@@ -3,6 +3,16 @@ import { PrismaClient } from "../src/generated/prisma";
 const db = new PrismaClient();
 
 async function main() {
+  // Idempotent guard: only seed a fresh database. This runs on every Vercel
+  // build, so we must never wipe content the client has already added.
+  const existingCourses = await db.course.count().catch(() => 0);
+  if (existingCourses > 0) {
+    console.log(
+      `⏭️  Database already has ${existingCourses} course(s) — skipping seed.`,
+    );
+    return;
+  }
+
   console.log("🌱 Seeding database...");
 
   // --- Site settings (single row) ---

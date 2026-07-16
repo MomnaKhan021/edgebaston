@@ -1,6 +1,6 @@
 // Prisma schema for the Edgebaston College CMS.
-// Uses SQLite locally (zero external setup). To move to production,
-// switch `provider` to "postgresql" and set DATABASE_URL accordingly.
+// Uses PostgreSQL (works on Vercel and any host). Set DATABASE_URL to your
+// Postgres connection string (e.g. a free Neon or Vercel Postgres database).
 
 generator client {
   provider = "prisma-client-js"
@@ -8,7 +8,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 

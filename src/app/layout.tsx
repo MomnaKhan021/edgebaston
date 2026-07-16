@@ -3,6 +3,10 @@ import { Geist } from "next/font/google";
 import "./globals.css";
 import { getSettings } from "@/lib/settings";
 
+// This is a database-backed CMS: render pages per-request so content edited in
+// the dashboard shows immediately, and so the build never queries the database.
+export const dynamic = "force-dynamic";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
