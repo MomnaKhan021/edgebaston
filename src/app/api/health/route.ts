@@ -20,27 +20,36 @@ export async function GET() {
   );
 
   let dbConnect = false;
-  let siteSettingTableExists: unknown = null;
+  let tables: string[] = [];
+  let courseCount: number | null = null;
   let dbError: string | null = null;
 
   try {
     await db.$queryRawUnsafe("SELECT 1");
     dbConnect = true;
+
     const rows = (await db.$queryRawUnsafe(
-      `SELECT to_regclass('public."SiteSetting"') AS t`,
-    )) as { t: string | null }[];
-    siteSettingTableExists = rows?.[0]?.t ?? null;
+      `SELECT table_name::text AS name FROM information_schema.tables WHERE table_schema = 'public' ORDER BY name`,
+    )) as { name: string }[];
+    tables = rows.map((r) => r.name);
+
+    try {
+      courseCount = await db.course.count();
+    } catch (e) {
+      dbError = `models: ${e instanceof Error ? e.message : String(e)}`;
+    }
   } catch (e) {
     dbError = e instanceof Error ? e.message : String(e);
   }
 
   return Response.json(
     {
-      ok: dbConnect && Boolean(siteSettingTableExists),
+      ok: dbConnect && courseCount !== null,
       hasDatabaseUrl: Boolean(process.env.DATABASE_URL),
       presentDbEnvVars,
       dbConnect,
-      siteSettingTableExists,
+      tables,
+      courseCount,
       dbError,
       nodeEnv: process.env.NODE_ENV,
     },
