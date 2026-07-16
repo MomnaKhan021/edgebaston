@@ -1,0 +1,93 @@
+// Prisma schema for the Edgebaston College CMS.
+// Uses SQLite locally (zero external setup). To move to production,
+// switch `provider` to "postgresql" and set DATABASE_URL accordingly.
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+/// A course offered by the college. Description/overview are rich-text HTML
+/// produced by the dashboard editor.
+model Course {
+  id            String   @id @default(cuid())
+  title         String
+  slug          String   @unique
+  category      String   @default("General")
+  level         String   @default("Undergraduate")
+  duration      String   @default("")
+  fee           String   @default("")
+  summary       String   @default("") // short plain-text blurb for cards
+  content       String   @default("") // rich-text HTML for the detail page
+  imageUrl      String   @default("")
+  featured      Boolean  @default(false)
+  published     Boolean  @default(true)
+  order         Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+/// Staff / faculty / admin member.
+model Staff {
+  id         String   @id @default(cuid())
+  name       String
+  role       String   @default("")
+  department String   @default("")
+  category   String   @default("Faculty") // Faculty | Admin | Support
+  email      String   @default("")
+  phone      String   @default("")
+  bio        String   @default("") // rich-text HTML
+  photoUrl   String   @default("")
+  published  Boolean  @default(true)
+  order      Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+/// A flexible content page the client can create/edit from the dashboard
+/// (e.g. "Admissions", "Campus Life"). Rendered at /p/[slug].
+model Page {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  content     String   @default("") // rich-text HTML
+  showInNav   Boolean  @default(false)
+  published   Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+/// Contact form submissions from the public site.
+model Inquiry {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String   @default("")
+  subject   String   @default("")
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+/// Single-row site-wide settings (branding, contact info, hero copy).
+model SiteSetting {
+  id           Int      @id @default(1)
+  siteName     String   @default("Edgebaston College")
+  tagline      String   @default("Shaping futures through education")
+  heroTitle    String   @default("Welcome to Edgebaston College")
+  heroSubtitle String   @default("A community of learners committed to academic excellence.")
+  heroImageUrl String   @default("")
+  aboutText    String   @default("") // rich-text HTML
+  email        String   @default("info@edgebaston.edu")
+  phone        String   @default("+44 121 000 0000")
+  address      String   @default("Edgbaston, Birmingham, UK")
+  primaryColor String   @default("#1e3a5f")
+  accentColor  String   @default("#c9a227")
+  updatedAt    DateTime @updatedAt
+}

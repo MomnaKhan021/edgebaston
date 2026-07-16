@@ -1,36 +1,115 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Edgebaston College — Website & CMS
 
-## Getting Started
+A full college website with a built-in, **no-code content dashboard**. The
+client can log in and manage everything — courses, staff, pages, branding,
+and enquiries — through a rich-text editor, without ever touching the code.
 
-First, run the development server:
+Built with **Next.js 16 (App Router)**, **TypeScript**, **Tailwind CSS**,
+**Prisma + SQLite**, and **TipTap** for rich text.
+
+---
+
+## ✨ What's included
+
+**Public website** (fully responsive — mobile, tablet, desktop):
+- Home page with hero, live stats, featured courses and staff highlights
+- Courses listing with category filter + individual course pages
+- Faculty / staff directory grouped by category
+- About page
+- Contact page with a working enquiry form (saved to the dashboard)
+- Custom pages created by the client (e.g. Admissions, Campus Life)
+
+**Admin dashboard** (`/admin`) — protected by email + password login:
+- Overview with stats and recent enquiries
+- **Courses** — create / edit / delete, rich-text descriptions
+- **Staff** — create / edit / delete, rich-text bios
+- **Pages** — build brand-new pages with a rich-text editor and optionally
+  add them to the site navigation
+- **Enquiries** — read / mark / reply to / delete contact submissions
+- **Settings** — site name, tagline, hero copy, about text, contact details,
+  and **brand colours** (the whole site re-themes instantly)
+
+Everything is edited through a WYSIWYG editor — **no code changes needed** to
+update content.
+
+---
+
+## 🚀 Getting started
 
 ```bash
+# 1. Install dependencies
+npm install
+
+# 2. Create your environment file
+cp .env.example .env
+#    then edit .env (see "Environment variables" below)
+
+# 3. Create the database and load demo content
+npm run db:reset
+
+# 4. Start the dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open <http://localhost:3000> for the website, and
+<http://localhost:3000/admin> for the dashboard.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Demo login** (from `.env`):
+- Email: `admin@edgebaston.edu`
+- Password: `admin1234`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🔐 Environment variables
 
-To learn more about Next.js, take a look at the following resources:
+All configuration lives in a `.env` file (copy it from `.env.example`). This
+is where any secrets or third-party **API keys** go — never hard-code them in
+the source.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Variable         | What it does                                            |
+| ---------------- | ------------------------------------------------------- |
+| `DATABASE_URL`   | Database connection. Defaults to a local SQLite file.   |
+| `ADMIN_EMAIL`    | The dashboard login email.                              |
+| `ADMIN_PASSWORD` | The dashboard login password.                           |
+| `SESSION_SECRET` | Random string used to sign the login session cookie.    |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Adding a new API key later** (e.g. an email service, maps, analytics):
 
-## Deploy on Vercel
+1. Add it to `.env` and to `.env.example` (with a placeholder), e.g.
+   `RESEND_API_KEY="..."`.
+2. Read it in server code via `process.env.RESEND_API_KEY`.
+3. If a value must be visible in the browser, prefix it with `NEXT_PUBLIC_`
+   (e.g. `NEXT_PUBLIC_MAPS_KEY`) — **only** do this for non-secret values.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+`.env` is git-ignored, so secrets are never committed. `.env.example`
+documents which variables are needed.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🎨 Branding
+
+Brand colours are stored in the database and injected as CSS variables, so the
+client can change the whole site's look from **Dashboard → Settings** — no code
+changes. Defaults live in `src/app/globals.css`.
+
+---
+
+## 🗄️ Useful scripts
+
+| Command             | Description                                        |
+| ------------------- | -------------------------------------------------- |
+| `npm run dev`       | Start the development server                       |
+| `npm run build`     | Production build                                   |
+| `npm run start`     | Run the production build                           |
+| `npm run db:push`   | Sync the schema to the database                    |
+| `npm run db:seed`   | Load demo content                                  |
+| `npm run db:reset`  | Wipe + recreate the database with demo content     |
+| `npm run db:studio` | Open Prisma Studio to inspect data                 |
+
+---
+
+## 🏗️ Moving to production
+
+SQLite is used for zero-setup local development and demos. For production,
+switch the datasource in `prisma/schema.prisma` to `postgresql` and set
+`DATABASE_URL` to your hosted database — no other code changes required.
