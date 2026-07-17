@@ -11,6 +11,7 @@ import { LearnMarquee } from "@/components/home/LearnMarquee";
 import { Faq } from "@/components/home/Faq";
 import { News } from "@/components/home/News";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
+import { Reveal } from "@/components/home/Reveal";
 
 export const metadata: Metadata = {
   title: "Edgbaston College — Birmingham's Top-Performing Sixth Form College",
@@ -24,15 +25,15 @@ export default function HomePage() {
       <AnnouncementBar />
       <Hero />
       <FeatureStrip />
-      <PrincipalMessage />
-      <Pathways />
-      <Results />
-      <Stories />
-      <WhyChoose />
+      <Reveal><PrincipalMessage /></Reveal>
+      <Reveal><Pathways /></Reveal>
+      <Reveal><Results /></Reveal>
+      <Reveal><Stories /></Reveal>
+      <Reveal><WhyChoose /></Reveal>
       <LearnMarquee />
-      <Faq />
-      <News />
-      <FigmaFooter />
+      <Reveal><Faq /></Reveal>
+      <Reveal><News /></Reveal>
+      <Reveal><FigmaFooter /></Reveal>
     </>
   );
 }

@@ -54,6 +54,34 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Scroll reveal (fade + rise in as each section enters the viewport) */
+.eb-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.eb-reveal.eb-in {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .eb-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Hide scrollbars on slider tracks (still scrollable/swipeable) */
+.eb-noscroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.eb-noscroll::-webkit-scrollbar {
+  display: none;
+}
+
 /* Marquee (feature strip + "Learn today" band) */
 @keyframes eb-marquee {
   from {
