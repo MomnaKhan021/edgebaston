@@ -46,3 +46,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Unrelated project folder (not part of Edgbaston)
+/Age-verification-marketing-page-nextjs
