@@ -1,25 +1,15 @@
 import type { Metadata } from "next";
-import { Hanken_Grotesk, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { getSettings } from "@/lib/settings";
+import { saans, saansMono } from "./fonts";
 
 // This is a database-backed CMS: render pages per-request so content edited in
 // the dashboard shows immediately, and so the build never queries the database.
 export const dynamic = "force-dynamic";
 
-// Hanken Grotesk is the closest freely-licensable match to the design's
-// "Saans" typeface (neo-grotesque, full weight range). Swap in the licensed
-// Saans web-font here for an exact match.
-const geistSans = Hanken_Grotesk({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// Self-hosted Saans (design typeface) for text, Saans SemiMono for labels.
+const geistSans = saans;
+const geistMono = saansMono;
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
