@@ -66,12 +66,17 @@ All configuration lives in a `.env` file (copy it from `.env.example`). This
 is where any secrets or third-party **API keys** go — never hard-code them in
 the source.
 
-| Variable         | What it does                                            |
-| ---------------- | ------------------------------------------------------- |
-| `DATABASE_URL`   | Database connection. Defaults to a local SQLite file.   |
-| `ADMIN_EMAIL`    | The dashboard login email.                              |
-| `ADMIN_PASSWORD` | The dashboard login password.                           |
-| `SESSION_SECRET` | Random string used to sign the login session cookie.    |
+| Variable         | What it does                                                       |
+| ---------------- | ------------------------------------------------------------------ |
+| `DATABASE_URL`   | Supabase **pooled** connection (Supavisor, port 6543, `?pgbouncer=true`). Used at runtime. |
+| `DIRECT_URL`     | Supabase **direct** connection (port 5432). Used for migrations / schema push. |
+| `ADMIN_EMAIL`    | The dashboard login email.                                         |
+| `ADMIN_PASSWORD` | The dashboard login password.                                      |
+| `SESSION_SECRET` | Random string used to sign the login session cookie.               |
+
+Get both connection strings from **Supabase → Project Settings → Database →
+Connection string** (pick "Transaction" pooler for `DATABASE_URL` and the
+direct/session string for `DIRECT_URL`).
 
 **Adding a new API key later** (e.g. an email service, maps, analytics):
 
@@ -110,6 +115,7 @@ changes. Defaults live in `src/app/globals.css`.
 
 ## 🏗️ Moving to production
 
-SQLite is used for zero-setup local development and demos. For production,
-switch the datasource in `prisma/schema.prisma` to `postgresql` and set
-`DATABASE_URL` to your hosted database — no other code changes required.
+The app runs on **Supabase Postgres**. Create a Supabase project, then set
+`DATABASE_URL` (pooled) and `DIRECT_URL` (direct) locally and in your host's
+environment variables. The build step (`scripts/setup-db.mjs`) creates the
+tables and seeds demo content on first deploy — no manual migration needed.

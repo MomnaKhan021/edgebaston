@@ -1,6 +1,8 @@
 // Prisma schema for the Edgebaston College CMS.
-// Uses PostgreSQL (works on Vercel and any host). Set DATABASE_URL to your
-// Postgres connection string (e.g. a free Neon or Vercel Postgres database).
+// Uses PostgreSQL on Supabase. Set DATABASE_URL to the Supabase *pooled*
+// connection string (Supavisor, port 6543, with ?pgbouncer=true) used at
+// runtime, and DIRECT_URL to the *direct* connection (port 5432) used for
+// migrations / schema push.
 
 generator client {
   provider = "prisma-client-js"
@@ -8,8 +10,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 /// A course offered by the college. Description/overview are rich-text HTML
