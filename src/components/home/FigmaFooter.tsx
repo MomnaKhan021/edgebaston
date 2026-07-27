@@ -31,9 +31,9 @@ export function FigmaFooter() {
           <div className="flex items-center gap-4">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/figma/avatar-principal.png"
+              src="/figma/owais-ahmed.png"
               alt="Owais Ahmed"
-              className="h-16 w-16 rounded-lg object-cover"
+              className="h-16 w-16 rounded-lg object-cover object-top"
             />
             <div>
               <p className="text-sm text-white/70">Principal</p>
