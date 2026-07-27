@@ -8,21 +8,24 @@ const CARDS = [
     body: "Focused retake support in a specialist environment. Small classes, regular mocks, and dedicated university guidance to help you secure the grades you need.",
     stat: 16.0,
     statLabel: "of 2025 A-Level grades achieved the top A* grade",
-    img: "/figma/news-1.png",
+    img: "/figma/course-retake.png",
+    objPos: "object-[70%_center]",
   },
   {
     title: "Five Term A-Level",
     body: "A flexible five-term pathway starting in January. Ideal for students who missed the September entry window but want a full and structured route to university.",
     stat: 16.0,
     statLabel: "of 2025 A-Level grades achieved the top A* grade",
-    img: "/figma/pathway-1.png",
+    img: "/figma/course-fiveterm.png",
+    objPos: "object-[55%_center]",
   },
   {
     title: "Transfer into Year 13",
     body: "Already in Year 12 elsewhere? Transfer mid-course into more focused, supportive environment where you'll receive the individual attention to push for top grades.",
     stat: 72.7,
     statLabel: "of students progressed to Russell Group universities",
-    img: "/figma/pathway-3.png",
+    img: "/figma/course-transfer.png",
+    objPos: "object-[45%_center]",
   },
 ];
 
@@ -46,7 +49,7 @@ export function Pathways() {
               </div>
               <div className="relative mt-6 aspect-[4/3] overflow-hidden rounded-xl bg-eb-cream">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={c.img} alt={c.title} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+                <img src={c.img} alt={c.title} className={`h-full w-full object-cover ${c.objPos} transition duration-500 group-hover:scale-105`} />
                 <span className="eb-square absolute bottom-4 right-4 grid h-11 w-11 place-items-center rounded-md bg-eb-blue text-white">
                   <ArrowUpRight className="h-5 w-5" />
                 </span>
