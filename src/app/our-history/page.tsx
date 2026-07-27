@@ -125,7 +125,7 @@ export default function OurHistoryPage() {
           <div className="mx-auto grid max-w-[1320px] items-center gap-8 px-6 py-14 lg:grid-cols-2 lg:gap-14 lg:px-16 lg:py-20">
             <div className="overflow-hidden rounded-2xl">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/figma/course-transfer.png" alt="Edgbaston student" className="aspect-[4/3] w-full object-cover" />
+              <img src="/figma/history-a.png" alt="Edgbaston student" className="aspect-[4/3] w-full object-cover" />
             </div>
             <div>
               <p className="text-2xl font-bold leading-snug text-eb-navy lg:text-[28px]">
