@@ -25,7 +25,7 @@ function Arrow() {
 export function FigmaFooter() {
   return (
     <footer className="bg-gradient-to-b from-eb-navy via-eb-navy to-[#245a8a] text-white">
-      <div className="mx-auto max-w-[1440px] px-6 pt-16 lg:px-16">
+      <div className="mx-auto max-w-[1440px] px-4 pt-12 lg:px-16">
         {/* Top: principal + intro */}
         <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex items-center gap-4">

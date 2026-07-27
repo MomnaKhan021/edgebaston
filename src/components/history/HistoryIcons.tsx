@@ -1,3 +1,11 @@
+export function IconSpark({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 40 40" fill="none" className={className} stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <circle cx="20" cy="20" r="6" />
+      <path d="M20 5v4M20 31v4M5 20h4M31 20h4M9.6 9.6l2.8 2.8M27.6 27.6l2.8 2.8M30.4 9.6l-2.8 2.8M12.4 27.6l-2.8 2.8" />
+    </svg>
+  );
+}
 export function IconBulb({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 40 40" fill="none" className={className} stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>

@@ -49,7 +49,7 @@ export default function OurHistoryPage() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/figma/history-hero.png" alt="Edgbaston College students" className="absolute inset-0 h-full w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30" />
-        <div className="relative mx-auto flex min-h-[440px] max-w-[1440px] flex-col justify-end px-6 pb-10 pt-36 lg:min-h-[520px] lg:px-16 lg:pb-12">
+        <div className="relative mx-auto flex min-h-[440px] max-w-[1440px] flex-col justify-end px-4 pb-10 pt-36 lg:min-h-[520px] lg:px-16 lg:pb-12">
           <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-[56px]">
             Edgbaston History
           </h1>
@@ -62,7 +62,7 @@ export default function OurHistoryPage() {
 
       {/* Breadcrumb */}
       <div className="border-b bg-white">
-        <div className="mx-auto flex max-w-[1440px] flex-col gap-3 px-6 py-4 sm:flex-row sm:items-center sm:justify-between lg:px-16">
+        <div className="mx-auto flex max-w-[1440px] flex-col gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between lg:px-16">
           <nav className="text-sm text-muted-foreground">
             <Link href="/" className="hover:text-eb-navy">Home</Link>
             <span className="px-2">/</span>
@@ -77,14 +77,14 @@ export default function OurHistoryPage() {
       {/* Our Commitment to Excellence */}
       <Reveal>
         <section className="bg-white">
-          <div className="mx-auto max-w-[1320px] px-6 py-14 lg:py-20">
+          <div className="mx-auto max-w-[1320px] px-4 py-10 lg:py-16">
             <div className="eb-stagger mx-auto max-w-2xl text-center">
               <h2 className="text-3xl font-extrabold tracking-tight text-eb-ink lg:text-[44px]">Our Commitment to Excellence</h2>
               <p className="mt-4 text-[15px] leading-relaxed text-neutral-600">
                 Our commitment to providing exceptional support for students&apos; academic journeys and future careers has resulted in first-class outcomes.
               </p>
             </div>
-            <div className="eb-noscroll -mx-6 mt-10 flex snap-x gap-5 overflow-x-auto px-6 pb-2 lg:mx-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:px-0">
+            <div className="eb-noscroll -mx-4 mt-10 flex snap-x gap-5 overflow-x-auto px-4 pb-2 lg:mx-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:px-0">
               {COMMITMENTS.map(({ Icon, title, body }) => (
                 <div key={title} className="eb-card w-[78%] shrink-0 snap-start rounded-2xl bg-eb-cream p-7 sm:w-[300px] lg:w-auto">
                   <Icon className="h-9 w-9 text-eb-navy" />
@@ -100,7 +100,7 @@ export default function OurHistoryPage() {
       {/* Founded in 2015 */}
       <Reveal>
         <section className="bg-eb-navy">
-          <div className="eb-stagger mx-auto max-w-[1320px] px-6 pt-16 lg:px-16 lg:pt-20">
+          <div className="eb-stagger mx-auto max-w-[1320px] px-4 pt-12 lg:px-16 lg:pt-16">
             <p className="font-mono text-sm uppercase tracking-[0.14em] text-white/60">Founded In</p>
             <p className="mt-2 text-7xl font-extrabold leading-none text-white lg:text-[120px]">2015</p>
             <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/85 lg:text-xl">
@@ -122,7 +122,7 @@ export default function OurHistoryPage() {
       {/* Content block A: image left, text right */}
       <Reveal>
         <section className="bg-white">
-          <div className="mx-auto grid max-w-[1320px] items-center gap-8 px-6 py-14 lg:grid-cols-2 lg:gap-14 lg:px-16 lg:py-20">
+          <div className="mx-auto grid max-w-[1320px] items-center gap-8 px-4 py-10 lg:grid-cols-2 lg:gap-14 lg:px-16 lg:py-16">
             <div className="overflow-hidden rounded-2xl">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/figma/history-a.png" alt="Edgbaston student" className="aspect-[4/3] w-full object-cover" />
@@ -142,7 +142,7 @@ export default function OurHistoryPage() {
       {/* Content block B: text left, image right */}
       <Reveal>
         <section className="bg-white">
-          <div className="mx-auto grid max-w-[1320px] items-center gap-8 px-6 pb-16 lg:grid-cols-2 lg:gap-14 lg:px-16 lg:pb-24">
+          <div className="mx-auto grid max-w-[1320px] items-center gap-8 px-4 pb-16 lg:grid-cols-2 lg:gap-14 lg:px-16 lg:pb-24">
             <div className="order-2 lg:order-1">
               <p className="text-2xl font-bold leading-snug text-eb-navy lg:text-[28px]">
                 Our unwavering dedication to student success has consistently placed us amongst the leading providers for students seeking admission to prestigious universities and competitive courses, including Oxbridge, Medicine, and Dentistry.

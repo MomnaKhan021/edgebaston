@@ -16,7 +16,7 @@ function InfoCard({ label, title, body, place }: Info) {
 export function Results() {
   return (
     <section className="bg-eb-navy">
-      <div className="mx-auto max-w-[1320px] px-6 py-14 lg:px-10 lg:py-20">
+      <div className="mx-auto max-w-[1320px] px-4 py-10 lg:px-10 lg:py-16">
         {/* Heading */}
         <div className="eb-stagger text-center">
           <p className="font-mono text-sm uppercase tracking-[0.12em] text-white/60">Outcome Spotlight</p>

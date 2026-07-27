@@ -4,7 +4,7 @@ import { AnnouncementBar } from "@/components/home/AnnouncementBar";
 import { Navbar } from "@/components/home/Navbar";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
-import { IconBulb, IconUsers, IconCrest } from "@/components/history/HistoryIcons";
+import { IconSpark, IconUsers, IconCrest } from "@/components/history/HistoryIcons";
 import { AppSteps } from "@/components/admissions/AppSteps";
 import { Accordion } from "@/components/admissions/Accordion";
 
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 const LOOK_FOR = [
-  { Icon: IconBulb, text: "Recognize students who show genuine potential and a real enthusiasm for learning." },
+  { Icon: IconSpark, text: "Recognize students who show genuine potential and a real enthusiasm for learning." },
   { Icon: IconUsers, text: "Welcome students who will enjoy, and add to, the life of our community." },
   { Icon: IconCrest, text: "Treat every applicant fairly, openly and with care." },
 ];
@@ -70,7 +70,7 @@ export default function AdmissionsRequirementsPage() {
 
       {/* Title + intro */}
       <section className="bg-white">
-        <div className="mx-auto grid max-w-[1440px] gap-6 px-6 py-12 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-16 lg:px-16">
+        <div className="mx-auto grid max-w-[1440px] gap-6 px-4 py-12 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-16 lg:px-16">
           <h1 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-eb-ink lg:text-[52px]">
             Admissions Requirements
           </h1>
@@ -82,14 +82,14 @@ export default function AdmissionsRequirementsPage() {
           </p>
         </div>
         {/* Group photo */}
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-16">
+        <div className="mx-auto max-w-[1440px] px-4 lg:px-16">
           <div className="overflow-hidden rounded-2xl">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/figma/adm-group.png" alt="Edgbaston College students" className="aspect-[16/7] w-full object-cover" />
           </div>
         </div>
         {/* Breadcrumb + share */}
-        <div className="mx-auto mt-6 flex max-w-[1440px] flex-col gap-3 border-t px-6 py-4 sm:flex-row sm:items-center sm:justify-between lg:px-16">
+        <div className="mx-auto mt-6 flex max-w-[1440px] flex-col gap-3 border-t px-4 py-4 sm:flex-row sm:items-center sm:justify-between lg:px-16">
           <nav className="text-sm text-muted-foreground">
             <Link href="/" className="hover:text-eb-navy">Home</Link><span className="px-2">/</span>
             <Link href="/courses" className="hover:text-eb-navy">Courses</Link><span className="px-2">/</span>
@@ -102,7 +102,7 @@ export default function AdmissionsRequirementsPage() {
       {/* What we look for */}
       <Reveal>
         <section className="bg-white">
-          <div className="mx-auto max-w-[1320px] px-6 py-14 lg:py-20">
+          <div className="mx-auto max-w-[1320px] px-4 py-10 lg:py-16">
             <div className="eb-stagger mx-auto max-w-2xl text-center">
               <p className="font-mono text-sm uppercase tracking-[0.14em] text-eb-navy/60">What We Look For</p>
               <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-eb-ink lg:text-[42px]">
@@ -126,7 +126,7 @@ export default function AdmissionsRequirementsPage() {
       {/* Application process */}
       <Reveal>
         <section className="bg-eb-navy">
-          <div className="mx-auto max-w-[1320px] px-6 py-14 lg:px-16 lg:py-20">
+          <div className="mx-auto max-w-[1320px] px-4 py-10 lg:px-16 lg:py-16">
             <div className="eb-stagger text-center">
               <p className="font-mono text-sm uppercase tracking-[0.14em] text-white/50">How to Apply</p>
               <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-white lg:text-[42px]">Application Process</h2>
@@ -148,7 +148,7 @@ export default function AdmissionsRequirementsPage() {
       {/* Requirements cards */}
       <Reveal>
         <section className="bg-white">
-          <div className="mx-auto max-w-[1320px] px-6 py-14 lg:py-20">
+          <div className="mx-auto max-w-[1320px] px-4 py-10 lg:py-16">
             <div className="eb-stagger mx-auto max-w-2xl text-center">
               <p className="font-mono text-sm uppercase tracking-[0.14em] text-eb-navy/60">A Guide to Entry</p>
               <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-eb-ink lg:text-[42px]">Admissions Requirements</h2>
@@ -159,7 +159,7 @@ export default function AdmissionsRequirementsPage() {
             <div className="mt-10 grid gap-6 lg:grid-cols-2">
               {REQUIREMENTS.map((r) => (
                 <div key={r.title} className="rounded-2xl bg-eb-navy p-8 text-white">
-                  <span className="grid h-11 w-11 place-items-center rounded-full bg-white/10 text-white">
+                  <span className="grid h-11 w-11 place-items-center rounded-full bg-white text-eb-navy">
                     <BookIcon className="h-6 w-6" />
                   </span>
                   <h3 className="mt-6 text-xl font-bold">{r.title}</h3>
@@ -181,7 +181,7 @@ export default function AdmissionsRequirementsPage() {
       {/* FAQ */}
       <Reveal>
         <section className="bg-white">
-          <div className="mx-auto max-w-[860px] px-6 py-14 lg:py-20">
+          <div className="mx-auto max-w-[860px] px-4 py-10 lg:py-16">
             <div className="eb-stagger text-center">
               <p className="font-mono text-sm uppercase tracking-[0.14em] text-eb-navy/60">Good to Know</p>
               <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-eb-ink lg:text-[42px]">Frequently Asked Questions</h2>

@@ -5,7 +5,7 @@ import { WordReveal } from "./WordReveal";
 export function PrincipalMessage() {
   return (
     <section className="bg-eb-navy">
-      <div className="mx-auto max-w-[1080px] px-6 py-16 text-center lg:py-20">
+      <div className="mx-auto max-w-[1080px] px-4 py-12 text-center lg:py-16">
         <p className="font-mono text-sm uppercase tracking-[0.12em] text-white/60">
           Message from the Principal
         </p>

@@ -12,7 +12,7 @@ const NEWS = [
 export function News() {
   return (
     <section className="bg-eb-cream">
-      <div className="mx-auto max-w-[1440px] px-6 py-14 lg:px-16 lg:py-20">
+      <div className="mx-auto max-w-[1440px] px-4 py-10 lg:px-16 lg:py-16">
         <Slider label="News & Events" title="What's happening at Edgbaston">
           {NEWS.map((n) => (
             <article key={n.title} className="group w-[78%] shrink-0 snap-start sm:w-[320px]">

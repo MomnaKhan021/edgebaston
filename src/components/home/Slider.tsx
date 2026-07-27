@@ -97,7 +97,7 @@ export function Slider({
 
       <div
         ref={trackRef}
-        className="eb-noscroll -mx-6 mt-12 flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-2 lg:mx-0 lg:px-0"
+        className="eb-noscroll -mx-4 mt-12 flex snap-x snap-mandatory gap-6 overflow-x-auto px-4 pb-2 lg:mx-0 lg:px-0"
       >
         {children}
       </div>

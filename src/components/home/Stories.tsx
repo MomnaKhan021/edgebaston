@@ -35,7 +35,7 @@ const COMPACT = [
 export function Stories() {
   return (
     <section className="bg-eb-cream">
-      <div className="mx-auto max-w-[1440px] px-6 py-14 lg:px-16 lg:py-20">
+      <div className="mx-auto max-w-[1440px] px-4 py-10 lg:px-16 lg:py-16">
         <Slider label="Success Stories" title="Real Students. Real Grade Transformation.">
           {/* Featured */}
           <div className="eb-card grid w-[90%] shrink-0 snap-start overflow-hidden rounded-2xl bg-white sm:w-[640px] sm:grid-cols-2">
