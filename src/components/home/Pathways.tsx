@@ -8,14 +8,14 @@ const CARDS = [
     body: "Focused retake support in a specialist environment. Small classes, regular mocks, and dedicated university guidance to help you secure the grades you need.",
     stat: 16.0,
     statLabel: "of 2025 A-Level grades achieved the top A* grade",
-    img: "/figma/pathway-1.png",
+    img: "/figma/news-1.png",
   },
   {
     title: "Five Term A-Level",
     body: "A flexible five-term pathway starting in January. Ideal for students who missed the September entry window but want a full and structured route to university.",
     stat: 16.0,
     statLabel: "of 2025 A-Level grades achieved the top A* grade",
-    img: "/figma/pathway-2.png",
+    img: "/figma/pathway-1.png",
   },
   {
     title: "Transfer into Year 13",
@@ -34,20 +34,20 @@ export function Pathways() {
           {CARDS.map((c) => (
             <article
               key={c.title}
-              className="eb-card group flex w-[86%] shrink-0 snap-start flex-col rounded-2xl bg-white p-6 sm:w-[420px] lg:w-[calc((100%-3rem)/3)]"
+              className="eb-card group flex w-[85%] shrink-0 snap-start flex-col rounded-2xl bg-white p-7 sm:w-[440px] sm:p-8 lg:w-[calc((100%-3rem)/3)]"
             >
-              <h3 className="text-2xl font-bold text-eb-navy">{c.title}</h3>
-              <p className="mt-3 text-[15px] leading-relaxed text-neutral-600">{c.body}</p>
-              <div className="mt-5 flex items-center gap-4 rounded-xl bg-eb-cream px-5 py-4">
-                <CountUp to={c.stat} decimals={1} suffix="%" className="text-3xl font-extrabold text-eb-blue" />
-                <span className="text-[13px] font-semibold leading-tight text-eb-blue">
+              <h3 className="text-[26px] font-bold leading-tight text-eb-navy">{c.title}</h3>
+              <p className="mt-4 text-[15px] leading-relaxed text-neutral-600">{c.body}</p>
+              <div className="mt-6 flex items-center gap-4 rounded-xl bg-eb-cream px-6 py-5">
+                <CountUp to={c.stat} decimals={1} suffix="%" className="shrink-0 text-[32px] font-extrabold text-eb-blue" />
+                <span className="text-[13px] font-semibold leading-snug text-eb-blue">
                   {c.statLabel}
                 </span>
               </div>
-              <div className="relative mt-5 aspect-[4/3] overflow-hidden rounded-xl">
+              <div className="relative mt-6 aspect-[4/3] overflow-hidden rounded-xl bg-eb-cream">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={c.img} alt={c.title} className="h-full w-full object-cover" />
-                <span className="eb-square absolute bottom-3 right-3 grid h-11 w-11 place-items-center rounded-md bg-eb-blue text-white">
+                <img src={c.img} alt={c.title} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+                <span className="eb-square absolute bottom-4 right-4 grid h-11 w-11 place-items-center rounded-md bg-eb-blue text-white">
                   <ArrowUpRight className="h-5 w-5" />
                 </span>
               </div>

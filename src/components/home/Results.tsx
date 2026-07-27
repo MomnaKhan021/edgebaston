@@ -27,24 +27,24 @@ export function Results() {
 
         {/* Door + flanking stat boxes (stay side-by-side on all sizes) */}
         <div className="relative mt-12 grid grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-4">
-          {/* Decorative dashed connectors (desktop only) */}
+          {/* Dashed connectors from each stat box toward the door */}
           <svg
-            className="pointer-events-none absolute left-[30%] top-1/2 hidden h-20 w-28 -translate-y-4 text-white/50 lg:block"
-            viewBox="0 0 110 70"
+            className="pointer-events-none absolute left-[27%] top-[58%] hidden h-24 w-32 text-white/70 md:block"
+            viewBox="0 0 120 80"
             fill="none"
             aria-hidden
           >
-            <path d="M4 6 C 45 12, 70 48, 104 60" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 6" strokeLinecap="round" />
-            <circle cx="104" cy="60" r="3.5" fill="currentColor" />
+            <path d="M4 8 C 50 16, 78 54, 112 68" stroke="currentColor" strokeWidth="2" strokeDasharray="2 7" strokeLinecap="round" />
+            <circle cx="112" cy="68" r="4" fill="currentColor" />
           </svg>
           <svg
-            className="pointer-events-none absolute right-[30%] top-[22%] hidden h-20 w-28 text-white/50 lg:block"
-            viewBox="0 0 110 70"
+            className="pointer-events-none absolute right-[27%] top-[16%] hidden h-24 w-32 text-white/70 md:block"
+            viewBox="0 0 120 80"
             fill="none"
             aria-hidden
           >
-            <path d="M106 64 C 65 56, 40 20, 6 8" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 6" strokeLinecap="round" />
-            <circle cx="6" cy="8" r="3.5" fill="currentColor" />
+            <path d="M116 72 C 70 62, 42 22, 8 8" stroke="currentColor" strokeWidth="2" strokeDasharray="2 7" strokeLinecap="round" />
+            <circle cx="8" cy="8" r="4" fill="currentColor" />
           </svg>
 
           <div className="z-10 rounded-2xl bg-white/[0.06] p-4 text-center backdrop-blur-sm sm:p-6">

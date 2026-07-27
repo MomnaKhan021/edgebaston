@@ -1,19 +1,18 @@
 import Link from "next/link";
 import { ArrowUpRight } from "./icons";
+import { WordReveal } from "./WordReveal";
 
 export function PrincipalMessage() {
   return (
     <section className="bg-eb-navy">
-      <div className="eb-stagger mx-auto max-w-[1080px] px-6 py-16 text-center lg:py-20">
+      <div className="mx-auto max-w-[1080px] px-6 py-16 text-center lg:py-20">
         <p className="font-mono text-sm uppercase tracking-[0.12em] text-white/60">
           Message from the Principal
         </p>
-        <p className="mx-auto mt-8 max-w-4xl text-2xl font-medium leading-[1.35] text-white sm:text-3xl lg:text-[40px] lg:leading-[1.3]">
-          Students arrive at the College aiming to excel academically and secure
-          a place on a course at their preferred university. We achieve this with
-          exceptional teaching, small classes, and individual attention and help
-          for every pupil.
-        </p>
+        <WordReveal
+          text="Students arrive at the College aiming to excel academically and secure a place on a course at their preferred university. We achieve this with exceptional teaching, small classes, and individual attention and help for every pupil."
+          className="mx-auto mt-8 max-w-4xl text-2xl font-medium leading-[1.35] text-white sm:text-3xl lg:text-[40px] lg:leading-[1.3]"
+        />
         <Link
           href="/about"
           className="eb-cta group mt-10 inline-flex items-center gap-3 rounded-full bg-white py-2 pl-6 pr-2 text-sm font-bold uppercase tracking-wide text-eb-navy"

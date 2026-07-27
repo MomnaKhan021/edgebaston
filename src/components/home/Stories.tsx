@@ -41,7 +41,7 @@ export function Stories() {
           <div className="eb-card grid w-[90%] shrink-0 snap-start overflow-hidden rounded-2xl bg-white sm:w-[640px] sm:grid-cols-2">
             <div className="relative aspect-[3/4] sm:aspect-auto sm:min-h-[420px]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/figma/pathway-2.png" alt="Alishba" className="h-full w-full object-cover" />
+              <img src="/figma/pathway-1.png" alt="Alishba" className="h-full w-full object-cover" />
               <PhotoCaption name="Alishba" from="BB" to="A*A*" course="Law at University of Cambridge" />
             </div>
             <div className="flex flex-col justify-between p-7">
