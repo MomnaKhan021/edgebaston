@@ -37,6 +37,12 @@ try {
 
   console.log("[setup-db] Done.");
 } catch (err) {
-  console.error("[setup-db] Failed:", err?.message ?? err);
-  process.exit(1);
+  // Do NOT fail the build if the DB is unreachable/misconfigured — let the
+  // app deploy (static pages + diagnostics still work) so the connection can
+  // be fixed via env vars and a redeploy. DB-backed pages will error until then.
+  console.error(
+    "[setup-db] WARNING: schema sync/seed failed — deploying anyway.",
+    err?.message ?? err,
+  );
+  process.exit(0);
 }
