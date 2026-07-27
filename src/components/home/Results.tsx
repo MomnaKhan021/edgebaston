@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "./icons";
+import { CountUp } from "./CountUp";
 
 type Info = { label: string; title: string; body?: string; place?: string };
 
@@ -15,9 +16,9 @@ function InfoCard({ label, title, body, place }: Info) {
 export function Results() {
   return (
     <section className="bg-eb-navy">
-      <div className="mx-auto max-w-[1320px] px-6 py-20 lg:px-10 lg:py-24">
+      <div className="mx-auto max-w-[1320px] px-6 py-14 lg:px-10 lg:py-20">
         {/* Heading */}
-        <div className="text-center">
+        <div className="eb-stagger text-center">
           <p className="font-mono text-sm uppercase tracking-[0.12em] text-white/60">Outcome Spotlight</p>
           <h2 className="mt-4 text-4xl font-extrabold tracking-tight text-white lg:text-[58px]">
             Results That Open Doors
@@ -48,7 +49,7 @@ export function Results() {
 
           <div className="z-10 rounded-2xl bg-white/[0.06] p-4 text-center backdrop-blur-sm sm:p-6">
             <p className="font-mono text-[11px] uppercase tracking-wide text-white/70 sm:text-sm">National Ranking</p>
-            <p className="my-1 text-4xl font-extrabold text-white sm:text-6xl">#25</p>
+            <CountUp to={25} prefix="#" className="my-1 block text-4xl font-extrabold text-white sm:text-6xl" />
             <p className="text-xs text-white/70 sm:text-sm">Sixth form college in England</p>
           </div>
 
@@ -61,7 +62,7 @@ export function Results() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/figma/medal.svg" alt="" className="mx-auto mb-1 h-7 w-7 sm:h-8 sm:w-8" />
             <p className="font-mono text-[11px] uppercase tracking-wide text-white/70 sm:text-sm">Value Added</p>
-            <p className="my-1 text-4xl font-extrabold text-white sm:text-6xl">#1</p>
+            <CountUp to={1} prefix="#" className="my-1 block text-4xl font-extrabold text-white sm:text-6xl" />
             <p className="text-xs text-white/70 sm:text-sm">For Value-Added in Birmingham</p>
           </div>
         </div>
@@ -69,11 +70,11 @@ export function Results() {
         {/* Blue split bar (two columns on all sizes) */}
         <div className="mt-6 grid grid-cols-2 overflow-hidden rounded-2xl bg-eb-blue">
           <div className="flex flex-col gap-1 border-r border-white/25 px-4 py-5 sm:flex-row sm:items-center sm:gap-4 sm:px-8 sm:py-6">
-            <span className="text-3xl font-extrabold text-white sm:text-5xl lg:text-6xl">96%</span>
+            <CountUp to={96} suffix="%" className="text-3xl font-extrabold text-white sm:text-5xl lg:text-6xl" />
             <span className="text-sm text-white/90 sm:text-lg">success rate in securing Medicine &amp; Dentistry places</span>
           </div>
           <div className="flex flex-col gap-1 px-4 py-5 sm:flex-row sm:items-center sm:gap-4 sm:px-8 sm:py-6">
-            <span className="text-3xl font-extrabold text-white sm:text-5xl lg:text-6xl">72.7%</span>
+            <CountUp to={72.7} decimals={1} suffix="%" className="text-3xl font-extrabold text-white sm:text-5xl lg:text-6xl" />
             <span className="text-sm text-white/90 sm:text-lg">Russell Group Progression</span>
           </div>
         </div>

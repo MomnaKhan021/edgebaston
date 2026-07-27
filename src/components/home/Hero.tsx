@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Navbar } from "./Navbar";
 import { ArrowUpRight } from "./icons";
+import { CountUp } from "./CountUp";
 
 export function Hero() {
   return (
@@ -32,8 +33,8 @@ export function Hero() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/figma/medal.svg" alt="" className="h-9 w-9" />
             </div>
-            <StatRow label="A Level Results A*-A" value="24%" tint />
-            <StatRow label="A Level Results A*-B" value="57%" />
+            <StatRow label="A Level Results A*-A" to={24} tint />
+            <StatRow label="A Level Results A*-B" to={57} />
           </div>
 
           {/* CTA */}
@@ -52,11 +53,11 @@ export function Hero() {
   );
 }
 
-function StatRow({ label, value, tint }: { label: string; value: string; tint?: boolean }) {
+function StatRow({ label, to, tint }: { label: string; to: number; tint?: boolean }) {
   return (
     <div className={"flex items-center justify-between px-6 py-4 " + (tint ? "bg-eb-cream" : "bg-white")}>
       <span className="text-[17px] font-medium text-eb-navy">{label}</span>
-      <span className="text-2xl font-extrabold text-eb-blue">{value}</span>
+      <CountUp to={to} suffix="%" className="text-2xl font-extrabold text-eb-blue" />
     </div>
   );
 }

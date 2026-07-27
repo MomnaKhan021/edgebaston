@@ -55,7 +55,7 @@ export function Slider({
   return (
     <div>
       <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-        <div>
+        <div className="eb-stagger">
           {label && (
             <p
               className={

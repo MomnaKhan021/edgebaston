@@ -1,25 +1,26 @@
 import { Slider } from "./Slider";
 import { ArrowUpRight } from "./icons";
+import { CountUp } from "./CountUp";
 
 const CARDS = [
   {
     title: "One Year A-Level Retake",
     body: "Focused retake support in a specialist environment. Small classes, regular mocks, and dedicated university guidance to help you secure the grades you need.",
-    stat: "16.0%",
+    stat: 16.0,
     statLabel: "of 2025 A-Level grades achieved the top A* grade",
     img: "/figma/pathway-1.png",
   },
   {
     title: "Five Term A-Level",
     body: "A flexible five-term pathway starting in January. Ideal for students who missed the September entry window but want a full and structured route to university.",
-    stat: "16.0%",
+    stat: 16.0,
     statLabel: "of 2025 A-Level grades achieved the top A* grade",
     img: "/figma/pathway-2.png",
   },
   {
     title: "Transfer into Year 13",
     body: "Already in Year 12 elsewhere? Transfer mid-course into more focused, supportive environment where you'll receive the individual attention to push for top grades.",
-    stat: "72.7%",
+    stat: 72.7,
     statLabel: "of students progressed to Russell Group universities",
     img: "/figma/pathway-3.png",
   },
@@ -28,7 +29,7 @@ const CARDS = [
 export function Pathways() {
   return (
     <section className="bg-eb-cream">
-      <div className="mx-auto max-w-[1440px] px-6 py-20 lg:px-16 lg:py-24">
+      <div className="mx-auto max-w-[1440px] px-6 py-14 lg:px-16 lg:py-20">
         <Slider label="Courses We Offer" title="Choose the A-Level Pathway That Fits Your Goal">
           {CARDS.map((c) => (
             <article
@@ -38,7 +39,7 @@ export function Pathways() {
               <h3 className="text-2xl font-bold text-eb-navy">{c.title}</h3>
               <p className="mt-3 text-[15px] leading-relaxed text-neutral-600">{c.body}</p>
               <div className="mt-5 flex items-center gap-4 rounded-xl bg-eb-cream px-5 py-4">
-                <span className="text-3xl font-extrabold text-eb-blue">{c.stat}</span>
+                <CountUp to={c.stat} decimals={1} suffix="%" className="text-3xl font-extrabold text-eb-blue" />
                 <span className="text-[13px] font-semibold leading-tight text-eb-blue">
                   {c.statLabel}
                 </span>

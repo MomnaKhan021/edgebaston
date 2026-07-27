@@ -4,7 +4,7 @@ import { ArrowUpRight } from "./icons";
 export function PrincipalMessage() {
   return (
     <section className="bg-eb-navy">
-      <div className="mx-auto max-w-[1080px] px-6 py-20 text-center lg:py-28">
+      <div className="eb-stagger mx-auto max-w-[1080px] px-6 py-16 text-center lg:py-20">
         <p className="font-mono text-sm uppercase tracking-[0.12em] text-white/60">
           Message from the Principal
         </p>

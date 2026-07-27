@@ -35,7 +35,7 @@ export function Faq() {
   const [open, setOpen] = useState<number | null>(null);
   return (
     <section className="bg-white">
-      <div className="mx-auto grid max-w-[1320px] gap-12 px-6 py-20 lg:grid-cols-[0.85fr_1.15fr] lg:py-24">
+      <div className="mx-auto grid max-w-[1320px] gap-12 px-6 py-14 lg:grid-cols-[0.85fr_1.15fr] lg:py-20">
         <div>
           <h2 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-eb-ink lg:text-[58px]">
             A-Level retake &amp; resit FAQ

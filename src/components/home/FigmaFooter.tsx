@@ -76,7 +76,7 @@ export function FigmaFooter() {
                 <ul className="mt-10 space-y-4 text-[15px]">
                   <li><a href="tel:01213060182" className="flex items-start gap-3 hover:text-white"><Arrow /> 0121 306 0182</a></li>
                   <li><a href="mailto:enquiries@edgbastoncollege.co.uk" className="flex items-start gap-3 break-all hover:text-white"><Arrow /> enquiries@edgbastoncollege.co.uk</a></li>
-                  <li><a href="#" className="flex items-start gap-3 hover:text-white"><Arrow /> Get Directions</a></li>
+                  <li><a href="https://www.google.com/maps/search/?api=1&query=37+George+Road+Edgbaston+Birmingham+B15+1PL" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 hover:text-white"><Arrow /> Get Directions</a></li>
                 </ul>
               </div>
               <div className="min-h-[240px] overflow-hidden rounded-xl">

@@ -17,11 +17,11 @@ function Star() {
 export function FeatureStrip() {
   const row = [...ITEMS, ...ITEMS];
   return (
-    <div className="overflow-hidden border-y border-white/10 bg-eb-navy py-4">
+    <div className="overflow-hidden border-y border-border bg-white py-4">
       <div className="eb-marquee-track">
         {row.map((item, i) => (
           <span key={i} className="flex items-center">
-            <span className="text-[15px] font-medium text-white/90">{item}</span>
+            <span className="text-[15px] font-medium text-eb-navy">{item}</span>
             <Star />
           </span>
         ))}
