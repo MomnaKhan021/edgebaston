@@ -28,9 +28,9 @@ const ITEMS = [
 
 function Card({ icon, title, body }: (typeof ITEMS)[number]) {
   return (
-    <div className="rounded-2xl bg-eb-cream px-8 py-12 text-center">
+    <div className="eb-card group rounded-2xl bg-eb-cream px-8 py-12 text-center">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={icon} alt="" className="mx-auto h-14 w-14" />
+      <img src={icon} alt="" className="mx-auto h-14 w-14 transition duration-300 group-hover:scale-110" />
       <h3 className="mt-6 text-2xl font-bold text-eb-navy">{title}</h3>
       <p className="mx-auto mt-3 max-w-xs text-[15px] leading-relaxed text-neutral-600">
         {body}

@@ -39,10 +39,10 @@ export function Hero() {
           {/* CTA */}
           <Link
             href="/contact"
-            className="flex items-center justify-between gap-3 rounded-full bg-white py-2 pl-6 pr-2 text-sm font-bold uppercase tracking-wide text-eb-navy transition hover:bg-white/90 lg:col-start-1 lg:row-start-2 lg:inline-flex lg:w-auto lg:justify-start lg:self-start"
+            className="eb-cta group flex items-center justify-between gap-3 rounded-full bg-white py-2 pl-6 pr-2 text-sm font-bold uppercase tracking-wide text-eb-navy lg:col-start-1 lg:row-start-2 lg:inline-flex lg:w-auto lg:justify-start lg:self-start"
           >
             Enquire About Course
-            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-md bg-eb-blue text-white">
+            <span className="eb-square grid h-9 w-9 shrink-0 place-items-center rounded-md bg-eb-blue text-white">
               <ArrowUpRight className="h-5 w-5" />
             </span>
           </Link>

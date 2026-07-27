@@ -54,6 +54,66 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Consistent hover animation for pill CTAs across the site */
+.eb-cta {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+.eb-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(14, 47, 73, 0.18);
+}
+.eb-square {
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
+}
+.eb-cta:hover .eb-square,
+.group:hover .eb-square {
+  filter: brightness(1.12);
+  transform: scale(1.08);
+}
+
+/* Consistent card hover (pathways, news, stories, why, results tiles) */
+.eb-card {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.eb-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(14, 47, 73, 0.12);
+}
+
+/* Circle/arrow controls (slider + icon buttons) */
+.eb-ctrl {
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    filter 0.2s ease;
+}
+.eb-ctrl:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eb-cta,
+  .eb-square,
+  .eb-card,
+  .eb-ctrl {
+    transition: none;
+  }
+  .eb-cta:hover,
+  .eb-card:hover,
+  .eb-ctrl:hover,
+  .eb-cta:hover .eb-square {
+    transform: none;
+  }
+}
+
 /* Scroll reveal (fade + rise in as each section enters the viewport) */
 .eb-reveal {
   opacity: 0;

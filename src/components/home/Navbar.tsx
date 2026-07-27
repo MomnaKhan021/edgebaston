@@ -58,7 +58,7 @@ export function Navbar() {
           </div>
           <Link
             href="/contact"
-            className="rounded-full bg-white px-7 py-3.5 text-[15px] font-bold uppercase tracking-wide text-eb-navy shadow-sm transition hover:bg-white/90"
+            className="eb-cta rounded-full bg-white px-7 py-3.5 text-[15px] font-bold uppercase tracking-wide text-eb-navy shadow-sm"
           >
             Contact us
           </Link>

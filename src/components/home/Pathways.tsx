@@ -33,7 +33,7 @@ export function Pathways() {
           {CARDS.map((c) => (
             <article
               key={c.title}
-              className="flex w-[86%] shrink-0 snap-start flex-col rounded-2xl bg-white p-6 sm:w-[420px] lg:w-[calc((100%-3rem)/3)]"
+              className="eb-card group flex w-[86%] shrink-0 snap-start flex-col rounded-2xl bg-white p-6 sm:w-[420px] lg:w-[calc((100%-3rem)/3)]"
             >
               <h3 className="text-2xl font-bold text-eb-navy">{c.title}</h3>
               <p className="mt-3 text-[15px] leading-relaxed text-neutral-600">{c.body}</p>
@@ -46,7 +46,7 @@ export function Pathways() {
               <div className="relative mt-5 aspect-[4/3] overflow-hidden rounded-xl">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={c.img} alt={c.title} className="h-full w-full object-cover" />
-                <span className="absolute bottom-3 right-3 grid h-11 w-11 place-items-center rounded-md bg-eb-blue text-white">
+                <span className="eb-square absolute bottom-3 right-3 grid h-11 w-11 place-items-center rounded-md bg-eb-blue text-white">
                   <ArrowUpRight className="h-5 w-5" />
                 </span>
               </div>

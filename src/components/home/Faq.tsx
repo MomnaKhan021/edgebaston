@@ -46,10 +46,10 @@ export function Faq() {
           </p>
           <Link
             href="/contact"
-            className="mt-8 inline-flex items-center gap-3 rounded-lg bg-eb-cream py-2 pl-6 pr-2 text-sm font-bold uppercase tracking-wide text-eb-navy transition hover:bg-eb-cream/70"
+            className="eb-cta group mt-8 inline-flex items-center gap-3 rounded-lg bg-eb-cream py-2 pl-6 pr-2 text-sm font-bold uppercase tracking-wide text-eb-navy"
           >
             Contact Us
-            <span className="grid h-9 w-9 place-items-center rounded-md bg-eb-blue text-white">
+            <span className="eb-square grid h-9 w-9 place-items-center rounded-md bg-eb-blue text-white">
               <ArrowUpRight className="h-5 w-5" />
             </span>
           </Link>

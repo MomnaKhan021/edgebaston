@@ -80,7 +80,7 @@ export function Slider({
             aria-label="Previous"
             onClick={() => scroll(-1)}
             disabled={atStart}
-            className={`grid h-12 w-12 place-items-center rounded-lg transition disabled:opacity-40 ${arrowBase}`}
+            className={`eb-ctrl grid h-12 w-12 place-items-center rounded-lg disabled:opacity-40 disabled:hover:transform-none ${arrowBase}`}
           >
             <ArrowRight className="h-5 w-5 rotate-180" />
           </button>
@@ -88,7 +88,7 @@ export function Slider({
             aria-label="Next"
             onClick={() => scroll(1)}
             disabled={atEnd}
-            className={`grid h-12 w-12 place-items-center rounded-lg transition disabled:opacity-40 ${arrowBase}`}
+            className={`eb-ctrl grid h-12 w-12 place-items-center rounded-lg disabled:opacity-40 disabled:hover:transform-none ${arrowBase}`}
           >
             <ArrowRight className="h-5 w-5" />
           </button>

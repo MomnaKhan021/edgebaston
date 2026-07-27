@@ -95,9 +95,9 @@ export function Results() {
                 leading UK universities to competitive degree pathways.
               </p>
             </div>
-            <button className="col-span-2 flex items-center justify-between gap-4 rounded-xl bg-eb-cream px-6 py-4 text-left lg:col-span-1 lg:col-start-3 lg:row-start-3">
+            <button className="eb-cta group col-span-2 flex items-center justify-between gap-4 rounded-xl bg-eb-cream px-6 py-4 text-left lg:col-span-1 lg:col-start-3 lg:row-start-3">
               <span className="text-sm font-bold uppercase tracking-wide text-eb-navy">View Results &amp; Destinations</span>
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-md bg-eb-blue text-white">
+              <span className="eb-square grid h-10 w-10 shrink-0 place-items-center rounded-md bg-eb-blue text-white">
                 <ArrowUpRight className="h-5 w-5" />
               </span>
             </button>

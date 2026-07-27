@@ -38,7 +38,7 @@ export function Stories() {
       <div className="mx-auto max-w-[1440px] px-6 py-20 lg:px-16 lg:py-24">
         <Slider label="Success Stories" title="Real Students. Real Grade Transformation.">
           {/* Featured */}
-          <div className="grid w-[90%] shrink-0 snap-start overflow-hidden rounded-2xl bg-white sm:w-[640px] sm:grid-cols-2">
+          <div className="eb-card grid w-[90%] shrink-0 snap-start overflow-hidden rounded-2xl bg-white sm:w-[640px] sm:grid-cols-2">
             <div className="relative aspect-[3/4] sm:aspect-auto sm:min-h-[420px]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/figma/pathway-2.png" alt="Alishba" className="h-full w-full object-cover" />
@@ -60,10 +60,10 @@ export function Stories() {
 
           {/* Compact */}
           {COMPACT.map((c) => (
-            <div key={c.name} className="relative w-[72%] shrink-0 snap-start overflow-hidden rounded-2xl bg-eb-navy sm:w-[300px]">
+            <div key={c.name} className="eb-card group relative w-[72%] shrink-0 snap-start overflow-hidden rounded-2xl bg-eb-navy sm:w-[300px]">
               <div className="relative aspect-[3/4]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={c.img} alt={c.name} className="h-full w-full object-cover" />
+                <img src={c.img} alt={c.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
                 <button aria-label="Expand" className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-md bg-white text-eb-navy">
                   <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M3 9h12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>
                 </button>
