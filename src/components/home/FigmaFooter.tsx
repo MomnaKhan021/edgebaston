@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Socials } from "@/components/contact/Socials";
 
 const LINKS = [
   "Enquire About A Course",
@@ -78,6 +79,10 @@ export function FigmaFooter() {
                   <li><a href="mailto:enquiries@edgbastoncollege.co.uk" className="flex items-start gap-3 break-all hover:text-white"><Arrow /> enquiries@edgbastoncollege.co.uk</a></li>
                   <li><a href="https://www.google.com/maps/search/?api=1&query=37+George+Road+Edgbaston+Birmingham+B15+1PL" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 hover:text-white"><Arrow /> Get Directions</a></li>
                 </ul>
+                <p className="mt-10 text-sm font-semibold text-white/70">Follow Us</p>
+                <div className="mt-3">
+                  <Socials variant="dark" />
+                </div>
               </div>
               <div className="min-h-[240px] overflow-hidden rounded-xl">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
