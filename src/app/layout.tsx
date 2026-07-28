@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { getSettings } from "@/lib/settings";
 import { saans, saansMono } from "./fonts";
+import { OfferBar } from "@/components/home/OfferBar";
 
 // This is a database-backed CMS: render pages per-request so content edited in
 // the dashboard shows immediately, and so the build never queries the database.
@@ -42,7 +43,10 @@ export default async function RootLayout({
       style={themeStyle}
       className={`${geistSans.variable} ${geistMono.variable} h-full`}
     >
-      <body className="flex min-h-full flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+        {children}
+        <OfferBar />
+      </body>
     </html>
   );
 }
