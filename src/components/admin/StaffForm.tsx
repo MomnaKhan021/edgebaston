@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { saveStaff } from "@/app/admin/actions";
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 import { Field, Input, Select, Toggle, SubmitButton } from "@/components/admin/ui";
 
 type StaffValues = {
@@ -79,13 +80,8 @@ export function StaffForm({ member }: { member?: StaffValues }) {
         </div>
 
         <div className="mt-4">
-          <Field label="Photo URL" htmlFor="photoUrl">
-            <Input
-              id="photoUrl"
-              name="photoUrl"
-              defaultValue={m.photoUrl}
-              placeholder="https://…"
-            />
+          <Field label="Photo" hint="Upload a headshot — shown on the faculty page.">
+            <ImageUpload name="photoUrl" defaultValue={m.photoUrl} aspect="aspect-[3/4]" />
           </Field>
         </div>
       </div>

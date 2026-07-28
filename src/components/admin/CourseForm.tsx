@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { saveCourse } from "@/app/admin/actions";
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 import { Field, Input, Textarea, Select, Toggle, SubmitButton } from "@/components/admin/ui";
 
 type CourseValues = {
@@ -108,13 +109,8 @@ export function CourseForm({ course }: { course?: CourseValues }) {
         </div>
 
         <div className="mt-4">
-          <Field label="Image URL" htmlFor="imageUrl">
-            <Input
-              id="imageUrl"
-              name="imageUrl"
-              defaultValue={c.imageUrl}
-              placeholder="https://…"
-            />
+          <Field label="Course image" hint="Upload a cover image for the course card and page.">
+            <ImageUpload name="imageUrl" defaultValue={c.imageUrl} aspect="aspect-[4/3]" />
           </Field>
         </div>
       </div>

@@ -96,6 +96,33 @@ export function IconPlus({ className = base }: P) {
   );
 }
 
+export function IconImage({ className = base }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...common}>
+      <rect x="3" y="4.5" width="18" height="15" rx="2" />
+      <circle cx="8.5" cy="9.5" r="1.6" />
+      <path d="M4 17l4.5-4.5a2 2 0 012.8 0L16 17M14 14l2-2a2 2 0 012.8 0L21 15" />
+    </svg>
+  );
+}
+
+export function IconUpload({ className = base }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...common}>
+      <path d="M12 15V4M8 8l4-4 4 4" />
+      <path d="M4 15v3a2 2 0 002 2h12a2 2 0 002-2v-3" />
+    </svg>
+  );
+}
+
+export function IconTrash({ className = base }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...common}>
+      <path d="M4 7h16M9 7V5a1 1 0 011-1h4a1 1 0 011 1v2M6 7l1 13a1 1 0 001 1h8a1 1 0 001-1l1-13" />
+    </svg>
+  );
+}
+
 export function IconMenu({ className = base }: P) {
   return (
     <svg viewBox="0 0 24 24" className={className} {...common}>

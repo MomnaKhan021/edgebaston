@@ -1,6 +1,7 @@
 import { getSettings } from "@/lib/settings";
 import { saveSettings } from "@/app/admin/actions";
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 import { Field, Input, Textarea, SubmitButton } from "@/components/admin/ui";
 
 export default async function SettingsAdmin({
@@ -80,16 +81,10 @@ export default async function SettingsAdmin({
             />
           </Field>
           <Field
-            label="Hero background image URL"
-            htmlFor="heroImageUrl"
+            label="Hero background image"
             hint="Optional. Shown faded behind the hero text."
           >
-            <Input
-              id="heroImageUrl"
-              name="heroImageUrl"
-              defaultValue={settings.heroImageUrl}
-              placeholder="https://…"
-            />
+            <ImageUpload name="heroImageUrl" defaultValue={settings.heroImageUrl} aspect="aspect-[16/9]" />
           </Field>
         </div>
       </section>
