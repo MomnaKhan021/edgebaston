@@ -197,8 +197,10 @@ export default function RetakePage() {
             <div className="eb-stagger mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {EXCEL.map(({ Icon, title, body }) => (
                 <div key={title} className="eb-card rounded-2xl bg-eb-cream p-7">
-                  <Icon />
-                  <h3 className="mt-6 text-lg font-bold text-eb-navy">{title}</h3>
+                  <span className="grid h-14 w-14 place-items-center rounded-xl bg-white shadow-sm ring-1 ring-black/5">
+                    <Icon className="h-7 w-7 text-eb-navy" />
+                  </span>
+                  <h3 className="mt-5 text-lg font-bold text-eb-navy">{title}</h3>
                   <p className="mt-3 text-sm leading-relaxed text-neutral-600">{body}</p>
                 </div>
               ))}
