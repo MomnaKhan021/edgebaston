@@ -109,10 +109,11 @@ export default function RetakePage() {
       <section className="relative isolate overflow-hidden bg-eb-navy">
         <Navbar />
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/figma/retake-hero.png" alt="Edgbaston College retake students" className="absolute inset-0 h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-eb-navy/90 via-eb-navy/40 to-eb-navy/40" />
+        <img src="/figma/retake-hero.png" alt="Edgbaston College retake students" className="absolute inset-0 h-full w-full object-cover object-[center_30%]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-eb-navy/85 via-eb-navy/45 to-eb-navy/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-eb-navy/70 to-transparent" />
         <div className="relative mx-auto flex min-h-[380px] max-w-[1440px] flex-col justify-end px-4 pb-9 pt-32 lg:min-h-[460px] lg:px-16 lg:pb-12">
-          <p className="font-mono text-xs uppercase tracking-[0.16em] text-white/70">A-Level Programme</p>
+          <p className="font-mono text-xs uppercase tracking-[0.16em] text-white/80">A-Level Programme</p>
           <h1 className="mt-3 max-w-2xl text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-[56px]">
             One Year A-Level Retake
           </h1>
@@ -235,7 +236,7 @@ export default function RetakePage() {
           <div className="mx-auto grid max-w-[1320px] items-center gap-8 px-4 py-10 lg:grid-cols-2 lg:gap-14 lg:px-16 lg:py-16">
             <div className="overflow-hidden rounded-2xl">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/figma/retake-plan.png" alt="A retake student" className="aspect-[4/5] w-full object-cover" />
+              <img src="/figma/retake-plan.png" alt="A retake student" className="aspect-[4/3] w-full object-cover lg:aspect-[5/6]" />
             </div>
             <div className="eb-stagger">
               <p className="font-mono text-xs uppercase tracking-[0.16em] text-eb-navy/60">Personalised</p>
