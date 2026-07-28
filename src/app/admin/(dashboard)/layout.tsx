@@ -17,7 +17,8 @@ export default async function DashboardLayout({
   const session = await requireAuth();
   const [settings, unreadCount] = await Promise.all([
     getSettings(),
-    db.inquiry.count({ where: { read: false } }),
+    // Fail-soft: a transient DB hiccup shouldn't blank the whole dashboard.
+    db.inquiry.count({ where: { read: false } }).catch(() => 0),
   ]);
 
   return (

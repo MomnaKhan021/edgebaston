@@ -243,7 +243,34 @@ body {
 }
 .prose-content img {
   max-width: 100%;
+  height: auto;
   border-radius: 0.5rem;
+  margin: 1em 0;
+}
+.prose-content pre {
+  background: var(--eb-navy, #0e2f49);
+  color: #fff;
+  padding: 1rem 1.25rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin: 1em 0;
+  font-size: 0.85em;
+}
+.prose-content pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+.prose-content code {
+  background: var(--muted, #eef1f4);
+  padding: 0.15em 0.4em;
+  border-radius: 0.3rem;
+  font-size: 0.88em;
+}
+.prose-content hr {
+  border: 0;
+  border-top: 1px solid var(--border, #e5e7eb);
+  margin: 1.5em 0;
 }
 
 /* TipTap editor placeholder + focus styling in the dashboard. */
