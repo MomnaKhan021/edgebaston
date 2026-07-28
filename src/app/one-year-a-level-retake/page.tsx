@@ -143,7 +143,7 @@ export default function RetakePage() {
               <div className="eb-stagger">
                 <p className="font-mono text-xs uppercase tracking-[0.16em] text-eb-navy/60">The Retake Programme</p>
                 <h2 className="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-eb-ink lg:text-[40px]">
-                  Birmingham&apos;s most successful A-Level retake programme. Your A-Levels, online or in person.
+                  Birmingham&apos;s most successful A-Level retake programme. Your A-Levels Online.
                 </h2>
                 <p className="mt-5 text-[15px] leading-relaxed text-neutral-600">
                   Our intensive one-year programme is designed for students who want to significantly improve their grades and reapply to top universities — with the small classes, frequent exam practice and personalised support that make the difference.
