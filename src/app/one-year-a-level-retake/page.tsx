@@ -69,6 +69,20 @@ const FAQ = [
   { q: "Is accommodation available for retake students?", a: "Yes. We can help arrange student accommodation nearby, including The Elgar Residences, Ernest Somers House and Edgbaston Court." },
 ];
 
+function StatBar({ label, value, pct }: { label: string; value: number; pct: number }) {
+  return (
+    <div>
+      <div className="flex items-center justify-between text-xs font-semibold text-eb-navy">
+        <span>{label}</span>
+        <span>{value}%</span>
+      </div>
+      <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-white">
+        <div className="h-full rounded-full bg-eb-blue" style={{ width: pct + "%" }} />
+      </div>
+    </div>
+  );
+}
+
 function EnquireBtn({ dark = false }: { dark?: boolean }) {
   return (
     <Link
@@ -141,19 +155,29 @@ export default function RetakePage() {
               <div className="eb-card rounded-2xl bg-eb-cream p-8">
                 <p className="text-5xl font-extrabold text-eb-navy lg:text-6xl">
                   <CountUp to={87.7} decimals={1} suffix="%" />
+                  <span className="ml-2 align-top text-lg font-bold text-eb-blue">A*–B</span>
                 </p>
                 <p className="mt-3 text-sm font-medium text-neutral-600">Achieved A*–B grades in 2025</p>
-                <div className="mt-6 h-2 overflow-hidden rounded-full bg-white">
-                  <div className="h-full rounded-full bg-eb-blue" style={{ width: "87.7%" }} />
+                <div className="mt-6 space-y-3">
+                  <StatBar label="A*–A" value={61.4} pct={61} />
+                  <StatBar label="A*–B" value={87.7} pct={88} />
                 </div>
               </div>
               <div className="eb-card rounded-2xl bg-eb-cream p-8">
                 <p className="text-5xl font-extrabold text-eb-navy lg:text-6xl">
                   <CountUp to={1.78} decimals={2} prefix="+" />
+                  <span className="ml-2 align-top text-lg font-bold text-eb-blue">grades</span>
                 </p>
-                <p className="mt-3 text-sm font-medium text-neutral-600">Average grade improvement per subject</p>
-                <div className="mt-6 h-2 overflow-hidden rounded-full bg-white">
-                  <div className="h-full rounded-full bg-eb-blue" style={{ width: "78%" }} />
+                <p className="mt-3 text-sm font-medium text-neutral-600">Average grade improvement per subject (value added)</p>
+                <div className="mt-6 grid grid-cols-2 gap-4">
+                  <div className="rounded-xl bg-white p-4">
+                    <p className="text-2xl font-extrabold text-eb-navy"><CountUp to={680} /></p>
+                    <p className="mt-1 text-xs font-medium text-neutral-500">Students supported</p>
+                  </div>
+                  <div className="rounded-xl bg-white p-4">
+                    <p className="text-2xl font-extrabold text-eb-navy"><CountUp to={94} suffix="%" /></p>
+                    <p className="mt-1 text-xs font-medium text-neutral-500">Improved on prior grades</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -277,7 +301,17 @@ export default function RetakePage() {
                 Personalised UCAS support that helps our retake students progress to Russell Group and competitive courses.
               </p>
             </div>
-            <div className="eb-stagger mt-12 grid gap-10 sm:grid-cols-3">
+            {/* Photo row */}
+            <div className="eb-stagger mt-12 grid gap-4 sm:grid-cols-3">
+              {["/figma/pathway-1.png", "/figma/pathway-2.png", "/figma/pathway-3.png"].map((src) => (
+                <div key={src} className="overflow-hidden rounded-2xl">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={src} alt="Edgbaston retake student" className="aspect-[4/3] w-full object-cover" />
+                </div>
+              ))}
+            </div>
+            {/* Rings */}
+            <div className="eb-stagger mt-10 grid gap-10 sm:grid-cols-3">
               <ProgressRing value={87} label="Progress to their first-choice university" />
               <ProgressRing value={72} label="Secure a Russell Group offer" />
               <ProgressRing value={95} label="Improve on their previous grades" />
@@ -339,14 +373,14 @@ export default function RetakePage() {
 
       {/* CTA band */}
       <Reveal>
-        <section className="bg-eb-blue">
+        <section className="bg-eb-navy">
           <div className="mx-auto flex max-w-[1320px] flex-col items-start gap-6 px-4 py-12 lg:flex-row lg:items-center lg:justify-between lg:px-16 lg:py-16">
             <h2 className="max-w-2xl text-3xl font-extrabold leading-tight tracking-tight text-white lg:text-[40px]">
               Start your A-Level retake in Birmingham
             </h2>
             <Link href="/contact" className="eb-cta group inline-flex shrink-0 items-center gap-3 rounded-full bg-white py-2 pl-6 pr-2 text-sm font-bold uppercase tracking-wide text-eb-navy">
               Enquire About Course
-              <span className="eb-square grid h-9 w-9 place-items-center rounded-md bg-eb-navy text-white">
+              <span className="eb-square grid h-9 w-9 place-items-center rounded-md bg-eb-blue text-white">
                 <ArrowUpRight className="h-5 w-5" />
               </span>
             </Link>
@@ -357,14 +391,15 @@ export default function RetakePage() {
       {/* FAQ */}
       <Reveal>
         <section className="bg-white">
-          <div className="mx-auto max-w-[900px] px-4 py-12 lg:px-16 lg:py-16">
-            <div className="mx-auto max-w-2xl text-center">
+          <div className="mx-auto grid max-w-[1320px] gap-8 px-4 py-12 lg:grid-cols-[380px_1fr] lg:gap-16 lg:px-16 lg:py-16">
+            <div className="lg:sticky lg:top-24 lg:self-start">
               <p className="font-mono text-xs uppercase tracking-[0.16em] text-eb-navy/60">Questions</p>
               <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-eb-ink lg:text-[40px]">A-Level retake &amp; resit FAQ</h2>
+              <p className="mt-4 text-[15px] leading-relaxed text-neutral-600">
+                Everything you need to know about retaking your A-Levels at Edgbaston College.
+              </p>
             </div>
-            <div className="mt-10">
-              <Accordion items={FAQ} />
-            </div>
+            <Accordion items={FAQ} />
           </div>
         </section>
       </Reveal>
