@@ -5,22 +5,33 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { logoutAction } from "@/app/admin/auth-actions";
+import {
+  IconOverview,
+  IconCourses,
+  IconStaff,
+  IconPages,
+  IconInquiries,
+  IconSettings,
+  IconExternal,
+  IconSignOut,
+  IconMenu,
+  IconClose,
+} from "./icons";
 
 const NAV = [
-  { label: "Overview", href: "/admin", icon: "▦" },
-  { label: "Courses", href: "/admin/courses", icon: "🎓" },
-  { label: "Staff", href: "/admin/staff", icon: "👥" },
-  { label: "Pages", href: "/admin/pages", icon: "📄" },
-  { label: "Inquiries", href: "/admin/inquiries", icon: "✉️" },
-  { label: "Settings", href: "/admin/settings", icon: "⚙️" },
+  { label: "Overview", href: "/admin", Icon: IconOverview },
+  { label: "Courses", href: "/admin/courses", Icon: IconCourses },
+  { label: "Staff", href: "/admin/staff", Icon: IconStaff },
+  { label: "Pages", href: "/admin/pages", Icon: IconPages },
+  { label: "Inquiries", href: "/admin/inquiries", Icon: IconInquiries },
+  { label: "Settings", href: "/admin/settings", Icon: IconSettings },
 ];
 
 export function Sidebar({
-  siteName,
   email,
   unreadCount,
 }: {
-  siteName: string;
+  siteName?: string;
   email: string;
   unreadCount: number;
 }) {
@@ -33,53 +44,77 @@ export function Sidebar({
   return (
     <>
       {/* Mobile top bar */}
-      <div className="flex items-center justify-between border-b bg-brand px-4 py-3 text-white lg:hidden">
-        <span className="font-bold">{siteName} · Admin</span>
+      <div className="sticky top-0 z-40 flex items-center justify-between bg-eb-navy px-4 py-3 lg:hidden">
+        <Link href="/admin" onClick={() => setOpen(false)}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/figma/logo.svg" alt="Edgbaston College" className="h-8 w-auto" />
+        </Link>
         <button
           type="button"
           aria-label="Toggle menu"
           onClick={() => setOpen((v) => !v)}
-          className="rounded-lg border border-white/30 px-3 py-1 text-sm"
+          className="grid h-9 w-9 place-items-center rounded-lg border border-white/25 text-white transition hover:bg-white/10"
         >
-          Menu
+          {open ? <IconClose /> : <IconMenu />}
         </button>
       </div>
 
+      {/* Mobile backdrop */}
+      <div
+        onClick={() => setOpen(false)}
+        className={cn(
+          "fixed inset-0 z-40 bg-black/40 backdrop-blur-sm transition-opacity duration-300 lg:hidden",
+          open ? "opacity-100" : "pointer-events-none opacity-0",
+        )}
+        aria-hidden
+      />
+
       <aside
         className={cn(
-          "flex-col bg-brand text-white lg:flex lg:h-screen lg:w-64 lg:shrink-0",
-          open ? "flex" : "hidden lg:flex",
+          "fixed inset-y-0 left-0 z-50 flex w-72 max-w-[82%] flex-col bg-eb-navy text-white transition-transform duration-300 ease-out",
+          "lg:static lg:z-auto lg:h-screen lg:w-64 lg:shrink-0 lg:translate-x-0 lg:transition-none",
+          open ? "translate-x-0" : "-translate-x-full",
         )}
       >
-        <div className="hidden items-center gap-2 border-b border-white/10 px-6 py-5 lg:flex">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/15 text-sm font-bold">
-            {siteName.charAt(0)}
-          </span>
-          <div className="leading-tight">
-            <div className="text-sm font-bold">{siteName}</div>
-            <div className="text-xs text-white/60">Content dashboard</div>
-          </div>
+        {/* Brand */}
+        <div className="flex items-center justify-between border-b border-white/10 px-6 py-5">
+          <Link href="/admin" onClick={() => setOpen(false)}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/figma/logo.svg" alt="Edgbaston College" className="h-9 w-auto" />
+          </Link>
+          <button
+            type="button"
+            aria-label="Close menu"
+            onClick={() => setOpen(false)}
+            className="grid h-8 w-8 place-items-center rounded-lg text-white/70 transition hover:bg-white/10 hover:text-white lg:hidden"
+          >
+            <IconClose className="h-4 w-4" />
+          </button>
         </div>
 
-        <nav className="flex-1 space-y-1 px-3 py-4">
-          {NAV.map((item) => (
+        <p className="px-6 pt-4 pb-2 font-mono text-[11px] uppercase tracking-[0.14em] text-white/40">
+          Content dashboard
+        </p>
+
+        <nav className="flex-1 space-y-1 overflow-y-auto px-3 pb-4">
+          {NAV.map(({ label, href, Icon }) => (
             <Link
-              key={item.href}
-              href={item.href}
+              key={href}
+              href={href}
               onClick={() => setOpen(false)}
               className={cn(
-                "flex items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm font-medium transition",
-                isActive(item.href)
-                  ? "bg-white/15 text-white"
-                  : "text-white/75 hover:bg-white/10 hover:text-white",
+                "group flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
+                isActive(href)
+                  ? "bg-eb-blue text-white shadow-sm"
+                  : "text-white/70 hover:bg-white/10 hover:text-white",
               )}
             >
               <span className="flex items-center gap-3">
-                <span className="w-5 text-center">{item.icon}</span>
-                {item.label}
+                <Icon className="h-5 w-5 shrink-0" />
+                {label}
               </span>
-              {item.href === "/admin/inquiries" && unreadCount > 0 && (
-                <span className="rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-brand-dark">
+              {href === "/admin/inquiries" && unreadCount > 0 && (
+                <span className="grid min-w-5 place-items-center rounded-full bg-white px-1.5 text-xs font-bold text-eb-navy">
                   {unreadCount}
                 </span>
               )}
@@ -91,17 +126,19 @@ export function Sidebar({
           <Link
             href="/"
             target="_blank"
-            className="mb-2 flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-white/75 hover:bg-white/10 hover:text-white"
+            className="mb-1 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-white/70 transition-colors hover:bg-white/10 hover:text-white"
           >
-            <span className="w-5 text-center">🌐</span> View site ↗
+            <IconExternal className="h-5 w-5 shrink-0" />
+            View live site
           </Link>
-          <div className="px-3 py-2 text-xs text-white/50">{email}</div>
+          <div className="truncate px-3 py-2 text-xs text-white/45">{email}</div>
           <form action={logoutAction}>
             <button
               type="submit"
-              className="w-full rounded-lg px-3 py-2 text-left text-sm text-white/75 transition hover:bg-white/10 hover:text-white"
+              className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm text-white/70 transition-colors hover:bg-white/10 hover:text-white"
             >
-              <span className="mr-3 w-5 text-center">⏻</span> Sign out
+              <IconSignOut className="h-5 w-5 shrink-0" />
+              Sign out
             </button>
           </form>
         </div>

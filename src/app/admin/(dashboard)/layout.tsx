@@ -28,7 +28,7 @@ export default async function DashboardLayout({
         email={session.email}
         unreadCount={unreadCount}
       />
-      <div className="min-w-0 flex-1 bg-muted lg:h-screen lg:overflow-y-auto">
+      <div className="min-w-0 flex-1 bg-eb-cream lg:h-screen lg:overflow-y-auto">
         <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">{children}</div>
       </div>
     </div>

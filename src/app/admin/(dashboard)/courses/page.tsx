@@ -2,6 +2,7 @@ import Link from "next/link";
 import { db } from "@/lib/db";
 import { deleteCourse } from "@/app/admin/actions";
 import { DeleteButton } from "@/components/admin/DeleteButton";
+import { IconPlus } from "@/components/admin/icons";
 
 export default async function CoursesAdmin() {
   const courses = await db.course.findMany({ orderBy: { order: "asc" } });
@@ -10,16 +11,16 @@ export default async function CoursesAdmin() {
     <div>
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-brand">Courses</h1>
+          <h1 className="text-2xl font-bold text-eb-navy">Courses</h1>
           <p className="text-sm text-muted-foreground">
             {courses.length} course{courses.length === 1 ? "" : "s"}
           </p>
         </div>
         <Link
           href="/admin/courses/new"
-          className="rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-dark"
+          className="inline-flex items-center gap-2 rounded-lg bg-eb-navy px-4 py-2 text-sm font-semibold text-white transition hover:bg-eb-navy-2"
         >
-          ＋ New course
+          <IconPlus className="h-4 w-4" /> New course
         </Link>
       </div>
 
@@ -94,7 +95,7 @@ function StatusBadge({
         {published ? "Published" : "Draft"}
       </span>
       {featured && (
-        <span className="rounded-full bg-accent/20 px-2 py-0.5 text-xs font-medium text-brand-dark">
+        <span className="rounded-full bg-eb-blue/15 px-2 py-0.5 text-xs font-medium text-eb-navy">
           Featured
         </span>
       )}
@@ -108,7 +109,7 @@ function EmptyState() {
       <p className="text-muted-foreground">No courses yet.</p>
       <Link
         href="/admin/courses/new"
-        className="mt-4 inline-block rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white"
+        className="mt-4 inline-block rounded-lg bg-eb-navy px-4 py-2 text-sm font-semibold text-white"
       >
         Create your first course
       </Link>

@@ -207,7 +207,7 @@ function Btn({
       disabled={disabled}
       className={cn(
         "min-w-8 rounded px-2 py-1 text-sm transition hover:bg-background disabled:cursor-not-allowed disabled:opacity-40",
-        active ? "bg-brand text-white hover:bg-brand" : "text-foreground",
+        active ? "bg-eb-navy text-white hover:bg-eb-navy" : "text-foreground",
         className,
       )}
     >

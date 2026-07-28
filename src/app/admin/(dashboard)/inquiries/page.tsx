@@ -11,7 +11,7 @@ export default async function InquiriesAdmin() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-brand">Inquiries</h1>
+        <h1 className="text-2xl font-bold text-eb-navy">Inquiries</h1>
         <p className="text-sm text-muted-foreground">
           Messages submitted through the contact form.
         </p>
@@ -32,7 +32,7 @@ export default async function InquiriesAdmin() {
                   <div className="flex items-center gap-2">
                     <span className="font-semibold">{i.name}</span>
                     {!i.read && (
-                      <span className="rounded-full bg-accent/20 px-2 py-0.5 text-xs font-medium text-brand-dark">
+                      <span className="rounded-full bg-eb-blue/15 px-2 py-0.5 text-xs font-medium text-eb-navy">
                         New
                       </span>
                     )}
@@ -40,7 +40,7 @@ export default async function InquiriesAdmin() {
                   <div className="text-sm text-muted-foreground">
                     <a
                       href={`mailto:${i.email}`}
-                      className="text-accent hover:underline"
+                      className="text-eb-blue hover:underline"
                     >
                       {i.email}
                     </a>

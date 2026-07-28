@@ -2,6 +2,7 @@ import Link from "next/link";
 import { db } from "@/lib/db";
 import { getSettings } from "@/lib/settings";
 import { formatDate } from "@/lib/utils";
+import { IconPlus, IconCourses, IconStaff, IconPages, IconSettings } from "@/components/admin/icons";
 
 export default async function DashboardOverview() {
   const [settings, courses, staff, pages, inquiries, unread, recentInquiries] =
@@ -24,9 +25,7 @@ export default async function DashboardOverview() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-brand">
-        Welcome back 👋
-      </h1>
+      <h1 className="text-2xl font-bold text-eb-navy">Welcome back</h1>
       <p className="mt-1 text-muted-foreground">
         Manage {settings.siteName}&apos;s content from here.
       </p>
@@ -39,11 +38,11 @@ export default async function DashboardOverview() {
             className="rounded-2xl border bg-background p-5 shadow-sm transition hover:shadow-md"
           >
             <div className="flex items-start justify-between">
-              <span className="text-3xl font-extrabold text-brand">
+              <span className="text-3xl font-extrabold text-eb-navy">
                 {s.value}
               </span>
               {"badge" in s && s.badge ? (
-                <span className="rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-brand-dark">
+                <span className="rounded-full bg-eb-blue px-2 py-0.5 text-xs font-bold text-white">
                   {s.badge} new
                 </span>
               ) : null}
@@ -56,22 +55,22 @@ export default async function DashboardOverview() {
       <div className="mt-8 grid gap-6 lg:grid-cols-2">
         {/* Quick actions */}
         <section className="rounded-2xl border bg-background p-6 shadow-sm">
-          <h2 className="mb-4 font-bold text-brand">Quick actions</h2>
+          <h2 className="mb-4 font-bold text-eb-navy">Quick actions</h2>
           <div className="grid gap-2">
-            <QuickLink href="/admin/courses/new" label="＋ Add a new course" />
-            <QuickLink href="/admin/staff/new" label="＋ Add a staff member" />
-            <QuickLink href="/admin/pages/new" label="＋ Create a new page" />
-            <QuickLink href="/admin/settings" label="⚙️ Edit site settings & branding" />
+            <QuickLink href="/admin/courses/new" label="Add a new course" Icon={IconCourses} />
+            <QuickLink href="/admin/staff/new" label="Add a staff member" Icon={IconStaff} />
+            <QuickLink href="/admin/pages/new" label="Create a new page" Icon={IconPages} />
+            <QuickLink href="/admin/settings" label="Edit site settings & branding" Icon={IconSettings} />
           </div>
         </section>
 
         {/* Recent inquiries */}
         <section className="rounded-2xl border bg-background p-6 shadow-sm">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="font-bold text-brand">Recent inquiries</h2>
+            <h2 className="font-bold text-eb-navy">Recent inquiries</h2>
             <Link
               href="/admin/inquiries"
-              className="text-sm font-medium text-accent hover:underline"
+              className="text-sm font-medium text-eb-blue hover:underline"
             >
               View all
             </Link>
@@ -83,7 +82,7 @@ export default async function DashboardOverview() {
                   <span
                     className={
                       "h-2 w-2 shrink-0 rounded-full " +
-                      (i.read ? "bg-border" : "bg-accent")
+                      (i.read ? "bg-border" : "bg-eb-blue")
                     }
                   />
                   <div className="min-w-0 flex-1">
@@ -109,13 +108,25 @@ export default async function DashboardOverview() {
   );
 }
 
-function QuickLink({ href, label }: { href: string; label: string }) {
+function QuickLink({
+  href,
+  label,
+  Icon,
+}: {
+  href: string;
+  label: string;
+  Icon: (p: { className?: string }) => React.ReactElement;
+}) {
   return (
     <Link
       href={href}
-      className="rounded-lg border px-4 py-3 text-sm font-medium transition hover:bg-muted"
+      className="group flex items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium text-eb-navy transition hover:border-eb-blue/40 hover:bg-eb-cream"
     >
+      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-eb-cream text-eb-navy transition group-hover:bg-white">
+        <Icon className="h-4 w-4" />
+      </span>
       {label}
+      <IconPlus className="ml-auto h-4 w-4 text-muted-foreground transition group-hover:text-eb-blue" />
     </Link>
   );
 }

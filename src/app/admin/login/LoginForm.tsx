@@ -20,8 +20,8 @@ export function LoginForm() {
           type="email"
           autoComplete="username"
           required
-          defaultValue="admin@edgebaston.edu"
-          className="w-full rounded-lg border bg-background px-3 py-2 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
+          placeholder="you@edgbastoncollege.co.uk"
+          className="w-full rounded-lg border bg-background px-3 py-2 text-sm outline-none focus:border-eb-blue focus:ring-2 focus:ring-eb-blue/20"
         />
       </div>
       <div>
@@ -34,7 +34,7 @@ export function LoginForm() {
           type="password"
           autoComplete="current-password"
           required
-          className="w-full rounded-lg border bg-background px-3 py-2 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
+          className="w-full rounded-lg border bg-background px-3 py-2 text-sm outline-none focus:border-eb-blue focus:ring-2 focus:ring-eb-blue/20"
         />
       </div>
 
@@ -47,7 +47,7 @@ export function LoginForm() {
       <button
         type="submit"
         disabled={pending}
-        className="w-full rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-dark disabled:opacity-60"
+        className="w-full rounded-lg bg-eb-navy px-4 py-2 text-sm font-semibold text-white transition hover:bg-eb-navy-2 disabled:opacity-60"
       >
         {pending ? "Signing in…" : "Sign in"}
       </button>

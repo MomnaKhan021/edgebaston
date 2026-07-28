@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { IconPlus } from "@/components/admin/icons";
 import { db } from "@/lib/db";
 import { deleteStaff } from "@/app/admin/actions";
 import { DeleteButton } from "@/components/admin/DeleteButton";
@@ -10,16 +11,16 @@ export default async function StaffAdmin() {
     <div>
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-brand">Staff</h1>
+          <h1 className="text-2xl font-bold text-eb-navy">Staff</h1>
           <p className="text-sm text-muted-foreground">
             {staff.length} member{staff.length === 1 ? "" : "s"}
           </p>
         </div>
         <Link
           href="/admin/staff/new"
-          className="rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-dark"
+          className="inline-flex items-center gap-2 rounded-lg bg-eb-navy px-4 py-2 text-sm font-semibold text-white transition hover:bg-eb-navy-2"
         >
-          ＋ New member
+          <IconPlus className="h-4 w-4" /> New member
         </Link>
       </div>
 
@@ -39,7 +40,7 @@ export default async function StaffAdmin() {
                     className="h-full w-full object-cover"
                   />
                 ) : (
-                  <div className="flex h-full items-center justify-center text-xl font-bold text-brand/30">
+                  <div className="flex h-full items-center justify-center text-xl font-bold text-eb-navy/30">
                     {m.name.charAt(0)}
                   </div>
                 )}
@@ -72,7 +73,7 @@ export default async function StaffAdmin() {
           <p className="text-muted-foreground">No staff added yet.</p>
           <Link
             href="/admin/staff/new"
-            className="mt-4 inline-block rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white"
+            className="mt-4 inline-block rounded-lg bg-eb-navy px-4 py-2 text-sm font-semibold text-white"
           >
             Add your first staff member
           </Link>

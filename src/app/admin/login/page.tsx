@@ -9,21 +9,21 @@ export const metadata: Metadata = {
 export default async function LoginPage() {
   const settings = await getSettings();
   return (
-    <div className="flex min-h-screen items-center justify-center bg-muted px-4">
-      <div className="w-full max-w-sm rounded-2xl border bg-background p-8 shadow-sm">
+    <div className="flex min-h-screen items-center justify-center bg-eb-navy px-4">
+      <div className="w-full max-w-sm rounded-2xl bg-white p-8 shadow-2xl">
         <div className="mb-6 text-center">
-          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-brand text-lg font-bold text-white">
-            {settings.siteName.charAt(0)}
-          </div>
-          <h1 className="text-xl font-semibold">{settings.siteName}</h1>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/figma/logo-navy.svg"
+            alt={settings.siteName}
+            className="mx-auto mb-4 h-10 w-auto"
+          />
+          <h1 className="text-lg font-bold text-eb-navy">Content dashboard</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Sign in to the content dashboard
+            Sign in to manage {settings.siteName}
           </p>
         </div>
         <LoginForm />
-        <p className="mt-6 text-center text-xs text-muted-foreground">
-          Demo credentials are set in your <code>.env</code> file.
-        </p>
       </div>
     </div>
   );

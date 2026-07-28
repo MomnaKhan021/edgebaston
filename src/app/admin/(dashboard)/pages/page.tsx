@@ -2,6 +2,7 @@ import Link from "next/link";
 import { db } from "@/lib/db";
 import { deletePage } from "@/app/admin/actions";
 import { DeleteButton } from "@/components/admin/DeleteButton";
+import { IconPlus, IconExternal } from "@/components/admin/icons";
 
 export default async function PagesAdmin() {
   const pages = await db.page.findMany({ orderBy: { order: "asc" } });
@@ -10,16 +11,16 @@ export default async function PagesAdmin() {
     <div>
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-brand">Pages</h1>
+          <h1 className="text-2xl font-bold text-eb-navy">Pages</h1>
           <p className="text-sm text-muted-foreground">
             Custom content pages (e.g. Admissions, Campus Life).
           </p>
         </div>
         <Link
           href="/admin/pages/new"
-          className="rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-dark"
+          className="inline-flex items-center gap-2 rounded-lg bg-eb-navy px-4 py-2 text-sm font-semibold text-white transition hover:bg-eb-navy-2"
         >
-          ＋ New page
+          <IconPlus className="h-4 w-4" /> New page
         </Link>
       </div>
 
@@ -42,9 +43,10 @@ export default async function PagesAdmin() {
                     <Link
                       href={`/p/${p.slug}`}
                       target="_blank"
-                      className="text-xs text-accent hover:underline"
+                      className="inline-flex items-center gap-1 text-xs text-eb-blue hover:underline"
                     >
-                      /p/{p.slug} ↗
+                      /p/{p.slug}
+                      <IconExternal className="h-3 w-3" />
                     </Link>
                   </td>
                   <td className="hidden px-4 py-3 sm:table-cell">
@@ -83,7 +85,7 @@ export default async function PagesAdmin() {
           <p className="text-muted-foreground">No pages yet.</p>
           <Link
             href="/admin/pages/new"
-            className="mt-4 inline-block rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white"
+            className="mt-4 inline-block rounded-lg bg-eb-navy px-4 py-2 text-sm font-semibold text-white"
           >
             Create your first page
           </Link>

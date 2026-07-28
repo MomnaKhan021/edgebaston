@@ -31,7 +31,7 @@ export function StaffForm({ member }: { member?: StaffValues }) {
       {isEdit && <input type="hidden" name="id" value={m.id} />}
 
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-brand">
+        <h1 className="text-2xl font-bold text-eb-navy">
           {isEdit ? "Edit staff member" : "New staff member"}
         </h1>
         <Link

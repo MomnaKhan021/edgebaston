@@ -13,7 +13,7 @@ export default async function SettingsAdmin({
   return (
     <form action={saveSettings} className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-brand">Site settings</h1>
+        <h1 className="text-2xl font-bold text-eb-navy">Site settings</h1>
         <p className="text-sm text-muted-foreground">
           Branding, homepage hero, about text and contact details.
         </p>
@@ -27,7 +27,7 @@ export default async function SettingsAdmin({
 
       {/* Branding */}
       <section className="rounded-2xl border bg-background p-6 shadow-sm">
-        <h2 className="mb-4 font-bold text-brand">Branding</h2>
+        <h2 className="mb-4 font-bold text-eb-navy">Branding</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label="Site name" htmlFor="siteName">
             <Input id="siteName" name="siteName" defaultValue={settings.siteName} />
@@ -66,7 +66,7 @@ export default async function SettingsAdmin({
 
       {/* Homepage hero */}
       <section className="rounded-2xl border bg-background p-6 shadow-sm">
-        <h2 className="mb-4 font-bold text-brand">Homepage hero</h2>
+        <h2 className="mb-4 font-bold text-eb-navy">Homepage hero</h2>
         <div className="space-y-4">
           <Field label="Hero title" htmlFor="heroTitle">
             <Input id="heroTitle" name="heroTitle" defaultValue={settings.heroTitle} />
@@ -96,7 +96,7 @@ export default async function SettingsAdmin({
 
       {/* About */}
       <section className="rounded-2xl border bg-background p-6 shadow-sm">
-        <h2 className="mb-4 font-bold text-brand">About page content</h2>
+        <h2 className="mb-4 font-bold text-eb-navy">About page content</h2>
         <RichTextEditor
           name="aboutText"
           defaultValue={settings.aboutText}
@@ -106,7 +106,7 @@ export default async function SettingsAdmin({
 
       {/* Contact */}
       <section className="rounded-2xl border bg-background p-6 shadow-sm">
-        <h2 className="mb-4 font-bold text-brand">Contact details</h2>
+        <h2 className="mb-4 font-bold text-eb-navy">Contact details</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label="Email" htmlFor="email">
             <Input id="email" name="email" type="email" defaultValue={settings.email} />

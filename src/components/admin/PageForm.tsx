@@ -22,7 +22,7 @@ export function PageForm({ page }: { page?: PageValues }) {
       {isEdit && <input type="hidden" name="id" value={p.id} />}
 
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-brand">
+        <h1 className="text-2xl font-bold text-eb-navy">
           {isEdit ? "Edit page" : "New page"}
         </h1>
         <Link

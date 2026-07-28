@@ -4,7 +4,7 @@ import { useFormStatus } from "react-dom";
 import { cn } from "@/lib/utils";
 
 const inputBase =
-  "w-full rounded-lg border bg-background px-3 py-2 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/20";
+  "w-full rounded-lg border bg-background px-3 py-2 text-sm outline-none focus:border-eb-blue focus:ring-2 focus:ring-eb-blue/20";
 
 export function Field({
   label,
@@ -83,7 +83,7 @@ export function SubmitButton({ children }: { children: React.ReactNode }) {
     <button
       type="submit"
       disabled={pending}
-      className="rounded-lg bg-brand px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-dark disabled:opacity-60"
+      className="rounded-lg bg-eb-navy px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-eb-navy-2 disabled:opacity-60"
     >
       {pending ? "Saving…" : children}
     </button>

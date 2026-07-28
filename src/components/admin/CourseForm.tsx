@@ -36,7 +36,7 @@ export function CourseForm({ course }: { course?: CourseValues }) {
       {isEdit && <input type="hidden" name="id" value={c.id} />}
 
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-brand">
+        <h1 className="text-2xl font-bold text-eb-navy">
           {isEdit ? "Edit course" : "New course"}
         </h1>
         <Link
