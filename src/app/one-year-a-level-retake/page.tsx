@@ -49,9 +49,9 @@ const PLAN = [
 ];
 
 const STORIES = [
-  { name: "Alishba", img: "/figma/course-retake.png", from: "BB", to: "A*A*", course: "Law at University of Cambridge", quote: "The one-year retake completely changed my future — the small classes and constant mock practice got me from BB to A*A*." },
-  { name: "Nicole", img: "/figma/course-fiveterm.png", from: "CC", to: "AA", course: "Dentistry at King's College London", quote: "The personalised UCAS support helped me reapply with confidence and land my dream dentistry offer." },
-  { name: "Tara", img: "/figma/course-transfer.png", from: "DD", to: "A*A", course: "Medicine at University of Birmingham", quote: "Sitting frequent mocks under real conditions took the fear out of the real exams. My grades jumped two full levels." },
+  { name: "Alishba", img: "/figma/retake-story-1.png", from: "BB", to: "A*A*", course: "Law at University of Cambridge", quote: "The one-year retake completely changed my future — the small classes and constant mock practice got me from BB to A*A*." },
+  { name: "Nicole", img: "/figma/retake-story-2.png", from: "CC", to: "AA", course: "Dentistry at King's College London", quote: "The personalised UCAS support helped me reapply with confidence and land my dream dentistry offer." },
+  { name: "Tara", img: "/figma/retake-story-3.png", from: "DD", to: "A*A", course: "Medicine at University of Birmingham", quote: "Sitting frequent mocks under real conditions took the fear out of the real exams. My grades jumped two full levels." },
 ];
 
 const RESIDENCES = [
@@ -109,7 +109,7 @@ export default function RetakePage() {
       <section className="relative isolate overflow-hidden bg-eb-navy">
         <Navbar />
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/figma/adm-group.png" alt="Edgbaston College retake students" className="absolute inset-0 h-full w-full object-cover" />
+        <img src="/figma/retake-hero.png" alt="Edgbaston College retake students" className="absolute inset-0 h-full w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-eb-navy/90 via-eb-navy/40 to-eb-navy/40" />
         <div className="relative mx-auto flex min-h-[380px] max-w-[1440px] flex-col justify-end px-4 pb-9 pt-32 lg:min-h-[460px] lg:px-16 lg:pb-12">
           <p className="font-mono text-xs uppercase tracking-[0.16em] text-white/70">A-Level Programme</p>
@@ -137,7 +137,7 @@ export default function RetakePage() {
             <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-14">
               <div className="overflow-hidden rounded-2xl">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/figma/history-hero.png" alt="Students at Edgbaston College" className="aspect-[4/3] w-full object-cover" />
+                <img src="/figma/retake-intro.png" alt="Students at Edgbaston College" className="aspect-[4/3] w-full object-cover" />
               </div>
               <div className="eb-stagger">
                 <p className="font-mono text-xs uppercase tracking-[0.16em] text-eb-navy/60">The Retake Programme</p>
@@ -235,7 +235,7 @@ export default function RetakePage() {
           <div className="mx-auto grid max-w-[1320px] items-center gap-8 px-4 py-10 lg:grid-cols-2 lg:gap-14 lg:px-16 lg:py-16">
             <div className="overflow-hidden rounded-2xl">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/figma/course-fiveterm.png" alt="A retake student" className="aspect-[4/5] w-full object-cover" />
+              <img src="/figma/retake-plan.png" alt="A retake student" className="aspect-[4/5] w-full object-cover" />
             </div>
             <div className="eb-stagger">
               <p className="font-mono text-xs uppercase tracking-[0.16em] text-eb-navy/60">Personalised</p>
@@ -303,7 +303,7 @@ export default function RetakePage() {
             </div>
             {/* Photo row */}
             <div className="eb-stagger mt-12 grid gap-4 sm:grid-cols-3">
-              {["/figma/pathway-1.png", "/figma/pathway-2.png", "/figma/pathway-3.png"].map((src) => (
+              {["/figma/retake-uni-1.png", "/figma/retake-uni-2.png", "/figma/retake-uni-3.png"].map((src) => (
                 <div key={src} className="overflow-hidden rounded-2xl">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={src} alt="Edgbaston retake student" className="aspect-[4/3] w-full object-cover" />
