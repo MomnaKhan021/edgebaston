@@ -169,8 +169,8 @@ function Toolbar({
       <Divider />
 
       {/* Link + media */}
-      <Btn active={editor.isActive("link")} onClick={setLink} label="🔗 Link" />
-      <Btn active={false} onClick={() => fileRef.current?.click()} label="🖼 Upload" />
+      <Btn active={editor.isActive("link")} onClick={setLink} label="Link" />
+      <Btn active={false} onClick={() => fileRef.current?.click()} label="Upload" />
       <Btn active={false} onClick={imageByUrl} label="Image URL" />
       <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={onPickFile} />
       <Divider />
