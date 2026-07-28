@@ -93,16 +93,7 @@ export function OfferBar() {
                 <p className="text-sm text-white/80">30% off course fees for the first 5 eligible applicants only.</p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <EnquireBtn />
-              <button
-                aria-label="Dismiss offer"
-                onClick={() => { setOpen(false); sessionStorage.setItem("eb-offer-dismissed", "1"); }}
-                className="grid h-8 w-8 shrink-0 place-items-center rounded-full text-white/70 transition hover:bg-white/10 hover:text-white"
-              >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>
-              </button>
-            </div>
+            <EnquireBtn />
           </div>
 
           {/* Mobile */}
@@ -111,16 +102,7 @@ export function OfferBar() {
               <p className="max-w-[52%] text-xs leading-snug text-white/85">
                 <span className="font-bold text-white">August Offer:</span> 30% off course fees for the first 5 eligible applicants only.
               </p>
-              <div className="flex items-start gap-2">
-                <Countdown t={t} dark />
-                <button
-                  aria-label="Dismiss offer"
-                  onClick={() => { setOpen(false); sessionStorage.setItem("eb-offer-dismissed", "1"); }}
-                  className="grid h-6 w-6 shrink-0 place-items-center rounded-full text-white/70"
-                >
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>
-                </button>
-              </div>
+              <Countdown t={t} dark />
             </div>
             <div className="mt-3">
               <EnquireBtn full />
