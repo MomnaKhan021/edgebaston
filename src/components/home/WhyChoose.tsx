@@ -28,16 +28,16 @@ const ITEMS = [
 
 function Card({ icon, title, body }: (typeof ITEMS)[number]) {
   return (
-    <div className="eb-card group flex-1 rounded-2xl bg-eb-cream p-[42px]">
+    <div className="eb-card group flex-1 rounded-2xl bg-eb-cream p-[42px] text-center">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={icon}
         alt=""
-        className="h-20 w-20 transition duration-300 group-hover:scale-110"
+        className="mx-auto h-20 w-20 transition duration-300 group-hover:scale-110"
         style={{ aspectRatio: "1 / 1" }}
       />
       <h3 className="mt-6 text-[28px] font-bold leading-tight text-eb-navy">{title}</h3>
-      <p className="mt-3 max-w-xs text-[16px] leading-relaxed tracking-[-0.01em] text-neutral-600">
+      <p className="mx-auto mt-3 max-w-xs text-[16px] leading-relaxed tracking-[-0.01em] text-neutral-600">
         {body}
       </p>
     </div>
@@ -48,7 +48,7 @@ export function WhyChoose() {
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-[1440px] px-4 py-12 lg:px-[60px] lg:py-20">
-        <h2 className="max-w-4xl text-4xl font-extrabold leading-[1.02] tracking-tight text-black lg:text-[62px]">
+        <h2 className="mx-auto max-w-4xl text-center text-4xl font-extrabold leading-[1.02] tracking-tight text-black lg:text-[62px]">
           Why Students Choose Edgbaston College
         </h2>
         {/* Top row: three cards */}
