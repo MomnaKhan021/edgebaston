@@ -39,7 +39,7 @@ export function Results() {
         {/* Heading block (gap 16, centered) */}
         <div className="eb-stagger mx-auto max-w-3xl text-center">
           <p className="text-[16px] font-medium text-white">Outcome Spotlight</p>
-          <h2 className="mt-4 text-4xl font-extrabold tracking-tight text-white lg:text-[62px]">
+          <h2 className="mt-4 text-[32px] font-extrabold leading-[1.05] tracking-tight text-white lg:text-[62px]">
             Results That Open Doors
           </h2>
           <p className="mt-4 text-[16px] font-normal leading-relaxed text-white/80">
@@ -51,10 +51,10 @@ export function Results() {
         {/* Door + flanking stat boxes (left higher, right lower) */}
         <div className="relative mt-[60px] grid grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-4">
           {/* Left box — higher */}
-          <div className="z-10 rounded-xl border border-white/25 bg-white/[0.06] p-5 text-center backdrop-blur-sm sm:p-[26px] lg:-translate-y-8">
-            <p className="text-[16px] font-medium text-white">National Ranking</p>
-            <CountUp to={25} prefix="#" className="my-2 block text-5xl font-extrabold text-white lg:text-[64px]" />
-            <p className="text-[15px] text-white/80">Sixth form college in England</p>
+          <div className="z-10 rounded-lg border border-white/25 bg-white/[0.06] p-3 text-center backdrop-blur-sm sm:rounded-xl sm:p-[26px] lg:-translate-y-8">
+            <p className="text-[11px] font-medium text-white sm:text-[16px]">National Ranking</p>
+            <CountUp to={25} prefix="#" className="my-1 block text-[26px] font-extrabold text-white sm:my-2 sm:text-5xl lg:text-[64px]" />
+            <p className="text-[12px] leading-snug text-white/80 sm:text-[15px]">Sixth form college in England</p>
           </div>
 
           {/* Door with connectors anchored to its edges (offsets from Figma) */}
@@ -72,11 +72,11 @@ export function Results() {
           </div>
 
           {/* Right box — lower, with rosette medal top-left */}
-          <div className="relative z-10 rounded-xl border border-white/25 bg-white/[0.06] p-5 text-center backdrop-blur-sm sm:p-[26px] lg:translate-y-10">
-            <Medal className="absolute left-4 top-3 h-8 w-8" />
-            <p className="text-[16px] font-medium text-white">Value Added</p>
-            <CountUp to={1} prefix="#" className="my-2 block text-5xl font-extrabold text-white lg:text-[64px]" />
-            <p className="text-[15px] text-white/80">For Value-Added in Birmingham</p>
+          <div className="relative z-10 rounded-lg border border-white/25 bg-white/[0.06] p-3 text-center backdrop-blur-sm sm:rounded-xl sm:p-[26px] lg:translate-y-10">
+            <Medal className="absolute left-2 top-2 h-6 w-6 sm:left-4 sm:top-3 sm:h-8 sm:w-8" />
+            <p className="text-[11px] font-medium text-white sm:text-[16px]">Value Added</p>
+            <CountUp to={1} prefix="#" className="my-1 block text-[26px] font-extrabold text-white sm:my-2 sm:text-5xl lg:text-[64px]" />
+            <p className="text-[12px] leading-snug text-white/80 sm:text-[15px]">For Value-Added in Birmingham</p>
           </div>
         </div>
 
