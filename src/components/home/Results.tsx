@@ -5,11 +5,28 @@ type Info = { label: string; title: string; body?: string; place?: string };
 
 function InfoCard({ label, title, body, place }: Info) {
   return (
-    <div className={"rounded-xl bg-eb-cream p-7 " + (place ?? "")}>
+    <div className={"rounded-2xl bg-neutral-50 p-7 " + (place ?? "")}>
       <p className="font-mono text-[13px] uppercase tracking-wide text-eb-blue">{label}</p>
-      <h4 className="mt-6 text-2xl font-bold text-eb-navy lg:text-[32px]">{title}</h4>
-      {body && <p className="mt-[42px] text-[16px] leading-relaxed text-neutral-900">{body}</p>}
+      <h4 className="mt-2 text-[26px] font-bold leading-tight text-eb-navy">{title}</h4>
+      {body && <p className="mt-3 text-[15px] leading-relaxed text-neutral-600">{body}</p>}
     </div>
+  );
+}
+
+/** Blue rosette medal with a ribbon hanger and a white star. */
+function Medal({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 48 52" fill="none" className={className} aria-hidden>
+      <rect x="20.5" y="1.5" width="7" height="15" rx="3.5" fill="#1f6fb2" />
+      <path
+        d="M24 11 L27.11 14.41 L31.50 13.01 L32.49 17.51 L36.99 18.50 L35.59 22.89 L39.00 26.00 L35.59 29.11 L36.99 33.50 L32.49 34.49 L31.50 38.99 L27.11 37.59 L24.00 41.00 L20.89 37.59 L16.50 38.99 L15.51 34.49 L11.01 33.50 L12.41 29.11 L9.00 26.00 L12.41 22.89 L11.01 18.50 L15.51 17.51 L16.50 13.01 L20.89 14.41 Z"
+        fill="#2781c8"
+      />
+      <path
+        d="M24 19 L25.70 23.65 L30.66 23.84 L26.76 26.90 L28.11 31.66 L24.00 28.90 L19.89 31.66 L21.24 26.90 L17.34 23.84 L22.30 23.65 Z"
+        fill="#ffffff"
+      />
+    </svg>
   );
 }
 
@@ -25,7 +42,7 @@ export function Results() {
           </h2>
         </div>
 
-        {/* Door + flanking stat boxes (stay side-by-side on all sizes) */}
+        {/* Door + flanking stat boxes (left sits higher, right sits lower) */}
         <div className="relative mt-[60px] grid grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-4">
           {/* Dashed connectors from each stat box toward the door */}
           <svg
@@ -47,9 +64,10 @@ export function Results() {
             <circle cx="8" cy="8" r="4" fill="currentColor" />
           </svg>
 
-          <div className="z-10 rounded-2xl bg-white/[0.06] p-4 text-center backdrop-blur-sm sm:p-6">
+          {/* Left box — higher */}
+          <div className="z-10 rounded-2xl border border-white/10 bg-white/[0.06] p-5 text-center backdrop-blur-sm sm:p-6 lg:-translate-y-8">
             <p className="font-mono text-[11px] uppercase tracking-wide text-white/70 sm:text-sm">National Ranking</p>
-            <CountUp to={25} prefix="#" className="my-1 block text-4xl font-extrabold text-white sm:text-6xl" />
+            <CountUp to={25} prefix="#" className="my-1 block text-4xl font-extrabold text-white sm:text-5xl" />
             <p className="text-xs text-white/70 sm:text-sm">Sixth form college in England</p>
           </div>
 
@@ -58,11 +76,13 @@ export function Results() {
             <img src="/figma/door.svg" alt="" className="h-40 w-auto sm:h-56 lg:h-72" />
           </div>
 
-          <div className="z-10 rounded-2xl bg-white/[0.06] p-4 text-center backdrop-blur-sm sm:p-6">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/figma/medal.svg" alt="" className="mx-auto mb-1 h-7 w-7 sm:h-8 sm:w-8" />
-            <p className="font-mono text-[11px] uppercase tracking-wide text-white/70 sm:text-sm">Value Added</p>
-            <CountUp to={1} prefix="#" className="my-1 block text-4xl font-extrabold text-white sm:text-6xl" />
+          {/* Right box — lower, with rosette medal */}
+          <div className="z-10 rounded-2xl border border-white/10 bg-white/[0.06] p-5 text-center backdrop-blur-sm sm:p-6 lg:translate-y-10">
+            <div className="flex items-center justify-center gap-2">
+              <Medal className="h-7 w-7 sm:h-8 sm:w-8" />
+              <p className="font-mono text-[11px] uppercase tracking-wide text-white/70 sm:text-sm">Value Added</p>
+            </div>
+            <CountUp to={1} prefix="#" className="my-1 block text-4xl font-extrabold text-white sm:text-5xl" />
             <p className="text-xs text-white/70 sm:text-sm">For Value-Added in Birmingham</p>
           </div>
         </div>
@@ -106,17 +126,17 @@ export function Results() {
               body="Focused guidance for students aiming for medicine, dentistry, and clinical pathways."
               place="lg:col-start-2 lg:row-start-2"
             />
-            <div className="col-span-2 flex flex-col rounded-xl bg-eb-cream p-6 lg:col-span-1 lg:col-start-3 lg:row-span-2 lg:row-start-1">
+            <div className="col-span-2 flex flex-col rounded-2xl bg-neutral-50 p-7 lg:col-span-1 lg:col-start-3 lg:row-span-2 lg:row-start-1">
               <p className="font-mono text-[13px] uppercase tracking-wide text-eb-blue">University Destinations</p>
-              <h4 className="mt-3 text-xl font-extrabold text-eb-navy lg:text-2xl">
+              <h4 className="mt-2 text-[26px] font-bold leading-tight text-eb-navy">
                 Russell Group &amp; QS Top Universities
               </h4>
-              <p className="mt-4 text-[15px] leading-relaxed text-neutral-600 lg:mt-auto lg:pt-8">
+              <p className="mt-3 text-[15px] leading-relaxed text-neutral-600 lg:mt-auto lg:pt-10">
                 A stronger way to show where students progress after Edgbaston College, from
                 leading UK universities to competitive degree pathways.
               </p>
             </div>
-            <button className="eb-cta group col-span-2 flex items-center justify-between gap-4 rounded-xl bg-eb-cream px-6 py-4 text-left lg:col-span-1 lg:col-start-3 lg:row-start-3">
+            <button className="eb-cta group col-span-2 flex items-center justify-between gap-4 rounded-2xl border border-neutral-200 bg-white px-6 py-4 text-left lg:col-span-1 lg:col-start-3 lg:row-start-3">
               <span className="text-sm font-bold uppercase tracking-wide text-eb-navy">View Results &amp; Destinations</span>
               <span className="eb-square grid h-10 w-10 shrink-0 place-items-center rounded-md bg-eb-blue text-white">
                 <ArrowUpRight className="h-5 w-5" />

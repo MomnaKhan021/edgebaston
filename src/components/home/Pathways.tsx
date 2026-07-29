@@ -42,12 +42,12 @@ export function Pathways() {
           {CARDS.map((c) => (
             <article
               key={c.title}
-              className="eb-card group flex w-[85%] shrink-0 snap-start flex-col overflow-hidden rounded-2xl bg-white sm:w-[440px] lg:w-[calc((100%-2.5rem)/3)]"
+              className="group flex w-[85%] shrink-0 snap-start flex-col bg-transparent sm:w-[440px] lg:w-[calc((100%-2.5rem)/3)]"
             >
-              <div className="flex flex-1 flex-col p-7 sm:p-8">
+              <div className="flex flex-1 flex-col px-1 pb-6">
                 <h3 className="text-[26px] font-bold leading-tight text-eb-navy">{c.title}</h3>
                 <p className="mt-4 text-[15px] leading-relaxed text-neutral-600">{c.body}</p>
-                <div className="mt-6 flex items-center justify-between gap-4 rounded-xl bg-eb-cream px-6 py-5">
+                <div className="mt-6 flex items-center justify-between gap-4 rounded-xl bg-black/[0.04] px-6 py-5">
                   <CountUp to={c.stat} decimals={1} suffix="%" className="shrink-0 text-[32px] font-extrabold text-eb-blue" />
                   <span className="text-right text-[13px] font-semibold leading-snug text-eb-blue">
                     {c.statLabel}
