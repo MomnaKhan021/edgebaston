@@ -3,11 +3,11 @@ import { cn } from "@/lib/utils";
 /** Up-right arrow used inside the blue action squares across the design. */
 export function ArrowUpRight({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 20 20" fill="none" className={className} aria-hidden>
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
       <path
-        d="M6 14L14 6M14 6H7M14 6V13"
+        d="M6 18L18 6M18 6H8.5M18 6V15.5"
         stroke="currentColor"
-        strokeWidth="1.8"
+        strokeWidth="2.2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />

@@ -109,7 +109,7 @@ export function Results() {
               </div>
               <button className="eb-cta group col-span-2 flex items-center justify-between gap-4 rounded bg-eb-cream py-3 pl-5 pr-3 text-left lg:col-span-1 lg:col-start-3 lg:row-start-3">
                 <span className="text-[14px] font-bold uppercase tracking-wide text-eb-navy">View Results &amp; Destinations</span>
-                <span className="eb-square grid h-10 w-10 shrink-0 place-items-center rounded bg-eb-blue text-white">
+                <span className="eb-square grid h-11 w-11 shrink-0 place-items-center rounded bg-eb-blue text-white ring-1 ring-eb-cream">
                   <ArrowUpRight className="h-5 w-5" />
                 </span>
               </button>
