@@ -57,7 +57,7 @@ export function Slider({
 
   const arrowBase = dark
     ? "bg-white/10 text-white hover:bg-white/20"
-    : "border border-neutral-200 bg-white text-eb-navy shadow-sm hover:bg-eb-cream";
+    : "bg-white text-eb-navy-2 shadow-sm hover:bg-eb-cream";
 
   return (
     <div>
@@ -75,7 +75,7 @@ export function Slider({
           )}
           <h2
             className={
-              "mt-4 max-w-3xl text-4xl font-extrabold leading-[1.05] tracking-tight lg:text-[54px] " +
+              "mt-4 max-w-3xl text-4xl font-extrabold leading-[1.05] tracking-tight lg:text-[62px] " +
               (titleClassName ?? (dark ? "text-white" : "text-eb-ink"))
             }
           >
@@ -87,7 +87,7 @@ export function Slider({
             aria-label="Previous"
             onClick={() => scroll(-1)}
             disabled={atStart}
-            className={`eb-ctrl grid h-12 w-12 cursor-pointer place-items-center rounded-lg disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:transform-none ${arrowBase}`}
+            className={`eb-ctrl grid h-12 w-12 cursor-pointer place-items-center rounded disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:transform-none ${arrowBase}`}
           >
             <ArrowRight className="h-5 w-5 rotate-180" />
           </button>
@@ -95,7 +95,7 @@ export function Slider({
             aria-label="Next"
             onClick={() => scroll(1)}
             disabled={atEnd}
-            className={`eb-ctrl grid h-12 w-12 cursor-pointer place-items-center rounded-lg disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:transform-none ${arrowBase}`}
+            className={`eb-ctrl grid h-12 w-12 cursor-pointer place-items-center rounded disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:transform-none ${arrowBase}`}
           >
             <ArrowRight className="h-5 w-5" />
           </button>

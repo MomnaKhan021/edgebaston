@@ -67,7 +67,7 @@ export function FigmaFooter() {
             </ul>
           </div>
 
-          <div className="rounded-2xl bg-white/[0.06] p-6 sm:p-8">
+          <div className="rounded-2xl bg-eb-navy-2 p-6 sm:p-8">
             <div className="grid gap-8 md:grid-cols-2">
               <div>
                 <h3 className="text-base font-bold uppercase tracking-wide">Address</h3>

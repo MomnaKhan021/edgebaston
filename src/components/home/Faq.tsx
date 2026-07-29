@@ -37,7 +37,7 @@ export function Faq() {
     <section className="bg-white">
       <div className="mx-auto grid max-w-[1440px] gap-12 px-4 py-12 lg:grid-cols-[0.85fr_1.15fr] lg:px-[60px] lg:py-20">
         <div>
-          <h2 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-eb-ink lg:text-[58px]">
+          <h2 className="text-4xl font-extrabold leading-[1.02] tracking-tight text-black lg:text-[62px]">
             A-Level retake &amp; resit FAQ
           </h2>
           <p className="mt-6 max-w-md text-[15px] leading-relaxed text-neutral-600">
@@ -46,10 +46,10 @@ export function Faq() {
           </p>
           <Link
             href="/contact"
-            className="eb-cta group mt-8 inline-flex items-center gap-3 rounded-lg bg-eb-cream py-2 pl-6 pr-2 text-sm font-bold uppercase tracking-wide text-eb-navy"
+            className="eb-cta group mt-8 inline-flex items-center gap-3 rounded bg-eb-cream py-2 pl-6 pr-2 text-sm font-bold uppercase tracking-wide text-eb-navy"
           >
             Contact Us
-            <span className="eb-square grid h-9 w-9 place-items-center rounded-md bg-eb-blue text-white">
+            <span className="eb-square grid h-9 w-9 place-items-center rounded bg-eb-blue text-white">
               <ArrowUpRight className="h-5 w-5" />
             </span>
           </Link>

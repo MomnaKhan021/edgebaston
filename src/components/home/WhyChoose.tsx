@@ -48,7 +48,7 @@ export function WhyChoose() {
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-[1440px] px-4 py-12 lg:px-[60px] lg:py-20">
-        <h2 className="max-w-3xl text-4xl font-extrabold leading-[1.05] tracking-tight text-eb-ink lg:text-[52px]">
+        <h2 className="max-w-4xl text-4xl font-extrabold leading-[1.02] tracking-tight text-black lg:text-[62px]">
           Why Students Choose Edgbaston College
         </h2>
         {/* Top row: three cards */}

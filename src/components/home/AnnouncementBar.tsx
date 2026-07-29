@@ -7,8 +7,8 @@ export function AnnouncementBar() {
   const [open, setOpen] = useState(true);
   if (!open) return null;
   return (
-    <div className="bg-eb-navy text-white">
-      <div className="relative mx-auto flex max-w-[1440px] items-center justify-center gap-2 px-10 py-4 text-center text-[15px] lg:px-[60px]">
+    <div className="bg-eb-navy-2 text-white">
+      <div className="relative mx-auto flex max-w-[1440px] items-center justify-center gap-2 px-10 py-2 text-center text-[15px] lg:px-[60px]">
         <p className="font-medium leading-tight text-white">
           <span className="font-bold">EXCITING NEWS:</span>{" "}
           <span className="text-white/90">

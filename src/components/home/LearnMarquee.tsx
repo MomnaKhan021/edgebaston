@@ -6,9 +6,9 @@ export function LearnMarquee() {
     <div className="overflow-hidden bg-eb-navy py-10">
       <div className="eb-marquee-track eb-marquee-fast items-center">
         {items.map((_, i) => (
-          <span key={i} className="flex items-center gap-3 pr-5">
-            <ArrowUpRight className="h-5 w-5 shrink-0 text-eb-blue" />
-            <span className="text-xl font-extrabold tracking-tight text-white lg:text-[28px]">
+          <span key={i} className="flex items-center gap-4 pr-5">
+            <ArrowUpRight className="h-7 w-7 shrink-0 text-eb-blue" />
+            <span className="text-3xl font-bold tracking-tight text-white lg:text-[48px]">
               Learn Today. Lead Tomorrow.
             </span>
           </span>

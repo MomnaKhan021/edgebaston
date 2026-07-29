@@ -50,12 +50,12 @@ function EnquireBtn({ full }: { full?: boolean }) {
     <Link
       href="/contact"
       className={
-        "eb-cta group flex items-center justify-between gap-3 rounded-full bg-white py-2 pl-5 pr-2 text-xs font-bold uppercase tracking-wide text-eb-navy sm:text-sm " +
+        "eb-cta group flex items-center justify-between gap-3 rounded bg-white py-2 pl-5 pr-2 text-xs font-bold uppercase tracking-wide text-eb-navy sm:text-sm " +
         (full ? "w-full" : "")
       }
     >
       Enquire About Course
-      <span className="eb-square grid h-9 w-9 shrink-0 place-items-center rounded-md bg-eb-blue text-white">
+      <span className="eb-square grid h-9 w-9 shrink-0 place-items-center rounded bg-eb-blue text-white">
         <ArrowUpRight className="h-5 w-5" />
       </span>
     </Link>
