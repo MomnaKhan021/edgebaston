@@ -57,7 +57,7 @@ export function Slider({
 
   const arrowBase = dark
     ? "bg-white/10 text-white hover:bg-white/20"
-    : "bg-white text-eb-navy shadow-sm hover:bg-eb-cream";
+    : "border border-neutral-200 bg-white text-eb-navy shadow-sm hover:bg-eb-cream";
 
   return (
     <div>

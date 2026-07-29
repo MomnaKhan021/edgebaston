@@ -17,7 +17,7 @@ export function News() {
           label="News & Events"
           title="What's happening at Edgbaston"
           labelClassName="text-eb-blue"
-          titleClassName="text-eb-ink"
+          titleClassName="text-neutral-900"
           trackClassName="mt-[42px] gap-5"
         >
           {NEWS.map((n) => (

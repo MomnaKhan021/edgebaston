@@ -33,7 +33,12 @@ export function Pathways() {
   return (
     <section className="bg-eb-cream">
       <div className="mx-auto max-w-[1440px] px-4 py-12 lg:px-[60px] lg:py-20">
-        <Slider label="Courses We Offer" title="Choose the A-Level Pathway That Fits Your Goal">
+        <Slider
+          label="Courses We Offer"
+          title="Choose the A-Level Pathway That Fits Your Goal"
+          labelClassName="text-neutral-900"
+          titleClassName="text-neutral-900"
+        >
           {CARDS.map((c) => (
             <article
               key={c.title}

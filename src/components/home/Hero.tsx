@@ -19,23 +19,26 @@ export function Hero() {
 
       <div className="relative mx-auto flex min-h-[720px] max-w-[1440px] flex-col justify-end px-4 pb-8 pt-36 lg:min-h-[780px] lg:px-[60px] lg:pb-14">
         <div className="grid gap-6 lg:grid-cols-[1fr_440px] lg:items-end lg:gap-8">
-          <h1 className="text-[34px] font-extrabold leading-[1.03] tracking-tight text-white sm:text-5xl lg:col-start-1 lg:row-start-1 lg:text-[62px]">
+          {/* Heading — wraps to three lines like the design */}
+          <h1 className="text-[34px] font-extrabold leading-[1.03] tracking-tight text-white sm:text-5xl lg:col-start-1 lg:row-start-1 lg:max-w-[720px] lg:text-[62px]">
             Birmingham&apos;s Top-Performing Independent Sixth Form College
           </h1>
 
           {/* Stats card */}
-          <div className="overflow-hidden rounded-2xl bg-white shadow-xl lg:col-start-2 lg:row-span-2 lg:self-end">
-            <div className="flex items-center justify-between gap-3 px-6 py-5">
+          <div className="rounded-2xl bg-white p-3 shadow-xl lg:col-start-2 lg:row-span-2 lg:self-end">
+            <div className="flex items-start justify-between gap-3 px-3 pb-4 pt-2">
               <div className="flex items-baseline gap-2.5">
                 <span className="text-[43px] font-extrabold leading-none text-eb-blue">#1</span>
-                <span className="text-[15px] font-medium text-eb-navy">for Value-Added in Birmingham</span>
+                <span className="max-w-[170px] text-[17px] font-medium leading-snug text-eb-navy">
+                  for Value-Added in Birmingham
+                </span>
               </div>
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-eb-blue/10 text-eb-blue">
-                <StarIcon />
-              </span>
+              <Medal className="-mt-3 h-14 w-14 shrink-0" />
             </div>
-            <StatRow label="A Level Results A*-A" to={24} />
-            <StatRow label="A Level Results A*-B" to={57} />
+            <div className="rounded-xl bg-eb-cream px-6">
+              <StatRow label="A Level Results A*-A" to={24} />
+              <StatRow label="A Level Results A*-B" to={57} />
+            </div>
           </div>
 
           {/* CTA — fit-content width */}
@@ -54,19 +57,31 @@ export function Hero() {
   );
 }
 
-function StarIcon() {
+/** Blue rosette medal with a ribbon hanger and a white star. */
+function Medal({ className }: { className?: string }) {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-      <path d="M12 2l2.6 6.3L21 9l-5 4.3L17.6 20 12 16.4 6.4 20 8 13.3 3 9l6.4-.7L12 2z" />
+    <svg viewBox="0 0 48 52" fill="none" className={className} aria-hidden>
+      {/* ribbon hanger peeking above the medallion */}
+      <rect x="20.5" y="1.5" width="7" height="15" rx="3.5" fill="#1f6fb2" />
+      {/* scalloped rosette */}
+      <path
+        d="M24 11 L27.11 14.41 L31.50 13.01 L32.49 17.51 L36.99 18.50 L35.59 22.89 L39.00 26.00 L35.59 29.11 L36.99 33.50 L32.49 34.49 L31.50 38.99 L27.11 37.59 L24.00 41.00 L20.89 37.59 L16.50 38.99 L15.51 34.49 L11.01 33.50 L12.41 29.11 L9.00 26.00 L12.41 22.89 L11.01 18.50 L15.51 17.51 L16.50 13.01 L20.89 14.41 Z"
+        fill="#2781c8"
+      />
+      {/* white star */}
+      <path
+        d="M24 19 L25.70 23.65 L30.66 23.84 L26.76 26.90 L28.11 31.66 L24.00 28.90 L19.89 31.66 L21.24 26.90 L17.34 23.84 L22.30 23.65 Z"
+        fill="#ffffff"
+      />
     </svg>
   );
 }
 
 function StatRow({ label, to }: { label: string; to: number }) {
   return (
-    <div className="flex items-center justify-between border-t border-neutral-200 px-6 py-4">
-      <span className="text-[15px] font-medium text-eb-navy">{label}</span>
-      <CountUp to={to} suffix="%" className="text-[28px] font-extrabold text-eb-blue" />
+    <div className="flex items-center justify-between py-4">
+      <span className="text-[18px] font-medium text-eb-navy">{label}</span>
+      <CountUp to={to} suffix="%" className="text-[40px] font-extrabold leading-none text-eb-blue" />
     </div>
   );
 }
