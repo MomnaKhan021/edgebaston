@@ -25,15 +25,16 @@ export function Hero() {
           </h1>
 
           {/* Stats card */}
-          <div className="rounded-2xl bg-white p-3 shadow-xl lg:col-start-2 lg:row-span-2 lg:self-end">
-            <div className="flex items-start justify-between gap-3 px-3 pb-4 pt-2">
+          <div className="relative rounded-2xl bg-white p-3 shadow-xl lg:col-start-2 lg:row-span-2 lg:self-end">
+            {/* Badge hangs from the top-right edge (ribbon peeks at the top) */}
+            <Medal className="absolute right-5 top-0 h-16 w-16" />
+            <div className="px-3 pb-4 pr-16 pt-3">
               <div className="flex items-baseline gap-2.5">
                 <span className="text-[43px] font-extrabold leading-none text-eb-blue">#1</span>
-                <span className="max-w-[170px] text-[17px] font-medium leading-snug text-eb-navy">
+                <span className="max-w-[190px] text-[17px] font-medium leading-snug text-eb-navy">
                   for Value-Added in Birmingham
                 </span>
               </div>
-              <Medal className="-mt-3 h-14 w-14 shrink-0" />
             </div>
             <div className="rounded-xl bg-eb-cream px-6">
               <StatRow label="A Level Results A*-A" to={24} />
