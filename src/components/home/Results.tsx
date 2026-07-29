@@ -5,7 +5,7 @@ type Info = { label: string; title: string; body?: string; place?: string };
 
 function InfoCard({ label, title, body, place }: Info) {
   return (
-    <div className={"rounded-2xl bg-neutral-50 p-7 " + (place ?? "")}>
+    <div className={"rounded-2xl bg-eb-cream p-7 " + (place ?? "")}>
       <p className="font-mono text-[13px] uppercase tracking-wide text-eb-blue">{label}</p>
       <h4 className="mt-2 text-[26px] font-bold leading-tight text-eb-navy">{title}</h4>
       {body && <p className="mt-3 text-[15px] leading-relaxed text-neutral-600">{body}</p>}
@@ -126,7 +126,7 @@ export function Results() {
               body="Focused guidance for students aiming for medicine, dentistry, and clinical pathways."
               place="lg:col-start-2 lg:row-start-2"
             />
-            <div className="col-span-2 flex flex-col rounded-2xl bg-neutral-50 p-7 lg:col-span-1 lg:col-start-3 lg:row-span-2 lg:row-start-1">
+            <div className="col-span-2 flex flex-col rounded-2xl bg-eb-cream p-7 lg:col-span-1 lg:col-start-3 lg:row-span-2 lg:row-start-1">
               <p className="font-mono text-[13px] uppercase tracking-wide text-eb-blue">University Destinations</p>
               <h4 className="mt-2 text-[26px] font-bold leading-tight text-eb-navy">
                 Russell Group &amp; QS Top Universities
