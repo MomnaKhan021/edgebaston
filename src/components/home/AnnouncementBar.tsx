@@ -8,10 +8,10 @@ export function AnnouncementBar() {
   if (!open) return null;
   return (
     <div className="bg-eb-navy text-white">
-      <div className="relative mx-auto flex max-w-[1440px] items-center justify-center gap-2 px-10 py-2.5 text-center text-sm">
-        <p className="leading-tight">
+      <div className="relative mx-auto flex max-w-[1440px] items-center justify-center gap-2 px-10 py-4 text-center text-[15px] lg:px-[60px]">
+        <p className="font-medium leading-tight text-white">
           <span className="font-bold">EXCITING NEWS:</span>{" "}
-          <span className="text-white/85">
+          <span className="text-white/90">
             Admissions for Batch 2026 are Now Open! Visit our{" "}
           </span>
           <Link href="/contact" className="font-bold underline underline-offset-2">
@@ -22,7 +22,7 @@ export function AnnouncementBar() {
           type="button"
           aria-label="Dismiss announcement"
           onClick={() => setOpen(false)}
-          className="absolute right-6 top-1/2 -translate-y-1/2 text-white/80 transition hover:text-white"
+          className="absolute right-4 top-1/2 -translate-y-1/2 text-white/80 transition hover:text-white lg:right-[60px]"
         >
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path

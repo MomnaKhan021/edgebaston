@@ -35,7 +35,7 @@ export function Faq() {
   const [open, setOpen] = useState<number | null>(null);
   return (
     <section className="bg-white">
-      <div className="mx-auto grid max-w-[1320px] gap-12 px-4 py-10 lg:grid-cols-[0.85fr_1.15fr] lg:py-16">
+      <div className="mx-auto grid max-w-[1440px] gap-12 px-4 py-12 lg:grid-cols-[0.85fr_1.15fr] lg:px-[60px] lg:py-20">
         <div>
           <h2 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-eb-ink lg:text-[58px]">
             A-Level retake &amp; resit FAQ
@@ -64,7 +64,7 @@ export function Faq() {
                   onClick={() => setOpen(isOpen ? null : i)}
                   className="flex w-full items-center justify-between gap-6 py-6 text-left"
                 >
-                  <span className="text-xl font-bold text-eb-navy lg:text-2xl">
+                  <span className="text-xl font-bold text-eb-navy lg:text-[28px]">
                     {item.q}
                   </span>
                   <span className="grid h-7 w-7 shrink-0 place-items-center text-eb-navy">

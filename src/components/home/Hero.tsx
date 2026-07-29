@@ -17,7 +17,7 @@ export function Hero() {
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/25" />
 
-      <div className="relative mx-auto flex min-h-[720px] max-w-[1440px] flex-col justify-end px-4 pb-8 pt-36 lg:min-h-[780px] lg:px-16 lg:pb-14">
+      <div className="relative mx-auto flex min-h-[720px] max-w-[1440px] flex-col justify-end px-4 pb-8 pt-36 lg:min-h-[780px] lg:px-[60px] lg:pb-14">
         <div className="grid gap-6 lg:grid-cols-[1fr_440px] lg:items-end lg:gap-8">
           <h1 className="text-[34px] font-extrabold leading-[1.03] tracking-tight text-white sm:text-5xl lg:col-start-1 lg:row-start-1 lg:text-[62px]">
             Birmingham&apos;s Top-Performing Independent Sixth Form College
@@ -27,7 +27,7 @@ export function Hero() {
           <div className="overflow-hidden rounded-2xl bg-white shadow-xl lg:col-start-2 lg:row-span-2 lg:self-end">
             <div className="flex items-center justify-between gap-3 px-6 py-5">
               <div className="flex items-baseline gap-3">
-                <span className="text-[40px] font-extrabold leading-none text-eb-blue">#1</span>
+                <span className="text-[43px] font-extrabold leading-none text-eb-blue">#1</span>
                 <span className="text-sm font-medium text-eb-navy">for Value-Added in Birmingham</span>
               </div>
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -57,7 +57,7 @@ function StatRow({ label, to, tint }: { label: string; to: number; tint?: boolea
   return (
     <div className={"flex items-center justify-between px-6 py-4 " + (tint ? "bg-eb-cream" : "bg-white")}>
       <span className="text-[17px] font-medium text-eb-navy">{label}</span>
-      <CountUp to={to} suffix="%" className="text-2xl font-extrabold text-eb-blue" />
+      <CountUp to={to} suffix="%" className="text-[28px] font-extrabold text-eb-blue" />
     </div>
   );
 }

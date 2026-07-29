@@ -28,11 +28,16 @@ const ITEMS = [
 
 function Card({ icon, title, body }: (typeof ITEMS)[number]) {
   return (
-    <div className="eb-card group rounded-2xl bg-eb-cream px-8 py-12 text-center">
+    <div className="eb-card group flex-1 rounded-2xl bg-eb-cream p-[42px]">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={icon} alt="" className="mx-auto h-14 w-14 transition duration-300 group-hover:scale-110" />
-      <h3 className="mt-6 text-2xl font-bold text-eb-navy">{title}</h3>
-      <p className="mx-auto mt-3 max-w-xs text-[15px] leading-relaxed text-neutral-600">
+      <img
+        src={icon}
+        alt=""
+        className="h-20 w-20 transition duration-300 group-hover:scale-110"
+        style={{ aspectRatio: "1 / 1" }}
+      />
+      <h3 className="mt-6 text-[28px] font-bold leading-tight text-eb-navy">{title}</h3>
+      <p className="mt-3 max-w-xs text-[16px] leading-relaxed tracking-[-0.01em] text-neutral-600">
         {body}
       </p>
     </div>
@@ -42,16 +47,18 @@ function Card({ icon, title, body }: (typeof ITEMS)[number]) {
 export function WhyChoose() {
   return (
     <section className="bg-white">
-      <div className="mx-auto max-w-[1320px] px-4 py-10 lg:py-16">
-        <h2 className="mx-auto max-w-3xl text-center text-4xl font-extrabold leading-[1.05] tracking-tight text-eb-ink lg:text-[58px]">
+      <div className="mx-auto max-w-[1440px] px-4 py-12 lg:px-[60px] lg:py-20">
+        <h2 className="max-w-3xl text-4xl font-extrabold leading-[1.05] tracking-tight text-eb-ink lg:text-[52px]">
           Why Students Choose Edgbaston College
         </h2>
-        <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {/* Top row: three cards */}
+        <div className="mt-12 flex flex-col gap-4 lg:flex-row">
           {ITEMS.slice(0, 3).map((i) => (
             <Card key={i.title} {...i} />
           ))}
         </div>
-        <div className="mt-6 grid gap-6 md:grid-cols-2 lg:mx-auto lg:max-w-[860px]">
+        {/* Bottom row: remaining cards grow to fill the full width */}
+        <div className="mt-4 flex flex-col gap-4 lg:flex-row">
           {ITEMS.slice(3).map((i) => (
             <Card key={i.title} {...i} />
           ))}

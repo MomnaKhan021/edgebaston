@@ -83,7 +83,7 @@ export function OfferBar() {
   return (
     <div className="fixed inset-x-0 bottom-0 z-50">
       <div className="mx-3 mb-3 overflow-hidden rounded-2xl bg-gradient-to-r from-eb-navy to-eb-blue shadow-2xl ring-1 ring-white/10 lg:mx-0 lg:mb-0 lg:rounded-none lg:ring-0">
-        <div className="mx-auto max-w-[1440px] px-4 py-3 lg:px-16 lg:py-3.5">
+        <div className="mx-auto max-w-[1440px] px-4 py-3 lg:px-[60px] lg:py-3.5">
           {/* Desktop */}
           <div className="hidden items-center justify-between gap-6 lg:flex">
             <div className="flex items-center gap-6">

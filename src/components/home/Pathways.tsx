@@ -32,22 +32,25 @@ const CARDS = [
 export function Pathways() {
   return (
     <section className="bg-eb-cream">
-      <div className="mx-auto max-w-[1440px] px-4 py-10 lg:px-16 lg:py-16">
+      <div className="mx-auto max-w-[1440px] px-4 py-12 lg:px-[60px] lg:py-20">
         <Slider label="Courses We Offer" title="Choose the A-Level Pathway That Fits Your Goal">
           {CARDS.map((c) => (
             <article
               key={c.title}
-              className="eb-card group flex w-[85%] shrink-0 snap-start flex-col rounded-2xl bg-white p-7 sm:w-[440px] sm:p-8 lg:w-[calc((100%-3rem)/3)]"
+              className="eb-card group flex w-[85%] shrink-0 snap-start flex-col overflow-hidden rounded-2xl bg-white sm:w-[440px] lg:w-[calc((100%-2.5rem)/3)]"
             >
-              <h3 className="text-[26px] font-bold leading-tight text-eb-navy">{c.title}</h3>
-              <p className="mt-4 text-[15px] leading-relaxed text-neutral-600">{c.body}</p>
-              <div className="mt-6 flex items-center gap-4 rounded-xl bg-eb-cream px-6 py-5">
-                <CountUp to={c.stat} decimals={1} suffix="%" className="shrink-0 text-[32px] font-extrabold text-eb-blue" />
-                <span className="text-[13px] font-semibold leading-snug text-eb-blue">
-                  {c.statLabel}
-                </span>
+              <div className="flex flex-1 flex-col p-7 sm:p-8">
+                <h3 className="text-[26px] font-bold leading-tight text-eb-navy">{c.title}</h3>
+                <p className="mt-4 text-[15px] leading-relaxed text-neutral-600">{c.body}</p>
+                <div className="mt-6 flex items-center justify-between gap-4 rounded-xl bg-eb-cream px-6 py-5">
+                  <CountUp to={c.stat} decimals={1} suffix="%" className="shrink-0 text-[32px] font-extrabold text-eb-blue" />
+                  <span className="text-right text-[13px] font-semibold leading-snug text-eb-blue">
+                    {c.statLabel}
+                  </span>
+                </div>
               </div>
-              <div className="relative mt-6 aspect-[4/3] overflow-hidden rounded-xl bg-eb-cream">
+              {/* Full-bleed image: full width, no padding, no border radius */}
+              <div className="relative aspect-[16/10] w-full overflow-hidden bg-eb-cream">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={c.img} alt={c.title} className={`h-full w-full object-cover ${c.objPos} transition duration-500 group-hover:scale-105`} />
                 <span className="eb-square absolute bottom-4 right-4 grid h-11 w-11 place-items-center rounded-md bg-eb-blue text-white">

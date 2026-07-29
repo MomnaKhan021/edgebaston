@@ -5,10 +5,10 @@ type Info = { label: string; title: string; body?: string; place?: string };
 
 function InfoCard({ label, title, body, place }: Info) {
   return (
-    <div className={"rounded-xl bg-eb-cream p-6 " + (place ?? "")}>
+    <div className={"rounded-xl bg-eb-cream p-7 " + (place ?? "")}>
       <p className="font-mono text-[13px] uppercase tracking-wide text-eb-blue">{label}</p>
-      <h4 className="mt-3 text-xl font-bold text-eb-navy lg:text-2xl">{title}</h4>
-      {body && <p className="mt-3 text-[15px] leading-relaxed text-neutral-600">{body}</p>}
+      <h4 className="mt-6 text-2xl font-bold text-eb-navy lg:text-[32px]">{title}</h4>
+      {body && <p className="mt-[42px] text-[16px] leading-relaxed text-neutral-900">{body}</p>}
     </div>
   );
 }
@@ -16,7 +16,7 @@ function InfoCard({ label, title, body, place }: Info) {
 export function Results() {
   return (
     <section className="bg-eb-navy">
-      <div className="mx-auto max-w-[1320px] px-4 py-10 lg:px-10 lg:py-16">
+      <div className="mx-auto max-w-[1440px] px-4 py-12 lg:px-[60px] lg:py-20">
         {/* Heading */}
         <div className="eb-stagger text-center">
           <p className="font-mono text-sm uppercase tracking-[0.12em] text-white/60">Outcome Spotlight</p>
@@ -26,7 +26,7 @@ export function Results() {
         </div>
 
         {/* Door + flanking stat boxes (stay side-by-side on all sizes) */}
-        <div className="relative mt-12 grid grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-4">
+        <div className="relative mt-[60px] grid grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-4">
           {/* Dashed connectors from each stat box toward the door */}
           <svg
             className="pointer-events-none absolute left-[27%] top-[58%] hidden h-24 w-32 text-white/70 md:block"
@@ -69,7 +69,7 @@ export function Results() {
 
         {/* Blue split bar (two columns on all sizes) */}
         <div className="mt-6 grid grid-cols-2 overflow-hidden rounded-2xl bg-eb-blue">
-          <div className="flex flex-col gap-1 border-r border-white/25 px-4 py-5 sm:flex-row sm:items-center sm:gap-4 sm:px-8 sm:py-6">
+          <div className="flex flex-col gap-1 border-r-2 border-white/40 px-4 py-5 sm:flex-row sm:items-center sm:gap-4 sm:px-8 sm:py-6">
             <CountUp to={96} suffix="%" className="text-3xl font-extrabold text-white sm:text-5xl lg:text-6xl" />
             <span className="text-sm text-white/90 sm:text-lg">success rate in securing Medicine &amp; Dentistry places</span>
           </div>
@@ -80,8 +80,8 @@ export function Results() {
         </div>
 
         {/* White card with info grid: 2-col on mobile, 3-col on desktop */}
-        <div className="mt-6 rounded-3xl bg-white p-4 sm:p-5 lg:p-7">
-          <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">
+        <div className="mt-6 rounded-3xl bg-white p-6 sm:p-8 lg:p-10">
+          <div className="grid grid-cols-2 gap-6 lg:grid-cols-3">
             <InfoCard
               label="Grade Performance"
               title="A*-A / A*-B Results"

@@ -26,11 +26,11 @@ export function Navbar({ variant = "overlay" }: { variant?: "overlay" | "solid" 
 
   return (
     <div className={solid ? "relative z-30 border-b bg-white" : "absolute inset-x-0 top-0 z-30"}>
-      <div className="mx-auto flex max-w-[1440px] items-center justify-between px-4 py-4 lg:px-16 lg:py-5">
+      <div className="mx-auto flex max-w-[1440px] items-center justify-between px-4 py-4 lg:px-[60px] lg:py-5">
         {/* Logo */}
         <Link href="/" className="shrink-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={solid ? "/figma/logo-navy.svg" : "/figma/logo.svg"} alt="Edgbaston College" className="h-11 w-auto lg:h-14" />
+          <img src={solid ? "/figma/logo-navy.svg" : "/figma/logo.svg"} alt="Edgbaston College" className="h-14 w-auto lg:h-[68px]" />
         </Link>
 
         {/* Desktop nav */}

@@ -12,22 +12,29 @@ const NEWS = [
 export function News() {
   return (
     <section className="bg-eb-cream">
-      <div className="mx-auto max-w-[1440px] px-4 py-10 lg:px-16 lg:py-16">
-        <Slider label="News & Events" title="What's happening at Edgbaston">
+      <div className="mx-auto max-w-[1440px] px-4 py-12 lg:px-[60px] lg:py-20">
+        <Slider
+          label="News & Events"
+          title="What's happening at Edgbaston"
+          labelClassName="text-eb-blue"
+          titleClassName="text-eb-ink"
+          trackClassName="mt-[42px] gap-5"
+        >
           {NEWS.map((n) => (
             <article key={n.title} className="group w-[78%] shrink-0 snap-start sm:w-[320px]">
-              <div className="aspect-[4/5] overflow-hidden rounded-2xl">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-lg">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={n.img}
                   alt={n.title}
                   className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
               </div>
-              <p className="mt-4 font-mono text-[13px] uppercase tracking-wide text-eb-blue">
+              <p className="mt-4 text-[13px] font-semibold uppercase tracking-wide text-eb-blue">
                 News • {n.date}
               </p>
-              <h3 className="mt-2 text-xl font-bold leading-snug text-eb-navy transition group-hover:text-eb-blue">{n.title}</h3>
+              <h3 className="mt-3 text-xl font-bold leading-snug text-eb-navy transition group-hover:text-eb-blue">{n.title}</h3>
               <span className="eb-cta mt-4 inline-flex items-center gap-3 rounded-lg bg-white py-1.5 pl-5 pr-1.5 text-xs font-bold uppercase tracking-wide text-eb-navy shadow-sm">
                 Read Article
                 <span className="eb-square grid h-8 w-8 place-items-center rounded-md bg-eb-blue text-white">

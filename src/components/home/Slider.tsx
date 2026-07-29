@@ -12,11 +12,18 @@ export function Slider({
   label,
   title,
   dark = false,
+  titleClassName,
+  labelClassName,
+  trackClassName = "mt-12 gap-6",
   children,
 }: {
   label: string;
   title: React.ReactNode;
   dark?: boolean;
+  titleClassName?: string;
+  labelClassName?: string;
+  /** Tailwind classes for the scroll track's top margin + gap. */
+  trackClassName?: string;
   children: React.ReactNode;
 }) {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -60,7 +67,7 @@ export function Slider({
             <p
               className={
                 "font-mono text-sm uppercase tracking-[0.12em] " +
-                (dark ? "text-white/60" : "text-eb-navy/70")
+                (labelClassName ?? (dark ? "text-white/60" : "text-eb-blue"))
               }
             >
               {label}
@@ -69,7 +76,7 @@ export function Slider({
           <h2
             className={
               "mt-4 max-w-3xl text-4xl font-extrabold leading-[1.05] tracking-tight lg:text-[54px] " +
-              (dark ? "text-white" : "text-eb-ink")
+              (titleClassName ?? (dark ? "text-white" : "text-eb-ink"))
             }
           >
             {title}
@@ -80,7 +87,7 @@ export function Slider({
             aria-label="Previous"
             onClick={() => scroll(-1)}
             disabled={atStart}
-            className={`eb-ctrl grid h-12 w-12 place-items-center rounded-lg disabled:opacity-40 disabled:hover:transform-none ${arrowBase}`}
+            className={`eb-ctrl grid h-12 w-12 cursor-pointer place-items-center rounded-lg disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:transform-none ${arrowBase}`}
           >
             <ArrowRight className="h-5 w-5 rotate-180" />
           </button>
@@ -88,7 +95,7 @@ export function Slider({
             aria-label="Next"
             onClick={() => scroll(1)}
             disabled={atEnd}
-            className={`eb-ctrl grid h-12 w-12 place-items-center rounded-lg disabled:opacity-40 disabled:hover:transform-none ${arrowBase}`}
+            className={`eb-ctrl grid h-12 w-12 cursor-pointer place-items-center rounded-lg disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:transform-none ${arrowBase}`}
           >
             <ArrowRight className="h-5 w-5" />
           </button>
@@ -97,7 +104,7 @@ export function Slider({
 
       <div
         ref={trackRef}
-        className="eb-noscroll -mx-4 mt-12 flex snap-x snap-mandatory gap-6 overflow-x-auto px-4 pb-2 lg:mx-0 lg:px-0"
+        className={`eb-noscroll -mx-4 flex snap-x snap-mandatory overflow-x-auto px-4 pb-2 lg:mx-0 lg:px-0 ${trackClassName}`}
       >
         {children}
       </div>

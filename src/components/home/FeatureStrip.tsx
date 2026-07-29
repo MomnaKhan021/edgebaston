@@ -8,7 +8,7 @@ const ITEMS = [
 
 function Star() {
   return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden className="mx-6 shrink-0 text-eb-blue">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden className="mx-4 shrink-0 text-eb-blue">
       <path d="M7 0l1.6 4.4L13 6 8.6 7.6 7 12 5.4 7.6 1 6l4.4-1.6L7 0z" fill="currentColor" />
     </svg>
   );
@@ -17,7 +17,7 @@ function Star() {
 export function FeatureStrip() {
   const row = [...ITEMS, ...ITEMS];
   return (
-    <div className="overflow-hidden border-y border-border bg-white py-4">
+    <div className="overflow-hidden border-y border-border bg-white py-5">
       <div className="eb-marquee-track">
         {row.map((item, i) => (
           <span key={i} className="flex items-center">

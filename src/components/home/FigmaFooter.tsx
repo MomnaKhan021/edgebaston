@@ -26,15 +26,16 @@ function Arrow() {
 export function FigmaFooter() {
   return (
     <footer className="bg-gradient-to-b from-eb-navy via-eb-navy to-[#245a8a] text-white">
-      <div className="mx-auto max-w-[1440px] px-4 pt-12 lg:px-16">
+      <div className="mx-auto max-w-[1440px] px-4 pt-12 lg:px-[60px]">
         {/* Top: principal + intro */}
         <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/figma/owais-ahmed.png"
               alt="Owais Ahmed"
-              className="h-16 w-16 rounded-lg object-cover object-top"
+              className="h-[89px] w-[89px] rounded-md object-cover object-top"
+              style={{ aspectRatio: "1 / 1" }}
             />
             <div>
               <p className="text-sm text-white/70">Principal</p>
