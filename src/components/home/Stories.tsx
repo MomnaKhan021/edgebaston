@@ -85,7 +85,7 @@ export function Stories() {
               <img src="/figma/pathway-1.png" alt="Alishba" className="h-full w-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/10" />
               <div className="absolute inset-x-0 bottom-0 flex flex-col gap-3 p-4">
-                <p className="text-[32px] font-bold leading-none text-white">Alishba</p>
+                <p className="text-[28px] font-bold leading-none text-white">Alishba</p>
                 <GradeBox grade="BB → A*A*" course="Law at University of Cambridge" />
               </div>
             </div>
