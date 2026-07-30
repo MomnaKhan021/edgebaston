@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Socials } from "@/components/contact/Socials";
+import { FooterLinks } from "./FooterLinks";
 
 const LINKS = [
   "Enquire About A Course",
@@ -28,21 +29,21 @@ export function FigmaFooter() {
     <footer className="bg-gradient-to-b from-eb-navy via-eb-navy to-[#245a8a] text-white">
       <div className="mx-auto max-w-[1440px] px-4 pt-12 lg:px-[60px]">
         {/* Top: principal + intro */}
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
           <div className="flex items-center gap-3">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/figma/owais-ahmed.png"
               alt="Owais Ahmed"
-              className="h-[89px] w-[89px] rounded-md object-cover object-top"
+              className="h-12 w-12 rounded-md object-cover object-top sm:h-[89px] sm:w-[89px]"
               style={{ aspectRatio: "1 / 1" }}
             />
             <div>
-              <p className="text-sm text-white/70">Principal</p>
-              <p className="text-lg font-bold tracking-wide">OWAIS AHMED</p>
+              <p className="text-[13px] text-white/70 sm:text-sm">Principal</p>
+              <p className="text-base font-bold tracking-wide sm:text-lg">OWAIS AHMED</p>
             </div>
           </div>
-          <p className="max-w-xl text-[15px] leading-relaxed text-white/85 lg:text-right">
+          <p className="max-w-xl text-[14px] leading-relaxed text-white/85 sm:text-[15px] lg:text-right">
             Students arrive at the College aiming to excel academically and
             secure a place on a course at their preferred university. We achieve
             this with exceptional teaching, small classes, and individual
@@ -50,22 +51,11 @@ export function FigmaFooter() {
           </p>
         </div>
 
-        <hr className="my-12 border-white/15" />
+        <hr className="my-8 border-white/15 lg:my-12" />
 
         {/* Links + address + map */}
-        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.6fr]">
-          <div>
-            <h3 className="text-base font-bold uppercase tracking-wide">Useful Links</h3>
-            <ul className="mt-8 space-y-5">
-              {LINKS.map((l) => (
-                <li key={l}>
-                  <Link href="#" className="flex items-start gap-3 text-[15px] text-white/85 transition hover:text-white">
-                    <Arrow /> {l}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.6fr] lg:gap-10">
+          <FooterLinks links={LINKS} />
 
           <div className="rounded-2xl bg-eb-navy-2 p-6 sm:p-8">
             <div className="grid gap-8 md:grid-cols-2">
