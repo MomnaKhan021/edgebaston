@@ -16,6 +16,7 @@ export function Slider({
   titleClassName,
   labelClassName,
   trackClassName = "mt-12 gap-6",
+  mobileAlign = "center",
   children,
 }: {
   label: string;
@@ -26,8 +27,11 @@ export function Slider({
   labelClassName?: string;
   /** Tailwind classes for the scroll track's top margin + gap. */
   trackClassName?: string;
+  /** Header alignment on mobile (desktop is always left). */
+  mobileAlign?: "center" | "left";
   children: React.ReactNode;
 }) {
+  const centerMobile = mobileAlign === "center";
   const trackRef = useRef<HTMLDivElement>(null);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
@@ -63,7 +67,7 @@ export function Slider({
 
   return (
     <div>
-      <div className="flex flex-col gap-6 text-center md:flex-row md:items-end md:justify-between md:text-left">
+      <div className={"flex flex-col gap-6 md:flex-row md:items-end md:justify-between md:text-left " + (centerMobile ? "text-center" : "text-left")}>
         <div className="eb-stagger">
           {label && (
             <p
@@ -77,14 +81,15 @@ export function Slider({
           )}
           <h2
             className={
-              "mx-auto mt-4 max-w-3xl text-[30px] font-extrabold leading-[1.1] tracking-tight sm:text-4xl sm:leading-[1.05] md:mx-0 lg:text-[62px] " +
+              "mt-4 max-w-3xl text-[30px] font-extrabold leading-[1.1] tracking-tight sm:text-4xl sm:leading-[1.05] md:mx-0 lg:text-[62px] " +
+              (centerMobile ? "mx-auto " : "") +
               (titleClassName ?? (dark ? "text-white" : "text-eb-ink"))
             }
           >
             {title}
           </h2>
           {subtitle && (
-            <p className={"mx-auto mt-4 max-w-md text-[15px] leading-relaxed md:mx-0 " + (dark ? "text-white/70" : "text-neutral-600")}>
+            <p className={"mt-4 max-w-md text-[15px] leading-relaxed md:mx-0 " + (centerMobile ? "mx-auto " : "") + (dark ? "text-white/70" : "text-neutral-600")}>
               {subtitle}
             </p>
           )}
