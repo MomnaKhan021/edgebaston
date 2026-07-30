@@ -11,14 +11,6 @@ const NAV = [
   { label: "Guides", href: "#" },
 ];
 
-function Caret() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
-      <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
 export function Navbar({ variant = "overlay" }: { variant?: "overlay" | "solid" }) {
   const [open, setOpen] = useState(false);
   const solid = variant === "solid";
@@ -39,16 +31,16 @@ export function Navbar({ variant = "overlay" }: { variant?: "overlay" | "solid" 
             href="/courses"
             className={`flex items-center gap-2 rounded-full px-6 py-3.5 text-[15px] font-semibold text-eb-navy shadow-sm transition hover:brightness-95 ${pill}`}
           >
-            Courses <Caret />
+            Courses
           </Link>
           <div className={`flex items-center gap-1 rounded-full px-3 py-2 shadow-sm ${pill}`}>
             {NAV.slice(1).map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
-                className="flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[15px] font-semibold text-eb-navy transition hover:bg-eb-cream"
+                className="flex items-center rounded-full px-3.5 py-1.5 text-[15px] font-semibold text-eb-navy transition hover:bg-eb-cream"
               >
-                {item.label} <Caret />
+                {item.label}
               </Link>
             ))}
             <button aria-label="Search" className="ml-1 grid h-9 w-9 place-items-center rounded-full text-eb-navy transition hover:bg-eb-cream">
