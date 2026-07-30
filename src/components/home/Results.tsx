@@ -5,12 +5,12 @@ type Info = { label: string; title: string; body?: string; place?: string };
 
 function InfoCard({ label, title, body, place }: Info) {
   return (
-    <div className={"rounded-xl bg-eb-cream p-7 " + (place ?? "")}>
+    <div className={"rounded-lg bg-eb-cream p-4 sm:rounded-xl sm:p-7 " + (place ?? "")}>
       <div>
-        <p className="font-mono text-[16px] font-medium uppercase tracking-wide text-eb-blue">{label}</p>
-        <h4 className="mt-6 text-[28px] font-bold leading-tight text-eb-navy lg:text-[32px]">{title}</h4>
+        <p className="font-mono text-[12px] font-medium uppercase tracking-wide text-eb-blue sm:text-[16px]">{label}</p>
+        <h4 className="mt-2 text-[18px] font-bold leading-tight text-eb-navy sm:mt-6 sm:text-[28px] lg:text-[32px]">{title}</h4>
       </div>
-      {body && <p className="mt-[42px] text-[16px] leading-relaxed text-black">{body}</p>}
+      {body && <p className="mt-2 text-[13px] leading-relaxed text-black sm:mt-[42px] sm:text-[16px]">{body}</p>}
     </div>
   );
 }
@@ -94,21 +94,21 @@ export function Results() {
 
         {/* White card (r12, 40px padding), inset a further 20px like the design */}
         <div className="mt-10 lg:mx-5">
-          <div className="rounded-xl bg-white p-6 sm:p-8 lg:p-10">
-            <div className="grid grid-cols-2 gap-6 lg:grid-cols-3">
+          <div className="rounded-xl bg-white p-4 sm:p-8 lg:p-10">
+            <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3">
               <InfoCard label="Grade Performance" title="A*-A / A*-B Results" body="Clear academic proof showing how students perform across top grade bands." place="lg:col-start-1 lg:row-start-1" />
               <InfoCard label="Grade Improvement" title="Value-Added Progress" body="Shows how students improve from their starting point through personalised support." place="lg:col-start-2 lg:row-start-1" />
               <InfoCard label="Competitive Pathways" title="Oxbridge Outcomes" body="Support for ambitious students applying to Oxford, Cambridge, and high-tariff courses." place="lg:col-start-1 lg:row-start-2" />
               <InfoCard label="Specialist Routes" title="Medicine & Dentistry" body="Focused guidance for students aiming for medicine, dentistry, and clinical pathways." place="lg:col-start-2 lg:row-start-2" />
-              <div className="col-span-2 flex flex-col rounded-xl bg-eb-cream p-7 lg:col-span-1 lg:col-start-3 lg:row-span-2 lg:row-start-1">
-                <p className="font-mono text-[16px] font-medium uppercase tracking-wide text-eb-blue">University Destinations</p>
-                <h4 className="mt-6 text-[28px] font-bold leading-tight text-eb-navy lg:text-[32px]">Russell Group &amp; QS Top Universities</h4>
-                <p className="mt-[42px] text-[16px] leading-relaxed text-black lg:mt-auto lg:pt-10">
+              <div className="col-span-2 flex flex-col rounded-lg bg-eb-cream p-4 sm:rounded-xl sm:p-7 lg:col-span-1 lg:col-start-3 lg:row-span-2 lg:row-start-1">
+                <p className="font-mono text-[12px] font-medium uppercase tracking-wide text-eb-blue sm:text-[16px]">University Destinations</p>
+                <h4 className="mt-2 text-[18px] font-bold leading-tight text-eb-navy sm:mt-6 sm:text-[28px] lg:text-[32px]">Russell Group &amp; QS Top Universities</h4>
+                <p className="mt-2 text-[13px] leading-relaxed text-black sm:mt-[42px] sm:text-[16px] lg:mt-auto lg:pt-10">
                   A stronger way to show where students progress after Edgbaston College, from leading UK universities to competitive degree pathways.
                 </p>
               </div>
               <button className="eb-cta group col-span-2 flex items-center justify-between gap-4 rounded bg-eb-cream py-3 pl-5 pr-3 text-left lg:col-span-1 lg:col-start-3 lg:row-start-3">
-                <span className="text-[14px] font-bold uppercase tracking-wide text-eb-navy">View Results &amp; Destinations</span>
+                <span className="text-[13px] font-bold uppercase tracking-wide text-eb-navy sm:text-[14px]">View Results &amp; Destinations</span>
                 <span className="eb-square grid h-11 w-11 shrink-0 place-items-center rounded bg-eb-blue text-white ring-1 ring-eb-cream">
                   <ArrowUpRight className="h-5 w-5" />
                 </span>
