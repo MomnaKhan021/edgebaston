@@ -23,6 +23,13 @@ function int(formData: FormData, key: string, fallback = 0): number {
   const n = parseInt(str(formData, key), 10);
   return Number.isNaN(n) ? fallback : n;
 }
+/** Normalise a redirect URL: trim, drop if empty, ensure it has a scheme. */
+function redirectUrl(formData: FormData, key: string): string {
+  const raw = str(formData, key).trim();
+  if (!raw) return "";
+  if (/^(https?:)?\/\//i.test(raw) || raw.startsWith("/")) return raw;
+  return `https://${raw}`;
+}
 
 /** Ensure a slug is unique for a model, appending -2, -3, … if needed. */
 async function uniqueSlug(
@@ -65,6 +72,7 @@ export async function saveCourse(formData: FormData) {
     summary: str(formData, "summary"),
     content: str(formData, "content"),
     imageUrl: str(formData, "imageUrl"),
+    redirectUrl: redirectUrl(formData, "redirectUrl"),
     featured: bool(formData, "featured"),
     published: bool(formData, "published"),
     order: int(formData, "order"),
@@ -145,6 +153,7 @@ export async function savePage(formData: FormData) {
     title,
     slug,
     content: str(formData, "content"),
+    redirectUrl: redirectUrl(formData, "redirectUrl"),
     showInNav: bool(formData, "showInNav"),
     published: bool(formData, "published"),
     order: int(formData, "order"),

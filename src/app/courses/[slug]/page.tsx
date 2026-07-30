@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { excerpt } from "@/lib/utils";
 import { AnnouncementBar } from "@/components/home/AnnouncementBar";
@@ -32,6 +32,7 @@ export default async function CourseDetailPage({
   const course = await db.course.findUnique({ where: { slug } });
 
   if (!course || !course.published) notFound();
+  if (course.redirectUrl) redirect(course.redirectUrl);
 
   return (
     <>

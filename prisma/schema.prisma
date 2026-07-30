@@ -28,6 +28,7 @@ model Course {
   summary       String   @default("") // short plain-text blurb for cards
   content       String   @default("") // rich-text HTML for the detail page
   imageUrl      String   @default("")
+  redirectUrl   String   @default("") // if set, the public course page 307-redirects here
   featured      Boolean  @default(false)
   published     Boolean  @default(true)
   order         Int      @default(0)
@@ -59,6 +60,7 @@ model Page {
   title       String
   slug        String   @unique
   content     String   @default("") // rich-text HTML
+  redirectUrl String   @default("") // if set, the public page 307-redirects here
   showInNav   Boolean  @default(false)
   published   Boolean  @default(true)
   order       Int      @default(0)

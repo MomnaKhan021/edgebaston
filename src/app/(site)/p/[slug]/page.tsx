@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { excerpt } from "@/lib/utils";
 
@@ -23,6 +23,7 @@ export default async function DynamicPage({
   const page = await db.page.findUnique({ where: { slug } });
 
   if (!page || !page.published) notFound();
+  if (page.redirectUrl) redirect(page.redirectUrl);
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { saveCourse } from "@/app/admin/actions";
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
+import { RedirectField } from "@/components/admin/RedirectField";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 import { Field, Input, Textarea, Select, Toggle, SubmitButton } from "@/components/admin/ui";
 
@@ -15,6 +16,7 @@ type CourseValues = {
   summary?: string;
   content?: string;
   imageUrl?: string;
+  redirectUrl?: string;
   featured?: boolean;
   published?: boolean;
   order?: number;
@@ -123,6 +125,10 @@ export function CourseForm({ course }: { course?: CourseValues }) {
             placeholder="Describe the course, modules, careers…"
           />
         </Field>
+      </div>
+
+      <div className="rounded-2xl border bg-background p-6 shadow-sm">
+        <RedirectField defaultValue={c.redirectUrl} noun="course" />
       </div>
 
       <div className="rounded-2xl border bg-background p-6 shadow-sm">

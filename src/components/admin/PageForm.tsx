@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { savePage } from "@/app/admin/actions";
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
+import { RedirectField } from "@/components/admin/RedirectField";
 import { Field, Input, Toggle, SubmitButton } from "@/components/admin/ui";
 
 type PageValues = {
@@ -8,6 +9,7 @@ type PageValues = {
   title?: string;
   slug?: string;
   content?: string;
+  redirectUrl?: string;
   showInNav?: boolean;
   published?: boolean;
   order?: number;
@@ -60,6 +62,10 @@ export function PageForm({ page }: { page?: PageValues }) {
             placeholder="Write your page content here…"
           />
         </Field>
+      </div>
+
+      <div className="rounded-2xl border bg-background p-6 shadow-sm">
+        <RedirectField defaultValue={p.redirectUrl} noun="page" />
       </div>
 
       <div className="rounded-2xl border bg-background p-6 shadow-sm">
