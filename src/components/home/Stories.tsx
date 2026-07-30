@@ -26,7 +26,7 @@ const COMPACT = [
 function CompactCard({ c }: { c: (typeof COMPACT)[number] }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="group relative aspect-[292/420] w-[78%] shrink-0 snap-start overflow-hidden rounded-lg bg-eb-navy sm:aspect-auto sm:h-[420px] sm:w-[292px]">
+    <div className="group relative aspect-[292/420] w-[80%] shrink-0 snap-center sm:snap-start overflow-hidden rounded-lg bg-eb-navy sm:aspect-auto sm:h-[420px] sm:w-[292px]">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={c.img} alt={c.name} className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/10" />
@@ -74,12 +74,13 @@ export function Stories() {
         <Slider
           label="Success Stories"
           title="Real Students. Real Grade Transformation."
+          subtitle="Real students, real grade jumps. Watch how their retake year went."
           labelClassName="text-black"
           titleClassName="text-black"
-          trackClassName="mt-[60px] gap-6"
+          trackClassName="mt-[40px] gap-4 sm:mt-[60px] sm:gap-6"
         >
           {/* Featured card (688 wide: image + quote) */}
-          <div className="grid w-[90%] shrink-0 snap-start overflow-hidden rounded-lg bg-white sm:w-[688px] sm:grid-cols-2">
+          <div className="grid w-[85%] shrink-0 snap-center overflow-hidden rounded-lg bg-white sm:w-[688px] sm:snap-start sm:grid-cols-2">
             <div className="relative aspect-[3/4] sm:aspect-auto sm:min-h-[420px]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/figma/pathway-1.png" alt="Alishba" className="h-full w-full object-cover" />

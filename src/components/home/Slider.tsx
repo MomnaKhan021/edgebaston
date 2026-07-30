@@ -11,6 +11,7 @@ import { ArrowRight } from "./icons";
 export function Slider({
   label,
   title,
+  subtitle,
   dark = false,
   titleClassName,
   labelClassName,
@@ -19,6 +20,7 @@ export function Slider({
 }: {
   label: string;
   title: React.ReactNode;
+  subtitle?: string;
   dark?: boolean;
   titleClassName?: string;
   labelClassName?: string;
@@ -81,6 +83,11 @@ export function Slider({
           >
             {title}
           </h2>
+          {subtitle && (
+            <p className={"mx-auto mt-4 max-w-md text-[15px] leading-relaxed md:mx-0 " + (dark ? "text-white/70" : "text-neutral-600")}>
+              {subtitle}
+            </p>
+          )}
         </div>
         <div className="hidden gap-3 md:flex">
           <button
