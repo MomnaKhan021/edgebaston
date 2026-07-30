@@ -35,7 +35,7 @@ export function Faq() {
   const [open, setOpen] = useState<number | null>(null);
   return (
     <section className="bg-white">
-      <div className="mx-auto flex max-w-[1440px] flex-col gap-6 px-4 py-12 lg:grid lg:grid-cols-[0.85fr_1.15fr] lg:gap-12 lg:px-[60px] lg:py-20">
+      <div className="mx-auto flex max-w-[1440px] flex-col gap-6 px-4 py-10 lg:grid lg:grid-cols-[0.85fr_1.15fr] lg:gap-12 lg:px-[60px] lg:py-20">
         {/* Heading + subtitle */}
         <div className="text-center lg:col-start-1 lg:row-start-1 lg:text-left">
           <h2 className="text-[26px] font-extrabold leading-[1.1] tracking-tight text-black sm:text-4xl sm:leading-[1.02] lg:text-[62px]">
@@ -80,10 +80,10 @@ export function Faq() {
         {/* Contact Us — full-width at the bottom on mobile, left column on desktop */}
         <Link
           href="/contact"
-          className="eb-cta group flex w-full items-center justify-between gap-3 rounded bg-eb-cream py-2 pl-6 pr-2 text-sm font-bold uppercase tracking-wide text-eb-navy lg:col-start-1 lg:row-start-2 lg:inline-flex lg:w-fit lg:justify-start lg:self-start"
+          className="eb-cta group flex w-full items-center justify-between gap-3 rounded-lg bg-eb-cream py-2 pl-6 pr-2 text-sm font-bold uppercase tracking-wide text-eb-navy lg:col-start-1 lg:row-start-2 lg:inline-flex lg:w-fit lg:justify-start lg:self-start"
         >
           Contact Us
-          <span className="eb-square grid h-9 w-9 place-items-center rounded bg-eb-blue text-white">
+          <span className="eb-square grid h-9 w-9 place-items-center rounded-lg bg-eb-blue text-white">
             <ArrowUpRight className="h-5 w-5" />
           </span>
         </Link>

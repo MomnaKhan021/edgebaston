@@ -35,7 +35,7 @@ function Medal({ className }: { className?: string }) {
 export function Results() {
   return (
     <section className="bg-eb-navy">
-      <div className="mx-auto max-w-[1440px] px-4 pb-10 pt-14 lg:px-10 lg:pb-10 lg:pt-20">
+      <div className="mx-auto max-w-[1440px] px-4 pb-10 pt-10 lg:px-10 lg:pb-10 lg:pt-20">
         {/* Heading block (gap 16, centered) */}
         <div className="eb-stagger mx-auto max-w-3xl text-center">
           <p className="text-[16px] font-medium text-white">Outcome Spotlight</p>
@@ -107,9 +107,9 @@ export function Results() {
                   A stronger way to show where students progress after Edgbaston College, from leading UK universities to competitive degree pathways.
                 </p>
               </div>
-              <button className="eb-cta group col-span-2 flex items-center justify-between gap-4 rounded bg-eb-cream py-3 pl-5 pr-3 text-left lg:col-span-1 lg:col-start-3 lg:row-start-3">
+              <button className="eb-cta group col-span-2 flex items-center justify-between gap-4 rounded-lg bg-eb-cream py-3 pl-5 pr-3 text-left lg:col-span-1 lg:col-start-3 lg:row-start-3">
                 <span className="text-[13px] font-bold uppercase tracking-wide text-eb-navy sm:text-[14px]">View Results &amp; Destinations</span>
-                <span className="eb-square grid h-11 w-11 shrink-0 place-items-center rounded bg-eb-blue text-white ring-1 ring-eb-cream">
+                <span className="eb-square grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-eb-blue text-white ring-1 ring-eb-cream">
                   <ArrowUpRight className="h-5 w-5" />
                 </span>
               </button>

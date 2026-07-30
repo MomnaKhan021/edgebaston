@@ -84,7 +84,7 @@ export function Stories() {
   const featured = STUDENTS[0];
   return (
     <section className="bg-eb-cream">
-      <div className="mx-auto max-w-[1440px] px-4 py-12 lg:px-[60px] lg:py-20">
+      <div className="mx-auto max-w-[1440px] px-4 py-10 lg:px-[60px] lg:py-20">
         <Slider
           label="Success Stories"
           title="Real Students. Real Grade Transformation."

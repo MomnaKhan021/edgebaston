@@ -45,10 +45,10 @@ export function Hero() {
           {/* CTA — fit-content width */}
           <Link
             href="/contact"
-            className="eb-cta group flex w-full items-center justify-between gap-3 self-start rounded bg-white py-1.5 pl-5 pr-1.5 text-sm font-bold uppercase tracking-wide text-eb-navy sm:inline-flex sm:w-fit sm:justify-start lg:col-start-1 lg:row-start-2"
+            className="eb-cta group flex w-full items-center justify-between gap-3 self-start rounded-lg bg-white py-1.5 pl-5 pr-1.5 text-sm font-bold uppercase tracking-wide text-eb-navy sm:inline-flex sm:w-fit sm:justify-start lg:col-start-1 lg:row-start-2"
           >
             Enquire About Course
-            <span className="eb-square grid h-11 w-11 shrink-0 place-items-center rounded bg-eb-blue text-white ring-1 ring-white/90">
+            <span className="eb-square grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-eb-blue text-white ring-2 ring-white">
               <ArrowUpRight className="h-5 w-5" />
             </span>
           </Link>

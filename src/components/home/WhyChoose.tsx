@@ -47,7 +47,7 @@ function Card({ icon, title, body }: (typeof ITEMS)[number]) {
 export function WhyChoose() {
   return (
     <section className="bg-white">
-      <div className="mx-auto max-w-[1440px] px-4 py-12 lg:px-[60px] lg:py-20">
+      <div className="mx-auto max-w-[1440px] px-4 py-10 lg:px-[60px] lg:py-20">
         <h2 className="mx-auto max-w-4xl text-center text-[26px] font-extrabold leading-[1.1] tracking-tight text-black sm:text-4xl sm:leading-[1.02] lg:text-[62px]">
           Why Students Choose Edgbaston College
         </h2>

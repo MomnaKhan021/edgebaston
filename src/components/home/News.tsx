@@ -12,7 +12,7 @@ const NEWS = [
 export function News() {
   return (
     <section className="bg-eb-cream">
-      <div className="mx-auto max-w-[1440px] px-4 py-12 lg:px-[60px] lg:py-20">
+      <div className="mx-auto max-w-[1440px] px-4 py-10 lg:px-[60px] lg:py-20">
         <Slider
           label="News & Events"
           title="What's happening at Edgbaston"
@@ -36,9 +36,9 @@ export function News() {
                 News • {n.date}
               </p>
               <h3 className="mt-2 text-[18px] font-bold leading-snug text-eb-navy transition group-hover:text-eb-blue sm:mt-3 sm:text-[22px]">{n.title}</h3>
-              <span className="eb-cta mt-4 inline-flex items-center gap-3 rounded bg-white py-1.5 pl-5 pr-1.5 text-xs font-bold uppercase tracking-wide text-eb-navy shadow-sm">
+              <span className="eb-cta mt-4 inline-flex items-center gap-3 rounded-lg bg-white py-1.5 pl-5 pr-1.5 text-xs font-bold uppercase tracking-wide text-eb-navy shadow-sm">
                 Read Article
-                <span className="eb-square grid h-8 w-8 place-items-center rounded bg-eb-blue text-white">
+                <span className="eb-square grid h-8 w-8 place-items-center rounded-lg bg-eb-blue text-white">
                   <ArrowUpRight className="h-4 w-4" />
                 </span>
               </span>

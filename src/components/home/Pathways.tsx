@@ -32,7 +32,7 @@ const CARDS = [
 export function Pathways() {
   return (
     <section className="bg-eb-cream">
-      <div className="mx-auto max-w-[1440px] px-4 py-12 lg:px-[60px] lg:py-20">
+      <div className="mx-auto max-w-[1440px] px-4 py-10 lg:px-[60px] lg:py-20">
         <Slider
           label="Courses We Offer"
           title="Choose the A-Level Pathway That Fits Your Goal"
@@ -58,7 +58,7 @@ export function Pathways() {
               <div className="relative mt-2 aspect-[16/11] w-full overflow-hidden rounded-lg bg-white sm:mt-3">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={c.img} alt={c.title} className={`h-full w-full object-cover ${c.objPos} transition duration-500 group-hover:scale-105`} />
-                <span className="eb-square absolute bottom-3 right-3 grid h-12 w-12 place-items-center rounded bg-eb-blue text-white">
+                <span className="eb-square absolute bottom-3 right-3 grid h-12 w-12 place-items-center rounded-lg bg-eb-blue text-white">
                   <ArrowUpRight className="h-5 w-5" />
                 </span>
               </div>

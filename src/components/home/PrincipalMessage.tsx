@@ -15,10 +15,10 @@ export function PrincipalMessage() {
         />
         <Link
           href="/about"
-          className="eb-cta group mt-6 inline-flex items-center gap-3 rounded bg-white py-2 pl-6 pr-2 text-sm font-bold uppercase tracking-wide text-eb-navy sm:mt-10"
+          className="eb-cta group mt-6 inline-flex items-center gap-3 rounded-lg bg-white py-2 pl-6 pr-2 text-sm font-bold uppercase tracking-wide text-eb-navy sm:mt-10"
         >
           Read more
-          <span className="eb-square grid h-9 w-9 place-items-center rounded bg-eb-blue text-white">
+          <span className="eb-square grid h-9 w-9 place-items-center rounded-lg bg-eb-blue text-white">
             <ArrowUpRight className="h-5 w-5" />
           </span>
         </Link>
