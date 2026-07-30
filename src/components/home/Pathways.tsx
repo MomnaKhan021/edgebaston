@@ -42,20 +42,20 @@ export function Pathways() {
           {CARDS.map((c) => (
             <article
               key={c.title}
-              className="group flex w-[85%] shrink-0 snap-center flex-col rounded-xl bg-white p-5 sm:w-[440px] sm:snap-start sm:p-6 lg:w-[calc((100%-3rem)/3)]"
+              className="group flex w-[80%] shrink-0 snap-center flex-col rounded-xl bg-white p-4 sm:w-[440px] sm:snap-start sm:p-6 lg:w-[calc((100%-3rem)/3)]"
             >
-              <div className="flex flex-1 flex-col gap-3">
-                <h3 className="text-[24px] font-bold leading-tight text-eb-navy sm:text-[28px]">{c.title}</h3>
-                <p className="text-[15px] leading-snug text-black sm:text-[16px]">{c.body}</p>
+              <div className="flex flex-1 flex-col gap-2.5 sm:gap-3">
+                <h3 className="text-[20px] font-bold leading-tight text-eb-navy sm:text-[28px]">{c.title}</h3>
+                <p className="text-[14px] leading-snug text-black sm:text-[16px]">{c.body}</p>
                 <div className="flex items-center justify-between gap-3 rounded-lg bg-eb-cream p-3">
-                  <CountUp to={c.stat} decimals={1} suffix="%" className="shrink-0 text-[22px] font-extrabold text-eb-blue sm:text-[30px]" />
-                  <span className="text-right text-[11px] font-semibold leading-snug text-eb-blue sm:text-[12px]">
+                  <CountUp to={c.stat} decimals={1} suffix="%" className="shrink-0 text-[20px] font-extrabold text-eb-blue sm:text-[30px]" />
+                  <span className="text-right text-[10px] font-semibold leading-snug text-eb-blue sm:text-[12px]">
                     {c.statLabel}
                   </span>
                 </div>
               </div>
               {/* Image (inset within the card, rounded) */}
-              <div className="relative mt-3 aspect-[16/11] w-full overflow-hidden rounded-lg bg-eb-cream">
+              <div className="relative mt-2 aspect-[16/11] w-full overflow-hidden rounded-lg bg-white sm:mt-3">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={c.img} alt={c.title} className={`h-full w-full object-cover ${c.objPos} transition duration-500 group-hover:scale-105`} />
                 <span className="eb-square absolute bottom-3 right-3 grid h-12 w-12 place-items-center rounded bg-eb-blue text-white">
