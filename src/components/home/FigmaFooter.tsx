@@ -1,6 +1,8 @@
 import Link from "next/link";
-import { Socials } from "@/components/contact/Socials";
 import { FooterLinks } from "./FooterLinks";
+
+const MAP_URL =
+  "https://www.google.com/maps/place/Edgbaston+College/@52.4700978,-1.9147819,15z/data=!4m5!3m4!1s0x0:0xe22ea36ee96914c1!8m2!3d52.4700978!4d-1.9147819";
 
 const LINKS = [
   "Enquire About A Course",
@@ -68,17 +70,13 @@ export function FigmaFooter() {
                 <ul className="mt-10 space-y-4 text-[15px]">
                   <li><a href="tel:01213060182" className="flex items-start gap-3 hover:text-white"><Arrow /> 0121 306 0182</a></li>
                   <li><a href="mailto:enquiries@edgbastoncollege.co.uk" className="flex items-start gap-3 break-all hover:text-white"><Arrow /> enquiries@edgbastoncollege.co.uk</a></li>
-                  <li><a href="https://www.google.com/maps/search/?api=1&query=37+George+Road+Edgbaston+Birmingham+B15+1PL" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 hover:text-white"><Arrow /> Get Directions</a></li>
+                  <li><a href={MAP_URL} target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 hover:text-white"><Arrow /> Get Directions</a></li>
                 </ul>
-                <p className="mt-10 text-sm font-semibold text-white/70">Follow Us</p>
-                <div className="mt-3">
-                  <Socials variant="dark" />
-                </div>
               </div>
-              <div className="min-h-[240px] overflow-hidden rounded-xl">
+              <a href={MAP_URL} target="_blank" rel="noopener noreferrer" aria-label="Open Edgbaston College on Google Maps" className="block min-h-[240px] overflow-hidden rounded-xl">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/figma/map.png" alt="Map to Edgbaston College" className="h-full w-full object-cover" />
-              </div>
+              </a>
             </div>
           </div>
         </div>
