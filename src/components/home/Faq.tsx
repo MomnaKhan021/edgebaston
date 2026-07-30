@@ -35,36 +35,29 @@ export function Faq() {
   const [open, setOpen] = useState<number | null>(null);
   return (
     <section className="bg-white">
-      <div className="mx-auto grid max-w-[1440px] gap-12 px-4 py-12 lg:grid-cols-[0.85fr_1.15fr] lg:px-[60px] lg:py-20">
-        <div>
-          <h2 className="text-4xl font-extrabold leading-[1.02] tracking-tight text-black lg:text-[62px]">
+      <div className="mx-auto flex max-w-[1440px] flex-col gap-6 px-4 py-12 lg:grid lg:grid-cols-[0.85fr_1.15fr] lg:gap-12 lg:px-[60px] lg:py-20">
+        {/* Heading + subtitle */}
+        <div className="text-center lg:col-start-1 lg:row-start-1 lg:text-left">
+          <h2 className="text-[26px] font-extrabold leading-[1.1] tracking-tight text-black sm:text-4xl sm:leading-[1.02] lg:text-[62px]">
             A-Level retake &amp; resit FAQ
           </h2>
-          <p className="mt-6 max-w-md text-[15px] leading-relaxed text-neutral-600">
+          <p className="mx-auto mt-3 max-w-md text-[14px] leading-relaxed text-neutral-600 sm:mt-6 sm:text-[15px] lg:mx-0">
             Quick answers to the most common questions about retaking and
             resitting A-Levels in Birmingham.
           </p>
-          <Link
-            href="/contact"
-            className="eb-cta group mt-8 inline-flex items-center gap-3 rounded bg-eb-cream py-2 pl-6 pr-2 text-sm font-bold uppercase tracking-wide text-eb-navy"
-          >
-            Contact Us
-            <span className="eb-square grid h-9 w-9 place-items-center rounded bg-eb-blue text-white">
-              <ArrowUpRight className="h-5 w-5" />
-            </span>
-          </Link>
         </div>
 
-        <div>
+        {/* Accordion */}
+        <div className="lg:col-start-2 lg:row-span-2 lg:row-start-1">
           {FAQS.map((item, i) => {
             const isOpen = open === i;
             return (
               <div key={item.q} className="border-b border-dashed border-neutral-300">
                 <button
                   onClick={() => setOpen(isOpen ? null : i)}
-                  className="flex w-full items-center justify-between gap-6 py-6 text-left"
+                  className="flex w-full items-center justify-between gap-6 py-4 text-left sm:py-6"
                 >
-                  <span className="text-xl font-bold text-eb-navy lg:text-[28px]">
+                  <span className="text-[16px] font-bold text-eb-navy sm:text-xl lg:text-[28px]">
                     {item.q}
                   </span>
                   <span className="grid h-7 w-7 shrink-0 place-items-center text-eb-navy">
@@ -75,7 +68,7 @@ export function Faq() {
                   </span>
                 </button>
                 {isOpen && (
-                  <p className="-mt-2 pb-6 pr-10 text-[15px] leading-relaxed text-neutral-600">
+                  <p className="-mt-1 pb-5 pr-10 text-[14px] leading-relaxed text-neutral-600 sm:-mt-2 sm:pb-6 sm:text-[15px]">
                     {item.a}
                   </p>
                 )}
@@ -83,6 +76,17 @@ export function Faq() {
             );
           })}
         </div>
+
+        {/* Contact Us — full-width at the bottom on mobile, left column on desktop */}
+        <Link
+          href="/contact"
+          className="eb-cta group flex w-full items-center justify-between gap-3 rounded bg-eb-cream py-2 pl-6 pr-2 text-sm font-bold uppercase tracking-wide text-eb-navy lg:col-start-1 lg:row-start-2 lg:inline-flex lg:w-fit lg:justify-start lg:self-start"
+        >
+          Contact Us
+          <span className="eb-square grid h-9 w-9 place-items-center rounded bg-eb-blue text-white">
+            <ArrowUpRight className="h-5 w-5" />
+          </span>
+        </Link>
       </div>
     </section>
   );
