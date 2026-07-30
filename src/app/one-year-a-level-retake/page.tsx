@@ -69,6 +69,54 @@ const FAQ = [
   { q: "Is accommodation available for retake students?", a: "Yes. We can help arrange student accommodation nearby, including The Elgar Residences, Ernest Somers House and Edgbaston Court." },
 ];
 
+const PAGE_URL = "https://edgbaston.vercel.app/one-year-a-level-retake";
+const SHARE_TITLE = "One Year A-Level Retake — Edgbaston College";
+
+function ShareLinks() {
+  const u = encodeURIComponent(PAGE_URL);
+  const t = encodeURIComponent(SHARE_TITLE);
+  const items = [
+    {
+      label: "Share on Facebook",
+      href: `https://www.facebook.com/sharer/sharer.php?u=${u}`,
+      icon: <path d="M13 8h2V5h-2c-1.7 0-3 1.3-3 3v1.5H8V12h2v6h2.5v-6H15l.5-2.5H12.5V8c0-.6.4-1 1-1z" fill="currentColor" />,
+    },
+    {
+      label: "Share on X",
+      href: `https://twitter.com/intent/tweet?url=${u}&text=${t}`,
+      icon: <path d="M6 5l5.2 6.9L6.3 18H8l3.7-4.1L14.7 18H18l-5.5-7.3L17.4 5h-1.7l-3.4 3.8L9.4 5H6zm2.3 1.3h1l6.5 8.6h-1L8.3 6.3z" fill="currentColor" />,
+    },
+    {
+      label: "Share by email",
+      href: `mailto:?subject=${t}&body=${u}`,
+      icon: (
+        <>
+          <rect x="4.5" y="6" width="15" height="12" rx="2" fill="none" stroke="currentColor" strokeWidth="1.5" />
+          <path d="M5 7l7 5 7-5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </>
+      ),
+    },
+  ];
+  return (
+    <div className="flex items-center gap-2">
+      {items.map((s) => (
+        <a
+          key={s.label}
+          href={s.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={s.label}
+          className="grid h-9 w-9 place-items-center rounded-full bg-eb-cream text-eb-navy transition hover:bg-eb-navy hover:text-white"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden>
+            {s.icon}
+          </svg>
+        </a>
+      ))}
+    </div>
+  );
+}
+
 function StatBar({ label, value, pct }: { label: string; value: number; pct: number }) {
   return (
     <div>
@@ -112,23 +160,30 @@ export default function RetakePage() {
         <img src="/figma/retake-hero.png" alt="Edgbaston College retake students" className="absolute inset-0 h-full w-full object-cover object-[center_30%]" />
         <div className="absolute inset-0 bg-gradient-to-r from-eb-navy/85 via-eb-navy/45 to-eb-navy/10" />
         <div className="absolute inset-0 bg-gradient-to-t from-eb-navy/70 to-transparent" />
-        <div className="relative mx-auto flex min-h-[380px] max-w-[1440px] flex-col justify-end px-4 pb-9 pt-32 lg:min-h-[460px] lg:px-16 lg:pb-12">
-          <p className="font-mono text-xs uppercase tracking-[0.16em] text-white/80">A-Level Programme</p>
-          <h1 className="mt-3 max-w-2xl text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-[56px]">
+        <div className="relative mx-auto flex min-h-[420px] max-w-[1440px] flex-col justify-end px-4 pb-16 pt-32 lg:min-h-[460px] lg:px-16 lg:pb-14">
+          <h1 className="max-w-2xl text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-[56px]">
             One Year A-Level Retake
           </h1>
         </div>
       </section>
 
-      {/* Breadcrumb */}
-      <div className="border-b bg-white">
-        <nav className="mx-auto max-w-[1440px] px-4 py-4 text-sm text-muted-foreground lg:px-16">
-          <Link href="/" className="hover:text-eb-navy">Home</Link>
-          <span className="px-2">/</span>
-          <Link href="/courses" className="hover:text-eb-navy">Courses</Link>
-          <span className="px-2">/</span>
-          <span className="text-eb-navy">One Year A-Level Retake</span>
-        </nav>
+      {/* Breadcrumb + share */}
+      <div className="relative z-10 bg-white sm:border-b">
+        <div className="mx-auto max-w-[1440px] px-4 lg:px-16">
+          <div className="-mt-9 flex flex-col rounded-xl bg-white px-4 py-3.5 shadow-[0_12px_30px_rgba(14,47,73,0.14)] ring-1 ring-black/5 sm:mt-0 sm:flex-row sm:items-center sm:justify-between sm:rounded-none sm:px-0 sm:py-4 sm:shadow-none sm:ring-0">
+            <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground">
+              <Link href="/" className="hover:text-eb-navy">Home</Link>
+              <span className="px-2 text-neutral-300">/</span>
+              <Link href="/courses" className="hover:text-eb-navy">Courses</Link>
+              <span className="px-2 text-neutral-300">/</span>
+              <span className="font-medium text-eb-navy">One Year A-Level Retake</span>
+            </nav>
+            <div className="mt-3 hidden items-center gap-3 sm:mt-0 sm:flex">
+              <span className="text-sm font-medium text-eb-navy">Share This Page</span>
+              <ShareLinks />
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Intro + stats */}
@@ -136,17 +191,18 @@ export default function RetakePage() {
         <section className="bg-white">
           <div className="mx-auto max-w-[1320px] px-4 py-10 lg:px-16 lg:py-16">
             <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-14">
-              <div className="overflow-hidden rounded-2xl">
+              <div className="order-2 overflow-hidden rounded-2xl lg:order-1">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/figma/retake-intro.png" alt="Students at Edgbaston College" className="aspect-[4/3] w-full object-cover" />
               </div>
-              <div className="eb-stagger">
-                <p className="font-mono text-xs uppercase tracking-[0.16em] text-eb-navy/60">The Retake Programme</p>
+              <div className="eb-stagger order-1 lg:order-2">
+                <p className="font-mono text-xs uppercase tracking-[0.16em] text-eb-navy/60">Birmingham Retake Specialists</p>
                 <h2 className="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-eb-ink lg:text-[40px]">
-                  Birmingham&apos;s most successful A-Level retake programme. Your A-Levels Online.
+                  Birmingham&apos;s most successful A-Level retake programme. Your A-Levels Online
                 </h2>
                 <p className="mt-5 text-[15px] leading-relaxed text-neutral-600">
-                  Our intensive one-year programme is designed for students who want to significantly improve their grades and reapply to top universities — with the small classes, frequent exam practice and personalised support that make the difference.
+                  Yes, you can retake your{" "}
+                  <span className="font-semibold text-eb-navy">A-Levels in Birmingham at Edgbaston College</span>. We turn disappointing results into exceptional outcomes, winning students higher grades and places at top universities, including Medicine, Dentistry and the Russell Group.
                 </p>
               </div>
             </div>
