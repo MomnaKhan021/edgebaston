@@ -20,23 +20,23 @@ export function Hero() {
       <div className="relative mx-auto flex min-h-[720px] max-w-[1440px] flex-col justify-end px-4 pb-8 pt-36 lg:min-h-[780px] lg:px-[60px] lg:pb-14">
         <div className="grid gap-6 lg:grid-cols-[1fr_440px] lg:items-end lg:gap-8">
           {/* Heading — wraps to three lines like the design */}
-          <h1 className="text-[34px] font-bold leading-[1.02] tracking-tight text-white sm:text-5xl lg:col-start-1 lg:row-start-1 lg:max-w-[760px] lg:text-[62px]">
+          <h1 className="text-[28px] font-bold leading-[1.08] tracking-tight text-white sm:text-5xl sm:leading-[1.02] lg:col-start-1 lg:row-start-1 lg:max-w-[760px] lg:text-[62px]">
             Birmingham&apos;s Top-Performing Independent Sixth Form College
           </h1>
 
           {/* Stats card */}
           <div className="relative rounded-2xl bg-white p-3 shadow-xl lg:col-start-2 lg:row-span-2 lg:self-end">
             {/* Badge hangs from the top-right edge (ribbon peeks at the top) */}
-            <Medal className="absolute right-5 top-0 h-16 w-16" />
-            <div className="px-3 pb-4 pr-16 pt-3">
+            <Medal className="absolute right-4 top-0 h-12 w-12 sm:right-5 sm:h-16 sm:w-16" />
+            <div className="px-3 pb-3 pr-14 pt-2 sm:pb-4 sm:pr-16 sm:pt-3">
               <div className="flex items-baseline gap-2.5">
-                <span className="text-[43px] font-extrabold leading-none text-eb-blue">#1</span>
-                <span className="max-w-[190px] text-[17px] font-medium leading-snug text-eb-navy">
+                <span className="text-[32px] font-extrabold leading-none text-eb-blue sm:text-[43px]">#1</span>
+                <span className="max-w-[190px] text-[14px] font-medium leading-snug text-eb-navy sm:text-[17px]">
                   for Value-Added in Birmingham
                 </span>
               </div>
             </div>
-            <div className="rounded-xl bg-eb-cream px-6">
+            <div className="rounded-xl bg-eb-cream px-4 sm:px-6">
               <StatRow label="A Level Results A*-A" to={24} />
               <StatRow label="A Level Results A*-B" to={57} />
             </div>
@@ -45,7 +45,7 @@ export function Hero() {
           {/* CTA — fit-content width */}
           <Link
             href="/contact"
-            className="eb-cta group inline-flex w-fit items-center gap-3 self-start rounded bg-white py-1.5 pl-5 pr-1.5 text-sm font-bold uppercase tracking-wide text-eb-navy lg:col-start-1 lg:row-start-2"
+            className="eb-cta group flex w-full items-center justify-between gap-3 self-start rounded bg-white py-1.5 pl-5 pr-1.5 text-sm font-bold uppercase tracking-wide text-eb-navy sm:inline-flex sm:w-fit sm:justify-start lg:col-start-1 lg:row-start-2"
           >
             Enquire About Course
             <span className="eb-square grid h-11 w-11 shrink-0 place-items-center rounded bg-eb-blue text-white ring-1 ring-white/90">
@@ -80,9 +80,9 @@ function Medal({ className }: { className?: string }) {
 
 function StatRow({ label, to }: { label: string; to: number }) {
   return (
-    <div className="flex items-center justify-between py-4">
-      <span className="text-[18px] font-medium text-eb-navy">{label}</span>
-      <CountUp to={to} suffix="%" className="text-[40px] font-extrabold leading-none text-eb-blue" />
+    <div className="flex items-center justify-between py-3 sm:py-4">
+      <span className="text-[14px] font-medium text-eb-navy sm:text-[18px]">{label}</span>
+      <CountUp to={to} suffix="%" className="text-[24px] font-extrabold leading-none text-eb-blue sm:text-[40px]" />
     </div>
   );
 }
