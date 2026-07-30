@@ -79,6 +79,8 @@ export function OfferBar() {
 
   if (!mounted || !open) return null;
   if (pathname?.startsWith("/admin")) return null;
+  // Course pages render their own inline offer band under the breadcrumb.
+  if (pathname === "/one-year-a-level-retake") return null;
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-50">
