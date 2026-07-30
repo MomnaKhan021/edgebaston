@@ -13,11 +13,11 @@ export function Hero() {
       <img
         src="/figma/hero-building.png"
         alt="Edgbaston College building"
-        className="absolute inset-0 h-full w-full object-cover"
+        className="absolute inset-0 h-full w-full object-cover object-[center_28%]"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/25" />
 
-      <div className="relative mx-auto flex min-h-[720px] max-w-[1440px] flex-col justify-end px-4 pb-8 pt-36 lg:min-h-[780px] lg:px-[60px] lg:pb-14">
+      <div className="relative mx-auto flex min-h-[600px] max-w-[1440px] flex-col justify-end px-4 pb-8 pt-32 sm:min-h-[720px] sm:pt-36 lg:min-h-[780px] lg:px-[60px] lg:pb-14">
         <div className="grid gap-3 lg:grid-cols-[1fr_440px] lg:items-end lg:gap-8">
           {/* Heading — wraps to three lines like the design */}
           <h1 className="text-center text-[30px] font-bold leading-[1.1] tracking-tight text-white sm:text-left sm:text-5xl sm:leading-[1.02] lg:col-start-1 lg:row-start-1 lg:max-w-[760px] lg:text-[62px]">
