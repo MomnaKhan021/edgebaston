@@ -15,6 +15,7 @@ export function Hero() {
         alt="Edgbaston College building"
         className="absolute inset-0 h-full w-full object-cover object-[center_28%]"
       />
+      <div className="absolute inset-0 bg-black/20" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/25" />
 
       <div className="relative mx-auto flex min-h-[600px] max-w-[1440px] flex-col justify-end px-4 pb-8 pt-32 sm:min-h-[720px] sm:pt-36 lg:min-h-[780px] lg:px-[60px] lg:pb-14">
@@ -45,7 +46,7 @@ export function Hero() {
           {/* CTA — fit-content width */}
           <Link
             href="/contact"
-            className="eb-cta group flex w-full items-center justify-between gap-3 self-start rounded-lg bg-white py-1.5 pl-5 pr-1.5 text-sm font-bold uppercase tracking-wide text-eb-navy sm:inline-flex sm:w-fit sm:justify-start lg:col-start-1 lg:row-start-2"
+            className="eb-cta group flex w-full items-center justify-between gap-3 self-start rounded-lg bg-white py-2 pl-5 pr-2 text-sm font-bold uppercase tracking-wide text-eb-navy sm:inline-flex sm:w-fit sm:justify-start lg:col-start-1 lg:row-start-2"
           >
             Enquire About Course
             <span className="eb-square grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-eb-blue text-white ring-2 ring-white">

@@ -1,5 +1,5 @@
 import { Slider } from "./Slider";
-import { ArrowUpRight } from "./icons";
+import { ArrowRight } from "./icons";
 import { CountUp } from "./CountUp";
 
 const CARDS = [
@@ -36,8 +36,9 @@ export function Pathways() {
         <Slider
           label="Courses We Offer"
           title="Choose the A-Level Pathway That Fits Your Goal"
-          labelClassName="text-black"
+          labelClassName="normal-case text-black"
           titleClassName="text-black"
+          trackClassName="mt-8 gap-4 sm:mt-12 sm:gap-6"
         >
           {CARDS.map((c) => (
             <article
@@ -59,7 +60,7 @@ export function Pathways() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={c.img} alt={c.title} className={`h-full w-full object-cover ${c.objPos} transition duration-500 group-hover:scale-105`} />
                 <span className="eb-square absolute bottom-3 right-3 grid h-12 w-12 place-items-center rounded-lg bg-eb-blue text-white">
-                  <ArrowUpRight className="h-5 w-5" />
+                  <ArrowRight className="h-5 w-5" />
                 </span>
               </div>
             </article>

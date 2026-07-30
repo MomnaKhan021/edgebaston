@@ -15,7 +15,7 @@ function Arrow() {
  * "Useful Links" — a collapsible accordion on mobile (toggle with the +/−),
  * always expanded on desktop.
  */
-export function FooterLinks({ links }: { links: string[] }) {
+export function FooterLinks({ links }: { links: { label: string; href: string }[] }) {
   const [open, setOpen] = useState(false);
   return (
     <div>
@@ -33,9 +33,9 @@ export function FooterLinks({ links }: { links: string[] }) {
       </button>
       <ul className={(open ? "grid" : "hidden") + " mt-6 grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-3 lg:mt-8 lg:!block lg:space-y-5"}>
         {links.map((l) => (
-          <li key={l}>
-            <Link href="#" className="flex items-start gap-3 text-[14px] text-white/85 transition hover:text-white lg:text-[15px]">
-              <Arrow /> {l}
+          <li key={l.label}>
+            <Link href={l.href} className="flex items-start gap-3 text-[14px] text-white/85 transition hover:text-white lg:text-[15px]">
+              <Arrow /> {l.label}
             </Link>
           </li>
         ))}

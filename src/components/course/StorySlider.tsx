@@ -39,7 +39,7 @@ export function StorySlider({ children }: { children: React.ReactNode }) {
           type="button"
           aria-label="Previous stories"
           onClick={() => nudge(-1)}
-          className="grid h-10 w-10 cursor-pointer place-items-center rounded bg-white text-eb-navy shadow-sm transition hover:bg-eb-navy hover:text-white"
+          className="grid h-10 w-10 cursor-pointer place-items-center rounded border border-black/10 bg-white text-eb-navy transition hover:bg-eb-navy hover:text-white"
         >
           <Arrow dir="left" />
         </button>
@@ -47,7 +47,7 @@ export function StorySlider({ children }: { children: React.ReactNode }) {
           type="button"
           aria-label="Next stories"
           onClick={() => nudge(1)}
-          className="grid h-10 w-10 cursor-pointer place-items-center rounded bg-white text-eb-navy shadow-sm transition hover:bg-eb-navy hover:text-white"
+          className="grid h-10 w-10 cursor-pointer place-items-center rounded border border-black/10 bg-white text-eb-navy transition hover:bg-eb-navy hover:text-white"
         >
           <Arrow dir="right" />
         </button>

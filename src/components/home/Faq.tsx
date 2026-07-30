@@ -41,7 +41,7 @@ export function Faq() {
           <h2 className="text-[26px] font-extrabold leading-[1.1] tracking-tight text-black sm:text-4xl sm:leading-[1.02] lg:text-[62px]">
             A-Level retake &amp; resit FAQ
           </h2>
-          <p className="mx-auto mt-3 max-w-md text-[14px] leading-relaxed text-neutral-600 sm:mt-6 sm:text-[15px] lg:mx-0">
+          <p className="mx-auto mt-3 max-w-md text-[14px] leading-relaxed text-eb-navy/75 sm:mt-6 sm:text-[15px] lg:mx-0">
             Quick answers to the most common questions about retaking and
             resitting A-Levels in Birmingham.
           </p>
@@ -68,7 +68,7 @@ export function Faq() {
                   </span>
                 </button>
                 {isOpen && (
-                  <p className="-mt-1 pb-5 pr-10 text-[14px] leading-relaxed text-neutral-600 sm:-mt-2 sm:pb-6 sm:text-[15px]">
+                  <p className="-mt-1 pb-5 pr-10 text-[14px] leading-relaxed text-eb-navy/75 sm:-mt-2 sm:pb-6 sm:text-[15px]">
                     {item.a}
                   </p>
                 )}

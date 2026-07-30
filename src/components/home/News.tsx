@@ -32,11 +32,11 @@ export function News() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
               </div>
-              <p className="mt-4 text-[13px] font-semibold uppercase tracking-wide text-eb-blue">
+              <p className="mt-4 font-mono text-[13px] font-medium uppercase tracking-wide text-eb-blue">
                 News • {n.date}
               </p>
               <h3 className="mt-2 text-[18px] font-bold leading-snug text-eb-navy transition group-hover:text-eb-blue sm:mt-3 sm:text-[22px]">{n.title}</h3>
-              <span className="eb-cta mt-4 inline-flex items-center gap-3 rounded-lg bg-white py-1.5 pl-5 pr-1.5 text-xs font-bold uppercase tracking-wide text-eb-navy shadow-sm">
+              <span className="eb-cta mt-4 flex w-full items-center justify-between gap-3 rounded-lg bg-white py-1.5 pl-5 pr-1.5 text-xs font-bold uppercase tracking-wide text-eb-navy shadow-sm">
                 Read Article
                 <span className="eb-square grid h-8 w-8 place-items-center rounded-lg bg-eb-blue text-white">
                   <ArrowUpRight className="h-4 w-4" />

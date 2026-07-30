@@ -1,16 +1,27 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Slider } from "./Slider";
+
+/** Double-triangle "grade jump" glyph between the before/after grades. */
+function GradeJump() {
+  return (
+    <svg width="13" height="8" viewBox="0 0 13 8" fill="currentColor" aria-hidden className="inline-block shrink-0">
+      <path d="M0 0l5 4-5 4V0zM7 0l5 4-5 4V0z" />
+    </svg>
+  );
+}
 
 /** White grade box: a cream grade pill + the course, matching the Figma. */
 function GradeBox({ grade, course }: { grade: string; course: string }) {
+  const [from, to] = grade.split("→").map((s) => s.trim());
   return (
     <div className="rounded-lg bg-white p-2.5">
-      <span className="inline-block rounded-full bg-eb-cream px-2 py-0.5 text-[11px] font-bold text-eb-navy">
-        {grade}
+      <span className="inline-flex items-center gap-1.5 rounded-full bg-eb-cream px-2 py-0.5 font-mono text-[11px] font-bold text-eb-navy">
+        {from} <GradeJump /> {to}
       </span>
-      <p className="mt-2 text-[12px] font-medium uppercase leading-snug tracking-wide text-eb-navy">
+      <p className="mt-2 font-mono text-[11px] font-medium uppercase leading-snug tracking-wide text-eb-navy">
         {course}
       </p>
     </div>
@@ -106,9 +117,9 @@ export function Stories() {
             </div>
             <div className="flex flex-col justify-between p-6">
               <p className="text-[18px] font-bold leading-[1.35] text-eb-navy">&ldquo;{featured.quote}&rdquo;</p>
-              <button className="mt-6 self-start text-[12px] font-semibold uppercase tracking-wide text-black underline underline-offset-4">
+              <Link href="/about" className="mt-6 self-start text-[12px] font-semibold uppercase tracking-wide text-black underline underline-offset-4">
                 View full profile
-              </button>
+              </Link>
             </div>
           </div>
 

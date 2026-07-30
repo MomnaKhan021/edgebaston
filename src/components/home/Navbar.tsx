@@ -69,13 +69,19 @@ export function Navbar({ variant = "overlay" }: { variant?: "overlay" | "solid" 
         {/* Mobile toggle */}
         <button
           type="button"
-          aria-label="Menu"
+          aria-label={open ? "Close menu" : "Menu"}
           onClick={() => setOpen((v) => !v)}
           className={`grid h-11 w-11 place-items-center rounded-full text-eb-navy shadow-sm lg:hidden ${pill}`}
         >
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-          </svg>
+          {open ? (
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+            </svg>
+          ) : (
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+            </svg>
+          )}
         </button>
       </div>
 

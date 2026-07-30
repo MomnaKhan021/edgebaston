@@ -1,3 +1,6 @@
+import Link from "next/link";
+import { ArrowUpRight } from "./icons";
+
 const ITEMS = [
   {
     icon: "/figma/why-1.svg",
@@ -37,7 +40,7 @@ function Card({ icon, title, body }: (typeof ITEMS)[number]) {
         style={{ aspectRatio: "1 / 1" }}
       />
       <h3 className="mt-4 text-[20px] font-bold leading-tight text-eb-navy sm:mt-6 sm:text-[28px]">{title}</h3>
-      <p className="mx-auto mt-2 max-w-xs text-[14px] leading-relaxed tracking-[-0.01em] text-neutral-600 sm:mt-3 sm:text-[16px]">
+      <p className="mx-auto mt-2 max-w-xs text-[14px] leading-relaxed text-eb-navy/80 sm:mt-3 sm:text-[16px]">
         {body}
       </p>
     </div>
@@ -48,7 +51,7 @@ export function WhyChoose() {
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-[1440px] px-4 py-10 lg:px-[60px] lg:py-20">
-        <h2 className="mx-auto max-w-4xl text-center text-[26px] font-extrabold leading-[1.1] tracking-tight text-black sm:text-4xl sm:leading-[1.02] lg:text-[62px]">
+        <h2 className="mx-auto max-w-4xl text-center text-[26px] font-extrabold leading-[1.1] text-black sm:text-4xl sm:leading-[1.02] lg:text-[62px] lg:tracking-tight">
           Why Students Choose Edgbaston College
         </h2>
         {/* Top row: three cards */}
@@ -63,6 +66,16 @@ export function WhyChoose() {
             <Card key={i.title} {...i} />
           ))}
         </div>
+        {/* Mobile-only CTA at the section bottom (matches the Figma mobile design) */}
+        <Link
+          href="/courses"
+          className="eb-cta group mt-4 flex w-full items-center justify-between gap-3 rounded-lg bg-eb-cream py-2 pl-5 pr-2 text-sm font-bold uppercase tracking-wide text-eb-navy lg:hidden"
+        >
+          View Results &amp; Destinations
+          <span className="eb-square grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-eb-blue text-white">
+            <ArrowUpRight className="h-5 w-5" />
+          </span>
+        </Link>
       </div>
     </section>
   );

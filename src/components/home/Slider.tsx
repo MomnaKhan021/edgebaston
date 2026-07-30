@@ -72,7 +72,7 @@ export function Slider({
           {label && (
             <p
               className={
-                "font-mono text-sm uppercase tracking-[0.12em] " +
+                "font-mono text-sm font-medium uppercase tracking-[0.12em] " +
                 (labelClassName ?? (dark ? "text-white/60" : "text-eb-blue"))
               }
             >
@@ -116,9 +116,12 @@ export function Slider({
 
       <div
         ref={trackRef}
-        className={`eb-noscroll -mx-4 flex snap-x snap-mandatory overflow-x-auto px-4 pb-2 lg:mx-0 lg:px-0 ${trackClassName}`}
+        className={`eb-noscroll -mx-4 flex snap-x snap-mandatory overflow-x-auto pb-2 sm:px-4 lg:mx-0 lg:px-0 ${trackClassName}`}
       >
+        {/* Edge spacers so the first/last slide can snap to the centre on mobile */}
+        <div aria-hidden className="w-[calc(10vw-1rem)] shrink-0 sm:hidden" />
         {children}
+        <div aria-hidden className="w-[calc(10vw-1rem)] shrink-0 sm:hidden" />
       </div>
     </div>
   );

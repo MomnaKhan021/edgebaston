@@ -185,7 +185,7 @@ function UnderlineLink({ href, children, external = false }: { href: string; chi
     <a
       href={href}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      className="font-mono text-[11px] font-bold uppercase tracking-wide text-white underline underline-offset-4 transition hover:text-white/80"
+      className="text-[12px] font-bold uppercase tracking-wide text-white underline underline-offset-[6px] transition hover:text-white/80"
     >
       {children}
     </a>
@@ -427,9 +427,9 @@ export default function RetakePage() {
             </div>
             <div className="grid flex-1 gap-6 sm:grid-cols-3 lg:gap-8">
               {TRANSFORMATIONS.map((t) => (
-                <div key={t.who} className="border-t border-white/15 pt-4 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0">
-                  <p className="flex items-center gap-2 text-[19px] font-extrabold text-white">
-                    {t.from} <span className="text-eb-blue"><DoubleArrow /></span> {t.to}
+                <div key={t.who}>
+                  <p className="text-[20px] font-extrabold tracking-tight text-white">
+                    {t.from} <span className="text-eb-blue">→</span> {t.to}
                   </p>
                   <p className="mt-1 text-[13px] text-white/70">{t.who}</p>
                 </div>
