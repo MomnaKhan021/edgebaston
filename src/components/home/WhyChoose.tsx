@@ -28,16 +28,16 @@ const ITEMS = [
 
 function Card({ icon, title, body }: (typeof ITEMS)[number]) {
   return (
-    <div className="eb-card group flex-1 rounded-2xl bg-eb-cream p-[42px] text-center">
+    <div className="eb-card group flex-1 rounded-2xl bg-eb-cream p-6 text-center sm:p-[42px]">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={icon}
         alt=""
-        className="mx-auto h-20 w-20 transition duration-300 group-hover:scale-110"
+        className="mx-auto h-12 w-12 transition duration-300 group-hover:scale-110 sm:h-20 sm:w-20"
         style={{ aspectRatio: "1 / 1" }}
       />
-      <h3 className="mt-6 text-[28px] font-bold leading-tight text-eb-navy">{title}</h3>
-      <p className="mx-auto mt-3 max-w-xs text-[16px] leading-relaxed tracking-[-0.01em] text-neutral-600">
+      <h3 className="mt-4 text-[20px] font-bold leading-tight text-eb-navy sm:mt-6 sm:text-[28px]">{title}</h3>
+      <p className="mx-auto mt-2 max-w-xs text-[14px] leading-relaxed tracking-[-0.01em] text-neutral-600 sm:mt-3 sm:text-[16px]">
         {body}
       </p>
     </div>
@@ -48,11 +48,11 @@ export function WhyChoose() {
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-[1440px] px-4 py-12 lg:px-[60px] lg:py-20">
-        <h2 className="mx-auto max-w-4xl text-center text-4xl font-extrabold leading-[1.02] tracking-tight text-black lg:text-[62px]">
+        <h2 className="mx-auto max-w-4xl text-center text-[26px] font-extrabold leading-[1.1] tracking-tight text-black sm:text-4xl sm:leading-[1.02] lg:text-[62px]">
           Why Students Choose Edgbaston College
         </h2>
         {/* Top row: three cards */}
-        <div className="mt-12 flex flex-col gap-4 lg:flex-row">
+        <div className="mt-8 flex flex-col gap-4 sm:mt-12 lg:flex-row">
           {ITEMS.slice(0, 3).map((i) => (
             <Card key={i.title} {...i} />
           ))}
