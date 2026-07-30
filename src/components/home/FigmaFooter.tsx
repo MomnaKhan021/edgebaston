@@ -59,15 +59,15 @@ export function FigmaFooter() {
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.6fr] lg:gap-10">
           <FooterLinks links={LINKS} />
 
-          <div className="rounded-2xl bg-eb-navy-2 p-6 sm:p-8">
-            <div className="grid gap-8 md:grid-cols-2">
+          <div className="rounded-2xl bg-eb-navy-2 p-5 sm:p-8">
+            <div className="grid gap-6 md:grid-cols-2 md:gap-8">
               <div>
                 <h3 className="text-base font-bold uppercase tracking-wide">Address</h3>
-                <p className="mt-8 font-mono text-sm text-white/70">Edgbaston College</p>
-                <p className="mt-4 max-w-[220px] text-[15px] font-medium leading-relaxed">
+                <p className="mt-6 font-mono text-sm text-white/70 sm:mt-8">Edgbaston College</p>
+                <p className="mt-3 max-w-[220px] text-[15px] font-medium leading-relaxed sm:mt-4">
                   37 George Road, Edgbaston, Birmingham, B15 1PL
                 </p>
-                <ul className="mt-10 space-y-4 text-[15px]">
+                <ul className="mt-6 space-y-3.5 text-[15px] sm:mt-10 sm:space-y-4">
                   <li><a href="tel:01213060182" className="flex items-start gap-3 hover:text-white"><Arrow /> 0121 306 0182</a></li>
                   <li><a href="mailto:enquiries@edgbastoncollege.co.uk" className="flex items-start gap-3 break-all hover:text-white"><Arrow /> enquiries@edgbastoncollege.co.uk</a></li>
                   <li><a href={MAP_URL} target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 hover:text-white"><Arrow /> Get Directions</a></li>

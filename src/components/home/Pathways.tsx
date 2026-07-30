@@ -36,7 +36,8 @@ export function Pathways() {
         <Slider
           label="Courses We Offer"
           title="Choose the A-Level Pathway That Fits Your Goal"
-          labelClassName="normal-case text-black"
+          labelClassName="text-black"
+          labelUppercase={false}
           titleClassName="text-black"
           trackClassName="mt-8 gap-4 sm:mt-12 sm:gap-6"
         >

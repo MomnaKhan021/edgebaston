@@ -15,6 +15,7 @@ export function Slider({
   dark = false,
   titleClassName,
   labelClassName,
+  labelUppercase = true,
   trackClassName = "mt-12 gap-6",
   mobileAlign = "center",
   children,
@@ -25,6 +26,8 @@ export function Slider({
   dark?: boolean;
   titleClassName?: string;
   labelClassName?: string;
+  /** Design uses Title Case for some eyebrows (e.g. "Courses We Offer"). */
+  labelUppercase?: boolean;
   /** Tailwind classes for the scroll track's top margin + gap. */
   trackClassName?: string;
   /** Header alignment on mobile (desktop is always left). */
@@ -72,7 +75,8 @@ export function Slider({
           {label && (
             <p
               className={
-                "font-mono text-sm font-medium uppercase tracking-[0.12em] " +
+                "font-mono text-sm font-medium tracking-[0.12em] " +
+                (labelUppercase ? "uppercase " : "") +
                 (labelClassName ?? (dark ? "text-white/60" : "text-eb-blue"))
               }
             >
