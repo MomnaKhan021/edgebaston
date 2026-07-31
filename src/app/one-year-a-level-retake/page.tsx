@@ -7,7 +7,6 @@ import { Reveal } from "@/components/home/Reveal";
 import { CountUp } from "@/components/home/CountUp";
 import { ArrowUpRight } from "@/components/home/icons";
 import { ProgressRing } from "@/components/course/ProgressRing";
-import { OfferBand } from "@/components/course/OfferBand";
 import { SharePage } from "@/components/site/SharePage";
 import { StorySlider } from "@/components/course/StorySlider";
 import { FaqList } from "@/components/course/FaqList";
@@ -198,9 +197,6 @@ export default function RetakePage() {
           </div>
         </div>
       </div>
-
-      {/* Offer band (inline, per design) */}
-      <OfferBand />
 
       {/* Intro */}
       <Reveal>
