@@ -200,19 +200,20 @@ export default function RetakePage() {
 
       {/* Intro */}
       <Reveal>
-        <section className="bg-eb-cream">
+        <section className="bg-white">
           <div className="mx-auto max-w-[1440px] px-4 py-10 lg:px-[60px] lg:py-16">
-            <div className="grid items-stretch gap-8 lg:grid-cols-2 lg:gap-14">
+            <div className="grid items-stretch gap-6 lg:grid-cols-2 lg:gap-8">
               <div className="order-2 overflow-hidden rounded-xl lg:order-1">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/figma/retake-intro.webp" alt="Students at Edgbaston College" className="h-full w-full object-cover" style={{ aspectRatio: "4 / 3" }} loading="lazy" decoding="async" />
               </div>
-              <div className="order-1 flex flex-col lg:order-2">
+              {/* Only the text block carries the cream background */}
+              <div className="order-1 flex flex-col rounded-xl bg-eb-cream p-6 sm:p-8 lg:order-2 lg:p-10">
                 <p className="font-mono text-[12px] uppercase tracking-[0.06em] text-eb-navy sm:text-[13px]">Birmingham Retake Specialists</p>
                 <h2 className="mt-3 text-[26px] font-extrabold leading-[1.1] tracking-tight text-eb-ink sm:text-3xl lg:mt-4 lg:text-[44px]">
                   Birmingham&apos;s most successful A-Level retake programme. Your A-Levels Online
                 </h2>
-                <p className="mt-4 text-[14px] leading-relaxed text-neutral-600 sm:text-[15px] lg:mt-auto lg:pt-8">
+                <p className="mt-5 text-[14px] leading-relaxed text-neutral-600 sm:text-[15px] lg:mt-auto lg:pt-10">
                   Yes, you can retake your{" "}
                   <span className="font-semibold text-eb-navy">A-Levels in Birmingham at Edgbaston College</span>. We turn disappointing results into exceptional outcomes, winning students higher grades and places at top universities, including Medicine, Dentistry and the Russell Group.
                 </p>
