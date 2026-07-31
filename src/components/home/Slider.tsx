@@ -18,6 +18,8 @@ export function Slider({
   labelUppercase = true,
   trackClassName = "mt-12 gap-6",
   mobileAlign = "center",
+  startIndex,
+  edgeClassName,
   children,
 }: {
   label: string;
@@ -32,12 +34,33 @@ export function Slider({
   trackClassName?: string;
   /** Header alignment on mobile (desktop is always left). */
   mobileAlign?: "center" | "left";
+  /** On mobile, start with this slide centered (center-mode swiper). */
+  startIndex?: number;
+  /** Width of the mobile edge spacers: calc((sideInset) - gap) for the slide width in use. */
+  edgeClassName?: string;
   children: React.ReactNode;
 }) {
   const centerMobile = mobileAlign === "center";
   const trackRef = useRef<HTMLDivElement>(null);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
+
+  // Center-mode start slide (mobile only): scroll the track so the slide at
+  // `startIndex` sits in the middle, with its neighbours peeking either side.
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el || startIndex == null) return;
+    if (window.matchMedia("(min-width: 640px)").matches) return;
+    const slides = Array.from(el.children).filter(
+      (c) => !c.hasAttribute("aria-hidden"),
+    ) as HTMLElement[];
+    const target = slides[startIndex];
+    if (!target) return;
+    const track = el.getBoundingClientRect();
+    const slide = target.getBoundingClientRect();
+    el.scrollLeft += slide.left - track.left - (el.clientWidth - slide.width) / 2;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const update = useCallback(() => {
     const el = trackRef.current;
@@ -123,9 +146,9 @@ export function Slider({
         className={`eb-noscroll -mx-4 flex snap-x snap-mandatory overflow-x-auto pb-2 sm:px-4 lg:mx-0 lg:px-0 ${trackClassName}`}
       >
         {/* Edge spacers so the first/last slide can snap to the centre on mobile */}
-        <div aria-hidden className="w-[calc(10vw-1rem)] shrink-0 sm:hidden" />
+        <div aria-hidden className={`${edgeClassName ?? "w-[calc(10vw-1rem)]"} shrink-0 sm:hidden`} />
         {children}
-        <div aria-hidden className="w-[calc(10vw-1rem)] shrink-0 sm:hidden" />
+        <div aria-hidden className={`${edgeClassName ?? "w-[calc(10vw-1rem)]"} shrink-0 sm:hidden`} />
       </div>
     </div>
   );

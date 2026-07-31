@@ -40,11 +40,13 @@ export function Pathways() {
           labelUppercase={false}
           titleClassName="text-black"
           trackClassName="mt-8 gap-4 sm:mt-12 sm:gap-6"
+          startIndex={1}
+          edgeClassName="w-4"
         >
           {CARDS.map((c) => (
             <article
               key={c.title}
-              className="group flex w-[80%] shrink-0 snap-center flex-col rounded-xl bg-white p-4 sm:w-[440px] sm:snap-start sm:p-6 lg:w-[calc((100%-3rem)/3)]"
+              className="group flex w-[calc(100%-64px)] shrink-0 snap-center flex-col rounded-xl bg-white p-4 sm:w-[440px] sm:snap-start sm:p-6 lg:w-[calc((100%-3rem)/3)]"
             >
               <div className="flex flex-1 flex-col gap-2.5 sm:gap-3">
                 <h3 className="text-[20px] font-bold leading-tight text-eb-navy sm:text-[28px]">{c.title}</h3>
