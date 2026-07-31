@@ -4,12 +4,23 @@ import { unstable_cache } from "next/cache";
 import { notFound, redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { excerpt } from "@/lib/utils";
+import { compressDataUri, compressInlineImages } from "@/lib/images";
 
 // Cached per-slug course lookup shared by metadata + page render
 // (invalidated by revalidateTag("courses") on admin saves).
 const getCourse = (slug: string) =>
   unstable_cache(
-    async () => db.course.findUnique({ where: { slug } }),
+    async () => {
+      const course = await db.course.findUnique({ where: { slug } });
+      if (!course) return course;
+      // Inline data-URI images from admin uploads can be many MB — compress
+      // them so the page HTML stays small.
+      return {
+        ...course,
+        imageUrl: await compressDataUri(course.imageUrl, 1600),
+        content: await compressInlineImages(course.content),
+      };
+    },
     ["course", slug],
     { revalidate: 60, tags: ["courses"] },
   )();

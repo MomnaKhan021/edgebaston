@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath, revalidateTag } from "next/cache";
+import { compressDataUri, compressInlineImages } from "@/lib/images";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/auth";
@@ -70,8 +71,8 @@ export async function saveCourse(formData: FormData) {
     duration: str(formData, "duration"),
     fee: str(formData, "fee"),
     summary: str(formData, "summary"),
-    content: str(formData, "content"),
-    imageUrl: str(formData, "imageUrl"),
+    content: await compressInlineImages(str(formData, "content")),
+    imageUrl: await compressDataUri(str(formData, "imageUrl")),
     redirectUrl: redirectUrl(formData, "redirectUrl"),
     featured: bool(formData, "featured"),
     published: bool(formData, "published"),
@@ -116,7 +117,7 @@ export async function saveStaff(formData: FormData) {
     email: str(formData, "email"),
     phone: str(formData, "phone"),
     bio: str(formData, "bio"),
-    photoUrl: str(formData, "photoUrl"),
+    photoUrl: await compressDataUri(str(formData, "photoUrl"), 800),
     published: bool(formData, "published"),
     order: int(formData, "order"),
   };
@@ -154,7 +155,7 @@ export async function savePage(formData: FormData) {
   const data = {
     title,
     slug,
-    content: str(formData, "content"),
+    content: await compressInlineImages(str(formData, "content")),
     redirectUrl: redirectUrl(formData, "redirectUrl"),
     showInNav: bool(formData, "showInNav"),
     published: bool(formData, "published"),
@@ -206,7 +207,7 @@ export async function saveSettings(formData: FormData) {
     tagline: str(formData, "tagline"),
     heroTitle: str(formData, "heroTitle"),
     heroSubtitle: str(formData, "heroSubtitle"),
-    heroImageUrl: str(formData, "heroImageUrl"),
+    heroImageUrl: await compressDataUri(str(formData, "heroImageUrl")),
     aboutText: str(formData, "aboutText"),
     email: str(formData, "email"),
     phone: str(formData, "phone"),

@@ -91,6 +91,9 @@ export function Slider({
     ? "bg-white/10 text-white hover:bg-white/20"
     : "bg-white text-eb-navy-2 shadow-sm hover:bg-eb-cream";
 
+  // No overflow (e.g. only 3 cards that all fit on desktop) → no arrows.
+  const scrollable = !(atStart && atEnd);
+
   return (
     <div>
       <div className={"flex flex-col gap-6 md:flex-row md:items-end md:justify-between md:text-left " + (centerMobile ? "text-center" : "text-left")}>
@@ -121,7 +124,7 @@ export function Slider({
             </p>
           )}
         </div>
-        <div className="hidden gap-3 md:flex">
+        <div className={"hidden gap-3 " + (scrollable ? "md:flex" : "")}>
           <button
             aria-label="Previous"
             onClick={() => scroll(-1)}

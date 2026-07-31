@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { unstable_cache } from "next/cache";
 import { db } from "@/lib/db";
+import { compressDataUri } from "@/lib/images";
 import { AnnouncementBar } from "@/components/home/AnnouncementBar";
 import { Navbar } from "@/components/home/Navbar";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
@@ -28,11 +29,17 @@ type CourseRow = {
 // Cached course list (invalidated by revalidateTag("courses") on admin saves)
 // so browsing courses never waits on a database round-trip.
 const getPublishedCourses = unstable_cache(
-  async () =>
-    db.course.findMany({
+  async () => {
+    const courses = await db.course.findMany({
       where: { published: true },
       orderBy: [{ featured: "desc" }, { order: "asc" }],
-    }),
+    });
+    // Uploaded card images are stored inline as data URIs and can be many MB
+    // each — compress them so the page HTML stays small.
+    return Promise.all(
+      courses.map(async (c) => ({ ...c, imageUrl: await compressDataUri(c.imageUrl, 1200) })),
+    );
+  },
   ["published-courses"],
   { revalidate: 60, tags: ["courses"] },
 );
