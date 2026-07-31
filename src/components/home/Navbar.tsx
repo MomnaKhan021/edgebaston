@@ -1,20 +1,33 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const NAV = [
   { label: "Courses", href: "/courses" },
-  { label: "Admissions", href: "/contact" },
-  { label: "College Life", href: "/p/campus-life" },
+  { label: "Admissions", href: "/p/admissions" },
   { label: "About Us", href: "/about" },
   { label: "Guides", href: "#" },
 ];
 
 export function Navbar({ variant = "overlay" }: { variant?: "overlay" | "solid" }) {
   const [open, setOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const searchRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
   const solid = variant === "solid";
   const pill = solid ? "bg-eb-cream" : "bg-white";
+
+  const submitSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const q = query.trim();
+    if (!q) return;
+    setOpen(false);
+    setSearchOpen(false);
+    router.push(`/search?q=${encodeURIComponent(q)}`);
+  };
 
   return (
     <div className={solid ? "relative z-30 border-b bg-white" : "absolute inset-x-0 top-0 z-30"}>
@@ -43,7 +56,33 @@ export function Navbar({ variant = "overlay" }: { variant?: "overlay" | "solid" 
                 {item.label}
               </Link>
             ))}
-            <button aria-label="Search" className="ml-1 grid h-9 w-9 place-items-center rounded-full text-eb-navy transition hover:bg-eb-cream">
+            {searchOpen && (
+              <form onSubmit={submitSearch} className="ml-1">
+                <input
+                  ref={searchRef}
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  onKeyDown={(e) => e.key === "Escape" && setSearchOpen(false)}
+                  placeholder="Search…"
+                  className="w-40 rounded-full border border-eb-navy/20 bg-white px-3 py-1.5 text-sm text-eb-navy outline-none placeholder:text-eb-navy/50 focus:border-eb-blue"
+                />
+              </form>
+            )}
+            <button
+              aria-label="Search"
+              onClick={(e) => {
+                if (searchOpen && query.trim()) {
+                  submitSearch(e);
+                  return;
+                }
+                setSearchOpen((v) => {
+                  const next = !v;
+                  if (next) setTimeout(() => searchRef.current?.focus(), 0);
+                  return next;
+                });
+              }}
+              className="ml-1 grid h-9 w-9 place-items-center rounded-full text-eb-navy transition hover:bg-eb-cream"
+            >
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="5.5" stroke="currentColor" strokeWidth="1.6"/><path d="M12.5 12.5L16 16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>
             </button>
             <button aria-label="Language" className="grid h-9 w-9 place-items-center rounded-full text-eb-navy transition hover:bg-eb-cream">
@@ -80,6 +119,17 @@ export function Navbar({ variant = "overlay" }: { variant?: "overlay" | "solid" 
       {/* Mobile menu */}
       {open && (
         <div className="mx-4 rounded-2xl bg-white p-3 shadow-lg lg:hidden">
+          <form onSubmit={submitSearch} className="relative mb-2">
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search…"
+              className="w-full rounded-full border border-eb-navy/20 bg-white py-2.5 pl-4 pr-11 text-[15px] text-eb-navy outline-none placeholder:text-eb-navy/50 focus:border-eb-blue"
+            />
+            <button type="submit" aria-label="Search" className="absolute right-1.5 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-full bg-eb-navy text-white">
+              <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="5.5" stroke="currentColor" strokeWidth="1.6"/><path d="M12.5 12.5L16 16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>
+            </button>
+          </form>
           {NAV.map((item) => (
             <Link
               key={item.label}

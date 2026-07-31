@@ -4,18 +4,16 @@ import { FooterLinks } from "./FooterLinks";
 const MAP_URL =
   "https://www.google.com/maps/place/Edgbaston+College/@52.4700978,-1.9147819,15z/data=!4m5!3m4!1s0x0:0xe22ea36ee96914c1!8m2!3d52.4700978!4d-1.9147819";
 
+// Only pages that actually exist — placeholder links (Two Year Programme,
+// Leavers' Destinations, Results, Sitemap, Job Vacancies, legal pages) are
+// omitted until those pages are created in the admin dashboard.
 const LINKS = [
   { label: "Enquire About A Course", href: "/contact" },
   { label: "One Year A-Level Retake Programme", href: "/one-year-a-level-retake" },
-  { label: "Two Year A-Level Programme", href: "/courses" },
-  { label: "Leavers' Destinations", href: "/courses" },
-  { label: "Results", href: "/courses" },
-  { label: "Sitemap", href: "/" },
-  { label: "Job Vacancies", href: "/contact" },
-  { label: "Terms of Use", href: "/p/terms-of-use" },
-  { label: "Privacy Policy", href: "/p/privacy-policy" },
-  { label: "Cookie Usage", href: "/p/cookie-usage" },
-  { label: "High Visibility Version", href: "/" },
+  { label: "Our Courses", href: "/courses" },
+  { label: "Admissions Requirements", href: "/admissions-requirements" },
+  { label: "About Us", href: "/about-us" },
+  { label: "Our History", href: "/our-history" },
 ];
 
 function Arrow() {
