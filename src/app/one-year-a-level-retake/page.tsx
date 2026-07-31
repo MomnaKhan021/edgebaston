@@ -227,28 +227,28 @@ export default function RetakePage() {
       <Reveal>
         <section className="bg-white">
           <div className="mx-auto max-w-[1440px] px-4 pb-12 lg:px-[60px] lg:pb-16">
-            <p className="font-mono text-[13px] text-eb-navy">2025 outcomes</p>
-            <div className="mt-4 grid gap-5 lg:grid-cols-2">
-              <div className="rounded-xl bg-eb-cream p-6 sm:p-8">
-                <p className="text-6xl font-extrabold tracking-tight text-eb-blue lg:text-[76px]">
+            <p className="font-mono text-[12px] text-eb-navy sm:text-[13px]">2025 outcomes</p>
+            <div className="mt-4 grid gap-4 sm:gap-5 lg:grid-cols-2">
+              <div className="rounded-xl bg-eb-cream p-5 sm:p-8">
+                <p className="text-[44px] font-extrabold leading-none tracking-tight text-eb-blue sm:text-6xl lg:text-[76px]">
                   <CountUp to={87.7} decimals={1} />
-                  <span className="ml-1 align-baseline text-3xl font-extrabold lg:text-4xl">%–</span>
+                  <span className="ml-1 align-baseline text-2xl font-extrabold sm:text-3xl lg:text-4xl">%–</span>
                 </p>
-                <div className="mt-6 space-y-3">
+                <div className="mt-5 space-y-3 sm:mt-6">
                   <StatRow label="65.1%" grade="A*–A" pct={66} />
                   <StatRow label="87.7%" grade="A*–B" pct={83} />
                 </div>
               </div>
-              <div className="rounded-xl bg-eb-cream p-6 sm:p-8">
+              <div className="rounded-xl bg-eb-cream p-5 sm:p-8">
                 <div className="flex items-start justify-between gap-4">
-                  <p className="text-6xl font-extrabold tracking-tight text-eb-blue lg:text-[76px]">
+                  <p className="text-[44px] font-extrabold leading-none tracking-tight text-eb-blue sm:text-6xl lg:text-[76px]">
                     <CountUp to={1.78} decimals={2} prefix="+" />
                   </p>
-                  <p className="pt-2 text-right text-lg font-bold leading-snug text-eb-navy lg:text-[21px]">
+                  <p className="pt-1 text-right text-[15px] font-bold leading-snug text-eb-navy sm:pt-2 sm:text-lg lg:text-[21px]">
                     Grades gained<br />per subject
                   </p>
                 </div>
-                <div className="mt-6 space-y-3">
+                <div className="mt-5 space-y-3 sm:mt-6">
                   <StatRow label="Typical arrival" grade="BBC" pct={66} />
                   <StatRow label="Typical Result" grade="A*AA" pct={77} />
                 </div>
