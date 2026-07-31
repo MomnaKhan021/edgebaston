@@ -1,51 +1,47 @@
-import { Slider } from "./Slider";
 import { ArrowUpRight } from "./icons";
+import { NewsSlider } from "./NewsSlider";
 
 const NEWS = [
-  { date: "2025 Results", title: "Edgbaston College Celebrates Outstanding 2025 A-Level Results", img: "/figma/pathway-1.webp" },
-  { date: "22 Nov 2024", title: "Maneek Wins the Great College Bake Off to Support Children…", img: "/figma/news-1.webp" },
-  { date: "15 Oct 2024", title: "Year 12 Students Explore Future Opportunities at UK University…", img: "/figma/pathway-2.webp" },
-  { date: "3 Oct 2024", title: "Edgbaston College Students Build Life-Saving Skills with St John…", img: "/figma/news-2.webp" },
-  { date: "7 Oct 2024", title: "Students Hit the Track for Go Karting Fun", img: "/figma/pathway-3.webp" },
+  { date: "12 Sep 2024", title: "Edgbaston College Celebrates Outstanding A-Level Results", img: "/figma/news-results.webp" },
+  { date: "22 Nov 2024", title: "Maneek Wins the Great College Bake Off to Support Children…", img: "/figma/news-cake.webp" },
+  { date: "15 Oct 2024", title: "Year 12 Students Explore Future Opportunities at UK University…", img: "/figma/news-uni.webp" },
+  { date: "3 Oct 2024", title: "Edgbaston College Students Build Life-Saving Skills with St John…", img: "/figma/news-firstaid.webp" },
+  { date: "7 Oct 2024", title: "Students Hit the Track for Karting Fun", img: "/figma/news-karting.webp" },
 ];
 
 export function News() {
   return (
-    <section className="bg-eb-cream">
-      <div className="mx-auto max-w-[1440px] px-4 py-10 lg:px-[60px] lg:py-20">
-        <Slider
-          label="News & Events"
-          title="What's happening at Edgbaston"
-          labelClassName="text-eb-blue"
-          titleClassName="text-neutral-900"
-          trackClassName="mt-8 gap-4 sm:mt-[42px] sm:gap-5"
-          mobileAlign="left"
-        >
-          {NEWS.map((n) => (
-            <article key={n.title} className="group w-[80%] shrink-0 snap-center sm:w-[320px] sm:snap-start">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-lg">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={n.img}
-                  alt={n.title}
-                  className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
-              </div>
-              <p className="mt-4 font-mono text-[13px] font-medium uppercase tracking-wide text-eb-blue">
-                News • {n.date}
-              </p>
-              <h3 className="mt-2 text-[18px] font-bold leading-snug text-eb-navy transition group-hover:text-eb-blue sm:mt-3 sm:text-[22px]">{n.title}</h3>
-              <span className="eb-cta mt-4 flex w-full items-center justify-between gap-3 rounded-lg bg-white py-1.5 pl-5 pr-1.5 text-xs font-bold uppercase tracking-wide text-eb-navy shadow-sm">
+    <section className="overflow-hidden bg-eb-cream py-10 lg:py-14">
+      <NewsSlider label="Find Your Local YDS Clinic" title="What's happening at Edgbaston">
+        {NEWS.map((n) => (
+          <article key={n.title} className="group w-[78%] shrink-0 snap-center sm:w-[300px]">
+            <div className="relative aspect-[283/350] overflow-hidden rounded-md">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={n.img}
+                alt={n.title}
+                className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <p className="mt-4 font-mono text-[12px] font-medium uppercase tracking-[0.08em] text-eb-blue sm:text-[13px]">
+              News <span className="px-0.5">•</span> {n.date}
+            </p>
+            <h3 className="mt-2 min-h-[52px] text-[16px] font-bold leading-snug text-eb-navy transition group-hover:text-eb-blue sm:text-[18px]">
+              {n.title}
+            </h3>
+            <span className="eb-cta mt-3 flex items-stretch gap-1">
+              <span className="flex flex-1 items-center bg-white px-4 py-3 text-[11px] font-bold uppercase tracking-wide text-eb-navy">
                 Read Article
-                <span className="eb-square grid h-8 w-8 place-items-center rounded-lg bg-eb-blue text-white">
-                  <ArrowUpRight className="h-4 w-4" />
-                </span>
               </span>
-            </article>
-          ))}
-        </Slider>
-      </div>
+              <span className="eb-square grid w-10 shrink-0 place-items-center rounded-sm bg-eb-blue text-white">
+                <ArrowUpRight className="h-4 w-4" />
+              </span>
+            </span>
+          </article>
+        ))}
+      </NewsSlider>
     </section>
   );
 }

@@ -6,6 +6,7 @@ import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
 import { ArrowUpRight } from "@/components/home/icons";
 import { IconBulb, IconUsers, IconGear, IconCrest } from "@/components/history/HistoryIcons";
+import { SharePage } from "@/components/history/SharePage";
 
 export const metadata: Metadata = {
   title: "Our History",
@@ -19,24 +20,6 @@ const COMMITMENTS = [
   { Icon: IconGear, title: "Excellent Teaching", body: "We provide excellent teaching to support students throughout their academic journeys." },
   { Icon: IconCrest, title: "Personalised Attention", body: "We give each student personalised attention and exceptional support for their future careers." },
 ];
-
-function Share() {
-  const item = "grid h-9 w-9 place-items-center rounded-full border text-eb-navy transition hover:bg-eb-cream";
-  return (
-    <div className="flex items-center gap-3">
-      <span className="text-sm text-muted-foreground">Share This Page</span>
-      <a href="#" aria-label="Share on Facebook" className={item}>
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M9.5 16V9h2l.3-2.3H9.5V5.2c0-.66.2-1.1 1.14-1.1H12V2.1C11.7 2.06 10.9 2 10 2 8.06 2 6.75 3.16 6.75 5v1.7H4.7V9h2.05v7h2.75Z"/></svg>
-      </a>
-      <a href="#" aria-label="Share on X" className={item}>
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M12.6 1.5h2.3L9.9 7.2l5.9 7.3h-4.6L7.6 9.9l-4.1 4.6H1.2l5.4-6.1L1 1.5h4.7l3.3 4.3 3.6-4.3Zm-.8 11.6h1.3L4.7 2.8H3.3l8.5 10.3Z"/></svg>
-      </a>
-      <a href="#" aria-label="Share by email" className={item}>
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3"><rect x="2" y="3.5" width="12" height="9" rx="1.5"/><path d="M2.5 4.5 8 8.5l5.5-4"/></svg>
-      </a>
-    </div>
-  );
-}
 
 export default function OurHistoryPage() {
   return (
@@ -60,17 +43,20 @@ export default function OurHistoryPage() {
         </div>
       </section>
 
-      {/* Breadcrumb */}
-      <div className="border-b bg-white">
-        <div className="mx-auto flex max-w-[1440px] flex-col gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between lg:px-16">
-          <nav className="text-sm text-muted-foreground">
-            <Link href="/" className="hover:text-eb-navy">Home</Link>
-            <span className="px-2">/</span>
-            <Link href="/courses" className="hover:text-eb-navy">Courses</Link>
-            <span className="px-2">/</span>
-            <span className="text-eb-navy">Our History</span>
-          </nav>
-          <Share />
+      {/* Breadcrumb — the divider is inset by the page padding (not full-bleed);
+          breadcrumb + share icons stack centered on mobile */}
+      <div className="bg-white">
+        <div className="mx-auto max-w-[1440px] px-4 lg:px-16">
+          <div className="flex flex-col items-center gap-3 border-b py-4 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left sm:py-5">
+            <nav className="text-sm text-muted-foreground">
+              <Link href="/" className="hover:text-eb-navy">Home</Link>
+              <span className="px-2">/</span>
+              <Link href="/courses" className="hover:text-eb-navy">Courses</Link>
+              <span className="px-2">/</span>
+              <span className="text-eb-navy">Our History</span>
+            </nav>
+            <SharePage title="Edgbaston College — Our History" />
+          </div>
         </div>
       </div>
 
@@ -122,16 +108,17 @@ export default function OurHistoryPage() {
       {/* Content block A: image left, text right */}
       <Reveal>
         <section className="bg-white">
-          <div className="mx-auto grid max-w-[1320px] items-center gap-8 px-4 py-10 lg:grid-cols-2 lg:gap-14 lg:px-16 lg:py-16">
+          <div className="mx-auto grid max-w-[1320px] items-stretch gap-5 px-4 py-10 lg:grid-cols-2 lg:gap-10 lg:px-16 lg:py-16">
             <div className="overflow-hidden rounded-2xl">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/figma/history-a.webp" alt="Edgbaston student" className="aspect-[4/3] w-full object-cover" loading="lazy" decoding="async" />
+              <img src="/figma/history-a.webp" alt="Edgbaston student" className="aspect-[4/3] h-full w-full object-cover lg:aspect-auto" loading="lazy" decoding="async" />
             </div>
-            <div>
+            {/* Light card, same height as the image; intro top, note pinned bottom */}
+            <div className="flex flex-col justify-between gap-10 rounded-2xl bg-eb-cream p-6 sm:p-8 lg:gap-14 lg:p-12">
               <p className="text-2xl font-bold leading-snug text-eb-navy lg:text-[28px]">
                 Despite our growth, Edgbaston College remains family-owned, which allows us to prioritise what truly matters – creating a welcoming and supportive environment where each student is known and valued.
               </p>
-              <p className="mt-6 text-[15px] leading-relaxed text-neutral-600">
+              <p className="text-[15px] leading-relaxed text-eb-navy/80">
                 Our open-door policy ensures students and parents feel comfortable seeking guidance and support at any time, fostering a strong sense of community and shared purpose.
               </p>
             </div>
@@ -142,18 +129,19 @@ export default function OurHistoryPage() {
       {/* Content block B: text left, image right */}
       <Reveal>
         <section className="bg-white">
-          <div className="mx-auto grid max-w-[1320px] items-center gap-8 px-4 pb-16 lg:grid-cols-2 lg:gap-14 lg:px-16 lg:pb-24">
-            <div className="order-2 lg:order-1">
+          <div className="mx-auto grid max-w-[1320px] items-stretch gap-5 px-4 pb-16 lg:grid-cols-2 lg:gap-10 lg:px-16 lg:pb-24">
+            {/* Light card, same height as the image; intro top, note pinned bottom */}
+            <div className="order-2 flex flex-col justify-between gap-10 rounded-2xl bg-eb-cream p-6 sm:p-8 lg:order-1 lg:gap-14 lg:p-12">
               <p className="text-2xl font-bold leading-snug text-eb-navy lg:text-[28px]">
                 Our unwavering dedication to student success has consistently placed us amongst the leading providers for students seeking admission to prestigious universities and competitive courses, including Oxbridge, Medicine, and Dentistry.
               </p>
-              <p className="mt-6 text-[15px] leading-relaxed text-neutral-600">
+              <p className="text-[15px] leading-relaxed text-eb-navy/80">
                 This outstanding track record is a testament to our commitment to empowering students to achieve their highest aspirations.
               </p>
             </div>
             <div className="order-1 overflow-hidden rounded-2xl lg:order-2">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/figma/history-grass.webp" alt="Edgbaston student outdoors" className="aspect-[4/3] w-full object-cover" loading="lazy" decoding="async" />
+              <img src="/figma/history-grass.webp" alt="Edgbaston student outdoors" className="aspect-[4/3] h-full w-full object-cover lg:aspect-auto" loading="lazy" decoding="async" />
             </div>
           </div>
         </section>
