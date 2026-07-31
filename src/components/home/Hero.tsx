@@ -11,10 +11,9 @@ export function Hero() {
       {/* Building photo */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/figma/hero-building.png"
+        src="/figma/hero-building.webp"
         alt="Edgbaston College building"
-        className="absolute inset-0 h-full w-full object-cover object-[center_28%]"
-      />
+        className="absolute inset-0 h-full w-full object-cover object-[center_28%]" fetchPriority="high" />
       <div className="absolute inset-0 bg-black/20" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/25" />
 

@@ -85,7 +85,7 @@ export default function AdmissionsRequirementsPage() {
         <div className="mx-auto max-w-[1440px] px-4 lg:px-16">
           <div className="overflow-hidden rounded-2xl">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/figma/adm-group.png" alt="Edgbaston College students" className="aspect-[16/7] w-full object-cover" />
+            <img src="/figma/adm-group.webp" alt="Edgbaston College students" className="aspect-[16/7] w-full object-cover" loading="lazy" decoding="async" />
           </div>
         </div>
         {/* Breadcrumb + share */}
@@ -138,7 +138,7 @@ export default function AdmissionsRequirementsPage() {
               <AppSteps />
               <div className="overflow-hidden rounded-2xl">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/figma/adm-process.png" alt="Students in class" className="aspect-[4/3] w-full object-cover" />
+                <img src="/figma/adm-process.webp" alt="Students in class" className="aspect-[4/3] w-full object-cover" loading="lazy" decoding="async" />
               </div>
             </div>
           </div>

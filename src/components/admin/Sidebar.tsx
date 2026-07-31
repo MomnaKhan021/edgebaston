@@ -47,7 +47,7 @@ export function Sidebar({
       <div className="sticky top-0 z-40 flex items-center justify-between bg-eb-navy px-4 py-3 lg:hidden">
         <Link href="/admin" onClick={() => setOpen(false)}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/figma/logo.svg" alt="Edgbaston College" className="h-8 w-auto" />
+          <img src="/figma/logo.svg" alt="Edgbaston College" className="h-8 w-auto" loading="lazy" decoding="async" />
         </Link>
         <button
           type="button"
@@ -80,7 +80,7 @@ export function Sidebar({
         <div className="flex items-center justify-between border-b border-white/10 px-6 py-5">
           <Link href="/admin" onClick={() => setOpen(false)}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/figma/logo.svg" alt="Edgbaston College" className="h-9 w-auto" />
+            <img src="/figma/logo.svg" alt="Edgbaston College" className="h-9 w-auto" loading="lazy" decoding="async" />
           </Link>
           <button
             type="button"

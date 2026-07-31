@@ -58,10 +58,9 @@ export function InspectionTabs() {
         <div className="overflow-hidden rounded-2xl bg-eb-cream">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/figma/about-owais-seated.png"
+            src="/figma/about-owais-seated.webp"
             alt="Principal Owais Ahmed"
-            className="mx-auto block h-auto w-full max-w-[360px] object-contain md:max-w-none"
-          />
+            className="mx-auto block h-auto w-full max-w-[360px] object-contain md:max-w-none" loading="lazy" decoding="async" />
         </div>
         <div>
           <h3 className="text-2xl font-bold text-eb-navy">{tab.title}</h3>

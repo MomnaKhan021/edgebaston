@@ -55,7 +55,7 @@ export default function ContactPage() {
       <section className="relative isolate overflow-hidden bg-eb-navy">
         <Navbar />
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/figma/retake-hero.png" alt="Edgbaston College students" className="absolute inset-0 h-full w-full object-cover object-[center_30%]" />
+        <img src="/figma/retake-hero.webp" alt="Edgbaston College students" className="absolute inset-0 h-full w-full object-cover object-[center_30%]" fetchPriority="high" />
         <div className="absolute inset-0 bg-gradient-to-r from-eb-navy/85 via-eb-navy/45 to-eb-navy/10" />
         <div className="absolute inset-0 bg-gradient-to-t from-eb-navy/80 to-transparent" />
         <div className="relative mx-auto flex min-h-[420px] max-w-[1440px] flex-col justify-end px-4 pb-9 pt-32 lg:min-h-[520px] lg:px-16 lg:pb-12">

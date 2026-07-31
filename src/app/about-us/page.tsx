@@ -29,10 +29,10 @@ const HISTORY = [
 ];
 
 const STAFF = [
-  { name: "Brian Ray", role: "Principal", img: "/figma/staff-1.png", body: "Created and led Edgbaston College in 2015 and previously worked as an MBA banker at UBS and J.P. Morgan." },
-  { name: "David Morriss", role: "Vice Principal & Biology Teacher", img: "/figma/staff-2.png", body: "An experienced teacher with over 20 years' experience; previously Head of Sixth Form at a grammar school." },
-  { name: "Jeffrey", role: "Vice Principal & Maths Teacher", img: "/figma/staff-3.png", body: "A qualified Maths and Physics teacher who has been with Edgbaston College for six years." },
-  { name: "Dan", role: "Economics Teacher", img: "/figma/staff-4.png", body: "A highly experienced Economics teacher with over 30 years' experience; formerly an Assistant Headteacher before joining the College." },
+  { name: "Brian Ray", role: "Principal", img: "/figma/staff-1.webp", body: "Created and led Edgbaston College in 2015 and previously worked as an MBA banker at UBS and J.P. Morgan." },
+  { name: "David Morriss", role: "Vice Principal & Biology Teacher", img: "/figma/staff-2.webp", body: "An experienced teacher with over 20 years' experience; previously Head of Sixth Form at a grammar school." },
+  { name: "Jeffrey", role: "Vice Principal & Maths Teacher", img: "/figma/staff-3.webp", body: "A qualified Maths and Physics teacher who has been with Edgbaston College for six years." },
+  { name: "Dan", role: "Economics Teacher", img: "/figma/staff-4.webp", body: "A highly experienced Economics teacher with over 30 years' experience; formerly an Assistant Headteacher before joining the College." },
 ];
 
 function Share() {
@@ -48,8 +48,8 @@ function Share() {
 }
 
 const STUDENTS = [
-  { name: "Nicole", img: "/figma/news-1.png", from: "BB", to: "A*A*", course: "Dentistry at King's College London" },
-  { name: "Tara", img: "/figma/news-2.png", from: "BB", to: "AA", course: "Medicine at Edge Hill University" },
+  { name: "Nicole", img: "/figma/news-1.webp", from: "BB", to: "A*A*", course: "Dentistry at King's College London" },
+  { name: "Tara", img: "/figma/news-2.webp", from: "BB", to: "AA", course: "Medicine at Edge Hill University" },
 ];
 
 function GradeBadge({ from, to }: { from: string; to: string }) {
@@ -71,7 +71,7 @@ export default function AboutUsPage() {
       <section className="relative isolate overflow-hidden bg-eb-navy">
         <Navbar />
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/figma/course-retake.png" alt="Edgbaston College student" className="absolute inset-0 h-full w-full object-cover object-[70%_center]" />
+        <img src="/figma/course-retake.webp" alt="Edgbaston College student" className="absolute inset-0 h-full w-full object-cover object-[70%_center]" loading="lazy" decoding="async" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30" />
         <div className="relative mx-auto flex min-h-[380px] max-w-[1440px] flex-col justify-end px-4 pb-10 pt-36 lg:min-h-[460px] lg:px-16 lg:pb-12">
           <h1 className="max-w-xl text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-[52px]">
@@ -98,7 +98,7 @@ export default function AboutUsPage() {
           <div className="mx-auto grid max-w-[1320px] items-center gap-10 px-4 py-12 lg:grid-cols-2 lg:gap-16 lg:py-16">
             <div className="overflow-hidden rounded-2xl">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/figma/owais-ahmed.png" alt="Principal Owais Ahmed" className="aspect-[4/5] w-full object-cover object-top" />
+              <img src="/figma/owais-ahmed.webp" alt="Principal Owais Ahmed" className="aspect-[4/5] w-full object-cover object-top" loading="lazy" decoding="async" />
             </div>
             <div>
               <h2 className="text-3xl font-extrabold tracking-tight text-eb-ink lg:text-[40px]">Principal&apos;s Welcome</h2>
@@ -219,7 +219,7 @@ export default function AboutUsPage() {
               <div className="eb-card grid w-[90%] shrink-0 snap-start overflow-hidden rounded-2xl bg-white sm:w-[640px] sm:grid-cols-2">
                 <div className="relative aspect-[3/4] sm:aspect-auto sm:min-h-[420px]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/figma/pathway-1.png" alt="Alishba" className="h-full w-full object-cover" />
+                  <img src="/figma/pathway-1.webp" alt="Alishba" className="h-full w-full object-cover" loading="lazy" decoding="async" />
                   <span className="absolute bottom-20 left-4 text-2xl font-bold text-white drop-shadow-lg">Alishba</span>
                   <div className="absolute inset-x-3 bottom-3 rounded-xl bg-white px-4 py-2.5">
                     <GradeBadge from="BB" to="A*A*" />

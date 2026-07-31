@@ -8,7 +8,7 @@ const CARDS = [
     body: "Focused retake support in a specialist environment. Small classes, regular mocks, and dedicated university guidance to help you secure the grades you need.",
     stat: 16.0,
     statLabel: "of 2025 A-Level grades achieved the top A* grade",
-    img: "/figma/course-retake.png",
+    img: "/figma/course-retake.webp",
     objPos: "object-[70%_center]",
   },
   {
@@ -16,7 +16,7 @@ const CARDS = [
     body: "A flexible five-term pathway starting in January. Ideal for students who missed the September entry window but want a full and structured route to university.",
     stat: 16.0,
     statLabel: "of 2025 A-Level grades achieved the top A* grade",
-    img: "/figma/course-fiveterm.png",
+    img: "/figma/course-fiveterm.webp",
     objPos: "object-[55%_center]",
   },
   {
@@ -24,7 +24,7 @@ const CARDS = [
     body: "Already in Year 12 elsewhere? Transfer mid-course into more focused, supportive environment where you'll receive the individual attention to push for top grades.",
     stat: 72.7,
     statLabel: "of students progressed to Russell Group universities",
-    img: "/figma/course-transfer.png",
+    img: "/figma/course-transfer.webp",
     objPos: "object-[45%_center]",
   },
 ];

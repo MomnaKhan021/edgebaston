@@ -162,7 +162,7 @@ export default function RetakePage() {
       <section className="relative isolate overflow-hidden bg-eb-navy">
         <Navbar />
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/figma/retake-hero.png" alt="Edgbaston College retake students" className="absolute inset-0 h-full w-full object-cover object-[center_30%]" />
+        <img src="/figma/retake-hero.webp" alt="Edgbaston College retake students" className="absolute inset-0 h-full w-full object-cover object-[center_30%]" fetchPriority="high" />
         <div className="absolute inset-0 bg-gradient-to-r from-eb-navy/85 via-eb-navy/45 to-eb-navy/10" />
         <div className="absolute inset-0 bg-gradient-to-t from-eb-navy/70 to-transparent" />
         <div className="relative mx-auto flex min-h-[420px] max-w-[1440px] flex-col justify-end px-4 pb-16 pt-32 lg:min-h-[460px] lg:px-[60px] lg:pb-12">
@@ -200,7 +200,7 @@ export default function RetakePage() {
             <div className="grid items-stretch gap-8 lg:grid-cols-2 lg:gap-10">
               <div className="order-2 overflow-hidden rounded-lg lg:order-1">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/figma/retake-intro.png" alt="Students at Edgbaston College" className="h-full w-full object-cover" style={{ aspectRatio: "4 / 3" }} />
+                <img src="/figma/retake-intro.webp" alt="Students at Edgbaston College" className="h-full w-full object-cover" style={{ aspectRatio: "4 / 3" }} loading="lazy" decoding="async" />
               </div>
               <div className="order-1 flex flex-col lg:order-2">
                 <p className="font-mono text-[13px] text-eb-navy">Birmingham Retake Specialists</p>
@@ -314,7 +314,7 @@ export default function RetakePage() {
           <div className="mx-auto grid max-w-[1440px] items-center gap-10 px-4 py-12 lg:grid-cols-2 lg:gap-14 lg:px-[60px] lg:py-20">
             <div className="overflow-hidden rounded-lg">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/figma/retake-plan.png" alt="A retake student working with a teacher" className="w-full object-cover" style={{ aspectRatio: "5 / 4" }} />
+              <img src="/figma/retake-plan.webp" alt="A retake student working with a teacher" className="w-full object-cover" style={{ aspectRatio: "5 / 4" }} loading="lazy" decoding="async" />
             </div>
             <div className="eb-stagger">
               <p className="font-mono text-[13px] text-white/80">Personalised From Day One</p>
@@ -349,7 +349,7 @@ export default function RetakePage() {
                 {/* Featured: photo + quote */}
                 <div className="grid w-[92%] shrink-0 snap-center grid-cols-1 gap-4 sm:w-[600px] sm:snap-start sm:grid-cols-[256px_1fr]">
                   <div className="relative h-[380px] sm:h-auto">
-                    <StoryPhoto img="/figma/retake-story-1.png" name="Alishba" from="BB" to="A*A*" course="University of Cambridge" />
+                    <StoryPhoto img="/figma/retake-story-1.webp" name="Alishba" from="BB" to="A*A*" course="University of Cambridge" />
                   </div>
                   <div className="flex flex-col justify-between rounded-xl bg-white p-6">
                     <p className="text-[15px] font-semibold leading-relaxed text-eb-navy">
@@ -360,10 +360,10 @@ export default function RetakePage() {
                 </div>
                 {/* Photo cards */}
                 <div className="relative h-[380px] w-[78%] shrink-0 snap-center sm:w-[300px] sm:snap-start">
-                  <StoryPhoto img="/figma/retake-story-2.png" name="Nicole" from="BB" to="A*A*" course="Dentistry at King's College London" />
+                  <StoryPhoto img="/figma/retake-story-2.webp" name="Nicole" from="BB" to="A*A*" course="Dentistry at King's College London" />
                 </div>
                 <div className="relative h-[380px] w-[78%] shrink-0 snap-center sm:w-[300px] sm:snap-start">
-                  <StoryPhoto img="/figma/retake-story-3.png" name="Tara" from="BB" to="AA" course="Medicine at Edge Hill University" />
+                  <StoryPhoto img="/figma/retake-story-3.webp" name="Tara" from="BB" to="AA" course="Medicine at Edge Hill University" />
                 </div>
               </StorySlider>
             </div>
@@ -420,7 +420,7 @@ export default function RetakePage() {
               </div>
               <div className="overflow-hidden rounded-xl">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/figma/retake-uni-2.png" alt="Edgbaston College students in class" className="h-full min-h-[280px] w-full object-cover" />
+                <img src="/figma/retake-uni-2.webp" alt="Edgbaston College students in class" className="h-full min-h-[280px] w-full object-cover" loading="lazy" decoding="async" />
               </div>
               <div className="rounded-xl border border-black/10 bg-white p-6">
                 <div className="flex flex-col items-center">

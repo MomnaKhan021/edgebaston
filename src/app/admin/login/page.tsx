@@ -16,8 +16,7 @@ export default async function LoginPage() {
           <img
             src="/figma/logo-navy.svg"
             alt={settings.siteName}
-            className="mx-auto mb-4 h-10 w-auto"
-          />
+            className="mx-auto mb-4 h-10 w-auto" loading="lazy" decoding="async" />
           <h1 className="text-lg font-bold text-eb-navy">Content dashboard</h1>
           <p className="mt-1 text-sm text-muted-foreground">
             Sign in to manage {settings.siteName}

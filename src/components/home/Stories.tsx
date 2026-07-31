@@ -39,10 +39,10 @@ type Story = {
 };
 
 const STUDENTS: Story[] = [
-  { name: "Alishba", img: "/figma/pathway-1.png", grade: "BB → A*A*", course: "Law at University of Cambridge", quote: "The career guidance was absolutely transformative for me. Umar's Chemistry teaching helped me jump from a D to an A, whilst Owais's university advice gave me clear direction.", mobileOnly: true },
-  { name: "Nicole", img: "/figma/news-1.png", grade: "BB → A*A*", course: "Dentistry at King's College London", quote: "The small classes and mock exams gave me the confidence to jump from BB to A*A* and secure my dentistry place." },
-  { name: "Tara", img: "/figma/news-2.png", grade: "BB → AA", course: "Medicine at Edge Hill University", quote: "The personalised UCAS support was the difference — I reapplied and got my medicine offer." },
-  { name: "Jacob", img: "/figma/pathway-3.png", grade: "CC → A*A", course: "Engineering at University of Warwick", quote: "Weekly assessments kept me on track and my grades climbed two full levels over the year." },
+  { name: "Alishba", img: "/figma/pathway-1.webp", grade: "BB → A*A*", course: "Law at University of Cambridge", quote: "The career guidance was absolutely transformative for me. Umar's Chemistry teaching helped me jump from a D to an A, whilst Owais's university advice gave me clear direction.", mobileOnly: true },
+  { name: "Nicole", img: "/figma/news-1.webp", grade: "BB → A*A*", course: "Dentistry at King's College London", quote: "The small classes and mock exams gave me the confidence to jump from BB to A*A* and secure my dentistry place." },
+  { name: "Tara", img: "/figma/news-2.webp", grade: "BB → AA", course: "Medicine at Edge Hill University", quote: "The personalised UCAS support was the difference — I reapplied and got my medicine offer." },
+  { name: "Jacob", img: "/figma/pathway-3.webp", grade: "CC → A*A", course: "Engineering at University of Warwick", quote: "Weekly assessments kept me on track and my grades climbed two full levels over the year." },
 ];
 
 function CompactCard({ c }: { c: Story }) {

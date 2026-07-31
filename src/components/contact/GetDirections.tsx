@@ -26,7 +26,7 @@ export function GetDirections() {
         aria-label="Open Edgbaston College on Google Maps"
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/figma/map.png" alt="Map to Edgbaston College" className="h-64 w-full object-cover sm:h-80" />
+        <img src="/figma/map.webp" alt="Map to Edgbaston College" className="h-64 w-full object-cover sm:h-80" loading="lazy" decoding="async" />
       </a>
       <div className="p-5 sm:p-6">
         <p className="text-sm text-neutral-600">

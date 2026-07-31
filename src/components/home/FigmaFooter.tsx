@@ -33,11 +33,10 @@ export function FigmaFooter() {
           <div className="flex items-center gap-3">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/figma/owais-ahmed.png"
+              src="/figma/owais-ahmed.webp"
               alt="Owais Ahmed"
               className="h-12 w-12 rounded-md object-cover object-top sm:h-[89px] sm:w-[89px]"
-              style={{ aspectRatio: "1 / 1" }}
-            />
+              style={{ aspectRatio: "1 / 1" }} loading="lazy" decoding="async" />
             <div>
               <p className="text-[13px] text-white/70 sm:text-sm">Principal</p>
               <p className="text-base font-bold tracking-wide sm:text-lg">OWAIS AHMED</p>
@@ -73,7 +72,7 @@ export function FigmaFooter() {
               </div>
               <a href={MAP_URL} target="_blank" rel="noopener noreferrer" aria-label="Open Edgbaston College on Google Maps" className="block min-h-[240px] overflow-hidden rounded-xl">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/figma/map.png" alt="Map to Edgbaston College" className="h-full w-full object-cover" />
+                <img src="/figma/map.webp" alt="Map to Edgbaston College" className="h-full w-full object-cover" loading="lazy" decoding="async" />
               </a>
             </div>
           </div>
@@ -82,7 +81,7 @@ export function FigmaFooter() {
         {/* Big brand lockup */}
         <div className="pt-16">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/figma/logo-stacked.svg" alt="Edgbaston College" className="w-full" />
+          <img src="/figma/logo-stacked.svg" alt="Edgbaston College" className="w-full" loading="lazy" decoding="async" />
         </div>
         <div className="border-t border-white/10 py-6 text-xs text-white/55">
           © {new Date().getFullYear()} Edgbaston College. All rights reserved. ·{" "}

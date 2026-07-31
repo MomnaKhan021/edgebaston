@@ -2,11 +2,11 @@ import { Slider } from "./Slider";
 import { ArrowUpRight } from "./icons";
 
 const NEWS = [
-  { date: "2025 Results", title: "Edgbaston College Celebrates Outstanding 2025 A-Level Results", img: "/figma/pathway-1.png" },
-  { date: "22 Nov 2024", title: "Maneek Wins the Great College Bake Off to Support Children…", img: "/figma/news-1.png" },
-  { date: "15 Oct 2024", title: "Year 12 Students Explore Future Opportunities at UK University…", img: "/figma/pathway-2.png" },
-  { date: "3 Oct 2024", title: "Edgbaston College Students Build Life-Saving Skills with St John…", img: "/figma/news-2.png" },
-  { date: "7 Oct 2024", title: "Students Hit the Track for Go Karting Fun", img: "/figma/pathway-3.png" },
+  { date: "2025 Results", title: "Edgbaston College Celebrates Outstanding 2025 A-Level Results", img: "/figma/pathway-1.webp" },
+  { date: "22 Nov 2024", title: "Maneek Wins the Great College Bake Off to Support Children…", img: "/figma/news-1.webp" },
+  { date: "15 Oct 2024", title: "Year 12 Students Explore Future Opportunities at UK University…", img: "/figma/pathway-2.webp" },
+  { date: "3 Oct 2024", title: "Edgbaston College Students Build Life-Saving Skills with St John…", img: "/figma/news-2.webp" },
+  { date: "7 Oct 2024", title: "Students Hit the Track for Go Karting Fun", img: "/figma/pathway-3.webp" },
 ];
 
 export function News() {

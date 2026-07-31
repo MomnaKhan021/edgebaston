@@ -47,7 +47,7 @@ export default function OurHistoryPage() {
       <section className="relative isolate overflow-hidden bg-eb-navy">
         <Navbar />
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/figma/history-hero.png" alt="Edgbaston College students" className="absolute inset-0 h-full w-full object-cover" />
+        <img src="/figma/history-hero.webp" alt="Edgbaston College students" className="absolute inset-0 h-full w-full object-cover" fetchPriority="high" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30" />
         <div className="relative mx-auto flex min-h-[440px] max-w-[1440px] flex-col justify-end px-4 pb-10 pt-36 lg:min-h-[520px] lg:px-16 lg:pb-12">
           <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-[56px]">
@@ -125,7 +125,7 @@ export default function OurHistoryPage() {
           <div className="mx-auto grid max-w-[1320px] items-center gap-8 px-4 py-10 lg:grid-cols-2 lg:gap-14 lg:px-16 lg:py-16">
             <div className="overflow-hidden rounded-2xl">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/figma/history-a.png" alt="Edgbaston student" className="aspect-[4/3] w-full object-cover" />
+              <img src="/figma/history-a.webp" alt="Edgbaston student" className="aspect-[4/3] w-full object-cover" loading="lazy" decoding="async" />
             </div>
             <div>
               <p className="text-2xl font-bold leading-snug text-eb-navy lg:text-[28px]">
@@ -153,7 +153,7 @@ export default function OurHistoryPage() {
             </div>
             <div className="order-1 overflow-hidden rounded-2xl lg:order-2">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/figma/history-grass.png" alt="Edgbaston student outdoors" className="aspect-[4/3] w-full object-cover" />
+              <img src="/figma/history-grass.webp" alt="Edgbaston student outdoors" className="aspect-[4/3] w-full object-cover" loading="lazy" decoding="async" />
             </div>
           </div>
         </section>
