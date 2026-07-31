@@ -264,17 +264,17 @@ export default function RetakePage() {
       {/* Why our retake students excel */}
       <Reveal>
         <section className="bg-white">
-          <div className="mx-auto max-w-[1440px] px-4 pb-12 lg:px-[60px] lg:pb-20">
+          <div className="mx-auto max-w-[1440px] px-4 pb-14 lg:px-[60px] lg:pb-20">
             <div className="mx-auto max-w-2xl text-center">
-              <p className="font-mono text-[13px] text-eb-navy">The Edgbaston Advantage</p>
-              <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-eb-ink lg:text-[44px]">Why our retake students excel</h2>
+              <p className="font-mono text-[12px] uppercase tracking-[0.06em] text-eb-navy sm:text-[13px]">The Edgbaston Advantage</p>
+              <h2 className="mx-auto mt-3 max-w-[320px] text-[26px] font-extrabold leading-[1.15] tracking-tight text-eb-ink sm:max-w-none sm:text-3xl lg:text-[44px]">Why our retake students excel</h2>
             </div>
-            <div className="eb-stagger mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="eb-stagger mt-8 grid gap-4 sm:mt-10 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6">
               {EXCEL.map(({ Icon, title, body }) => (
-                <div key={title} className="eb-card rounded-xl bg-eb-cream px-6 py-7 text-center">
-                  <Icon className="mx-auto h-9 w-9 text-eb-navy" />
-                  <h3 className="mt-4 text-[17px] font-bold leading-snug text-eb-navy">{title}</h3>
-                  <p className="mx-auto mt-2 max-w-[300px] text-[13px] leading-relaxed text-neutral-600">{body}</p>
+                <div key={title} className="eb-card flex flex-col items-center rounded-xl bg-eb-cream px-6 py-8 text-center sm:px-7 sm:py-9">
+                  <Icon className="h-11 w-11 text-eb-navy sm:h-12 sm:w-12" />
+                  <h3 className="mt-5 text-[18px] font-bold leading-snug text-eb-navy sm:mt-6">{title}</h3>
+                  <p className="mx-auto mt-2.5 max-w-[320px] text-[14px] leading-relaxed text-neutral-600 sm:mt-3 sm:text-[15px]">{body}</p>
                 </div>
               ))}
             </div>
