@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 function Arrow({ dir }: { dir: "left" | "right" }) {
   return (
@@ -19,6 +19,16 @@ function Arrow({ dir }: { dir: "left" | "right" }) {
 /** Horizontal snap slider with centred prev/next buttons below the track. */
 export function StorySlider({ children }: { children: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
+
+  // On mobile, start with the middle slide centred (per the design);
+  // desktop starts from the first (featured) slide.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || window.innerWidth >= 640) return;
+    const mid = el.children[Math.floor(el.children.length / 2)] as HTMLElement | undefined;
+    if (mid) el.scrollLeft = mid.offsetLeft - (el.clientWidth - mid.clientWidth) / 2;
+  }, []);
+
   const nudge = (dir: number) => {
     const el = ref.current;
     if (!el) return;

@@ -282,30 +282,31 @@ export default function RetakePage() {
       {/* How the one-year retake works */}
       <Reveal>
         <section className="bg-white">
-          <div className="mx-auto max-w-[1440px] px-4 pb-14 lg:px-[60px] lg:pb-20">
+          <div className="mx-auto max-w-[1440px] px-4 pb-10 lg:px-[60px] lg:pb-16">
             <div className="mx-auto max-w-2xl text-center">
-              <p className="font-mono text-[13px] text-eb-navy">How It Works</p>
-              <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-eb-ink lg:text-[44px]">How the one-year retake works</h2>
-              <p className="mt-3 text-[14px] text-neutral-600">One year to master your subjects and lift your grades.</p>
+              <p className="font-mono text-[12px] text-eb-navy sm:text-[13px]">How It Works</p>
+              <h2 className="mt-2 text-[26px] font-extrabold tracking-tight text-eb-ink sm:text-3xl lg:text-[44px]">How the one-year retake works</h2>
+              <p className="mt-2 text-[14px] text-neutral-600 sm:mt-3">One year to master your subjects and lift your grades.</p>
             </div>
-            <div className="eb-stagger mt-10 grid gap-5 md:grid-cols-3">
+            <div className="eb-stagger mt-6 grid gap-4 sm:mt-8 sm:gap-5 md:grid-cols-3">
               {STEPS.map(({ n, title, body }) => (
-                <div key={n} className="eb-card relative flex min-h-[280px] flex-col justify-end rounded-xl bg-eb-navy p-6 lg:min-h-[340px]">
-                  <span className="absolute right-5 top-5 grid h-11 w-11 place-items-center rounded-full border border-white/40 font-mono text-[13px] font-bold text-white">
+                <div key={n} className="eb-card relative flex min-h-[220px] flex-col justify-end rounded-xl bg-eb-navy p-5 sm:min-h-[280px] sm:p-6 lg:min-h-[340px]">
+                  <span className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full border border-white/40 font-mono text-[12px] font-bold text-white sm:right-5 sm:top-5 sm:h-11 sm:w-11 sm:text-[13px]">
                     {n}
                   </span>
-                  <h3 className="text-xl font-bold text-white lg:text-[22px]">{title}</h3>
-                  <p className="mt-2 text-[14px] leading-relaxed text-white/75">{body}</p>
+                  <h3 className="text-[18px] font-bold text-white sm:text-xl lg:text-[22px]">{title}</h3>
+                  <p className="mt-1.5 text-[13px] leading-relaxed text-white/75 sm:mt-2 sm:text-[14px]">{body}</p>
                 </div>
               ))}
             </div>
-            <div className="mt-9 flex justify-center">
+            {/* Button sits below the cards on every size; full-width on mobile */}
+            <div className="mt-4 flex justify-center sm:mt-8">
               <Link
                 href="/contact"
-                className="eb-cta group inline-flex items-center gap-3 rounded-lg bg-eb-cream py-1.5 pl-5 pr-1.5 text-xs font-bold uppercase tracking-wide text-eb-navy sm:text-[13px]"
+                className="eb-cta group flex w-full items-center justify-between gap-3 rounded-lg bg-eb-cream py-1.5 pl-5 pr-1.5 text-xs font-bold uppercase tracking-wide text-eb-navy sm:inline-flex sm:w-auto sm:justify-start sm:text-[13px]"
               >
                 See The List Of Available Subjects
-                <span className="eb-square grid h-9 w-9 place-items-center rounded-lg bg-eb-blue text-white">
+                <span className="eb-square grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-eb-blue text-white">
                   <ArrowUpRight className="h-5 w-5" />
                 </span>
               </Link>
@@ -347,11 +348,11 @@ export default function RetakePage() {
         <section className="bg-eb-cream">
           <div className="mx-auto max-w-[1440px] px-4 py-12 lg:px-[60px] lg:py-20">
             <div className="mx-auto max-w-2xl text-center">
-              <p className="font-mono text-[13px] text-eb-navy">Courses We Offer</p>
-              <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-eb-ink lg:text-[44px]">Retake success stories</h2>
-              <p className="mt-3 text-[14px] text-neutral-600">Real students, real grade jumps. Watch how their retake year went.</p>
+              <p className="font-mono text-[12px] uppercase tracking-[0.06em] text-eb-navy sm:text-[13px]">Courses We Offer</p>
+              <h2 className="mt-3 text-[26px] font-extrabold leading-[1.15] tracking-tight text-eb-ink sm:text-3xl lg:text-[44px]">Retake success stories</h2>
+              <p className="mx-auto mt-2.5 max-w-[300px] text-[13px] leading-relaxed text-neutral-600 sm:mt-3 sm:max-w-none sm:text-[14px]">Real students, real grade jumps. Watch how their retake year went.</p>
             </div>
-            <div className="mt-10">
+            <div className="mt-8 sm:mt-10">
               <StorySlider>
                 {/* Featured: photo + quote */}
                 <div className="grid w-[92%] shrink-0 snap-center grid-cols-1 gap-4 sm:w-[600px] sm:snap-start sm:grid-cols-[256px_1fr]">
