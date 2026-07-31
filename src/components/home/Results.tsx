@@ -53,15 +53,15 @@ export function Results() {
         <Reveal delay={120}>
           <div className="mx-auto mt-10 flex items-center justify-center sm:mt-[60px]">
             {/* Left box — higher */}
-            <div className="z-10 w-[110px] shrink-0 -translate-y-8 rounded-lg bg-white/[0.08] px-2 py-3 text-center sm:w-[210px] sm:-translate-y-10 sm:rounded-xl sm:p-[26px] lg:w-[240px] lg:-translate-y-12">
-              <p className="font-mono text-[10px] font-medium text-white sm:text-[15px]">National Ranking</p>
-              <CountUp to={25} prefix="#" className="my-1 block text-[24px] font-extrabold text-white sm:my-2 sm:text-5xl lg:text-[64px]" />
-              <p className="text-[10px] leading-snug text-white/80 sm:text-[15px]">Sixth form college in England</p>
+            <div className="z-10 w-[128px] shrink-0 -translate-y-8 rounded-xl bg-white/[0.08] px-3 py-4 text-center sm:w-[210px] sm:-translate-y-10 sm:p-[26px] lg:w-[240px] lg:-translate-y-12">
+              <p className="font-mono text-[11px] font-medium text-white sm:text-[15px]">National Ranking</p>
+              <CountUp to={25} prefix="#" className="my-1.5 block text-[34px] font-extrabold leading-none text-white sm:my-2 sm:text-5xl lg:text-[64px]" />
+              <p className="text-[11px] leading-tight text-white/80 sm:text-[15px] sm:leading-snug">Sixth form college in England</p>
             </div>
 
             {/* Door. The horizontal margins are the “lanes” the curl arrows live in —
                 each curl is narrower than its lane, so it never touches the cards or door. */}
-            <div className="relative mx-6 shrink-0 sm:mx-16 lg:mx-28">
+            <div className="relative mx-1.5 shrink-0 sm:mx-16 lg:mx-28">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/figma/door.svg" alt="" className="h-32 w-auto sm:h-60 lg:h-72" loading="lazy" decoding="async" />
               {/* Lower-left curl: in the left lane, near the door base */}
@@ -75,11 +75,11 @@ export function Results() {
             </div>
 
             {/* Right box — lower, with rosette medal top-left */}
-            <div className="relative z-10 w-[110px] shrink-0 translate-y-8 rounded-lg bg-white/[0.08] px-2 py-3 text-center sm:w-[210px] sm:translate-y-10 sm:rounded-xl sm:p-[26px] lg:w-[240px] lg:translate-y-12">
-              <Medal className="absolute right-1.5 top-1.5 h-5 w-5 sm:left-4 sm:right-auto sm:top-3 sm:h-8 sm:w-8" />
-              <p className="font-mono text-[10px] font-medium text-white sm:text-[15px]">Value Added</p>
-              <CountUp to={1} prefix="#" className="my-1 block text-[24px] font-extrabold text-white sm:my-2 sm:text-5xl lg:text-[64px]" />
-              <p className="text-[10px] leading-snug text-white/80 sm:text-[15px]">For Value-Added in Birmingham</p>
+            <div className="relative z-10 w-[128px] shrink-0 translate-y-8 rounded-xl bg-white/[0.08] px-3 py-4 text-center sm:w-[210px] sm:translate-y-10 sm:p-[26px] lg:w-[240px] lg:translate-y-12">
+              <Medal className="absolute right-2 top-2 h-5 w-5 sm:left-4 sm:right-auto sm:top-3 sm:h-8 sm:w-8" />
+              <p className="font-mono text-[11px] font-medium text-white sm:text-[15px]">Value Added</p>
+              <CountUp to={1} prefix="#" className="my-1.5 block text-[34px] font-extrabold leading-none text-white sm:my-2 sm:text-5xl lg:text-[64px]" />
+              <p className="text-[11px] leading-tight text-white/80 sm:text-[15px] sm:leading-snug">For Value-Added in Birmingham</p>
             </div>
           </div>
         </Reveal>
@@ -87,13 +87,13 @@ export function Results() {
         {/* Blue split bar (r12) — same visual width as the door composition */}
         <Reveal delay={240}>
           <div className="mx-auto mt-8 grid max-w-[860px] grid-cols-2 overflow-hidden rounded-xl bg-eb-blue sm:mt-10">
-            <div className="flex items-center gap-2 border-r border-white/25 px-3 py-4 sm:gap-4 sm:px-7 sm:py-5">
-              <CountUp to={96} suffix="%" className="shrink-0 text-[20px] font-bold text-white sm:text-[32px] lg:text-[40px]" />
-              <span className="text-[10px] leading-snug text-white sm:text-[14px] lg:text-[16px]">success rate in securing Medicine &amp; Dentistry places</span>
+            <div className="flex items-center gap-2.5 border-r border-white/25 px-3.5 py-5 sm:gap-4 sm:px-7">
+              <CountUp to={96} suffix="%" className="shrink-0 text-[28px] font-bold leading-none text-white sm:text-[32px] lg:text-[40px]" />
+              <span className="text-[12px] leading-tight text-white sm:text-[14px] lg:text-[16px]">success rate in securing Medicine &amp; Dentistry places</span>
             </div>
-            <div className="flex items-center gap-2 px-3 py-4 sm:gap-4 sm:px-7 sm:py-5">
-              <CountUp to={72.7} decimals={1} suffix="%" className="shrink-0 text-[20px] font-bold text-white sm:text-[32px] lg:text-[40px]" />
-              <span className="text-[10px] leading-snug text-white sm:text-[14px] lg:text-[16px]">Russell Group Progression</span>
+            <div className="flex items-center gap-2.5 px-3.5 py-5 sm:gap-4 sm:px-7">
+              <CountUp to={72.7} decimals={1} suffix="%" className="shrink-0 text-[28px] font-bold leading-none text-white sm:text-[32px] lg:text-[40px]" />
+              <span className="text-[12px] leading-tight text-white sm:text-[14px] lg:text-[16px]">Russell Group Progression</span>
             </div>
           </div>
         </Reveal>

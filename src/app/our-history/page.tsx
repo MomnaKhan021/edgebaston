@@ -63,19 +63,19 @@ export default function OurHistoryPage() {
       {/* Our Commitment to Excellence */}
       <Reveal>
         <section className="bg-white">
-          <div className="mx-auto max-w-[1320px] px-4 py-10 lg:py-16">
+          <div className="mx-auto max-w-[1320px] px-4 py-8 lg:py-14">
             <div className="eb-stagger mx-auto max-w-2xl text-center">
-              <h2 className="text-3xl font-extrabold tracking-tight text-eb-ink lg:text-[44px]">Our Commitment to Excellence</h2>
-              <p className="mt-4 text-[15px] leading-relaxed text-neutral-600">
+              <h2 className="text-[24px] font-extrabold tracking-tight text-eb-ink sm:text-3xl lg:text-[40px]">Our Commitment to Excellence</h2>
+              <p className="mt-3 text-[14px] leading-relaxed text-neutral-600 sm:text-[15px]">
                 Our commitment to providing exceptional support for students&apos; academic journeys and future careers has resulted in first-class outcomes.
               </p>
             </div>
-            <div className="eb-noscroll -mx-4 mt-10 flex snap-x gap-5 overflow-x-auto px-4 pb-2 lg:mx-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:px-0">
+            <div className="eb-noscroll -mx-4 mt-7 flex snap-x gap-4 overflow-x-auto px-4 pb-2 sm:mt-10 sm:gap-5 lg:mx-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:px-0">
               {COMMITMENTS.map(({ Icon, title, body }) => (
-                <div key={title} className="eb-card w-[78%] shrink-0 snap-start rounded-2xl bg-eb-cream p-7 sm:w-[300px] lg:w-auto">
-                  <Icon className="h-9 w-9 text-eb-navy" />
-                  <h3 className="mt-6 text-lg font-bold text-eb-navy">{title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-neutral-600">{body}</p>
+                <div key={title} className="eb-card w-[78%] shrink-0 snap-start rounded-2xl bg-eb-cream p-5 sm:w-[300px] sm:p-6 lg:w-auto">
+                  <Icon className="h-8 w-8 text-eb-navy sm:h-9 sm:w-9" />
+                  <h3 className="mt-3 text-[16px] font-bold text-eb-navy sm:text-lg">{title}</h3>
+                  <p className="mt-2 text-[13px] leading-relaxed text-neutral-600 sm:text-sm">{body}</p>
                 </div>
               ))}
             </div>
@@ -86,16 +86,16 @@ export default function OurHistoryPage() {
       {/* Founded in 2015 */}
       <Reveal>
         <section className="bg-eb-navy">
-          <div className="eb-stagger mx-auto max-w-[1320px] px-4 pt-12 lg:px-16 lg:pt-16">
-            <p className="font-mono text-sm uppercase tracking-[0.14em] text-white/60">Founded In</p>
-            <p className="mt-2 text-7xl font-extrabold leading-none text-white lg:text-[120px]">2015</p>
-            <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/85 lg:text-xl">
+          <div className="eb-stagger mx-auto max-w-[1320px] px-4 pt-8 sm:pt-12 lg:px-16 lg:pt-14">
+            <p className="font-mono text-xs uppercase tracking-[0.14em] text-white/60 sm:text-sm">Founded In</p>
+            <p className="mt-2 text-[52px] font-extrabold leading-none text-white sm:text-7xl lg:text-[100px]">2015</p>
+            <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-white/85 sm:mt-6 sm:text-lg lg:text-xl">
               Edgbaston College quickly gained recognition for its outstanding results. Growing steadily through word-of-mouth recommendations, our reputation for academic excellence and individualised learning has led to continuous expansion.
             </p>
           </div>
           {/* decorative vertical-line band */}
           <div
-            className="mt-12 h-16"
+            className="mt-8 h-10 sm:mt-12 sm:h-16"
             style={{
               backgroundImage:
                 "repeating-linear-gradient(90deg, rgba(255,255,255,0.28) 0 1px, transparent 1px 12px)",
@@ -108,17 +108,17 @@ export default function OurHistoryPage() {
       {/* Content block A: image left, text right */}
       <Reveal>
         <section className="bg-white">
-          <div className="mx-auto grid max-w-[1320px] items-stretch gap-5 px-4 py-10 lg:grid-cols-2 lg:gap-10 lg:px-16 lg:py-16">
+          <div className="mx-auto grid max-w-[1320px] items-stretch gap-4 px-4 py-8 lg:grid-cols-2 lg:gap-10 lg:px-16 lg:py-14">
             <div className="overflow-hidden rounded-2xl">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/figma/history-a.webp" alt="Edgbaston student" className="aspect-[4/3] h-full w-full object-cover lg:aspect-auto" loading="lazy" decoding="async" />
             </div>
             {/* Light card, same height as the image; intro top, note pinned bottom */}
-            <div className="flex flex-col justify-between gap-10 rounded-2xl bg-eb-cream p-6 sm:p-8 lg:gap-14 lg:p-12">
-              <p className="text-2xl font-bold leading-snug text-eb-navy lg:text-[28px]">
+            <div className="flex flex-col justify-between gap-8 rounded-2xl bg-eb-cream p-5 sm:p-8 lg:gap-12 lg:p-10">
+              <p className="text-[18px] font-bold leading-snug text-eb-navy sm:text-[20px] lg:text-[24px]">
                 Despite our growth, Edgbaston College remains family-owned, which allows us to prioritise what truly matters – creating a welcoming and supportive environment where each student is known and valued.
               </p>
-              <p className="text-[15px] leading-relaxed text-eb-navy/80">
+              <p className="text-[13px] leading-relaxed text-eb-navy/80 sm:text-[14px]">
                 Our open-door policy ensures students and parents feel comfortable seeking guidance and support at any time, fostering a strong sense of community and shared purpose.
               </p>
             </div>
@@ -129,13 +129,13 @@ export default function OurHistoryPage() {
       {/* Content block B: text left, image right */}
       <Reveal>
         <section className="bg-white">
-          <div className="mx-auto grid max-w-[1320px] items-stretch gap-5 px-4 pb-16 lg:grid-cols-2 lg:gap-10 lg:px-16 lg:pb-24">
+          <div className="mx-auto grid max-w-[1320px] items-stretch gap-4 px-4 pb-12 lg:grid-cols-2 lg:gap-10 lg:px-16 lg:pb-20">
             {/* Light card, same height as the image; intro top, note pinned bottom */}
-            <div className="order-2 flex flex-col justify-between gap-10 rounded-2xl bg-eb-cream p-6 sm:p-8 lg:order-1 lg:gap-14 lg:p-12">
-              <p className="text-2xl font-bold leading-snug text-eb-navy lg:text-[28px]">
+            <div className="order-2 flex flex-col justify-between gap-8 rounded-2xl bg-eb-cream p-5 sm:p-8 lg:order-1 lg:gap-12 lg:p-10">
+              <p className="text-[18px] font-bold leading-snug text-eb-navy sm:text-[20px] lg:text-[24px]">
                 Our unwavering dedication to student success has consistently placed us amongst the leading providers for students seeking admission to prestigious universities and competitive courses, including Oxbridge, Medicine, and Dentistry.
               </p>
-              <p className="text-[15px] leading-relaxed text-eb-navy/80">
+              <p className="text-[13px] leading-relaxed text-eb-navy/80 sm:text-[14px]">
                 This outstanding track record is a testament to our commitment to empowering students to achieve their highest aspirations.
               </p>
             </div>
