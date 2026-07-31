@@ -7,6 +7,7 @@ import { Reveal } from "@/components/home/Reveal";
 import { CountUp } from "@/components/home/CountUp";
 import { ArrowUpRight } from "@/components/home/icons";
 import { ProgressRing } from "@/components/course/ProgressRing";
+import { ProgressBar } from "@/components/course/ProgressBar";
 import { SharePage } from "@/components/site/SharePage";
 import { StorySlider } from "@/components/course/StorySlider";
 import { FaqList } from "@/components/course/FaqList";
@@ -86,14 +87,13 @@ function ContactBtn({ className = "" }: { className?: string }) {
 
 function StatRow({ label, grade, pct }: { label: string; grade: string; pct: number }) {
   return (
-    <div className="rounded-lg bg-white px-3.5 pb-3.5 pt-3">
-      <div className="flex items-center justify-between">
-        <span className="font-mono text-[13px] text-eb-navy/80">{label}</span>
-        <span className="text-[17px] font-extrabold tracking-tight text-eb-navy">{grade}</span>
+    <div className="rounded-lg bg-white px-3 pb-3 pt-2.5 sm:px-3.5 sm:pb-3.5 sm:pt-3">
+      <div className="flex items-center justify-between gap-3">
+        <span className="font-mono text-[12px] text-eb-navy/80 sm:text-[13px]">{label}</span>
+        <span className="text-[15px] font-extrabold tracking-tight text-eb-navy sm:text-[17px]">{grade}</span>
       </div>
-      <div className="mt-2 h-3.5 overflow-hidden rounded-sm bg-eb-cream">
-        <div className="h-full bg-eb-blue" style={{ width: pct + "%" }} />
-      </div>
+      {/* Fills slowly from 0 → pct when the row scrolls into view */}
+      <ProgressBar pct={pct} className="mt-2" />
     </div>
   );
 }
@@ -317,22 +317,23 @@ export default function RetakePage() {
       {/* A retake plan built around you */}
       <Reveal>
         <section className="bg-eb-navy">
-          <div className="mx-auto grid max-w-[1440px] items-center gap-10 px-4 py-12 lg:grid-cols-2 lg:gap-14 lg:px-[60px] lg:py-20">
+          <div className="mx-auto grid max-w-[1440px] items-center gap-6 px-4 py-10 sm:gap-8 lg:grid-cols-2 lg:gap-14 lg:px-[60px] lg:py-20">
+            {/* Image first on mobile, per the design */}
             <div className="overflow-hidden rounded-lg">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/figma/retake-plan.webp" alt="A retake student working with a teacher" className="w-full object-cover" style={{ aspectRatio: "5 / 4" }} loading="lazy" decoding="async" />
             </div>
             <div className="eb-stagger">
-              <p className="font-mono text-[13px] text-white/80">Personalised From Day One</p>
-              <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-white lg:text-[44px]">A retake plan built around you</h2>
-              <p className="mt-3 max-w-md text-[14px] leading-relaxed text-white/75">
+              <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-white sm:text-[13px]">Personalised From Day One</p>
+              <h2 className="mt-2.5 text-[24px] font-extrabold leading-[1.15] tracking-tight text-white sm:mt-3 sm:text-3xl lg:text-[44px]">A retake plan built around you</h2>
+              <p className="mt-2.5 max-w-md text-[13px] leading-relaxed text-white/75 sm:mt-3 sm:text-[14px]">
                 No two students are the same. Every student starts with a one-to-one academic consultation, so we can target exactly what held your grades back last time.
               </p>
-              <ul className="mt-8 space-y-3.5">
+              <ul className="mt-6 space-y-2.5 sm:mt-8 sm:space-y-3.5">
                 {PLAN.map(({ Icon, text }) => (
-                  <li key={text} className="eb-card flex items-center gap-4 rounded-lg bg-white px-5 py-4">
+                  <li key={text} className="eb-card flex items-center gap-3.5 rounded-lg bg-white px-4 py-3.5 sm:gap-4 sm:px-5 sm:py-4">
                     <Icon className="h-6 w-6 shrink-0 text-eb-navy" />
-                    <span className="text-[14px] font-semibold leading-snug text-eb-navy sm:text-[15px]">{text}</span>
+                    <span className="text-[13px] font-semibold leading-snug text-eb-navy sm:text-[15px]">{text}</span>
                   </li>
                 ))}
               </ul>
