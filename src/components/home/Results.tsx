@@ -53,46 +53,47 @@ export function Results() {
         <Reveal delay={120}>
           <div className="mx-auto mt-10 flex items-center justify-center sm:mt-[60px]">
             {/* Left box — higher */}
-            <div className="z-10 w-[128px] shrink-0 -translate-y-8 rounded-lg bg-white/[0.08] px-2.5 py-3 text-center sm:w-[210px] sm:-translate-y-10 sm:rounded-xl sm:p-[26px] lg:w-[240px] lg:-translate-y-12">
-              <p className="font-mono text-[11px] font-medium text-white sm:text-[15px]">National Ranking</p>
-              <CountUp to={25} prefix="#" className="my-1 block text-[26px] font-extrabold text-white sm:my-2 sm:text-5xl lg:text-[64px]" />
-              <p className="text-[11px] leading-snug text-white/80 sm:text-[15px]">Sixth form college in England</p>
+            <div className="z-10 w-[110px] shrink-0 -translate-y-8 rounded-lg bg-white/[0.08] px-2 py-3 text-center sm:w-[210px] sm:-translate-y-10 sm:rounded-xl sm:p-[26px] lg:w-[240px] lg:-translate-y-12">
+              <p className="font-mono text-[10px] font-medium text-white sm:text-[15px]">National Ranking</p>
+              <CountUp to={25} prefix="#" className="my-1 block text-[24px] font-extrabold text-white sm:my-2 sm:text-5xl lg:text-[64px]" />
+              <p className="text-[10px] leading-snug text-white/80 sm:text-[15px]">Sixth form college in England</p>
             </div>
 
-            {/* Door with connectors anchored to its edges */}
-            <div className="relative mx-2 shrink-0 sm:mx-6 lg:mx-10">
+            {/* Door. The horizontal margins are the “lanes” the curl arrows live in —
+                each curl is narrower than its lane, so it never touches the cards or door. */}
+            <div className="relative mx-6 shrink-0 sm:mx-16 lg:mx-28">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/figma/door.svg" alt="" className="h-40 w-auto sm:h-60 lg:h-72" loading="lazy" decoding="async" />
-              {/* Lower-left curl: sits below the (raised) left card, near the door base */}
-              <svg className="pointer-events-none absolute right-[72%] top-[74%] w-9 sm:right-[86%] sm:top-[66%] sm:w-16 lg:w-[98px]" viewBox="0 0 104 69" fill="none" aria-hidden>
+              <img src="/figma/door.svg" alt="" className="h-32 w-auto sm:h-60 lg:h-72" loading="lazy" decoding="async" />
+              {/* Lower-left curl: in the left lane, near the door base */}
+              <svg className="pointer-events-none absolute right-full top-[62%] mr-0.5 w-4 sm:mr-2 sm:w-12 lg:mr-3 lg:w-[72px]" viewBox="0 0 104 69" fill="none" aria-hidden>
                 <path d="M71.3764 68.2635C65.6291 67.2217 61.2657 64.6191 56.7708 61.0693C30.7677 63.7634 7.09109 22.8727 0.0488705 1.51722C-0.33552 0.351266 1.64699 -1.03145 2.51206 1.1517C8.31112 15.7843 15.6607 30.7346 26.3868 42.4145C27.8941 44.3315 30.4395 46.658 32.2214 48.3077C37.4787 53.1752 46.9654 58.8887 54.3524 58.4796C54.3069 58.4188 54.2619 58.3574 54.2174 58.2958C51.8907 55.053 49.5909 50.7676 50.3826 46.7695C51.7984 39.6199 60.7951 40.226 64.1295 45.5859C67.012 50.2195 66.8674 55.5793 62.3735 59.0223C61.7833 59.4747 60.9331 59.8355 60.2747 60.2718C60.3462 60.4628 60.4463 60.6231 60.6101 60.7469C69.7071 67.6215 83.1198 67.7935 93.1083 63.3167C95.182 62.4035 97.1777 61.3213 99.0753 60.0811C99.62 59.7201 101.371 58.4109 101.839 58.5152C105.082 59.2368 101.832 61.4527 100.941 62.0298C92.3095 67.6195 81.5418 70.4415 71.3764 68.2635ZM57.8369 44.0879C50.8637 43.3817 52.5547 51.2863 54.9701 54.8625C55.6579 55.8807 56.7846 57.5459 57.8232 58.2031C59.6695 57.7311 61.6265 56.7592 62.541 55.0222C64.7955 50.7406 62.5373 45.2363 57.8369 44.0879Z" fill="white" fillOpacity="0.85" />
               </svg>
-              {/* Upper-right curl: sits above the (lowered) right card, near the door top */}
-              <svg className="pointer-events-none absolute left-[86%] top-[9%] w-9 sm:w-16 lg:w-[98px]" viewBox="0 0 104 69" fill="none" aria-hidden>
+              {/* Upper-right curl: in the right lane, near the door top */}
+              <svg className="pointer-events-none absolute left-full top-[8%] ml-0.5 w-4 sm:ml-2 sm:w-12 lg:ml-3 lg:w-[72px]" viewBox="0 0 104 69" fill="none" aria-hidden>
                 <path d="M31.8715 0.736496C37.6188 1.77827 41.9822 4.38091 46.4772 7.93071C72.4802 5.23661 96.1569 46.1273 103.199 67.4828C103.583 68.6487 101.601 70.0315 100.736 67.8483C94.9368 53.2157 87.5873 38.2654 76.8612 26.5855C75.3539 24.6685 72.8085 22.342 71.0266 20.6923C65.7693 15.8248 56.2826 10.1113 48.8955 10.5204C48.941 10.5812 48.986 10.6426 49.0306 10.7042C51.3573 13.947 53.657 18.2324 52.8653 22.2305C51.4495 29.3801 42.4528 28.774 39.1184 23.4141C36.2359 18.7805 36.3806 13.4207 40.8744 9.97769C41.4647 9.52528 42.3148 9.16446 42.9733 8.72823C42.9017 8.53723 42.8016 8.37693 42.6378 8.25308C33.5408 1.37851 20.1282 1.20648 10.1396 5.68328C8.06591 6.59653 6.07021 7.67869 4.17268 8.91887C3.62794 9.27992 1.87745 10.5891 1.40856 10.4848C-1.83426 9.76315 1.41579 7.54735 2.30696 6.97023C10.9385 1.38054 21.7062 -1.44152 31.8715 0.736496ZM45.4111 24.9121C52.3843 25.6183 50.6933 17.7137 48.2779 14.1375C47.5901 13.1193 46.4634 11.4541 45.4247 10.7969C43.5784 11.2689 41.6214 12.2408 40.707 13.9778C38.4525 18.2594 40.7107 23.7637 45.4111 24.9121Z" fill="white" fillOpacity="0.85" />
               </svg>
             </div>
 
             {/* Right box — lower, with rosette medal top-left */}
-            <div className="relative z-10 w-[128px] shrink-0 translate-y-8 rounded-lg bg-white/[0.08] px-2.5 py-3 text-center sm:w-[210px] sm:translate-y-10 sm:rounded-xl sm:p-[26px] lg:w-[240px] lg:translate-y-12">
+            <div className="relative z-10 w-[110px] shrink-0 translate-y-8 rounded-lg bg-white/[0.08] px-2 py-3 text-center sm:w-[210px] sm:translate-y-10 sm:rounded-xl sm:p-[26px] lg:w-[240px] lg:translate-y-12">
               <Medal className="absolute right-1.5 top-1.5 h-5 w-5 sm:left-4 sm:right-auto sm:top-3 sm:h-8 sm:w-8" />
-              <p className="font-mono text-[11px] font-medium text-white sm:text-[15px]">Value Added</p>
-              <CountUp to={1} prefix="#" className="my-1 block text-[26px] font-extrabold text-white sm:my-2 sm:text-5xl lg:text-[64px]" />
-              <p className="text-[11px] leading-snug text-white/80 sm:text-[15px]">For Value-Added in Birmingham</p>
+              <p className="font-mono text-[10px] font-medium text-white sm:text-[15px]">Value Added</p>
+              <CountUp to={1} prefix="#" className="my-1 block text-[24px] font-extrabold text-white sm:my-2 sm:text-5xl lg:text-[64px]" />
+              <p className="text-[10px] leading-snug text-white/80 sm:text-[15px]">For Value-Added in Birmingham</p>
             </div>
           </div>
         </Reveal>
 
         {/* Blue split bar (r12) — same visual width as the door composition */}
         <Reveal delay={240}>
-          <div className="mx-auto mt-8 grid max-w-[920px] grid-cols-2 overflow-hidden rounded-xl bg-eb-blue sm:mt-10">
-            <div className="flex items-center gap-2.5 border-r border-white/25 px-4 py-5 sm:gap-6 sm:px-7">
-              <CountUp to={96} suffix="%" className="shrink-0 text-[26px] font-bold text-white sm:text-6xl lg:text-[64px]" />
-              <span className="text-[12px] leading-snug text-white sm:text-[22px] sm:leading-tight">success rate in securing Medicine &amp; Dentistry places</span>
+          <div className="mx-auto mt-8 grid max-w-[860px] grid-cols-2 overflow-hidden rounded-xl bg-eb-blue sm:mt-10">
+            <div className="flex items-center gap-2 border-r border-white/25 px-3 py-4 sm:gap-4 sm:px-7 sm:py-5">
+              <CountUp to={96} suffix="%" className="shrink-0 text-[20px] font-bold text-white sm:text-[32px] lg:text-[40px]" />
+              <span className="text-[10px] leading-snug text-white sm:text-[14px] lg:text-[16px]">success rate in securing Medicine &amp; Dentistry places</span>
             </div>
-            <div className="flex items-center gap-2.5 px-4 py-5 sm:gap-6 sm:px-7">
-              <CountUp to={72.7} decimals={1} suffix="%" className="shrink-0 text-[26px] font-bold text-white sm:text-6xl lg:text-[64px]" />
-              <span className="text-[12px] leading-snug text-white sm:text-[22px] sm:leading-tight">Russell Group Progression</span>
+            <div className="flex items-center gap-2 px-3 py-4 sm:gap-4 sm:px-7 sm:py-5">
+              <CountUp to={72.7} decimals={1} suffix="%" className="shrink-0 text-[20px] font-bold text-white sm:text-[32px] lg:text-[40px]" />
+              <span className="text-[10px] leading-snug text-white sm:text-[14px] lg:text-[16px]">Russell Group Progression</span>
             </div>
           </div>
         </Reveal>

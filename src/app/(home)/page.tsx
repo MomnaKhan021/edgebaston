@@ -27,7 +27,8 @@ export default function HomePage() {
       <FeatureStrip />
       <Reveal><PrincipalMessage /></Reveal>
       <Reveal><Pathways /></Reveal>
-      <Reveal><Results /></Reveal>
+      {/* Results manages its own staged reveals internally */}
+      <Results />
       <Reveal><Stories /></Reveal>
       <Reveal><WhyChoose /></Reveal>
       <LearnMarquee />
