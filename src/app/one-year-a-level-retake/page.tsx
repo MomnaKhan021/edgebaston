@@ -61,20 +61,29 @@ const RESIDENCES = [
 ];
 
 const FAQ = [
-  { q: "Where can I retake my A-Levels in Birmingham?", a: "At Edgbaston College — Birmingham's specialist sixth-form college for A-Level retakes. We are based at 37 George Road, Edgbaston, a short walk from Five Ways station, and accept retake students from across Birmingham and beyond." },
-  { q: "Can you retake A-Levels?", a: "Yes. Anyone can retake their A-Levels regardless of age or previous school. Most of our students complete their retake in a single year with us, sitting the full exams again in the summer." },
-  { q: "Can you resit A-Levels in November?", a: "November resits are only available for a small number of subjects and exam boards. For most A-Levels, the next opportunity is the summer exam series — which is what our one-year programme prepares you for." },
-  { q: "When can you resit your A-Levels?", a: "A-Level exams are sat in the summer window (May–June). Students join us in September, re-learn the full course during the year, and sit their exams the following summer." },
-  { q: "How much does it cost to retake A-Levels?", a: "Fees depend on the number of subjects you retake. Contact us for current per-subject fees — flexible payment plans are available, and our July offer gives 30% off for the first five eligible applicants." },
-  { q: "What happens if you do worse in a resit?", a: "Universities almost always consider your best result, so a resit is very low risk. With small classes and constant feedback, the overwhelming majority of our students improve on their previous grades." },
-  { q: "How many times can you resit an A-Level?", a: "There is no limit — you can resit an A-Level as many times as you like. In practice, one well-structured retake year with the right support is usually all that's needed." },
-  { q: "Can I take a new A-Level subject when I retake?", a: "Yes. Many students take up a brand-new subject alongside their retakes — for example adding a subject that better fits their target university course." },
-  { q: "Do universities accept A-Level retakes?", a: "The vast majority do, including Russell Group universities. Some competitive courses like Medicine consider resit policies individually — we guide you through each university's stance as part of our UCAS support." },
-  { q: "How will you predict my grades?", a: "Your predicted grades are based on your performance in our weekly assessments and three full mock exams, so they reflect genuine, evidenced progress — not guesswork." },
-  { q: "What are your outcomes like?", a: "In 2025, 87.7% of grades were A*–B and 65.1% were A*–A, with students gaining an average of +1.78 grades per subject. 72.7% progressed to Russell Group universities." },
+  { q: "How many A-Levels can I retake?", a: "As many as you need — most students retake one to three A-Levels, and you can take up a brand-new subject alongside them." },
+  { q: "Can I retake only one subject?", a: "Yes. Many of our students join to retake a single subject. We build your timetable around exactly what you need to improve." },
+  { q: "Will I receive UCAS support?", a: "Yes — personalised UCAS reapplication guidance from Principal Owais Ahmed is built into the programme, from university selection to your personal statement and interviews." },
+  { q: "How often are assessments?", a: "Weekly. You sit timed assessments under exam conditions every week, plus three full mock exams across the year — each with individual feedback and a parent report." },
+  { q: "Is accommodation available?", a: "Yes. We've partnered with quality student accommodation just minutes from college, including Five Ways Residence and Beech Gardens, Edgbaston — bills included, with secure access and 24/7 support." },
+  { q: "How do I apply?", a: "Enquire online or call 0121 306 0182. We review your previous results, agree your subjects and target grades, and confirm your place — simple and quick." },
 ];
 
 /* ------------------------------ Small pieces ----------------------------- */
+
+/** Compact "Contact Us" button — cream label with a detached blue arrow square. */
+function ContactBtn({ className = "" }: { className?: string }) {
+  return (
+    <Link href="/contact" className={"eb-cta group items-stretch gap-1 " + className}>
+      <span className="flex flex-1 items-center bg-eb-cream px-4 py-3 text-[11px] font-bold uppercase tracking-wide text-eb-navy lg:flex-none">
+        Contact Us
+      </span>
+      <span className="eb-square grid w-10 shrink-0 place-items-center rounded-sm bg-eb-blue text-white">
+        <ArrowUpRight className="h-4 w-4" />
+      </span>
+    </Link>
+  );
+}
 
 function StatRow({ label, grade, pct }: { label: string; grade: string; pct: number }) {
   return (
@@ -545,25 +554,20 @@ export default function RetakePage() {
       {/* FAQ */}
       <Reveal>
         <section className="bg-white">
-          <div className="mx-auto grid max-w-[1440px] gap-10 px-4 pb-16 pt-4 lg:grid-cols-[380px_1fr] lg:gap-20 lg:px-[60px] lg:pb-24">
-            <div className="lg:sticky lg:top-24 lg:self-start">
-              <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-eb-ink lg:text-[40px]">
+          <div className="mx-auto grid max-w-[1440px] gap-8 px-4 pb-14 pt-6 lg:grid-cols-[minmax(0,380px)_1fr] lg:gap-24 lg:px-[60px] lg:pb-24 lg:pt-10">
+            <div className="text-center lg:sticky lg:top-24 lg:self-start lg:text-left">
+              <h2 className="mx-auto max-w-[300px] text-[22px] font-extrabold leading-[1.15] tracking-tight text-eb-ink lg:mx-0 lg:max-w-none lg:text-[40px]">
                 A-Level retake &amp; resit FAQ
               </h2>
-              <p className="mt-4 text-[14px] leading-relaxed text-neutral-600">
+              <p className="mx-auto mt-2.5 max-w-[320px] text-[12.5px] leading-relaxed text-eb-navy/80 lg:mx-0 lg:mt-3 lg:max-w-[300px] lg:text-[13px]">
                 Quick answers to the most common questions about retaking and resitting A-Levels in Birmingham.
               </p>
-              <Link
-                href="/contact"
-                className="eb-cta group mt-7 inline-flex items-center gap-3 rounded-lg bg-eb-cream py-1.5 pl-5 pr-1.5 text-xs font-bold uppercase tracking-wide text-eb-navy sm:text-[13px]"
-              >
-                Contact Us
-                <span className="eb-square grid h-9 w-9 place-items-center rounded-lg bg-eb-blue text-white">
-                  <ArrowUpRight className="h-5 w-5" />
-                </span>
-              </Link>
+              <ContactBtn className="mt-5 hidden lg:inline-flex" />
             </div>
-            <FaqList items={FAQ} />
+            <div>
+              <FaqList items={FAQ} />
+              <ContactBtn className="mt-6 flex w-full lg:hidden" />
+            </div>
           </div>
         </section>
       </Reveal>
