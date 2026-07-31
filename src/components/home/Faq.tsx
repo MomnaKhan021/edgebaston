@@ -35,7 +35,7 @@ export function Faq() {
   const [open, setOpen] = useState<number | null>(null);
   return (
     <section className="bg-white">
-      <div className="mx-auto flex max-w-[1440px] flex-col gap-6 px-4 py-10 lg:grid lg:grid-cols-[0.85fr_1.15fr] lg:gap-12 lg:px-[60px] lg:py-20">
+      <div className="mx-auto flex max-w-[1440px] flex-col gap-6 px-4 py-10 lg:grid lg:grid-cols-[0.85fr_1.15fr] lg:grid-rows-[auto_1fr] lg:gap-x-12 lg:gap-y-7 lg:px-[60px] lg:py-20">
         {/* Heading + subtitle */}
         <div className="text-center lg:col-start-1 lg:row-start-1 lg:text-left">
           <h2 className="text-[26px] font-extrabold leading-[1.1] tracking-tight text-black sm:text-4xl sm:leading-[1.02] lg:text-[62px]">
