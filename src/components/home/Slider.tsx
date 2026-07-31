@@ -51,9 +51,9 @@ export function Slider({
     const el = trackRef.current;
     if (!el || startIndex == null) return;
     if (window.matchMedia("(min-width: 640px)").matches) return;
-    const slides = Array.from(el.children).filter(
-      (c) => !c.hasAttribute("aria-hidden"),
-    ) as HTMLElement[];
+    const slides = (Array.from(el.children) as HTMLElement[]).filter(
+      (c) => !c.hasAttribute("aria-hidden") && c.offsetWidth > 0,
+    );
     const target = slides[startIndex];
     if (!target) return;
     const track = el.getBoundingClientRect();

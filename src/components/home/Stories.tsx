@@ -50,7 +50,7 @@ function CompactCard({ c }: { c: Story }) {
   return (
     <div
       className={
-        "group relative aspect-[292/420] w-[80%] shrink-0 snap-center overflow-hidden rounded-lg bg-eb-navy sm:aspect-auto sm:h-[420px] sm:w-[292px] sm:snap-start " +
+        "group relative aspect-[4/5] w-[calc(100%-64px)] shrink-0 snap-center overflow-hidden rounded-lg bg-eb-navy sm:aspect-auto sm:h-[420px] sm:w-[292px] sm:snap-start " +
         (c.mobileOnly ? "sm:hidden" : "")
       }
     >
@@ -103,6 +103,8 @@ export function Stories() {
           labelClassName="text-black"
           titleClassName="text-black"
           trackClassName="mt-[40px] gap-4 sm:mt-[60px] sm:gap-6"
+          startIndex={1}
+          edgeClassName="w-4"
         >
           {/* Featured card — desktop only (688 wide: image + quote) */}
           <div className="hidden w-[688px] shrink-0 snap-start overflow-hidden rounded-lg bg-white sm:grid sm:grid-cols-2">
