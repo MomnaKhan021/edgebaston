@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/auth";
@@ -84,6 +84,7 @@ export async function saveCourse(formData: FormData) {
     await db.course.create({ data });
   }
 
+  revalidateTag("courses", "max");
   revalidatePath("/courses");
   revalidatePath("/");
   revalidatePath("/admin/courses");
@@ -94,6 +95,7 @@ export async function deleteCourse(formData: FormData) {
   await assertAuth();
   const id = str(formData, "id");
   if (id) await db.course.delete({ where: { id } });
+  revalidateTag("courses", "max");
   revalidatePath("/courses");
   revalidatePath("/admin/courses");
 }
@@ -219,6 +221,7 @@ export async function saveSettings(formData: FormData) {
     create: { id: 1, ...data },
   });
 
+  revalidateTag("settings", "max");
   revalidatePath("/", "layout");
   revalidatePath("/admin/settings");
   redirect("/admin/settings?saved=1");

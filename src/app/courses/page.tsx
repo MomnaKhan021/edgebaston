@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { unstable_cache } from "next/cache";
 import { db } from "@/lib/db";
 import { AnnouncementBar } from "@/components/home/AnnouncementBar";
 import { Navbar } from "@/components/home/Navbar";
@@ -24,6 +25,18 @@ type CourseRow = {
   imageUrl: string;
 };
 
+// Cached course list (invalidated by revalidateTag("courses") on admin saves)
+// so browsing courses never waits on a database round-trip.
+const getPublishedCourses = unstable_cache(
+  async () =>
+    db.course.findMany({
+      where: { published: true },
+      orderBy: [{ featured: "desc" }, { order: "asc" }],
+    }),
+  ["published-courses"],
+  { revalidate: 60, tags: ["courses"] },
+);
+
 export default async function CoursesPage({
   searchParams,
 }: {
@@ -31,21 +44,9 @@ export default async function CoursesPage({
 }) {
   const { category } = await searchParams;
 
-  const courses = (await db.course.findMany({
-    where: { published: true, ...(category ? { category } : {}) },
-    orderBy: [{ featured: "desc" }, { order: "asc" }],
-  })) as CourseRow[];
-
-  const categories = [
-    ...new Set(
-      (
-        await db.course.findMany({
-          where: { published: true },
-          select: { category: true },
-        })
-      ).map((c) => c.category),
-    ),
-  ].sort();
+  const all = (await getPublishedCourses()) as CourseRow[];
+  const courses = category ? all.filter((c) => c.category === category) : all;
+  const categories = [...new Set(all.map((c) => c.category))].sort();
 
   return (
     <>

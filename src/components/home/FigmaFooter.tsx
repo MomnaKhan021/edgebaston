@@ -18,7 +18,7 @@ const LINKS = [
 
 function Arrow() {
   return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden className="mt-1 shrink-0 text-eb-blue">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden className="mt-1 shrink-0 text-white">
       <path d="M3 8h9M8 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
@@ -26,8 +26,14 @@ function Arrow() {
 
 export function FigmaFooter() {
   return (
-    <footer className="bg-gradient-to-b from-eb-navy via-eb-navy to-[#245a8a] text-white">
-      <div className="mx-auto max-w-[1440px] px-4 pt-12 lg:px-[60px]">
+    <footer
+      className="text-white"
+      style={{
+        background:
+          "radial-gradient(110% 85% at 12% 100%, #2f7dc0 0%, rgba(47,125,192,0.35) 38%, rgba(47,125,192,0) 62%), #0e2f49",
+      }}
+    >
+      <div className="mx-auto max-w-[1440px] px-4 pt-12 lg:px-[60px] lg:pt-20">
         {/* Top: principal + intro */}
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
           <div className="flex items-center gap-3">
@@ -50,13 +56,13 @@ export function FigmaFooter() {
           </p>
         </div>
 
-        <hr className="my-8 border-white/15 lg:my-12" />
+        <hr className="my-7 border-white/15 lg:my-12" />
 
         {/* Links + address + map */}
-        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.6fr] lg:gap-10">
+        <div className="grid gap-6 lg:grid-cols-[0.9fr_1.6fr] lg:gap-10">
           <FooterLinks links={LINKS} />
 
-          <div className="rounded-2xl bg-eb-navy-2 p-5 sm:p-8">
+          <div className="rounded-xl bg-eb-navy-2 p-4 sm:p-8">
             <div className="grid gap-6 md:grid-cols-2 md:gap-8">
               <div>
                 <h3 className="text-base font-bold uppercase tracking-wide">Address</h3>
@@ -65,9 +71,9 @@ export function FigmaFooter() {
                   37 George Road, Edgbaston, Birmingham, B15 1PL
                 </p>
                 <ul className="mt-6 space-y-3.5 text-[15px] sm:mt-10 sm:space-y-4">
-                  <li><a href="tel:01213060182" className="flex items-start gap-3 hover:text-white"><Arrow /> 0121 306 0182</a></li>
-                  <li><a href="mailto:enquiries@edgbastoncollege.co.uk" className="flex items-start gap-3 break-all hover:text-white"><Arrow /> enquiries@edgbastoncollege.co.uk</a></li>
-                  <li><a href={MAP_URL} target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 hover:text-white"><Arrow /> Get Directions</a></li>
+                  <li><a href="tel:01213060182" className="flex items-start gap-3 text-white/90 underline-offset-4 transition-colors duration-300 hover:text-white hover:underline"><Arrow /> 0121 306 0182</a></li>
+                  <li><a href="mailto:enquiries@edgbastoncollege.co.uk" className="flex items-start gap-3 break-all text-white/90 underline-offset-4 transition-colors duration-300 hover:text-white hover:underline"><Arrow /> enquiries@edgbastoncollege.co.uk</a></li>
+                  <li><a href={MAP_URL} target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 text-white/90 underline-offset-4 transition-colors duration-300 hover:text-white hover:underline"><Arrow /> Get Directions</a></li>
                 </ul>
               </div>
               <a href={MAP_URL} target="_blank" rel="noopener noreferrer" aria-label="Open Edgbaston College on Google Maps" className="block min-h-[240px] overflow-hidden rounded-xl">
@@ -79,11 +85,11 @@ export function FigmaFooter() {
         </div>
 
         {/* Big brand lockup */}
-        <div className="pt-16">
+        <div className="pt-10 lg:pt-16">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/figma/logo-stacked.svg" alt="Edgbaston College" className="w-full" loading="lazy" decoding="async" />
         </div>
-        <div className="border-t border-white/10 py-6 text-xs text-white/55">
+        <div className="mt-6 border-t border-white/10 py-5 text-xs text-white/55 lg:mt-8">
           © {new Date().getFullYear()} Edgbaston College. All rights reserved. ·{" "}
           <Link href="/admin" className="hover:text-white">Staff login</Link>
         </div>

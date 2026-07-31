@@ -1,8 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { unstable_cache } from "next/cache";
 import { notFound, redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { excerpt } from "@/lib/utils";
+
+// Cached per-slug course lookup shared by metadata + page render
+// (invalidated by revalidateTag("courses") on admin saves).
+const getCourse = (slug: string) =>
+  unstable_cache(
+    async () => db.course.findUnique({ where: { slug } }),
+    ["course", slug],
+    { revalidate: 60, tags: ["courses"] },
+  )();
 import { AnnouncementBar } from "@/components/home/AnnouncementBar";
 import { Navbar } from "@/components/home/Navbar";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
@@ -15,7 +25,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const course = await db.course.findUnique({ where: { slug } });
+  const course = await getCourse(slug);
   if (!course) return { title: "Course not found" };
   return {
     title: course.title,
@@ -29,7 +39,7 @@ export default async function CourseDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const course = await db.course.findUnique({ where: { slug } });
+  const course = await getCourse(slug);
 
   if (!course || !course.published) notFound();
   if (course.redirectUrl) redirect(course.redirectUrl);

@@ -5,7 +5,7 @@ import Link from "next/link";
 
 function Arrow() {
   return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden className="mt-1 shrink-0 text-eb-blue">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden className="mt-1 shrink-0 text-white">
       <path d="M3 8h9M8 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
@@ -31,10 +31,10 @@ export function FooterLinks({ links }: { links: { label: string; href: string }[
           <path d="M4 11h14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
         </svg>
       </button>
-      <ul className={(open ? "grid" : "hidden") + " mt-6 grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-3 lg:mt-8 lg:!block lg:space-y-5"}>
+      <ul className={(open ? "grid" : "hidden") + " mt-5 grid-cols-1 gap-y-4 sm:grid-cols-3 sm:gap-x-6 lg:mt-8 lg:!block lg:space-y-[18px]"}>
         {links.map((l) => (
           <li key={l.label}>
-            <Link href={l.href} className="flex items-start gap-3 text-[14px] text-white/85 transition hover:text-white lg:text-[15px]">
+            <Link href={l.href} className="flex items-start gap-3 text-[14px] text-white/85 underline-offset-4 transition-colors duration-300 hover:text-white hover:underline lg:text-[15px]">
               <Arrow /> {l.label}
             </Link>
           </li>
