@@ -261,20 +261,21 @@ export default function RetakePage() {
         <Navbar />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/figma/retake-hero.webp" alt="Edgbaston College retake students" className="absolute inset-0 h-full w-full object-cover object-[center_30%]" fetchPriority="high" />
-        <div className="absolute inset-0 bg-eb-navy/25" />
-        <div className="absolute inset-0 bg-gradient-to-r from-eb-navy/90 via-eb-navy/55 to-eb-navy/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-eb-navy/90 via-eb-navy/25 to-transparent" />
-        <div className="relative mx-auto flex min-h-[420px] max-w-[1440px] flex-col justify-end px-4 pb-16 pt-32 lg:min-h-[460px] lg:px-[60px] lg:pb-12">
+        {/* Neutral darkening for text legibility (no blue tint) */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/45 via-black/10 to-transparent" />
+        <div className="relative mx-auto flex min-h-[420px] max-w-[1440px] flex-col justify-end px-4 pb-10 pt-32 lg:min-h-[460px] lg:px-[60px] lg:pb-12">
           <h1 className="max-w-[320px] text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:max-w-[420px] sm:text-5xl lg:max-w-[520px] lg:text-[56px]">
             One Year A-Level Retake
           </h1>
         </div>
       </section>
 
-      {/* Breadcrumb + share */}
-      <div className="relative z-10 bg-white sm:border-b sm:border-black/10">
+      {/* Breadcrumb + share — bordered on both breakpoints; stacks into two
+          centred rows on mobile, single row on desktop (matches Our History). */}
+      <div className="bg-white">
         <div className="mx-auto max-w-[1440px] px-4 lg:px-[60px]">
-          <div className="-mt-9 flex flex-col rounded-xl bg-white px-4 py-3.5 shadow-[0_12px_30px_rgba(14,47,73,0.14)] ring-1 ring-black/5 sm:mt-0 sm:flex-row sm:items-center sm:justify-between sm:rounded-none sm:px-0 sm:py-4 sm:shadow-none sm:ring-0">
+          <div className="flex flex-col items-center gap-3 border-b border-black/10 py-4 text-center sm:flex-row sm:items-center sm:justify-between sm:py-5 sm:text-left">
             <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground">
               <Link href="/" className="hover:text-eb-navy">Home</Link>
               <span className="px-2 text-neutral-300">/</span>
@@ -282,9 +283,7 @@ export default function RetakePage() {
               <span className="px-2 text-neutral-300">/</span>
               <span className="font-medium text-eb-navy">One Year A-Level Retake</span>
             </nav>
-            <div className="mt-3 hidden sm:mt-0 sm:block">
-              <SharePage title="One Year A-Level Retake — Edgbaston College" />
-            </div>
+            <SharePage title="One Year A-Level Retake — Edgbaston College" />
           </div>
         </div>
       </div>
