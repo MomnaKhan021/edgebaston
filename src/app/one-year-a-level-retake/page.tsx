@@ -106,6 +106,30 @@ function DoubleArrow() {
   );
 }
 
+/** Open hand holding a coin marked with a pound sign (Fees). */
+function IconFees({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 32 32" fill="none" className={className} aria-hidden>
+      <circle cx="16" cy="9.5" r="5.5" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M14.3 9.5h3.4M16 7.2v4.6M15.1 7.4c1.4-.5 2.5.3 2.5 1.1" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+      <path d="M4 20.5c2.2-1.4 4-1 5.7.2l2.1 1.5h3.9c1 0 1 1.5 0 1.5h-3.6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M8.6 22.3c2.7 2.7 5.9 3.7 9.2 3.7 3 0 5.4-2 7.7-3.8.9-.7.2-2-.9-1.7l-4.3 1.2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+/** Head in profile with a question mark (How to apply). */
+function IconApply({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 32 32" fill="none" className={className} aria-hidden>
+      <path d="M7 26v-4.2C4.9 20 3.5 17.2 3.5 14A10.5 10.5 0 0 1 24 11.2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M7 26h9.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+      <path d="M18 12.6c0-1.6 1.3-2.9 2.9-2.9 1.6 0 3 1.1 3 2.7 0 1.9-2.1 2.2-2.6 3.6-.15.42-.2.85-.2 1.3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="21" cy="20.4" r="0.95" fill="currentColor" />
+    </svg>
+  );
+}
+
 function GradePill({ from, to, course }: { from: string; to: string; course: string }) {
   return (
     <div className="absolute inset-x-2.5 bottom-2.5 rounded-md bg-white px-3 py-2">
@@ -139,10 +163,71 @@ function StoryPhoto({ img, name, from, to, course, wide = false }: { img: string
   );
 }
 
-function MiniChip({ children }: { children: React.ReactNode }) {
+/* Chip icons for the guidance cards (match the Figma glyphs). */
+type IcoP = { className?: string };
+function IcoAward({ className = "h-6 w-6" }: IcoP) {
   return (
-    <div className="flex items-center justify-center gap-2 rounded-lg border border-black/10 bg-white px-3 py-2.5 text-center text-[12px] font-semibold text-eb-navy">
-      {children}
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+      <circle cx="12" cy="9" r="6" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M9 13.5 8 22l4-2.2L16 22l-1-8.5" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      <path d="M12 6.6l.9 1.8 2 .3-1.45 1.4.34 2L12 11.15 10.2 12.1l.34-2L9.1 8.7l2-.3.9-1.8Z" fill="currentColor" />
+    </svg>
+  );
+}
+function IcoPerson({ className = "h-6 w-6" }: IcoP) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+      <circle cx="12" cy="7.5" r="3.5" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M12 13c-3.2 0-5 2.2-5 4.8 0 .7.4 1.2 1.2 1.2h7.6c.8 0 1.2-.5 1.2-1.2C17 15.2 15.2 13 12 13Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+    </svg>
+  );
+}
+function IcoCap({ className = "h-6 w-6" }: IcoP) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+      <path d="M2 9.5 12 5l10 4.5-10 4.5L2 9.5Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      <path d="M6 11.5V16c0 1.3 2.7 2.6 6 2.6s6-1.3 6-2.6v-4.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M22 9.5V15" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+function IcoBadge({ className = "h-6 w-6" }: IcoP) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+      <rect x="3.5" y="4.5" width="17" height="15" rx="2.5" stroke="currentColor" strokeWidth="1.6" />
+      <circle cx="9" cy="10.5" r="2.2" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M6 16c0-1.7 1.4-2.8 3-2.8s3 1.1 3 2.8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+      <path d="M14.5 9.5H18M14.5 13H18" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/** Small white chip: icon above label on desktop, icon-left row on mobile. */
+function MiniChip({ Icon, children }: { Icon: (p: IcoP) => React.ReactElement; children: React.ReactNode }) {
+  return (
+    <div className="flex items-center gap-2.5 rounded-lg bg-white px-3 py-3 text-[12px] font-semibold leading-snug text-eb-navy sm:flex-col sm:gap-2 sm:py-4 sm:text-center">
+      <Icon className="h-6 w-6 shrink-0 text-eb-navy sm:h-7 sm:w-7" />
+      <span>{children}</span>
+    </div>
+  );
+}
+
+type Chip = { Icon: (p: IcoP) => React.ReactElement; text: React.ReactNode };
+
+/** Guidance stat card: light-grey shell around a white ring card + two chips. */
+function RingCard({ value, label, chips }: { value: number; label: string; chips: [Chip, Chip] }) {
+  return (
+    <div className="flex h-full flex-col gap-2.5 rounded-2xl bg-eb-cream p-2.5">
+      <div className="flex flex-1 flex-col items-center justify-center rounded-xl bg-white px-5 py-8">
+        <ProgressRing value={value} label={label} />
+      </div>
+      <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+        {chips.map((c, i) => (
+          <MiniChip key={i} Icon={c.Icon}>
+            {c.text}
+          </MiniChip>
+        ))}
+      </div>
     </div>
   );
 }
@@ -382,24 +467,24 @@ export default function RetakePage() {
       {/* More 2025 transformations */}
       <Reveal>
         <section className="bg-eb-navy">
-          <div className="mx-auto flex max-w-[1440px] flex-col gap-8 px-4 py-10 lg:flex-row lg:items-center lg:justify-between lg:gap-12 lg:px-[60px] lg:py-12">
-            <div className="shrink-0">
-              <h2 className="max-w-[240px] text-2xl font-extrabold leading-tight tracking-tight text-white lg:text-[28px]">
-                More 2025 transformations
-              </h2>
-              <div className="mt-4">
-                <UnderlineLink href="/contact">See All Our 2025 Grade Improvements</UnderlineLink>
-              </div>
-            </div>
-            <div className="grid flex-1 gap-6 sm:grid-cols-3 lg:gap-8">
+          {/* Desktop: heading+link left, transformations right. Mobile: heading
+              centered on top, transformations, link centered at the bottom. */}
+          <div className="mx-auto flex max-w-[1440px] flex-col items-center gap-6 px-4 py-9 text-center lg:grid lg:grid-cols-[minmax(0,auto)_1fr] lg:items-center lg:gap-x-12 lg:gap-y-4 lg:px-[60px] lg:py-12 lg:text-left">
+            <h2 className="order-1 max-w-[260px] text-[22px] font-extrabold leading-tight tracking-tight text-white sm:text-2xl lg:col-start-1 lg:row-start-1 lg:max-w-[240px] lg:text-[28px]">
+              More 2025 transformations
+            </h2>
+            <div className="order-2 grid w-full grid-cols-3 gap-3 sm:gap-6 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:gap-8">
               {TRANSFORMATIONS.map((t) => (
                 <div key={t.who}>
-                  <p className="text-[20px] font-extrabold tracking-tight text-white">
+                  <p className="text-[15px] font-extrabold tracking-tight text-white sm:text-[20px]">
                     {t.from} <span className="text-eb-blue">→</span> {t.to}
                   </p>
-                  <p className="mt-1 text-[13px] text-white/70">{t.who}</p>
+                  <p className="mt-1 text-[11px] leading-snug text-white/70 sm:text-[13px]">{t.who}</p>
                 </div>
               ))}
+            </div>
+            <div className="order-3 lg:col-start-1 lg:row-start-2">
+              <UnderlineLink href="/contact">See All Our 2025 Grade Improvements</UnderlineLink>
             </div>
           </div>
         </section>
@@ -408,39 +493,70 @@ export default function RetakePage() {
       {/* University & careers guidance */}
       <Reveal>
         <section className="bg-white">
-          <div className="mx-auto max-w-[1440px] px-4 py-12 lg:px-[60px] lg:py-20">
+          <div className="mx-auto max-w-[1440px] px-4 py-10 lg:px-[60px] lg:py-16">
             <div className="mx-auto max-w-2xl text-center">
-              <p className="font-mono text-[13px] text-eb-navy">From Grades To Offers</p>
-              <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-eb-ink lg:text-[44px]">University &amp; careers guidance</h2>
-              <p className="mt-4 text-[14px] leading-relaxed text-neutral-600">
+              <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-eb-navy sm:text-[13px]">From Grades To Offers</p>
+              <h2 className="mt-2 text-[26px] font-extrabold tracking-tight text-eb-ink sm:text-3xl lg:text-[44px]">University &amp; careers guidance</h2>
+              <p className="mt-3 text-[14px] leading-relaxed text-neutral-600">
                 A better set of grades is only half the story. Every retake student gets personalised applications guidance from Principal Owais Ahmed, with a proven record on placement into competitive courses like Oxbridge, Medicine, Dentistry, Law and Economics.
               </p>
             </div>
-            <div className="eb-stagger mt-12 grid items-stretch gap-5 md:grid-cols-3">
-              <div className="rounded-xl border border-black/10 bg-white p-6">
-                <div className="flex flex-col items-center">
-                  <ProgressRing value={72.7} label="to Russell Group universities (2025)" />
-                </div>
-                <div className="mt-5 grid grid-cols-2 gap-3">
-                  <MiniChip>Predicted grades</MiniChip>
-                  <MiniChip>Personal statement &amp; UCAS</MiniChip>
-                </div>
-              </div>
-              <div className="overflow-hidden rounded-xl">
+
+            {/* Desktop: ring · image · ring */}
+            <div className="mt-8 hidden items-stretch gap-5 md:grid md:grid-cols-3">
+              <RingCard
+                value={72.7}
+                label="to Russell Group universities (2025)"
+                chips={[
+                  { Icon: IcoAward, text: "Predicted grades" },
+                  { Icon: IcoPerson, text: <>Personal statement &amp; UCAS</> },
+                ]}
+              />
+              <div className="overflow-hidden rounded-2xl">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/figma/retake-uni-2.webp" alt="Edgbaston College students in class" className="h-full min-h-[280px] w-full object-cover" loading="lazy" decoding="async" />
               </div>
-              <div className="rounded-xl border border-black/10 bg-white p-6">
-                <div className="flex flex-col items-center">
-                  <ProgressRing value={96} label="Medicine & Dentistry offer success (2025)" />
+              <RingCard
+                value={96}
+                label="Medicine & Dentistry offer success (2025)"
+                chips={[
+                  { Icon: IcoCap, text: "University selection" },
+                  { Icon: IcoBadge, text: <>Admissions tests &amp; interviews</> },
+                ]}
+              />
+            </div>
+
+            {/* Mobile: image first, then a peek slider of the two ring cards */}
+            <div className="md:hidden">
+              <div className="mt-6 overflow-hidden rounded-2xl">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/figma/retake-uni-2.webp" alt="Edgbaston College students in class" className="aspect-[4/5] w-full object-cover" loading="lazy" decoding="async" />
+              </div>
+              <div className="eb-noscroll -mx-4 mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-1">
+                <div className="w-[calc(100%-52px)] shrink-0 snap-start">
+                  <RingCard
+                    value={96}
+                    label="Medicine & Dentistry offer success (2025)"
+                    chips={[
+                      { Icon: IcoCap, text: "University selection" },
+                      { Icon: IcoBadge, text: <>Admissions tests &amp; interviews</> },
+                    ]}
+                  />
                 </div>
-                <div className="mt-5 grid grid-cols-2 gap-3">
-                  <MiniChip>University selection</MiniChip>
-                  <MiniChip>Admissions tests &amp; interviews</MiniChip>
+                <div className="w-[calc(100%-52px)] shrink-0 snap-start">
+                  <RingCard
+                    value={72.7}
+                    label="to Russell Group universities (2025)"
+                    chips={[
+                      { Icon: IcoAward, text: "Predicted grades" },
+                      { Icon: IcoPerson, text: <>Personal statement &amp; UCAS</> },
+                    ]}
+                  />
                 </div>
               </div>
             </div>
-            <p className="mx-auto mt-10 max-w-xl text-center text-[13px] leading-relaxed text-neutral-600">
+
+            <p className="mx-auto mt-8 max-w-xl text-center text-[13px] leading-relaxed text-neutral-600">
               <span className="font-bold text-eb-navy">See our leavers&apos; destinations.</span>{" "}
               If you are resitting for Medicine or Dentistry, read our guides on{" "}
               <span className="font-bold text-eb-navy">medical school</span> and{" "}
@@ -453,30 +569,30 @@ export default function RetakePage() {
       {/* Fees & how to apply */}
       <Reveal>
         <section className="bg-white">
-          <div className="mx-auto max-w-[1440px] px-4 pb-12 lg:px-[60px] lg:pb-20">
+          <div className="mx-auto max-w-[1440px] px-4 pb-14 lg:px-[60px] lg:pb-20">
             <div className="mx-auto max-w-2xl text-center">
-              <p className="font-mono text-[13px] text-eb-navy">Fees &amp; Admissions</p>
-              <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-eb-ink lg:text-[44px]">Fees &amp; how to apply</h2>
+              <p className="font-mono text-[12px] uppercase tracking-[0.06em] text-eb-navy sm:text-[13px]">Fees &amp; Admissions</p>
+              <h2 className="mt-3 text-[26px] font-extrabold leading-[1.15] tracking-tight text-eb-ink sm:text-3xl lg:text-[44px]">Fees &amp; how to apply</h2>
             </div>
-            <div className="mt-10 grid gap-5 md:grid-cols-2">
-              <div className="eb-card flex flex-col rounded-xl bg-eb-navy p-7">
-                <IconSupport className="h-8 w-8 text-white" />
-                <h3 className="mt-4 text-xl font-bold text-white">Fees</h3>
-                <p className="mt-2 text-[14px] leading-relaxed text-white/75">
+            <div className="mt-8 grid gap-5 sm:mt-10 md:grid-cols-2 md:gap-6">
+              <div className="eb-card flex min-h-[280px] flex-col rounded-2xl bg-eb-navy p-6 sm:min-h-[320px] sm:p-8">
+                <IconFees className="h-9 w-9 text-white" />
+                <h3 className="mt-5 text-[20px] font-bold text-white sm:mt-6">Fees</h3>
+                <p className="mt-2.5 text-[14px] leading-relaxed text-white/75">
                   Fees depend on the number of subjects you retake. See current fees.
                 </p>
-                <div className="mt-8">
+                <div className="mt-auto pt-8">
                   <UnderlineLink href="/contact">See Current Fees</UnderlineLink>
                 </div>
               </div>
-              <div className="eb-card flex flex-col rounded-xl bg-eb-navy p-7">
-                <IconResults className="h-8 w-8 text-white" />
-                <h3 className="mt-4 text-xl font-bold text-white">How to apply</h3>
-                <p className="mt-2 text-[14px] leading-relaxed text-white/75">
+              <div className="eb-card flex min-h-[280px] flex-col rounded-2xl bg-eb-navy p-6 sm:min-h-[320px] sm:p-8">
+                <IconApply className="h-9 w-9 text-white" />
+                <h3 className="mt-5 text-[20px] font-bold text-white sm:mt-6">How to apply</h3>
+                <p className="mt-2.5 text-[14px] leading-relaxed text-white/75">
                   We accept retake applications on a rolling basis, but most students join us after results day in September. Spaces subject to availability. Complete our enquiry form or{" "}
                   <span className="font-bold text-white">Call 0121 306 0182.</span>
                 </p>
-                <div className="mt-8 flex flex-wrap gap-6">
+                <div className="mt-auto flex flex-wrap gap-x-8 gap-y-3 pt-8">
                   <UnderlineLink href="/contact">Complete Our Enquiry Form</UnderlineLink>
                   <UnderlineLink href="tel:01213060182" external>Call 0121 306 0182.</UnderlineLink>
                 </div>
