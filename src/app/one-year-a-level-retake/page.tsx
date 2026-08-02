@@ -514,7 +514,7 @@ export default function RetakePage() {
               />
               <div className="overflow-hidden rounded-2xl">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/figma/retake-uni-2.webp" alt="Edgbaston College students in class" className="h-full min-h-[280px] w-full object-cover" loading="lazy" decoding="async" />
+                <img src="/figma/adm-process.webp" alt="Edgbaston College students in class" className="h-full min-h-[280px] w-full object-cover" loading="lazy" decoding="async" />
               </div>
               <RingCard
                 value={96}
@@ -530,10 +530,12 @@ export default function RetakePage() {
             <div className="md:hidden">
               <div className="mt-6 overflow-hidden rounded-2xl">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/figma/retake-uni-2.webp" alt="Edgbaston College students in class" className="aspect-[4/5] w-full object-cover" loading="lazy" decoding="async" />
+                <img src="/figma/adm-process.webp" alt="Edgbaston College students in class" className="aspect-[4/5] w-full object-cover" loading="lazy" decoding="async" />
               </div>
-              <div className="eb-noscroll -mx-4 mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-1">
-                <div className="w-[calc(100%-52px)] shrink-0 snap-start">
+              {/* Track stays within the section's 16px padding; cards peek the
+                  next one on the right. */}
+              <div className="eb-noscroll mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-1">
+                <div className="w-[calc(100%-40px)] shrink-0 snap-start">
                   <RingCard
                     value={96}
                     label="Medicine & Dentistry offer success (2025)"
@@ -543,7 +545,7 @@ export default function RetakePage() {
                     ]}
                   />
                 </div>
-                <div className="w-[calc(100%-52px)] shrink-0 snap-start">
+                <div className="w-[calc(100%-40px)] shrink-0 snap-start">
                   <RingCard
                     value={72.7}
                     label="to Russell Group universities (2025)"

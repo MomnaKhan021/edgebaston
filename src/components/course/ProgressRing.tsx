@@ -10,9 +10,9 @@ export function ProgressRing({
   value,
   suffix = "%",
   label,
-  size = 132,
-  stroke = 10,
-  duration = 1800,
+  size = 150,
+  stroke = 12,
+  duration = 2200,
 }: {
   value: number;
   suffix?: string;
@@ -61,7 +61,7 @@ export function ProgressRing({
     <div ref={ref} className="flex flex-col items-center text-center">
       <div className="relative" style={{ width: size, height: size }}>
         <svg width={size} height={size} className="-rotate-90">
-          <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth={stroke} />
+          <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgba(14,47,73,0.10)" strokeWidth={stroke} />
           <circle
             cx={size / 2}
             cy={size / 2}
@@ -75,13 +75,13 @@ export function ProgressRing({
           />
         </svg>
         <div className="absolute inset-0 grid place-items-center">
-          <span className="text-2xl font-extrabold text-white">
-            {Math.round(p)}
+          <span className="text-[28px] font-extrabold text-eb-navy">
+            {value % 1 === 0 ? Math.round(p) : p.toFixed(1)}
             {suffix}
           </span>
         </div>
       </div>
-      <p className="mt-4 max-w-[190px] text-sm leading-snug text-white/80">{label}</p>
+      <p className="mt-4 max-w-[210px] text-[13px] font-medium leading-snug text-eb-navy">{label}</p>
     </div>
   );
 }
