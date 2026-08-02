@@ -354,12 +354,12 @@ export default function RetakePage() {
             </div>
             <div className="mt-8 sm:mt-10">
               <StorySlider>
-                {/* Featured: photo + quote */}
-                <div className="grid w-[92%] shrink-0 snap-center grid-cols-1 gap-4 sm:w-[600px] sm:snap-start sm:grid-cols-[256px_1fr]">
+                {/* Featured: photo + quote (quote hidden on mobile → uniform photo card) */}
+                <div className="grid w-[78%] shrink-0 snap-center grid-cols-1 gap-4 sm:w-[600px] sm:snap-start sm:grid-cols-[256px_1fr]">
                   <div className="relative h-[380px] sm:h-auto">
                     <StoryPhoto img="/figma/retake-story-1.webp" name="Alishba" from="BB" to="A*A*" course="University of Cambridge" />
                   </div>
-                  <div className="flex flex-col justify-between rounded-xl bg-white p-6">
+                  <div className="hidden flex-col justify-between rounded-xl bg-white p-6 sm:flex">
                     <p className="text-[15px] font-semibold leading-relaxed text-eb-navy">
                       &ldquo;The career guidance was absolutely transformative for me. Umar&apos;s Chemistry teaching helped me jump from a D to an A, whilst Owais&apos;s university advice gave me clear direction for my future. I&apos;m incredibly grateful for the comprehensive academic and careers support.&rdquo;
                     </p>
