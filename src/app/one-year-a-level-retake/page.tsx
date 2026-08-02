@@ -261,8 +261,9 @@ export default function RetakePage() {
         <Navbar />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/figma/retake-hero.webp" alt="Edgbaston College retake students" className="absolute inset-0 h-full w-full object-cover object-[center_30%]" fetchPriority="high" />
-        <div className="absolute inset-0 bg-gradient-to-r from-eb-navy/85 via-eb-navy/45 to-eb-navy/10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-eb-navy/70 to-transparent" />
+        <div className="absolute inset-0 bg-eb-navy/25" />
+        <div className="absolute inset-0 bg-gradient-to-r from-eb-navy/90 via-eb-navy/55 to-eb-navy/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-eb-navy/90 via-eb-navy/25 to-transparent" />
         <div className="relative mx-auto flex min-h-[420px] max-w-[1440px] flex-col justify-end px-4 pb-16 pt-32 lg:min-h-[460px] lg:px-[60px] lg:pb-12">
           <h1 className="max-w-[320px] text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:max-w-[420px] sm:text-5xl lg:max-w-[520px] lg:text-[56px]">
             One Year A-Level Retake
