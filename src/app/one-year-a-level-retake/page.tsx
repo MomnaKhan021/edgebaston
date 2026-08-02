@@ -643,8 +643,8 @@ export default function RetakePage() {
 
       {/* CTA */}
       <Reveal>
-        <section className="bg-white">
-          <div className="mx-auto max-w-[1440px] px-4 py-8 lg:px-[60px] lg:py-12">
+        <section className="bg-eb-cream">
+          <div className="mx-auto max-w-[1440px] px-4 pb-10 pt-2 lg:px-[60px] lg:pb-20 lg:pt-4">
             <div className="rounded-2xl bg-eb-navy px-5 py-10 text-center sm:px-6 lg:py-16">
               <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-white/80 sm:text-[13px]">Take The Next Step</p>
               <h2 className="mx-auto mt-3 max-w-[560px] text-[28px] font-extrabold leading-[1.1] tracking-tight text-white sm:text-4xl lg:text-[52px]">
