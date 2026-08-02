@@ -1,20 +1,53 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /**
- * FAQ list per the course-page design: bordered rows, thin +/× toggle,
- * one answer open at a time with a smooth height + fade transition.
+ * FAQ list per the course-page design: bordered rows with a thin +/× toggle.
+ * Rows reveal one-by-one as the list scrolls into view, and one answer opens
+ * at a time with a smooth height + fade transition.
  */
 export function FaqList({ items }: { items: { q: string; a: string }[] }) {
   const [open, setOpen] = useState<number | null>(null);
+  const [shown, setShown] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setShown(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            setShown(true);
+            io.disconnect();
+          }
+        });
+      },
+      { threshold: 0.15 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   return (
-    <div className="border-t border-black/10">
+    <div ref={ref} className="border-t border-black/10">
       {items.map((item, i) => {
         const isOpen = open === i;
         return (
-          <div key={item.q} className="border-b border-black/10">
+          <div
+            key={item.q}
+            className="border-b border-black/10 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+            style={{
+              opacity: shown ? 1 : 0,
+              transform: shown ? "none" : "translateY(14px)",
+              transitionDelay: shown ? `${i * 70}ms` : "0ms",
+            }}
+          >
             <button
               type="button"
               aria-expanded={isOpen}

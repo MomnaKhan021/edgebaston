@@ -61,12 +61,17 @@ const RESIDENCES = [
 ];
 
 const FAQ = [
-  { q: "How many A-Levels can I retake?", a: "As many as you need — most students retake one to three A-Levels, and you can take up a brand-new subject alongside them." },
-  { q: "Can I retake only one subject?", a: "Yes. Many of our students join to retake a single subject. We build your timetable around exactly what you need to improve." },
-  { q: "Will I receive UCAS support?", a: "Yes — personalised UCAS reapplication guidance from Principal Owais Ahmed is built into the programme, from university selection to your personal statement and interviews." },
-  { q: "How often are assessments?", a: "Weekly. You sit timed assessments under exam conditions every week, plus three full mock exams across the year — each with individual feedback and a parent report." },
-  { q: "Is accommodation available?", a: "Yes. We've partnered with quality student accommodation just minutes from college, including Five Ways Residence and Beech Gardens, Edgbaston — bills included, with secure access and 24/7 support." },
-  { q: "How do I apply?", a: "Enquire online or call 0121 306 0182. We review your previous results, agree your subjects and target grades, and confirm your place — simple and quick." },
+  { q: "Where can I retake my A-Levels in Birmingham?", a: "At Edgbaston College — Birmingham's specialist sixth-form college for A-Level retakes. We're based at 37 George Road, Edgbaston, a short walk from Five Ways station, and welcome retake students from across Birmingham and beyond." },
+  { q: "Can you retake A-Levels?", a: "Yes. Anyone can retake their A-Levels regardless of age or previous school. Most of our students complete their retake in a single year with us, sitting the full exams again in the summer." },
+  { q: "Can you resit A-Levels in November?", a: "November resits are only available for a small number of subjects and exam boards. For most A-Levels the next opportunity is the summer series — which is exactly what our one-year programme prepares you for." },
+  { q: "When can you resit your A-Levels?", a: "A-Level exams are sat in the summer window (May–June). Students join us in September, re-learn the full course through the year, and sit their exams the following summer." },
+  { q: "How much does it cost to retake A-Levels?", a: "Fees depend on the number of subjects you retake. Contact us for current per-subject fees — flexible payment plans are available, and our seasonal offer gives 30% off for the first five eligible applicants." },
+  { q: "What happens if you do worse in a resit?", a: "Universities almost always consider your best result, so a resit is very low risk. With small classes and constant feedback, the overwhelming majority of our students improve on their previous grades." },
+  { q: "How many times can you resit an A-Level?", a: "There's no limit — you can resit an A-Level as many times as you like. In practice, one well-structured retake year with the right support is usually all it takes." },
+  { q: "Can I take a new A-Level subject when I retake?", a: "Yes. Many students take up a brand-new subject alongside their retakes — for example adding one that better fits their target university course." },
+  { q: "Do universities accept A-Level retakes?", a: "The vast majority do, including Russell Group universities. A few competitive courses such as Medicine consider resit policies individually — we guide you through each university's stance as part of our UCAS support." },
+  { q: "How will you predict my grades?", a: "Your predicted grades are based on your performance in weekly assessments and three full mock exams, so they reflect genuine, evidenced progress — not guesswork." },
+  { q: "What are your outcomes like?", a: "In 2025, 87.7% of grades were A*–B and 65.1% were A*–A, with students gaining an average of +1.78 grades per subject. 72.7% progressed to Russell Group universities." },
 ];
 
 /* ------------------------------ Small pieces ----------------------------- */
@@ -607,20 +612,20 @@ export default function RetakePage() {
       {/* Accommodation */}
       <Reveal>
         <section className="bg-eb-cream">
-          <div className="mx-auto grid max-w-[1440px] gap-10 px-4 py-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-16 lg:px-[60px] lg:py-20">
+          <div className="mx-auto grid max-w-[1440px] gap-6 px-4 py-10 text-center sm:gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-16 lg:px-[60px] lg:py-20 lg:text-left">
             <div>
-              <p className="font-mono text-[13px] text-eb-navy">Accommodation Support</p>
-              <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-eb-ink lg:text-[44px]">Accommodation</h2>
-              <p className="mt-4 max-w-sm text-[14px] leading-relaxed text-neutral-600">
+              <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-eb-navy sm:text-[13px]">Accommodation Support</p>
+              <h2 className="mt-2 text-[26px] font-extrabold tracking-tight text-eb-ink sm:text-3xl lg:mt-3 lg:text-[44px]">Accommodation</h2>
+              <p className="mx-auto mt-3 max-w-sm text-[14px] leading-relaxed text-eb-navy/70 lg:mx-0">
                 For students relocating to Birmingham, we&apos;ve partnered with quality student accommodation just minutes from college.
               </p>
             </div>
             <div className="eb-stagger grid gap-4 sm:grid-cols-2">
               {RESIDENCES.map((r) => (
-                <div key={r.name} className="eb-card rounded-xl border border-black/10 bg-white p-5">
-                  <p className="font-mono text-[11px] font-bold uppercase tracking-wide text-eb-blue">{r.label}</p>
-                  <h3 className="mt-2 text-lg font-bold text-eb-navy">{r.name}</h3>
-                  <p className="mt-1.5 flex items-center gap-1.5 text-[13px] text-neutral-600">
+                <div key={r.name} className="eb-card rounded-2xl bg-white p-5 text-left sm:p-6">
+                  <p className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-eb-blue">{r.label}</p>
+                  <h3 className="mt-2.5 text-[18px] font-bold text-eb-navy sm:text-[19px]">{r.name}</h3>
+                  <p className="mt-2 flex items-center gap-1.5 text-[13px] text-eb-navy/80">
                     <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden className="shrink-0 text-eb-navy">
                       <path d="M6.5 1a4 4 0 014 4c0 2.7-4 7-4 7s-4-4.3-4-7a4 4 0 014-4z" stroke="currentColor" strokeWidth="1.2" />
                       <circle cx="6.5" cy="5" r="1.4" stroke="currentColor" strokeWidth="1.1" />
@@ -639,26 +644,26 @@ export default function RetakePage() {
       {/* CTA */}
       <Reveal>
         <section className="bg-white">
-          <div className="mx-auto max-w-[1440px] px-4 py-12 lg:px-[60px] lg:py-16">
-            <div className="rounded-2xl bg-eb-navy px-6 py-12 text-center lg:py-16">
-              <p className="font-mono text-[13px] text-white/80">Take The Next Step</p>
-              <h2 className="mx-auto mt-3 max-w-md text-3xl font-extrabold leading-tight tracking-tight text-white lg:text-[40px]">
+          <div className="mx-auto max-w-[1440px] px-4 py-8 lg:px-[60px] lg:py-12">
+            <div className="rounded-2xl bg-eb-navy px-5 py-10 text-center sm:px-6 lg:py-16">
+              <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-white/80 sm:text-[13px]">Take The Next Step</p>
+              <h2 className="mx-auto mt-3 max-w-[560px] text-[28px] font-extrabold leading-[1.1] tracking-tight text-white sm:text-4xl lg:text-[52px]">
                 Start your A-Level retake in Birmingham
               </h2>
-              <p className="mt-3 text-[14px] text-white/75">Fill out the online enquiry form, email us, or give us a call.</p>
-              <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <p className="mx-auto mt-3 max-w-md text-[14px] text-white/75">Fill out the online enquiry form, email us, or give us a call.</p>
+              <div className="mx-auto mt-7 flex max-w-md flex-col items-stretch justify-center gap-3 sm:max-w-none sm:flex-row sm:items-center">
                 <Link
                   href="/contact"
-                  className="eb-cta group inline-flex items-center gap-3 rounded-lg bg-white py-1.5 pl-5 pr-1.5 text-xs font-bold uppercase tracking-wide text-eb-navy sm:text-[13px]"
+                  className="eb-cta group flex items-center justify-between gap-3 rounded-lg bg-white py-1.5 pl-5 pr-1.5 text-xs font-bold uppercase tracking-wide text-eb-navy sm:inline-flex sm:justify-start sm:text-[13px]"
                 >
                   Enquire About Course
-                  <span className="eb-square grid h-9 w-9 place-items-center rounded-lg bg-eb-blue text-white">
+                  <span className="eb-square grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-eb-blue text-white">
                     <ArrowUpRight className="h-5 w-5" />
                   </span>
                 </Link>
                 <a
                   href="tel:01213060182"
-                  className="inline-flex items-center rounded-lg border border-white/40 px-6 py-3 text-xs font-bold uppercase tracking-wide text-white transition hover:bg-white/10 sm:text-[13px]"
+                  className="inline-flex items-center justify-center rounded-lg border border-white/40 px-6 py-3.5 text-xs font-bold uppercase tracking-wide text-white transition hover:bg-white/10 sm:py-3 sm:text-[13px]"
                 >
                   Call 0121 306 0182
                 </a>
