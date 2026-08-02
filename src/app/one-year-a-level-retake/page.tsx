@@ -10,6 +10,7 @@ import { ProgressRing } from "@/components/course/ProgressRing";
 import { ProgressBar } from "@/components/course/ProgressBar";
 import { SharePage } from "@/components/site/SharePage";
 import { StorySlider } from "@/components/course/StorySlider";
+import { StoryCard, type Story } from "@/components/course/StoryCard";
 import { FaqList } from "@/components/course/FaqList";
 import {
   IconResults,
@@ -53,6 +54,14 @@ const TRANSFORMATIONS = [
   { from: "DE", to: "AA", who: "Manelle · Medicine, Southampton" },
   { from: "UU", to: "AB", who: "Mohammed · Politics, KCL" },
   { from: "BB", to: "A*A*", who: "Adham · Medicine, Bristol" },
+];
+
+const STORIES: Story[] = [
+  { name: "Alishba", img: "/figma/pathway-1.webp", from: "BB", to: "A*A*", course: "Law at University of Cambridge", quote: "The career guidance was absolutely transformative for me. Umar's Chemistry teaching helped me jump from a D to an A, whilst Owais's university advice gave me clear direction for my future." },
+  { name: "Nicole", img: "/figma/news-1.webp", from: "BB", to: "A*A*", course: "Dentistry at King's College London", quote: "The small classes and weekly mock exams gave me the confidence to jump from BB to A*A* and secure my dentistry place." },
+  { name: "Tara", img: "/figma/news-2.webp", from: "BB", to: "AA", course: "Medicine at Edge Hill University", quote: "The personalised UCAS support was the difference — I reapplied and finally got my medicine offer." },
+  { name: "Jacob", img: "/figma/pathway-3.webp", from: "CC", to: "A*A", course: "Engineering at University of Warwick", quote: "Weekly assessments kept me on track and my grades climbed two full levels across the year." },
+  { name: "Manelle", img: "/figma/pathway-2.webp", from: "DE", to: "AA", course: "Medicine at University of Southampton", quote: "One focused year with the right support completely turned my results around." },
 ];
 
 const RESIDENCES = [
@@ -103,14 +112,6 @@ function StatRow({ label, grade, pct }: { label: string; grade: string; pct: num
   );
 }
 
-function DoubleArrow() {
-  return (
-    <svg width="15" height="10" viewBox="0 0 15 10" fill="none" aria-hidden className="inline-block">
-      <path d="M1.5 1l4 4-4 4M7.5 1l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
 /** Open hand holding a coin marked with a pound sign (Fees). */
 function IconFees({ className }: { className?: string }) {
   return (
@@ -135,38 +136,6 @@ function IconApply({ className }: { className?: string }) {
   );
 }
 
-function GradePill({ from, to, course }: { from: string; to: string; course: string }) {
-  return (
-    <div className="absolute inset-x-2.5 bottom-2.5 rounded-md bg-white px-3 py-2">
-      <span className="flex items-center gap-1.5 font-mono text-[12px] font-bold text-eb-navy">
-        {from} <DoubleArrow /> {to}
-      </span>
-      <p className="mt-0.5 font-mono text-[10px] uppercase tracking-wide text-neutral-600">{course}</p>
-    </div>
-  );
-}
-
-function PlusBtn() {
-  return (
-    <span className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-md bg-white text-eb-navy shadow-sm">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
-        <path d="M7 1.5v11M1.5 7h11" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-      </svg>
-    </span>
-  );
-}
-
-function StoryPhoto({ img, name, from, to, course, wide = false }: { img: string; name: string; from: string; to: string; course: string; wide?: boolean }) {
-  return (
-    <div className={"relative shrink-0 overflow-hidden rounded-xl bg-eb-navy " + (wide ? "aspect-[3/4] w-full" : "h-full w-full")}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={img} alt={name} className="h-full w-full object-cover" />
-      <PlusBtn />
-      <span className="absolute bottom-16 left-4 text-2xl font-bold text-white drop-shadow">{name}</span>
-      <GradePill from={from} to={to} course={course} />
-    </div>
-  );
-}
 
 /* Chip icons for the guidance cards (match the Figma glyphs). */
 type IcoP = { className?: string };
@@ -444,25 +413,13 @@ export default function RetakePage() {
             </div>
             <div className="mt-8 sm:mt-10">
               <StorySlider>
-                {/* Featured: photo + quote (quote hidden on mobile → uniform photo card) */}
-                <div className="grid w-[78%] shrink-0 snap-center grid-cols-1 gap-4 sm:w-[600px] sm:snap-start sm:grid-cols-[256px_1fr]">
-                  <div className="relative h-[380px] sm:h-auto">
-                    <StoryPhoto img="/figma/pathway-1.webp" name="Alishba" from="BB" to="A*A*" course="University of Cambridge" />
-                  </div>
-                  <div className="hidden flex-col justify-between rounded-xl bg-white p-6 sm:flex">
-                    <p className="text-[15px] font-semibold leading-relaxed text-eb-navy">
-                      &ldquo;The career guidance was absolutely transformative for me. Umar&apos;s Chemistry teaching helped me jump from a D to an A, whilst Owais&apos;s university advice gave me clear direction for my future. I&apos;m incredibly grateful for the comprehensive academic and careers support.&rdquo;
-                    </p>
-                    <p className="mt-6 text-right font-mono text-[11px] font-bold uppercase tracking-wide text-eb-navy">View Full Profile</p>
-                  </div>
-                </div>
-                {/* Photo cards */}
-                <div className="relative h-[380px] w-[78%] shrink-0 snap-center sm:w-[300px] sm:snap-start">
-                  <StoryPhoto img="/figma/news-1.webp" name="Nicole" from="BB" to="A*A*" course="Dentistry at King's College London" />
-                </div>
-                <div className="relative h-[380px] w-[78%] shrink-0 snap-center sm:w-[300px] sm:snap-start">
-                  <StoryPhoto img="/figma/news-2.webp" name="Tara" from="BB" to="AA" course="Medicine at Edge Hill University" />
-                </div>
+                {STORIES.map((s) => (
+                  <StoryCard
+                    key={s.name}
+                    story={s}
+                    className="h-[400px] w-[78%] snap-center sm:h-[420px] sm:w-[300px] sm:snap-start"
+                  />
+                ))}
               </StorySlider>
             </div>
           </div>
