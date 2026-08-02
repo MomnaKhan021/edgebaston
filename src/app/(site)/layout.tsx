@@ -21,7 +21,7 @@ export default async function SiteLayout({
     { label: "Courses", href: "/courses" },
     { label: "Faculty", href: "/faculty" },
     { label: "About", href: "/about" },
-    ...navPages.map((p) => ({ label: p.title, href: `/p/${p.slug}` })),
+    ...navPages.map((p) => ({ label: p.title, href: `/${p.slug}` })),
     { label: "Contact", href: "/contact" },
   ];
 

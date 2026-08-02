@@ -41,11 +41,11 @@ export default async function PagesAdmin() {
                   <td className="px-4 py-3">
                     <div className="font-medium">{p.title}</div>
                     <Link
-                      href={`/p/${p.slug}`}
+                      href={`/${p.slug}`}
                       target="_blank"
                       className="inline-flex items-center gap-1 text-xs text-eb-blue hover:underline"
                     >
-                      /p/{p.slug}
+                      /{p.slug}
                       <IconExternal className="h-3 w-3" />
                     </Link>
                   </td>

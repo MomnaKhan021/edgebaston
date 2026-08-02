@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 const NAV = [
   { label: "Courses", href: "/courses" },
-  { label: "Admissions", href: "/p/admissions" },
+  { label: "Admissions", href: "/admissions" },
   { label: "About Us", href: "/about" },
   { label: "Guides", href: "#" },
 ];

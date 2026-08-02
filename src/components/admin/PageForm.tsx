@@ -45,8 +45,8 @@ export function PageForm({ page }: { page?: PageValues }) {
             htmlFor="slug"
             hint={
               p.slug
-                ? `Lives at /p/${p.slug}`
-                : "Leave blank to auto-generate. Use slashes for nested paths, e.g. guard/course → /p/guard/course"
+                ? `Lives at /${p.slug}`
+                : "Leave blank to auto-generate. Use slashes for nested paths, e.g. guard/course → /guard/course"
             }
           >
             <Input

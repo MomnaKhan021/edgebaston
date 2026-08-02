@@ -148,7 +148,7 @@ export default async function SearchPage({
                     {pages.map((p) => (
                       <li key={p.id}>
                         <Link
-                          href={`/p/${p.slug}`}
+                          href={`/${p.slug}`}
                           className="eb-cta group flex items-center justify-between gap-4 rounded-lg bg-white p-5"
                         >
                           <span className="text-[18px] font-bold text-eb-navy">{p.title}</span>

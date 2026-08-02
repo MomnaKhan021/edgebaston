@@ -8,6 +8,17 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "8mb",
     },
   },
+  // CMS pages used to live under /p/<slug>; they now live at the root (/<slug>).
+  // Keep old links working with a permanent redirect.
+  async redirects() {
+    return [
+      {
+        source: "/p/:path*",
+        destination: "/:path*",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

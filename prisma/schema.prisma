@@ -54,8 +54,8 @@ model Staff {
 }
 
 /// A flexible content page the client can create/edit from the dashboard
-/// (e.g. "Admissions", "Campus Life"). Rendered at /p/<slug>, where the slug
-/// may contain slashes for nested paths (e.g. "guard/course" → /p/guard/course).
+/// (e.g. "Admissions", "Campus Life"). Rendered at /<slug> (root), where the
+/// slug may contain slashes for nested paths (e.g. "guard/course" → /guard/course).
 model Page {
   id          String   @id @default(cuid())
   title       String

@@ -14,7 +14,7 @@ export function AnnouncementBar() {
           <span className="text-white/90">
             Admissions for Batch 2026 are Now Open! Visit our{" "}
           </span>
-          <Link href="/p/admissions" className="font-bold underline underline-offset-2">
+          <Link href="/admissions" className="font-bold underline underline-offset-2">
             Admissions page
           </Link>
         </p>
