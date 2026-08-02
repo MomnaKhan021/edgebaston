@@ -271,7 +271,7 @@ export default function RetakePage() {
       </section>
 
       {/* Breadcrumb + share */}
-      <div className="relative z-10 bg-white">
+      <div className="relative z-10 bg-white sm:border-b sm:border-black/10">
         <div className="mx-auto max-w-[1440px] px-4 lg:px-[60px]">
           <div className="-mt-9 flex flex-col rounded-xl bg-white px-4 py-3.5 shadow-[0_12px_30px_rgba(14,47,73,0.14)] ring-1 ring-black/5 sm:mt-0 sm:flex-row sm:items-center sm:justify-between sm:rounded-none sm:px-0 sm:py-4 sm:shadow-none sm:ring-0">
             <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground">
