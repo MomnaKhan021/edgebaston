@@ -357,7 +357,7 @@ export default function RetakePage() {
                 {/* Featured: photo + quote (quote hidden on mobile → uniform photo card) */}
                 <div className="grid w-[78%] shrink-0 snap-center grid-cols-1 gap-4 sm:w-[600px] sm:snap-start sm:grid-cols-[256px_1fr]">
                   <div className="relative h-[380px] sm:h-auto">
-                    <StoryPhoto img="/figma/retake-story-1.webp" name="Alishba" from="BB" to="A*A*" course="University of Cambridge" />
+                    <StoryPhoto img="/figma/pathway-1.webp" name="Alishba" from="BB" to="A*A*" course="University of Cambridge" />
                   </div>
                   <div className="hidden flex-col justify-between rounded-xl bg-white p-6 sm:flex">
                     <p className="text-[15px] font-semibold leading-relaxed text-eb-navy">
@@ -368,10 +368,10 @@ export default function RetakePage() {
                 </div>
                 {/* Photo cards */}
                 <div className="relative h-[380px] w-[78%] shrink-0 snap-center sm:w-[300px] sm:snap-start">
-                  <StoryPhoto img="/figma/retake-story-2.webp" name="Nicole" from="BB" to="A*A*" course="Dentistry at King's College London" />
+                  <StoryPhoto img="/figma/news-1.webp" name="Nicole" from="BB" to="A*A*" course="Dentistry at King's College London" />
                 </div>
                 <div className="relative h-[380px] w-[78%] shrink-0 snap-center sm:w-[300px] sm:snap-start">
-                  <StoryPhoto img="/figma/retake-story-3.webp" name="Tara" from="BB" to="AA" course="Medicine at Edge Hill University" />
+                  <StoryPhoto img="/figma/news-2.webp" name="Tara" from="BB" to="AA" course="Medicine at Edge Hill University" />
                 </div>
               </StorySlider>
             </div>
