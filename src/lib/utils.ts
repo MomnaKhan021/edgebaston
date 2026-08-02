@@ -10,6 +10,19 @@ export function toSlug(input: string): string {
   return slugify(input, { lower: true, strict: true, trim: true });
 }
 
+/**
+ * Build a URL-safe *path* slug that may contain `/` separators, e.g.
+ * "/guard/course" → "guard/course". Each segment is slugified individually,
+ * empty segments (from leading/trailing/duplicate slashes) are dropped.
+ */
+export function toPathSlug(input: string): string {
+  return input
+    .split("/")
+    .map((segment) => toSlug(segment))
+    .filter(Boolean)
+    .join("/");
+}
+
 /** Human-friendly date, e.g. "16 Jul 2026". */
 export function formatDate(date: Date | string): string {
   const d = typeof date === "string" ? new Date(date) : date;

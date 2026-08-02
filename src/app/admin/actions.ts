@@ -5,7 +5,7 @@ import { compressDataUri, compressInlineImages } from "@/lib/images";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/auth";
-import { toSlug } from "@/lib/utils";
+import { toSlug, toPathSlug } from "@/lib/utils";
 
 /** Guard used by every mutating action (Server Actions are directly callable). */
 async function assertAuth() {
@@ -38,7 +38,8 @@ async function uniqueSlug(
   base: string,
   currentId?: string,
 ): Promise<string> {
-  const root = toSlug(base) || "item";
+  // Pages may live at nested paths (e.g. "guard/course"); courses are flat.
+  const root = (model === "page" ? toPathSlug(base) : toSlug(base)) || "item";
   let slug = root;
   let i = 1;
   // eslint-disable-next-line no-constant-condition

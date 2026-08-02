@@ -3,13 +3,18 @@ import { notFound, redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { excerpt } from "@/lib/utils";
 
+/** Join the catch-all segments back into a stored slug, e.g. ["guard","course"] → "guard/course". */
+function joinSlug(segments: string[]): string {
+  return segments.map((s) => decodeURIComponent(s)).join("/");
+}
+
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string[] }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const page = await db.page.findUnique({ where: { slug } });
+  const page = await db.page.findUnique({ where: { slug: joinSlug(slug) } });
   if (!page) return { title: "Page not found" };
   return { title: page.title, description: excerpt(page.content) };
 }
@@ -17,10 +22,10 @@ export async function generateMetadata({
 export default async function DynamicPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string[] }>;
 }) {
   const { slug } = await params;
-  const page = await db.page.findUnique({ where: { slug } });
+  const page = await db.page.findUnique({ where: { slug: joinSlug(slug) } });
 
   if (!page || !page.published) notFound();
   if (page.redirectUrl) redirect(page.redirectUrl);

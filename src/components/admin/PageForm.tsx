@@ -46,10 +46,15 @@ export function PageForm({ page }: { page?: PageValues }) {
             hint={
               p.slug
                 ? `Lives at /p/${p.slug}`
-                : "Leave blank to auto-generate. Lives at /p/<slug>"
+                : "Leave blank to auto-generate. Use slashes for nested paths, e.g. guard/course → /p/guard/course"
             }
           >
-            <Input id="slug" name="slug" defaultValue={p.slug} placeholder="auto" />
+            <Input
+              id="slug"
+              name="slug"
+              defaultValue={p.slug}
+              placeholder="auto (e.g. guard/course)"
+            />
           </Field>
         </div>
       </div>
