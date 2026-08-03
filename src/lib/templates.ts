@@ -12,13 +12,17 @@
 
 import type { CSSProperties } from "react";
 
-export type FieldType = "text" | "textarea" | "image" | "url" | "color";
+export type FieldType = "text" | "textarea" | "image" | "url" | "color" | "toggle" | "list";
 
 export type FieldDef = {
   name: string;
   label: string;
   type: FieldType;
   hint?: string;
+  /** For type "list": the editable fields of each item (card/menu item/…). */
+  itemFields?: FieldDef[];
+  /** For type "list": what one item is called in the admin, e.g. "Card". */
+  itemLabel?: string;
 };
 
 export type SectionDef = {
@@ -51,6 +55,47 @@ const color = (name = "bgColor", label = "Background colour", hint = "Leave empt
   type: "color",
   hint,
 });
+const toggle = (name = "visible", label = "Show this section", hint = "Untick to hide this section on the live site."): FieldDef => ({
+  name,
+  label,
+  type: "toggle",
+  hint,
+});
+const list = (name: string, label: string, itemLabel: string, itemFields: FieldDef[], hint?: string): FieldDef => ({
+  name,
+  label,
+  type: "list",
+  itemLabel,
+  itemFields,
+  hint: hint ?? `Add, remove and reorder ${itemLabel.toLowerCase()}s — changes go live on save.`,
+});
+
+/** True unless the section was explicitly hidden in the admin. */
+export function isVisible(data: Record<string, string> | undefined): boolean {
+  return (data?.visible ?? "1") !== "0";
+}
+
+/**
+ * Parse a list-field value (JSON array of records). Falls back to legacy
+ * "Label | /url" lines (mapped to {label, url}) so older saves keep working.
+ */
+export function parseItems(value: string | undefined): Record<string, string>[] {
+  const raw = String(value ?? "").trim();
+  if (!raw) return [];
+  if (raw.startsWith("[")) {
+    try {
+      const arr = JSON.parse(raw);
+      if (Array.isArray(arr)) {
+        return arr
+          .filter((x) => x && typeof x === "object")
+          .map((x) => Object.fromEntries(Object.entries(x).map(([k, v]) => [k, String(v ?? "")])));
+      }
+    } catch {
+      /* fall through to line parsing */
+    }
+  }
+  return parseLinks(raw).map((l) => ({ label: l.label, url: l.href }));
+}
 
 /** Parse "Label | /url" lines from a textarea into link objects. */
 export function parseLinks(value: string | undefined): { label: string; href: string }[] {
@@ -99,6 +144,7 @@ export const HOME_TEMPLATE: TemplateDef = {
       name: "Announcement Bar",
       description: "The navy strip at the very top (shows on every page).",
       fields: [
+        toggle(),
         text("badge", "Bold prefix"),
         text("message", "Announcement text", "Leave empty to hide the whole bar."),
         text("linkLabel", "Link label"),
@@ -106,6 +152,7 @@ export const HOME_TEMPLATE: TemplateDef = {
         color(),
       ],
       defaults: {
+        visible: "1",
         badge: "EXCITING NEWS:",
         message: "Admissions for Batch 2026 are Now Open! Visit our",
         linkLabel: "Admissions page",
@@ -118,6 +165,7 @@ export const HOME_TEMPLATE: TemplateDef = {
       name: "Home Banner",
       description: "Full-width banner: background images, heading, button and the stats card.",
       fields: [
+        toggle(),
         image("bgDesktop", "Background image (desktop)"),
         image("bgMobile", "Background image (mobile)", "Optional — falls back to the desktop image."),
         textarea("heading", "Heading"),
@@ -132,6 +180,7 @@ export const HOME_TEMPLATE: TemplateDef = {
         color(),
       ],
       defaults: {
+        visible: "1",
         bgDesktop: "/figma/hero-building.webp",
         bgMobile: "",
         heading: "Birmingham's Top-Performing Independent Sixth Form College",
@@ -150,8 +199,10 @@ export const HOME_TEMPLATE: TemplateDef = {
       key: "feature-strip",
       name: "Highlights Ticker",
       description: "The scrolling white strip under the banner.",
-      fields: [textarea("items", "Items", "One item per line."), color()],
+      fields: [
+        toggle(),textarea("items", "Items", "One item per line."), color()],
       defaults: {
+        visible: "1",
         items: [
           "Average Class Size of Seven",
           "Strong Pastoral Support",
@@ -167,6 +218,7 @@ export const HOME_TEMPLATE: TemplateDef = {
       name: "Message from the Principal",
       description: "Navy section with the principal's message and Read more button.",
       fields: [
+        toggle(),
         text("eyebrow", "Small label"),
         textarea("message", "Message"),
         text("buttonLabel", "Button label"),
@@ -174,6 +226,7 @@ export const HOME_TEMPLATE: TemplateDef = {
         color(),
       ],
       defaults: {
+        visible: "1",
         eyebrow: "Message from the Principal",
         message:
           "Students arrive at the College aiming to excel academically and secure a place on a course at their preferred university. We achieve this with exceptional teaching, small classes, and individual attention and help for every pupil.",
@@ -186,11 +239,26 @@ export const HOME_TEMPLATE: TemplateDef = {
       key: "pathways",
       name: "Courses We Offer",
       description: "Header of the course-pathways slider. (The three cards are edited in code; courses live under Courses.)",
-      fields: [text("label", "Small label"), textarea("title", "Heading"), color()],
+      fields: [
+        toggle(),
+        text("label", "Small label"),
+        textarea("title", "Heading"),
+        color(),
+        list("cards", "Course cards", "Card", [
+          text("title", "Title"),
+          textarea("body", "Text"),
+          text("stat", "Stat value (%)"),
+          text("statLabel", "Stat label"),
+          image("image", "Image"),
+          url("url", "Card link", "Leave empty for no link."),
+        ]),
+      ],
       defaults: {
+        visible: "1",
         label: "Courses We Offer",
         title: "Choose the A-Level Pathway That Fits Your Goal",
         bgColor: "",
+        cards: "[{\"title\":\"One Year A-Level Retake\",\"body\":\"Focused retake support in a specialist environment. Small classes, regular mocks, and dedicated university guidance to help you secure the grades you need.\",\"stat\":\"16.0\",\"statLabel\":\"of 2025 A-Level grades achieved the top A* grade\",\"image\":\"/figma/course-retake.webp\",\"url\":\"/one-year-a-level-retake\"},{\"title\":\"Five Term A-Level\",\"body\":\"A flexible five-term pathway starting in January. Ideal for students who missed the September entry window but want a full and structured route to university.\",\"stat\":\"16.0\",\"statLabel\":\"of 2025 A-Level grades achieved the top A* grade\",\"image\":\"/figma/course-fiveterm.webp\",\"url\":\"/courses\"},{\"title\":\"Transfer into Year 13\",\"body\":\"Already in Year 12 elsewhere? Transfer mid-course into more focused, supportive environment where you'll receive the individual attention to push for top grades.\",\"stat\":\"72.7\",\"statLabel\":\"of students progressed to Russell Group universities\",\"image\":\"/figma/course-transfer.webp\",\"url\":\"/courses\"}]",
       },
     },
     {
@@ -198,6 +266,7 @@ export const HOME_TEMPLATE: TemplateDef = {
       name: "Results That Open Doors",
       description: "Outcome spotlight: door graphic, ranking cards and the blue stats bar.",
       fields: [
+        toggle(),
         text("eyebrow", "Small label"),
         text("heading", "Heading"),
         text("rankingValue", "National ranking (number)", "e.g. 25"),
@@ -209,8 +278,20 @@ export const HOME_TEMPLATE: TemplateDef = {
         text("bar2Value", "Blue bar — right value (%)", "Number only, e.g. 72.7"),
         text("bar2Text", "Blue bar — right text"),
         color(),
+        image("doorImage", "Centre graphic", "The door illustration between the two ranking cards."),
+        list("cards", "Info cards (white grid)", "Card", [
+          text("label", "Small label"),
+          text("title", "Title"),
+          textarea("body", "Text"),
+        ]),
+        text("destLabel", "Tall card — small label"),
+        text("destTitle", "Tall card — title"),
+        textarea("destBody", "Tall card — text"),
+        text("buttonLabel", "Button label"),
+        url("buttonUrl", "Button link"),
       ],
       defaults: {
+        visible: "1",
         eyebrow: "Outcome Spotlight",
         heading: "Results That Open Doors",
         rankingValue: "25",
@@ -222,18 +303,40 @@ export const HOME_TEMPLATE: TemplateDef = {
         bar2Value: "72.7",
         bar2Text: "Russell Group Progression",
         bgColor: "",
+        doorImage: "/figma/door.svg",
+        cards: "[{\"label\":\"Grade Performance\",\"title\":\"A*-A / A*-B Results\",\"body\":\"Clear academic proof showing how students perform across top grade bands.\"},{\"label\":\"Grade Improvement\",\"title\":\"Value-Added Progress\",\"body\":\"Shows how students improve from their starting point through personalised support.\"},{\"label\":\"Competitive Pathways\",\"title\":\"Oxbridge Outcomes\",\"body\":\"Support for ambitious students applying to Oxford, Cambridge, and high-tariff courses.\"},{\"label\":\"Specialist Routes\",\"title\":\"Medicine & Dentistry\",\"body\":\"Focused guidance for students aiming for medicine, dentistry, and clinical pathways.\"}]",
+        destLabel: "University Destinations",
+        destTitle: "Russell Group & QS Top Universities",
+        destBody: "A stronger way to show where students progress after Edgbaston College, from leading UK universities to competitive degree pathways.",
+        buttonLabel: "View Results & Destinations",
+        buttonUrl: "/courses",
       },
     },
     {
       key: "stories",
       name: "Success Stories",
       description: "Header of the student stories slider. (Story cards are edited in code.)",
-      fields: [text("label", "Small label"), text("title", "Heading"), textarea("subtitle", "Subtitle"), color()],
+      fields: [
+        toggle(),
+        text("label", "Small label"),
+        text("title", "Heading"),
+        textarea("subtitle", "Subtitle"),
+        color(),
+        list("students", "Student cards", "Student", [
+          text("name", "Name"),
+          image("image", "Photo"),
+          text("grade", "Grade jump", "e.g. BB → A*A*"),
+          text("course", "Course & university"),
+          textarea("quote", "Quote"),
+        ], "The first student is also shown as the large featured card on desktop."),
+      ],
       defaults: {
+        visible: "1",
         label: "Success Stories",
         title: "Meet Our Students",
         subtitle: "Real students, real grade jumps. Watch how their retake year went.",
         bgColor: "",
+        students: "[{\"name\":\"Alishba\",\"image\":\"/figma/pathway-1.webp\",\"grade\":\"BB → A*A*\",\"course\":\"Law at University of Cambridge\",\"quote\":\"The career guidance was absolutely transformative for me. Umar's Chemistry teaching helped me jump from a D to an A, whilst Owais's university advice gave me clear direction.\"},{\"name\":\"Nicole\",\"image\":\"/figma/news-1.webp\",\"grade\":\"BB → A*A*\",\"course\":\"Dentistry at King's College London\",\"quote\":\"The small classes and mock exams gave me the confidence to jump from BB to A*A* and secure my dentistry place.\"},{\"name\":\"Tara\",\"image\":\"/figma/news-2.webp\",\"grade\":\"BB → AA\",\"course\":\"Medicine at Edge Hill University\",\"quote\":\"The personalised UCAS support was the difference — I reapplied and got my medicine offer.\"},{\"name\":\"Jacob\",\"image\":\"/figma/pathway-3.webp\",\"grade\":\"CC → A*A\",\"course\":\"Engineering at University of Warwick\",\"quote\":\"Weekly assessments kept me on track and my grades climbed two full levels over the year.\"}]",
       },
     },
     {
@@ -241,33 +344,21 @@ export const HOME_TEMPLATE: TemplateDef = {
       name: "Why Students Choose Edgbaston",
       description: "Heading and the five reason cards.",
       fields: [
+        toggle(),
         textarea("heading", "Heading"),
-        text("card1Title", "Card 1 title"),
-        textarea("card1Body", "Card 1 text"),
-        text("card2Title", "Card 2 title"),
-        textarea("card2Body", "Card 2 text"),
-        text("card3Title", "Card 3 title"),
-        textarea("card3Body", "Card 3 text"),
-        text("card4Title", "Card 4 title"),
-        textarea("card4Body", "Card 4 text"),
-        text("card5Title", "Card 5 title"),
-        textarea("card5Body", "Card 5 text"),
+        list("cards", "Reason cards", "Card", [
+          image("icon", "Icon"),
+          text("title", "Title"),
+          textarea("body", "Text"),
+        ], "The first three cards form the top row; the rest fill the bottom row."),
         text("buttonLabel", "Mobile button label"),
         url("buttonUrl", "Mobile button link"),
         color(),
       ],
       defaults: {
+        visible: "1",
         heading: "Why Students Choose Edgbaston College",
-        card1Title: "Small Classes",
-        card1Body: "Maximum of 10 students per class, typically 7, so every student receives individual attention.",
-        card2Title: "Progress",
-        card2Body: "Students gain an average of 1.78 grades per subject, with jumps from BBB to A*AA not uncommon.",
-        card3Title: "Guidance",
-        card3Body: "Personalised UCAS reapplication guidance from Principal Owais Ahmed, who oversees applications.",
-        card4Title: "Tailored",
-        card4Body: "Every student starts with a one-to-one academic consultation to identify gaps and build a personalised retake plan.",
-        card5Title: "Excellence",
-        card5Body: "Weekly assessments, three mock exams, and targeted exam technique coaching help turn knowledge into marks.",
+        cards: "[{\"icon\":\"/figma/why-1.svg\",\"title\":\"Small Classes\",\"body\":\"Maximum of 10 students per class, typically 7, so every student receives individual attention.\"},{\"icon\":\"/figma/why-2.svg\",\"title\":\"Progress\",\"body\":\"Students gain an average of 1.78 grades per subject, with jumps from BBB to A*AA not uncommon.\"},{\"icon\":\"/figma/why-3.svg\",\"title\":\"Guidance\",\"body\":\"Personalised UCAS reapplication guidance from Principal Owais Ahmed, who oversees applications.\"},{\"icon\":\"/figma/why-4.svg\",\"title\":\"Tailored\",\"body\":\"Every student starts with a one-to-one academic consultation to identify gaps and build a personalised retake plan.\"},{\"icon\":\"/figma/why-5.svg\",\"title\":\"Excellence\",\"body\":\"Weekly assessments, three mock exams, and targeted exam technique coaching help turn knowledge into marks.\"}]",
         buttonLabel: "View Results & Destinations",
         buttonUrl: "/courses",
         bgColor: "",
@@ -277,14 +368,17 @@ export const HOME_TEMPLATE: TemplateDef = {
       key: "learn-marquee",
       name: "Learn Today Band",
       description: "The scrolling navy band.",
-      fields: [text("message", "Scrolling text"), color()],
-      defaults: { message: "Learn Today. Lead Tomorrow.", bgColor: "" },
+      fields: [
+        toggle(),text("message", "Scrolling text"), color()],
+      defaults: {
+        visible: "1", message: "Learn Today. Lead Tomorrow.", bgColor: "" },
     },
     {
       key: "faq",
       name: "FAQ",
       description: "FAQ heading, subtitle, Contact Us button and every question & answer.",
       fields: [
+        toggle(),
         textarea("heading", "Heading"),
         textarea("subtitle", "Subtitle"),
         text("buttonLabel", "Button label"),
@@ -312,6 +406,7 @@ export const HOME_TEMPLATE: TemplateDef = {
         textarea("a10", "Answer 10"),
       ],
       defaults: {
+        visible: "1",
         heading: "A-Level retake & resit FAQ",
         subtitle: "Quick answers to the most common questions about retaking and resitting A-Levels in Birmingham.",
         buttonLabel: "Contact Us",
@@ -336,11 +431,24 @@ export const HOME_TEMPLATE: TemplateDef = {
       key: "news",
       name: "What's Happening (News)",
       description: "Header of the news slider. (Articles are edited in code.)",
-      fields: [text("label", "Small label"), text("title", "Heading"), color()],
+      fields: [
+        toggle(),
+        text("label", "Small label"),
+        text("title", "Heading"),
+        color(),
+        list("articles", "Articles", "Article", [
+          text("date", "Date", "e.g. 22 Nov 2024"),
+          text("title", "Title"),
+          image("image", "Photo"),
+          url("url", "Read Article link", "Leave empty to hide the Read Article button."),
+        ]),
+      ],
       defaults: {
+        visible: "1",
         label: "Find Your Local YDS Clinic",
         title: "What's happening at Edgbaston",
         bgColor: "",
+        articles: "[{\"date\":\"12 Sep 2024\",\"title\":\"Edgbaston College Celebrates Outstanding A-Level Results\",\"image\":\"/figma/news-results.webp\",\"url\":\"\"},{\"date\":\"22 Nov 2024\",\"title\":\"Maneek Wins the Great College Bake Off to Support Children…\",\"image\":\"/figma/news-cake.webp\",\"url\":\"\"},{\"date\":\"15 Oct 2024\",\"title\":\"Year 12 Students Explore Future Opportunities at UK University…\",\"image\":\"/figma/news-uni.webp\",\"url\":\"\"},{\"date\":\"3 Oct 2024\",\"title\":\"Edgbaston College Students Build Life-Saving Skills with St John…\",\"image\":\"/figma/news-firstaid.webp\",\"url\":\"\"},{\"date\":\"7 Oct 2024\",\"title\":\"Students Hit the Track for Karting Fun\",\"image\":\"/figma/news-karting.webp\",\"url\":\"\"}]",
       },
     },
     {
@@ -348,6 +456,7 @@ export const HOME_TEMPLATE: TemplateDef = {
       name: "Sticky Offer Bar",
       description: "The countdown bar fixed to the bottom of every page.",
       fields: [
+        toggle(),
         text("title", "Offer title"),
         text("message", "Offer text", "Leave empty to hide the bar."),
         text("buttonLabel", "Button label"),
@@ -355,6 +464,7 @@ export const HOME_TEMPLATE: TemplateDef = {
         color(),
       ],
       defaults: {
+        visible: "1",
         title: "August Offer",
         message: "30% off course fees for the first 5 eligible applicants only.",
         buttonLabel: "Enquire About Course",
@@ -377,7 +487,10 @@ export const HEADER_TEMPLATE: TemplateDef = {
       fields: [
         image("logoLight", "Logo (on dark banners)"),
         image("logoDark", "Logo (on white pages)"),
-        textarea("links", "Menu links", "One per line as: Label | /url"),
+        list("links", "Menu items", "Menu item", [
+          text("label", "Menu name"),
+          url("url", "Menu link", "Where this menu item goes."),
+        ]),
         text("contactLabel", "Contact button label"),
         url("contactUrl", "Contact button link"),
         color("pillColor", "Menu pill colour", "Background of the menu pills. Leave empty for white."),
@@ -385,12 +498,7 @@ export const HEADER_TEMPLATE: TemplateDef = {
       defaults: {
         logoLight: "/figma/logo.svg",
         logoDark: "/figma/logo-navy.svg",
-        links: [
-          "Courses | /courses",
-          "Admissions | /admissions",
-          "About Us | /about",
-          "Guides | #",
-        ].join("\n"),
+        links: "[{\"label\":\"Courses\",\"url\":\"/courses\"},{\"label\":\"Admissions\",\"url\":\"/admissions\"},{\"label\":\"About Us\",\"url\":\"/about\"},{\"label\":\"Guides\",\"url\":\"#\"}]",
         contactLabel: "Contact us",
         contactUrl: "/contact",
         pillColor: "",
@@ -430,18 +538,14 @@ export const FOOTER_TEMPLATE: TemplateDef = {
       description: "The link list in the footer.",
       fields: [
         text("heading", "Heading"),
-        textarea("items", "Links", "One per line as: Label | /url"),
+        list("items", "Links", "Link", [
+          text("label", "Link name"),
+          url("url", "Link URL", "Where this link goes."),
+        ]),
       ],
       defaults: {
         heading: "Useful Links",
-        items: [
-          "Enquire About A Course | /contact",
-          "One Year A-Level Retake Programme | /one-year-a-level-retake",
-          "Our Courses | /courses",
-          "Admissions Requirements | /admissions-requirements",
-          "About Us | /about-us",
-          "Our History | /our-history",
-        ].join("\n"),
+        items: "[{\"label\":\"Enquire About A Course\",\"url\":\"/contact\"},{\"label\":\"One Year A-Level Retake Programme\",\"url\":\"/one-year-a-level-retake\"},{\"label\":\"Our Courses\",\"url\":\"/courses\"},{\"label\":\"Admissions Requirements\",\"url\":\"/admissions-requirements\"},{\"label\":\"About Us\",\"url\":\"/about-us\"},{\"label\":\"Our History\",\"url\":\"/our-history\"}]",
       },
     },
     {

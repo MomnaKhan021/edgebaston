@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { FooterLinks } from "./FooterLinks";
 import { getTemplateSections } from "@/lib/sections";
-import { parseLinks, sectionDefaults } from "@/lib/templates";
+import { parseItems, sectionDefaults } from "@/lib/templates";
 
 function Arrow() {
   return (
@@ -24,7 +24,7 @@ export async function FigmaFooter() {
   const address = s.address ?? sectionDefaults("footer", "address");
   const brand = s.brand ?? sectionDefaults("footer", "brand");
 
-  const linkItems = parseLinks(links.items);
+  const linkItems = parseItems(links.items).map((l) => ({ label: l.label ?? "", href: l.url || l.href || "#" }));
   const mapUrl = address.mapUrl || "#";
   const phoneHref = "tel:" + (address.phone || "").replace(/\s+/g, "");
   const linkCls =

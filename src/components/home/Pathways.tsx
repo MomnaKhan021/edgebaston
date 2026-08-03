@@ -1,5 +1,6 @@
 import { Slider } from "./Slider";
-import { bgStyle } from "@/lib/templates";
+import Link from "next/link";
+import { bgStyle, parseItems } from "@/lib/templates";
 import { ArrowRight } from "./icons";
 import { CountUp } from "./CountUp";
 
@@ -31,6 +32,18 @@ const CARDS = [
 ];
 
 export function Pathways({ data }: { data?: Record<string, string> }) {
+  const managed = parseItems(data?.cards);
+  const cards = managed.length
+    ? managed.map((c) => ({
+        title: c.title ?? "",
+        body: c.body ?? "",
+        stat: parseFloat(c.stat || "0") || 0,
+        statLabel: c.statLabel ?? "",
+        img: c.image || "/figma/course-retake.webp",
+        objPos: "object-center",
+        url: c.url ?? "",
+      }))
+    : CARDS.map((c) => ({ ...c, url: "" }));
   return (
     <section className="bg-eb-cream" style={bgStyle(data)}>
       <div className="mx-auto max-w-[1440px] px-4 py-10 lg:px-[60px] lg:py-20">
@@ -44,7 +57,7 @@ export function Pathways({ data }: { data?: Record<string, string> }) {
           startIndex={1}
           edgeClassName="w-4"
         >
-          {CARDS.map((c) => (
+          {cards.map((c) => (
             <article
               key={c.title}
               className="group flex w-[calc(100%-64px)] shrink-0 snap-center flex-col rounded-xl bg-white p-4 sm:w-[440px] sm:snap-start sm:p-6 lg:w-[calc((100%-3rem)/3)]"
@@ -63,9 +76,15 @@ export function Pathways({ data }: { data?: Record<string, string> }) {
               <div className="relative mt-2 aspect-[16/11] w-full overflow-hidden rounded-lg bg-white sm:mt-3">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={c.img} alt={c.title} className={`h-full w-full object-cover ${c.objPos} transition duration-500 group-hover:scale-105`} />
-                <span className="eb-square absolute bottom-3 right-3 grid h-12 w-12 place-items-center rounded-lg bg-eb-blue text-white">
-                  <ArrowRight className="h-5 w-5" />
-                </span>
+                {c.url ? (
+                  <Link href={c.url} aria-label={c.title} className="eb-square absolute bottom-3 right-3 grid h-12 w-12 place-items-center rounded-lg bg-eb-blue text-white">
+                    <ArrowRight className="h-5 w-5" />
+                  </Link>
+                ) : (
+                  <span className="eb-square absolute bottom-3 right-3 grid h-12 w-12 place-items-center rounded-lg bg-eb-blue text-white">
+                    <ArrowRight className="h-5 w-5" />
+                  </span>
+                )}
               </div>
             </article>
           ))}

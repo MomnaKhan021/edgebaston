@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "./icons";
 import { CountUp } from "./CountUp";
 import { Reveal } from "./Reveal";
-import {num, sectionDefaults, bgStyle } from "@/lib/templates";
+import { num, sectionDefaults, bgStyle, parseItems } from "@/lib/templates";
 
 type Info = { label: string; title: string; body?: string; place?: string };
 
@@ -37,6 +37,16 @@ function Medal({ className }: { className?: string }) {
 
 export function Results({ data }: { data?: Record<string, string> }) {
   const d = { ...sectionDefaults("home", "results"), ...data };
+  const managed = parseItems(d.cards);
+  const infoCards = managed.length
+    ? managed
+    : [
+        { label: "Grade Performance", title: "A*-A / A*-B Results", body: "Clear academic proof showing how students perform across top grade bands." },
+        { label: "Grade Improvement", title: "Value-Added Progress", body: "Shows how students improve from their starting point through personalised support." },
+        { label: "Competitive Pathways", title: "Oxbridge Outcomes", body: "Support for ambitious students applying to Oxford, Cambridge, and high-tariff courses." },
+        { label: "Specialist Routes", title: "Medicine & Dentistry", body: "Focused guidance for students aiming for medicine, dentistry, and clinical pathways." },
+      ];
+  const places = ["lg:col-start-1 lg:row-start-1", "lg:col-start-2 lg:row-start-1", "lg:col-start-1 lg:row-start-2", "lg:col-start-2 lg:row-start-2"];
   return (
     <section className="overflow-hidden bg-eb-navy" style={bgStyle(data)}>
       <div className="mx-auto max-w-[1440px] px-4 pb-10 pt-10 lg:px-10 lg:pb-10 lg:pt-20">
@@ -65,7 +75,7 @@ export function Results({ data }: { data?: Record<string, string> }) {
                 each curl is narrower than its lane, so it never touches the cards or door. */}
             <div className="relative mx-1.5 shrink-0 sm:mx-16 lg:mx-28">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/figma/door.svg" alt="" className="h-32 w-auto sm:h-60 lg:h-72" loading="lazy" decoding="async" />
+              <img src={d.doorImage || "/figma/door.svg"} alt="" className="h-32 w-auto sm:h-60 lg:h-72" loading="lazy" decoding="async" />
               {/* Lower-left curl: in the left lane, near the door base */}
               <svg className="pointer-events-none absolute right-full top-[62%] mr-0.5 w-4 sm:mr-2 sm:w-12 lg:mr-3 lg:w-[72px]" viewBox="0 0 104 69" fill="none" aria-hidden>
                 <path d="M71.3764 68.2635C65.6291 67.2217 61.2657 64.6191 56.7708 61.0693C30.7677 63.7634 7.09109 22.8727 0.0488705 1.51722C-0.33552 0.351266 1.64699 -1.03145 2.51206 1.1517C8.31112 15.7843 15.6607 30.7346 26.3868 42.4145C27.8941 44.3315 30.4395 46.658 32.2214 48.3077C37.4787 53.1752 46.9654 58.8887 54.3524 58.4796C54.3069 58.4188 54.2619 58.3574 54.2174 58.2958C51.8907 55.053 49.5909 50.7676 50.3826 46.7695C51.7984 39.6199 60.7951 40.226 64.1295 45.5859C67.012 50.2195 66.8674 55.5793 62.3735 59.0223C61.7833 59.4747 60.9331 59.8355 60.2747 60.2718C60.3462 60.4628 60.4463 60.6231 60.6101 60.7469C69.7071 67.6215 83.1198 67.7935 93.1083 63.3167C95.182 62.4035 97.1777 61.3213 99.0753 60.0811C99.62 59.7201 101.371 58.4109 101.839 58.5152C105.082 59.2368 101.832 61.4527 100.941 62.0298C92.3095 67.6195 81.5418 70.4415 71.3764 68.2635ZM57.8369 44.0879C50.8637 43.3817 52.5547 51.2863 54.9701 54.8625C55.6579 55.8807 56.7846 57.5459 57.8232 58.2031C59.6695 57.7311 61.6265 56.7592 62.541 55.0222C64.7955 50.7406 62.5373 45.2363 57.8369 44.0879Z" fill="white" fillOpacity="0.85" />
@@ -106,26 +116,27 @@ export function Results({ data }: { data?: Record<string, string> }) {
           <div className="mt-10 lg:mx-5">
             <div className="rounded-xl bg-white p-3 sm:p-8 lg:p-10">
               <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3 lg:grid-rows-2">
-                <InfoCard label="Grade Performance" title="A*-A / A*-B Results" body="Clear academic proof showing how students perform across top grade bands." place="lg:col-start-1 lg:row-start-1" />
-                <InfoCard label="Grade Improvement" title="Value-Added Progress" body="Shows how students improve from their starting point through personalised support." place="lg:col-start-2 lg:row-start-1" />
-                <InfoCard label="Competitive Pathways" title="Oxbridge Outcomes" body="Support for ambitious students applying to Oxford, Cambridge, and high-tariff courses." place="lg:col-start-1 lg:row-start-2" />
-                <InfoCard label="Specialist Routes" title="Medicine & Dentistry" body="Focused guidance for students aiming for medicine, dentistry, and clinical pathways." place="lg:col-start-2 lg:row-start-2" />
+                {infoCards.map((c, i) => (
+                  <InfoCard key={i} label={c.label ?? ""} title={c.title ?? ""} body={c.body ?? ""} place={places[i % places.length]} />
+                ))}
 
                 {/* Right column: tall destinations card + button, bottom-aligned with the grid */}
                 <div className="col-span-2 flex flex-col gap-3 sm:gap-6 lg:col-span-1 lg:col-start-3 lg:row-span-2 lg:row-start-1">
                   <div className="eb-card flex flex-1 flex-col rounded-lg bg-eb-cream p-5 sm:rounded-xl sm:p-7">
-                    <p className="font-mono text-[12px] font-medium tracking-wide text-eb-blue sm:text-[16px]">University Destinations</p>
-                    <h4 className="mt-2 text-[18px] font-bold leading-tight text-eb-navy sm:mt-6 sm:text-[28px] lg:text-[32px]">Russell Group &amp; QS Top Universities</h4>
+                    <p className="font-mono text-[12px] font-medium tracking-wide text-eb-blue sm:text-[16px]">{d.destLabel}</p>
+                    <h4 className="mt-2 text-[18px] font-bold leading-tight text-eb-navy sm:mt-6 sm:text-[28px] lg:text-[32px]">{d.destTitle}</h4>
                     <p className="mt-2 text-[13px] leading-relaxed text-black sm:mt-[42px] sm:text-[16px] lg:mt-auto lg:pt-10">
-                      A stronger way to show where students progress after Edgbaston College, from leading UK universities to competitive degree pathways.
+                      {d.destBody}
                     </p>
                   </div>
-                  <Link href="/courses" className="eb-cta group flex shrink-0 items-center justify-between gap-4 rounded-lg bg-eb-cream py-2.5 pl-4 pr-2.5 text-left sm:py-3 sm:pl-5 sm:pr-3">
-                    <span className="text-[12px] font-bold uppercase tracking-wide text-eb-navy sm:text-[14px]">View Results &amp; Destinations</span>
+                  {d.buttonUrl && (
+                  <Link href={d.buttonUrl} className="eb-cta group flex shrink-0 items-center justify-between gap-4 rounded-lg bg-eb-cream py-2.5 pl-4 pr-2.5 text-left sm:py-3 sm:pl-5 sm:pr-3">
+                    <span className="text-[12px] font-bold uppercase tracking-wide text-eb-navy sm:text-[14px]">{d.buttonLabel}</span>
                     <span className="eb-square grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-eb-blue text-white sm:h-11 sm:w-11">
                       <ArrowUpRight className="h-5 w-5" />
                     </span>
                   </Link>
+                  )}
                 </div>
               </div>
             </div>

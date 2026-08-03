@@ -252,6 +252,30 @@ export async function saveSection(formData: FormData) {
       value = await compressDataUri(value);
     }
     if (field.type === "url") value = redirectUrl(formData, field.name);
+    if (field.type === "list") {
+      // Keep only the defined item fields and compress uploaded images.
+      let items: Record<string, string>[] = [];
+      try {
+        const arr = JSON.parse(value || "[]");
+        if (Array.isArray(arr)) {
+          for (const raw of arr) {
+            if (!raw || typeof raw !== "object") continue;
+            const item: Record<string, string> = {};
+            for (const f of field.itemFields ?? []) {
+              let v = String((raw as Record<string, unknown>)[f.name] ?? "");
+              if (f.type === "image" && v.startsWith("data:image/")) {
+                v = await compressDataUri(v, 1200);
+              }
+              item[f.name] = v;
+            }
+            items.push(item);
+          }
+        }
+      } catch {
+        items = [];
+      }
+      value = JSON.stringify(items);
+    }
     data[field.name] = value;
   }
 

@@ -13,6 +13,7 @@ import { News } from "@/components/home/News";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
 import { getTemplateSections } from "@/lib/sections";
+import { isVisible } from "@/lib/templates";
 
 export const metadata: Metadata = {
   title: "Edgbaston College — Birmingham's Top-Performing Sixth Form College",
@@ -25,17 +26,17 @@ export default async function HomePage() {
   return (
     <>
       <SiteAnnouncement />
-      <Hero data={s.hero} />
-      <FeatureStrip data={s["feature-strip"]} />
-      <Reveal><PrincipalMessage data={s.principal} /></Reveal>
-      <Reveal><Pathways data={s.pathways} /></Reveal>
+      {isVisible(s.hero) && <Hero data={s.hero} />}
+      {isVisible(s["feature-strip"]) && <FeatureStrip data={s["feature-strip"]} />}
+      {isVisible(s.principal) && <Reveal><PrincipalMessage data={s.principal} /></Reveal>}
+      {isVisible(s.pathways) && <Reveal><Pathways data={s.pathways} /></Reveal>}
       {/* Results manages its own staged reveals internally */}
-      <Results data={s.results} />
-      <Reveal><Stories data={s.stories} /></Reveal>
-      <Reveal><WhyChoose data={s["why-choose"]} /></Reveal>
-      <LearnMarquee data={s["learn-marquee"]} />
-      <Reveal><Faq data={s.faq} /></Reveal>
-      <Reveal><News data={s.news} /></Reveal>
+      {isVisible(s.results) && <Results data={s.results} />}
+      {isVisible(s.stories) && <Reveal><Stories data={s.stories} /></Reveal>}
+      {isVisible(s["why-choose"]) && <Reveal><WhyChoose data={s["why-choose"]} /></Reveal>}
+      {isVisible(s["learn-marquee"]) && <LearnMarquee data={s["learn-marquee"]} />}
+      {isVisible(s.faq) && <Reveal><Faq data={s.faq} /></Reveal>}
+      {isVisible(s.news) && <Reveal><News data={s.news} /></Reveal>}
       <Reveal><FigmaFooter /></Reveal>
     </>
   );

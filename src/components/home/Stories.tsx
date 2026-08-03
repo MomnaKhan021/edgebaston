@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { bgStyle } from "@/lib/templates";
+import { bgStyle, parseItems } from "@/lib/templates";
 import Link from "next/link";
 import { Slider } from "./Slider";
 
@@ -93,7 +93,18 @@ function CompactCard({ c }: { c: Story }) {
 }
 
 export function Stories({ data }: { data?: Record<string, string> }) {
-  const featured = STUDENTS[0];
+  const managed = parseItems(data?.students);
+  const students = managed.length
+    ? managed.map((c, i) => ({
+        name: c.name ?? "",
+        img: c.image || STUDENTS[i % STUDENTS.length].img,
+        grade: c.grade ?? "",
+        course: c.course ?? "",
+        quote: c.quote ?? "",
+        mobileOnly: i === 0,
+      }))
+    : STUDENTS;
+  const featured = students[0];
   return (
     <section className="bg-eb-cream" style={bgStyle(data)}>
       <div className="mx-auto max-w-[1440px] px-4 py-10 lg:px-[60px] lg:py-20">
@@ -127,7 +138,7 @@ export function Stories({ data }: { data?: Record<string, string> }) {
           </div>
 
           {/* All students as compact cards (Alishba is mobile-only here) */}
-          {STUDENTS.map((c) => (
+          {students.map((c) => (
             <CompactCard key={c.name} c={c} />
           ))}
         </Slider>

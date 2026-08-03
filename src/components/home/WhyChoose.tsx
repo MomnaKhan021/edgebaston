@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { bgStyle } from "@/lib/templates";
+import { bgStyle, parseItems } from "@/lib/templates";
 import { ArrowUpRight } from "./icons";
 
 const ITEMS = [
@@ -49,11 +49,18 @@ function Card({ icon, title, body }: (typeof ITEMS)[number]) {
 }
 
 export function WhyChoose({ data }: { data?: Record<string, string> }) {
-  const items = ITEMS.map((item, i) => ({
-    ...item,
-    title: data?.[`card${i + 1}Title`] || item.title,
-    body: data?.[`card${i + 1}Body`] || item.body,
-  }));
+  const managed = parseItems(data?.cards);
+  const items = managed.length
+    ? managed.map((c, i) => ({
+        icon: c.icon || ITEMS[i % ITEMS.length].icon,
+        title: c.title ?? "",
+        body: c.body ?? "",
+      }))
+    : ITEMS.map((item, i) => ({
+        ...item,
+        title: data?.[`card${i + 1}Title`] || item.title,
+        body: data?.[`card${i + 1}Body`] || item.body,
+      }));
   const heading = data?.heading || "Why Students Choose Edgbaston College";
   const buttonLabel = data?.buttonLabel || "View Results & Destinations";
   const buttonUrl = data?.buttonUrl ?? "/courses";

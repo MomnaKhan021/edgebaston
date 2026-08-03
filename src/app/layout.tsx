@@ -4,6 +4,7 @@ import { getSettings } from "@/lib/settings";
 import { saans, saansMono } from "./fonts";
 import { OfferBar } from "@/components/home/OfferBar";
 import { getSection } from "@/lib/sections";
+import { isVisible } from "@/lib/templates";
 
 // This is a database-backed CMS: render pages per-request so content edited in
 // the dashboard shows immediately, and so the build never queries the database.
@@ -47,7 +48,7 @@ export default async function RootLayout({
     >
       <body className="flex min-h-full flex-col">
         {children}
-        <OfferBar title={offer.title} message={offer.message} buttonLabel={offer.buttonLabel} buttonUrl={offer.buttonUrl} bgColor={offer.bgColor} />
+        {isVisible(offer) && <OfferBar title={offer.title} message={offer.message} buttonLabel={offer.buttonLabel} buttonUrl={offer.buttonUrl} bgColor={offer.bgColor} />}
       </body>
     </html>
   );

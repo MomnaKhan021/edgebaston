@@ -1,5 +1,5 @@
 import { ArrowUpRight } from "./icons";
-import { bgStyle } from "@/lib/templates";
+import { bgStyle, parseItems } from "@/lib/templates";
 import { NewsSlider } from "./NewsSlider";
 
 const NEWS = [
@@ -11,10 +11,19 @@ const NEWS = [
 ];
 
 export function News({ data }: { data?: Record<string, string> }) {
+  const managed = parseItems(data?.articles);
+  const articles = managed.length
+    ? managed.map((a, i) => ({
+        date: a.date ?? "",
+        title: a.title ?? "",
+        img: a.image || NEWS[i % NEWS.length].img,
+        url: a.url ?? "",
+      }))
+    : NEWS.map((n) => ({ ...n, url: "" }));
   return (
     <section className="overflow-hidden bg-eb-cream py-10 lg:py-14" style={bgStyle(data)}>
       <NewsSlider label={data?.label || "Find Your Local YDS Clinic"} title={data?.title || "What's happening at Edgbaston"}>
-        {NEWS.map((n) => (
+        {articles.map((n) => (
           <article key={n.title} className="group w-[78%] shrink-0 snap-center sm:w-[300px]">
             <div className="relative aspect-[283/350] overflow-hidden rounded-md">
               {/* eslint-disable-next-line @next/next/no-img-element */}

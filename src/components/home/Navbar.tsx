@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { parseLinks } from "@/lib/templates";
+import { parseItems } from "@/lib/templates";
 
 const NAV = [
   { label: "Courses", href: "/courses" },
@@ -27,7 +27,8 @@ export function Navbar({
   const solid = variant === "solid";
   const pill = solid ? "bg-eb-cream" : "bg-white";
   const pillStyle = data?.pillColor ? { backgroundColor: data.pillColor } : undefined;
-  const links = data?.links ? parseLinks(data.links) : NAV;
+  const managed = data?.links ? parseItems(data.links) : [];
+  const links = managed.length ? managed.map((l) => ({ label: l.label ?? "", href: l.url || l.href || "#" })) : NAV;
   const first = links[0] ?? NAV[0];
   const rest = links.slice(1);
   const logoLight = data?.logoLight || "/figma/logo.svg";

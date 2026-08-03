@@ -6,6 +6,8 @@ import { saveSection } from "@/app/admin/actions";
 import { Field, Input, Textarea, SubmitButton } from "@/components/admin/ui";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 import { ColorField } from "@/components/admin/ColorField";
+import { ToggleField } from "@/components/admin/ToggleField";
+import { ListField } from "@/components/admin/ListField";
 
 export default async function SectionEditor({
   params,
@@ -51,6 +53,10 @@ export default async function SectionEditor({
           <Field key={f.name} label={f.label} htmlFor={f.name} hint={f.hint}>
             {f.type === "image" ? (
               <ImageUpload name={f.name} defaultValue={values[f.name] ?? ""} />
+            ) : f.type === "toggle" ? (
+              <ToggleField name={f.name} defaultValue={values[f.name] ?? "1"} />
+            ) : f.type === "list" ? (
+              <ListField name={f.name} itemLabel={f.itemLabel} itemFields={f.itemFields ?? []} defaultValue={values[f.name] ?? ""} />
             ) : f.type === "color" ? (
               <ColorField name={f.name} defaultValue={values[f.name] ?? ""} />
             ) : f.type === "textarea" ? (
