@@ -1,8 +1,15 @@
 import Link from "next/link";
 import { TEMPLATES } from "@/lib/templates";
 import { IconTemplates } from "@/components/admin/icons";
+import { DuplicatePanel } from "@/components/admin/DuplicatePanel";
 
-export default function TemplatesAdmin() {
+export default async function TemplatesAdmin({
+  searchParams,
+}: {
+  searchParams: Promise<{ copied?: string; to?: string }>;
+}) {
+  const { copied, to } = await searchParams;
+  const toName = TEMPLATES.find((t) => t.key === to)?.name;
   return (
     <div>
       <div className="mb-6">
@@ -11,6 +18,16 @@ export default function TemplatesAdmin() {
           Edit the content of each designed page, section by section. Changes go live as soon as you save.
         </p>
       </div>
+
+      {copied === "invalid" ? (
+        <div className="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+          Please choose two different pages to copy between.
+        </div>
+      ) : copied ? (
+        <div className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-700">
+          Copied {copied} section{copied === "1" ? "" : "s"}{toName ? ` to ${toName}` : ""}. The changes are live now.
+        </div>
+      ) : null}
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {TEMPLATES.map((t) => (
@@ -31,6 +48,10 @@ export default function TemplatesAdmin() {
             <p className="mt-3 text-sm text-muted-foreground">{t.description}</p>
           </Link>
         ))}
+      </div>
+
+      <div className="mt-8">
+        <DuplicatePanel templates={TEMPLATES.map((t) => ({ key: t.key, name: t.name }))} />
       </div>
     </div>
   );

@@ -289,3 +289,35 @@ export async function saveSection(formData: FormData) {
   revalidatePath("/", "layout");
   redirect(`/admin/templates/${template}?saved=${key}`);
 }
+
+/** Copy the saved content of one page's template onto another existing page. */
+export async function duplicateTemplate(formData: FormData) {
+  await assertAuth();
+  const { getTemplateDef } = await import("@/lib/templates");
+  const from = str(formData, "from");
+  const to = str(formData, "to");
+  const fromDef = getTemplateDef(from);
+  const toDef = getTemplateDef(to);
+  if (!fromDef || !toDef || from === to) {
+    redirect("/admin/templates?copied=invalid");
+  }
+
+  // Only copy sections that also exist on the target page, so nothing junk is
+  // written. Matching sections (same key) receive the source's saved content.
+  const toKeys = new Set(toDef.sections.map((s) => s.key));
+  const rows = await db.templateSection.findMany({ where: { template: from } });
+  let copied = 0;
+  for (const r of rows) {
+    if (!toKeys.has(r.key)) continue;
+    await db.templateSection.upsert({
+      where: { template_key: { template: to, key: r.key } },
+      update: { data: r.data },
+      create: { template: to, key: r.key, data: r.data },
+    });
+    copied++;
+  }
+
+  revalidateTag("sections", "max");
+  revalidatePath("/", "layout");
+  redirect(`/admin/templates?copied=${copied}&to=${to}`);
+}
