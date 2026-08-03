@@ -3,20 +3,30 @@
 import { useState } from "react";
 import Link from "next/link";
 
-export function AnnouncementBar() {
+export function AnnouncementBar({
+  badge = "EXCITING NEWS:",
+  message = "Admissions for Batch 2026 are Now Open! Visit our",
+  linkLabel = "Admissions page",
+  linkUrl = "/admissions",
+}: {
+  badge?: string;
+  message?: string;
+  linkLabel?: string;
+  linkUrl?: string;
+}) {
   const [open, setOpen] = useState(true);
-  if (!open) return null;
+  if (!open || !message) return null;
   return (
     <div className="bg-eb-navy-2 text-white">
       <div className="relative mx-auto flex max-w-[1440px] items-center justify-center gap-2 px-10 py-2 text-center text-[15px] lg:px-[60px]">
         <p className="font-medium leading-tight text-white">
-          <span className="font-bold">EXCITING NEWS:</span>{" "}
-          <span className="text-white/90">
-            Admissions for Batch 2026 are Now Open! Visit our{" "}
-          </span>
-          <Link href="/admissions" className="font-bold underline underline-offset-2">
-            Admissions page
-          </Link>
+          {badge && <span className="font-bold">{badge}</span>}{" "}
+          <span className="text-white/90">{message} </span>
+          {linkUrl && linkLabel && (
+            <Link href={linkUrl} className="font-bold underline underline-offset-2">
+              {linkLabel}
+            </Link>
+          )}
         </p>
         <button
           type="button"

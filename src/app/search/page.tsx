@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { db } from "@/lib/db";
-import { AnnouncementBar } from "@/components/home/AnnouncementBar";
+import { SiteAnnouncement } from "@/components/home/SiteAnnouncement";
 import { Navbar } from "@/components/home/Navbar";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { ArrowUpRight } from "@/components/home/icons";
@@ -65,7 +65,7 @@ export default async function SearchPage({
 
   return (
     <>
-      <AnnouncementBar />
+      <SiteAnnouncement />
 
       <section className="relative isolate overflow-hidden bg-eb-navy">
         <Navbar />

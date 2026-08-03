@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { AnnouncementBar } from "@/components/home/AnnouncementBar";
+import { SiteAnnouncement } from "@/components/home/SiteAnnouncement";
 import { Navbar } from "@/components/home/Navbar";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
@@ -65,7 +65,7 @@ function Share() {
 export default function AdmissionsRequirementsPage() {
   return (
     <>
-      <AnnouncementBar />
+      <SiteAnnouncement />
       <Navbar variant="solid" />
 
       {/* Title + intro */}

@@ -14,8 +14,10 @@ function Star() {
   );
 }
 
-export function FeatureStrip() {
-  const row = [...ITEMS, ...ITEMS];
+export function FeatureStrip({ data }: { data?: Record<string, string> }) {
+  const items = (data?.items ?? "").split("\n").map((i) => i.trim()).filter(Boolean);
+  const list = items.length ? items : ITEMS;
+  const row = [...list, ...list];
   return (
     <div className="overflow-hidden border-y border-border bg-white py-5">
       <div className="eb-marquee-track">

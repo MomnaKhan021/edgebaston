@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AnnouncementBar } from "@/components/home/AnnouncementBar";
+import { SiteAnnouncement } from "@/components/home/SiteAnnouncement";
 import { Navbar } from "@/components/home/Navbar";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
@@ -49,7 +49,7 @@ const COMPANY = [
 export default function ContactPage() {
   return (
     <>
-      <AnnouncementBar />
+      <SiteAnnouncement />
 
       {/* Hero */}
       <section className="relative isolate overflow-hidden bg-eb-navy">

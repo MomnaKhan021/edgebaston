@@ -138,3 +138,12 @@ export function IconClose({ className = base }: P) {
     </svg>
   );
 }
+
+export function IconTemplates({ className = base }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...common}>
+      <rect x="3.5" y="4" width="17" height="16" rx="2" />
+      <path d="M3.5 9.5h17M9.5 9.5V20" />
+    </svg>
+  );
+}

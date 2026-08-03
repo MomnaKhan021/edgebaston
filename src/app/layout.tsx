@@ -3,6 +3,7 @@ import "./globals.css";
 import { getSettings } from "@/lib/settings";
 import { saans, saansMono } from "./fonts";
 import { OfferBar } from "@/components/home/OfferBar";
+import { getSection } from "@/lib/sections";
 
 // This is a database-backed CMS: render pages per-request so content edited in
 // the dashboard shows immediately, and so the build never queries the database.
@@ -29,6 +30,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const settings = await getSettings();
+  const offer = await getSection("home", "offer-bar");
 
   // Inject the client's brand colours as CSS variables so the entire site
   // (and dashboard) re-themes from the database with no code changes.
@@ -45,7 +47,7 @@ export default async function RootLayout({
     >
       <body className="flex min-h-full flex-col">
         {children}
-        <OfferBar />
+        <OfferBar title={offer.title} message={offer.message} buttonLabel={offer.buttonLabel} buttonUrl={offer.buttonUrl} />
       </body>
     </html>
   );

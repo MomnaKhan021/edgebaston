@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "./icons";
 import { CountUp } from "./CountUp";
 import { Reveal } from "./Reveal";
+import { num, sectionDefaults } from "@/lib/templates";
 
 type Info = { label: string; title: string; body?: string; place?: string };
 
@@ -34,16 +35,17 @@ function Medal({ className }: { className?: string }) {
   );
 }
 
-export function Results() {
+export function Results({ data }: { data?: Record<string, string> }) {
+  const d = { ...sectionDefaults("home", "results"), ...data };
   return (
     <section className="overflow-hidden bg-eb-navy">
       <div className="mx-auto max-w-[1440px] px-4 pb-10 pt-10 lg:px-10 lg:pb-10 lg:pt-20">
         {/* Heading block (centered) */}
         <Reveal>
           <div className="mx-auto max-w-3xl text-center">
-            <p className="font-mono text-[14px] font-medium tracking-[0.08em] text-white sm:text-[16px]">Outcome Spotlight</p>
+            <p className="font-mono text-[14px] font-medium tracking-[0.08em] text-white sm:text-[16px]">{d.eyebrow}</p>
             <h2 className="mt-4 text-[32px] font-extrabold leading-[1.05] tracking-tight text-white lg:text-[62px]">
-              Results That Open Doors
+              {d.heading}
             </h2>
           </div>
         </Reveal>
@@ -55,8 +57,8 @@ export function Results() {
             {/* Left box — higher */}
             <div className="z-10 w-[128px] shrink-0 -translate-y-8 rounded-xl bg-white/[0.08] px-3 py-4 text-center sm:w-[210px] sm:-translate-y-10 sm:p-[26px] lg:w-[240px] lg:-translate-y-12">
               <p className="font-mono text-[11px] font-medium text-white sm:text-[15px]">National Ranking</p>
-              <CountUp to={25} prefix="#" className="my-1.5 block text-[34px] font-extrabold leading-none text-white sm:my-2 sm:text-5xl lg:text-[64px]" />
-              <p className="text-[11px] leading-tight text-white/80 sm:text-[15px] sm:leading-snug">Sixth form college in England</p>
+              <CountUp to={num(d.rankingValue, 25)} prefix="#" className="my-1.5 block text-[34px] font-extrabold leading-none text-white sm:my-2 sm:text-5xl lg:text-[64px]" />
+              <p className="text-[11px] leading-tight text-white/80 sm:text-[15px] sm:leading-snug">{d.rankingCaption}</p>
             </div>
 
             {/* Door. The horizontal margins are the “lanes” the curl arrows live in —
@@ -78,8 +80,8 @@ export function Results() {
             <div className="relative z-10 w-[128px] shrink-0 translate-y-8 rounded-xl bg-white/[0.08] px-3 py-4 text-center sm:w-[210px] sm:translate-y-10 sm:p-[26px] lg:w-[240px] lg:translate-y-12">
               <Medal className="absolute right-2 top-2 h-5 w-5 sm:left-4 sm:right-auto sm:top-3 sm:h-8 sm:w-8" />
               <p className="font-mono text-[11px] font-medium text-white sm:text-[15px]">Value Added</p>
-              <CountUp to={1} prefix="#" className="my-1.5 block text-[34px] font-extrabold leading-none text-white sm:my-2 sm:text-5xl lg:text-[64px]" />
-              <p className="text-[11px] leading-tight text-white/80 sm:text-[15px] sm:leading-snug">For Value-Added in Birmingham</p>
+              <CountUp to={num(d.valueAddedValue, 1)} prefix="#" className="my-1.5 block text-[34px] font-extrabold leading-none text-white sm:my-2 sm:text-5xl lg:text-[64px]" />
+              <p className="text-[11px] leading-tight text-white/80 sm:text-[15px] sm:leading-snug">{d.valueAddedCaption}</p>
             </div>
           </div>
         </Reveal>
@@ -88,12 +90,12 @@ export function Results() {
         <Reveal delay={240}>
           <div className="mx-auto mt-8 grid max-w-[860px] grid-cols-2 overflow-hidden rounded-xl bg-eb-blue sm:mt-10">
             <div className="flex items-center gap-2.5 border-r border-white/25 px-3.5 py-5 sm:gap-4 sm:px-7">
-              <CountUp to={96} suffix="%" className="shrink-0 text-[28px] font-bold leading-none text-white sm:text-[32px] lg:text-[40px]" />
-              <span className="text-[12px] leading-tight text-white sm:text-[14px] lg:text-[16px]">success rate in securing Medicine &amp; Dentistry places</span>
+              <CountUp to={num(d.bar1Value, 96)} suffix="%" className="shrink-0 text-[28px] font-bold leading-none text-white sm:text-[32px] lg:text-[40px]" />
+              <span className="text-[12px] leading-tight text-white sm:text-[14px] lg:text-[16px]">{d.bar1Text}</span>
             </div>
             <div className="flex items-center gap-2.5 px-3.5 py-5 sm:gap-4 sm:px-7">
-              <CountUp to={72.7} decimals={1} suffix="%" className="shrink-0 text-[28px] font-bold leading-none text-white sm:text-[32px] lg:text-[40px]" />
-              <span className="text-[12px] leading-tight text-white sm:text-[14px] lg:text-[16px]">Russell Group Progression</span>
+              <CountUp to={num(d.bar2Value, 72.7)} decimals={1} suffix="%" className="shrink-0 text-[28px] font-bold leading-none text-white sm:text-[32px] lg:text-[40px]" />
+              <span className="text-[12px] leading-tight text-white sm:text-[14px] lg:text-[16px]">{d.bar2Text}</span>
             </div>
           </div>
         </Reveal>

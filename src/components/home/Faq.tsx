@@ -31,7 +31,11 @@ const FAQS = [
   },
 ];
 
-export function Faq() {
+export function Faq({ data }: { data?: Record<string, string> }) {
+  const heading = data?.heading || "A-Level retake & resit FAQ";
+  const subtitle = data?.subtitle || "Quick answers to the most common questions about retaking and resitting A-Levels in Birmingham.";
+  const buttonLabel = data?.buttonLabel || "Contact Us";
+  const buttonUrl = data?.buttonUrl ?? "/contact";
   const [open, setOpen] = useState<number | null>(null);
   return (
     <section className="bg-white">
@@ -39,11 +43,10 @@ export function Faq() {
         {/* Heading + subtitle */}
         <div className="text-center lg:col-start-1 lg:row-start-1 lg:text-left">
           <h2 className="text-[26px] font-extrabold leading-[1.1] tracking-tight text-black sm:text-4xl sm:leading-[1.02] lg:text-[62px]">
-            A-Level retake &amp; resit FAQ
+            {heading}
           </h2>
           <p className="mx-auto mt-3 max-w-md text-[14px] leading-relaxed text-eb-navy/75 sm:mt-6 sm:text-[15px] lg:mx-0">
-            Quick answers to the most common questions about retaking and
-            resitting A-Levels in Birmingham.
+            {subtitle}
           </p>
         </div>
 
@@ -78,15 +81,17 @@ export function Faq() {
         </div>
 
         {/* Contact Us — full-width at the bottom on mobile, left column on desktop */}
+        {buttonUrl && (
         <Link
-          href="/contact"
+          href={buttonUrl}
           className="eb-cta group flex w-full items-center justify-between gap-3 rounded-lg bg-eb-cream py-2 pl-6 pr-2 text-sm font-bold uppercase tracking-wide text-eb-navy lg:col-start-1 lg:row-start-2 lg:inline-flex lg:w-fit lg:justify-start lg:self-start"
         >
-          Contact Us
+          {buttonLabel}
           <span className="eb-square grid h-9 w-9 place-items-center rounded-lg bg-eb-blue text-white">
             <ArrowUpRight className="h-5 w-5" />
           </span>
         </Link>
+        )}
       </div>
     </section>
   );

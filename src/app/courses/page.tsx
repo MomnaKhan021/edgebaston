@@ -3,7 +3,7 @@ import Link from "next/link";
 import { unstable_cache } from "next/cache";
 import { db } from "@/lib/db";
 import { compressDataUri } from "@/lib/images";
-import { AnnouncementBar } from "@/components/home/AnnouncementBar";
+import { SiteAnnouncement } from "@/components/home/SiteAnnouncement";
 import { Navbar } from "@/components/home/Navbar";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
@@ -57,7 +57,7 @@ export default async function CoursesPage({
 
   return (
     <>
-      <AnnouncementBar />
+      <SiteAnnouncement />
 
       {/* Hero */}
       <section className="relative isolate overflow-hidden bg-eb-navy">

@@ -29,13 +29,13 @@ const CARDS = [
   },
 ];
 
-export function Pathways() {
+export function Pathways({ data }: { data?: Record<string, string> }) {
   return (
     <section className="bg-eb-cream">
       <div className="mx-auto max-w-[1440px] px-4 py-10 lg:px-[60px] lg:py-20">
         <Slider
-          label="Courses We Offer"
-          title="Choose the A-Level Pathway That Fits Your Goal"
+          label={data?.label || "Courses We Offer"}
+          title={data?.title || "Choose the A-Level Pathway That Fits Your Goal"}
           labelClassName="text-black"
           labelUppercase={false}
           titleClassName="text-black"

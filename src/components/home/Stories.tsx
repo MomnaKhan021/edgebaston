@@ -91,15 +91,15 @@ function CompactCard({ c }: { c: Story }) {
   );
 }
 
-export function Stories() {
+export function Stories({ data }: { data?: Record<string, string> }) {
   const featured = STUDENTS[0];
   return (
     <section className="bg-eb-cream">
       <div className="mx-auto max-w-[1440px] px-4 py-10 lg:px-[60px] lg:py-20">
         <Slider
-          label="Success Stories"
-          title="Real Students. Real Grade Transformation."
-          subtitle="Real students, real grade jumps. Watch how their retake year went."
+          label={data?.label || "Success Stories"}
+          title={data?.title || "Real Students. Real Grade Transformation."}
+          subtitle={data?.subtitle || "Real students, real grade jumps. Watch how their retake year went."}
           labelClassName="text-black"
           titleClassName="text-black"
           trackClassName="mt-[40px] gap-4 sm:mt-[60px] sm:gap-6"

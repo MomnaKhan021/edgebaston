@@ -2,18 +2,26 @@ import Link from "next/link";
 import { Navbar } from "./Navbar";
 import { ArrowUpRight } from "./icons";
 import { CountUp } from "./CountUp";
+import { num, sectionDefaults } from "@/lib/templates";
 
-export function Hero() {
+export function Hero({ data }: { data?: Record<string, string> }) {
+  const d = { ...sectionDefaults("home", "hero"), ...data };
+  const bgDesktop = d.bgDesktop || "/figma/hero-building.webp";
+  const bgMobile = d.bgMobile || bgDesktop;
+
   return (
     <section className="relative isolate overflow-hidden bg-eb-navy">
       <Navbar />
 
-      {/* Building photo */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/figma/hero-building.webp"
-        alt="Edgbaston College building"
-        className="absolute inset-0 h-full w-full object-cover object-[center_28%]" fetchPriority="high" />
+      {/* Background photo (separate mobile/desktop images from the admin) */}
+      <picture>
+        <source media="(max-width: 639px)" srcSet={bgMobile} />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={bgDesktop}
+          alt="Edgbaston College"
+          className="absolute inset-0 h-full w-full object-cover object-[center_28%]" fetchPriority="high" />
+      </picture>
       <div className="absolute inset-0 bg-black/20" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/25" />
 
@@ -21,7 +29,7 @@ export function Hero() {
         <div className="grid gap-3 lg:grid-cols-[1fr_440px] lg:items-end lg:gap-8">
           {/* Heading — wraps to three lines like the design */}
           <h1 className="text-center text-[30px] font-bold leading-[1.1] tracking-tight text-white sm:text-left sm:text-5xl sm:leading-[1.02] lg:col-start-1 lg:row-start-1 lg:max-w-[760px] lg:text-[62px]">
-            Birmingham&apos;s Top-Performing Independent Sixth Form College
+            {d.heading}
           </h1>
 
           {/* Stats card */}
@@ -30,28 +38,30 @@ export function Hero() {
             <Medal className="absolute right-4 top-0 h-12 w-12 sm:right-5 sm:h-16 sm:w-16" />
             <div className="px-3 pb-3 pr-12 pt-2 sm:pb-4 sm:pr-16 sm:pt-3">
               <div className="flex items-baseline gap-2">
-                <span className="text-[22px] font-extrabold leading-none text-eb-blue sm:text-[43px]">#1</span>
+                <span className="text-[22px] font-extrabold leading-none text-eb-blue sm:text-[43px]">{d.statHeadline}</span>
                 <span className="text-[12px] font-medium leading-snug text-eb-navy sm:max-w-[190px] sm:text-[17px]">
-                  for Value-Added in Birmingham
+                  {d.statCaption}
                 </span>
               </div>
             </div>
             <div className="rounded-xl bg-eb-cream px-4 sm:px-6">
-              <StatRow label="A Level Results A*-A" to={24} />
-              <StatRow label="A Level Results A*-B" to={57} />
+              <StatRow label={d.stat1Label} to={num(d.stat1Value, 24)} />
+              <StatRow label={d.stat2Label} to={num(d.stat2Value, 57)} />
             </div>
           </div>
 
-          {/* CTA — fit-content width */}
-          <Link
-            href="/contact"
-            className="eb-cta group flex w-full items-center justify-between gap-3 self-start rounded-lg bg-white py-2 pl-5 pr-2 text-sm font-bold uppercase tracking-wide text-eb-navy sm:inline-flex sm:w-fit sm:justify-start lg:col-start-1 lg:row-start-2"
-          >
-            Enquire About Course
-            <span className="eb-square grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-eb-blue text-white ring-2 ring-white">
-              <ArrowUpRight className="h-5 w-5" />
-            </span>
-          </Link>
+          {/* CTA — hidden when no link is set in the admin */}
+          {d.buttonUrl && (
+            <Link
+              href={d.buttonUrl}
+              className="eb-cta group flex w-full items-center justify-between gap-3 self-start rounded-lg bg-white py-2 pl-5 pr-2 text-sm font-bold uppercase tracking-wide text-eb-navy sm:inline-flex sm:w-fit sm:justify-start lg:col-start-1 lg:row-start-2"
+            >
+              {d.buttonLabel}
+              <span className="eb-square grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-eb-blue text-white ring-2 ring-white">
+                <ArrowUpRight className="h-5 w-5" />
+              </span>
+            </Link>
+          )}
         </div>
       </div>
     </section>

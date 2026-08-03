@@ -45,16 +45,16 @@ function Countdown({ t, dark }: { t: T; dark?: boolean }) {
   );
 }
 
-function EnquireBtn({ full }: { full?: boolean }) {
+function EnquireBtn({ full, label = "Enquire About Course", href = "/contact" }: { full?: boolean; label?: string; href?: string }) {
   return (
     <Link
-      href="/contact"
+      href={href}
       className={
         "eb-cta group flex items-center justify-between gap-3 rounded-lg bg-white py-2 pl-5 pr-2 text-xs font-bold uppercase tracking-wide text-eb-navy sm:text-sm " +
         (full ? "w-full" : "")
       }
     >
-      Enquire About Course
+      {label}
       <span className="eb-square grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-eb-blue text-white">
         <ArrowUpRight className="h-5 w-5" />
       </span>
@@ -62,7 +62,17 @@ function EnquireBtn({ full }: { full?: boolean }) {
   );
 }
 
-export function OfferBar() {
+export function OfferBar({
+  title = "August Offer",
+  message = "30% off course fees for the first 5 eligible applicants only.",
+  buttonLabel = "Enquire About Course",
+  buttonUrl = "/contact",
+}: {
+  title?: string;
+  message?: string;
+  buttonLabel?: string;
+  buttonUrl?: string;
+}) {
   const pathname = usePathname();
   const [open, setOpen] = useState(true);
   const [mounted, setMounted] = useState(false);
@@ -77,7 +87,7 @@ export function OfferBar() {
     return () => clearInterval(id);
   }, []);
 
-  if (!mounted || !open) return null;
+  if (!mounted || !open || !message) return null;
   if (pathname?.startsWith("/admin")) return null;
 
   return (
@@ -89,23 +99,23 @@ export function OfferBar() {
             <div className="flex items-center gap-6">
               <Countdown t={t} />
               <div className="border-l border-white/20 pl-6">
-                <p className="text-sm font-extrabold uppercase tracking-wide text-white">August Offer</p>
-                <p className="text-sm text-white/80">30% off course fees for the first 5 eligible applicants only.</p>
+                <p className="text-sm font-extrabold uppercase tracking-wide text-white">{title}</p>
+                <p className="text-sm text-white/80">{message}</p>
               </div>
             </div>
-            <EnquireBtn />
+            {buttonUrl && <EnquireBtn label={buttonLabel} href={buttonUrl} />}
           </div>
 
           {/* Mobile */}
           <div className="lg:hidden">
             <div className="flex items-start justify-between gap-3">
               <p className="max-w-[52%] text-xs leading-snug text-white/85">
-                <span className="font-bold text-white">August Offer:</span> 30% off course fees for the first 5 eligible applicants only.
+                <span className="font-bold text-white">{title}:</span> {message}
               </p>
               <Countdown t={t} dark />
             </div>
             <div className="mt-3">
-              <EnquireBtn full />
+              {buttonUrl && <EnquireBtn full label={buttonLabel} href={buttonUrl} />}
             </div>
           </div>
         </div>

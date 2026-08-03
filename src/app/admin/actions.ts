@@ -228,3 +228,40 @@ export async function saveSettings(formData: FormData) {
   revalidatePath("/admin/settings");
   redirect("/admin/settings?saved=1");
 }
+
+/* ------------------------- Template sections ------------------------- */
+
+/**
+ * Save one template section's fields (from /admin/templates). Field names
+ * come from the section definition in src/lib/templates.ts; image fields are
+ * compressed before storing. The public site re-renders immediately.
+ */
+export async function saveSection(formData: FormData) {
+  await assertAuth();
+  const { getSectionDef } = await import("@/lib/templates");
+
+  const template = str(formData, "_template");
+  const key = str(formData, "_section");
+  const def = getSectionDef(template, key);
+  if (!def) throw new Error("Unknown section");
+
+  const data: Record<string, string> = {};
+  for (const field of def.fields) {
+    let value = str(formData, field.name);
+    if (field.type === "image" && value.startsWith("data:image/")) {
+      value = await compressDataUri(value);
+    }
+    if (field.type === "url") value = redirectUrl(formData, field.name);
+    data[field.name] = value;
+  }
+
+  await db.templateSection.upsert({
+    where: { template_key: { template, key } },
+    update: { data: JSON.stringify(data) },
+    create: { template, key, data: JSON.stringify(data) },
+  });
+
+  revalidateTag("sections", "max");
+  revalidatePath("/", "layout");
+  redirect(`/admin/templates/${template}?saved=${key}`);
+}

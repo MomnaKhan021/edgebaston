@@ -9,10 +9,10 @@ const NEWS = [
   { date: "7 Oct 2024", title: "Students Hit the Track for Karting Fun", img: "/figma/news-karting.webp" },
 ];
 
-export function News() {
+export function News({ data }: { data?: Record<string, string> }) {
   return (
     <section className="overflow-hidden bg-eb-cream py-10 lg:py-14">
-      <NewsSlider label="Find Your Local YDS Clinic" title="What's happening at Edgbaston">
+      <NewsSlider label={data?.label || "Find Your Local YDS Clinic"} title={data?.title || "What's happening at Edgbaston"}>
         {NEWS.map((n) => (
           <article key={n.title} className="group w-[78%] shrink-0 snap-center sm:w-[300px]">
             <div className="relative aspect-[283/350] overflow-hidden rounded-md">

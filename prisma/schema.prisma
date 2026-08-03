@@ -56,6 +56,19 @@ model Staff {
 /// A flexible content page the client can create/edit from the dashboard
 /// (e.g. "Admissions", "Campus Life"). Rendered at /<slug> (root), where the
 /// slug may contain slashes for nested paths (e.g. "guard/course" → /guard/course).
+/// Editable content for one section of a page template (e.g. the home-page
+/// hero). `data` is a JSON object of field values; fields are defined in
+/// src/lib/templates.ts and merged over code defaults at render time.
+model TemplateSection {
+  id        String   @id @default(cuid())
+  template  String   @default("home")
+  key       String
+  data      String   @default("{}")
+  updatedAt DateTime @updatedAt
+
+  @@unique([template, key])
+}
+
 model Page {
   id          String   @id @default(cuid())
   title       String

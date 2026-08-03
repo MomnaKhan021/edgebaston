@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { logoutAction } from "@/app/admin/auth-actions";
 import {
   IconOverview,
+  IconTemplates,
   IconCourses,
   IconStaff,
   IconPages,
@@ -20,6 +21,7 @@ import {
 
 const NAV = [
   { label: "Overview", href: "/admin", Icon: IconOverview },
+  { label: "Templates", href: "/admin/templates", Icon: IconTemplates },
   { label: "Courses", href: "/admin/courses", Icon: IconCourses },
   { label: "Staff", href: "/admin/staff", Icon: IconStaff },
   { label: "Pages", href: "/admin/pages", Icon: IconPages },

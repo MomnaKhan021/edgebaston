@@ -47,35 +47,45 @@ function Card({ icon, title, body }: (typeof ITEMS)[number]) {
   );
 }
 
-export function WhyChoose() {
+export function WhyChoose({ data }: { data?: Record<string, string> }) {
+  const items = ITEMS.map((item, i) => ({
+    ...item,
+    title: data?.[`card${i + 1}Title`] || item.title,
+    body: data?.[`card${i + 1}Body`] || item.body,
+  }));
+  const heading = data?.heading || "Why Students Choose Edgbaston College";
+  const buttonLabel = data?.buttonLabel || "View Results & Destinations";
+  const buttonUrl = data?.buttonUrl ?? "/courses";
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-[1440px] px-4 py-10 lg:px-[60px] lg:py-20">
         <h2 className="mx-auto max-w-4xl text-center text-[26px] font-extrabold leading-[1.1] text-black sm:text-4xl sm:leading-[1.02] lg:text-[62px] lg:tracking-tight">
-          Why Students Choose Edgbaston College
+          {heading}
         </h2>
         {/* Top row: three cards */}
         <div className="mt-8 flex flex-col gap-4 sm:mt-12 lg:flex-row">
-          {ITEMS.slice(0, 3).map((i) => (
+          {items.slice(0, 3).map((i) => (
             <Card key={i.title} {...i} />
           ))}
         </div>
         {/* Bottom row: remaining cards grow to fill the full width */}
         <div className="mt-4 flex flex-col gap-4 lg:flex-row">
-          {ITEMS.slice(3).map((i) => (
+          {items.slice(3).map((i) => (
             <Card key={i.title} {...i} />
           ))}
         </div>
         {/* Mobile-only CTA at the section bottom (matches the Figma mobile design) */}
+        {buttonUrl && (
         <Link
-          href="/courses"
+          href={buttonUrl}
           className="eb-cta group mt-4 flex w-full items-center justify-between gap-3 rounded-lg bg-eb-cream py-2 pl-5 pr-2 text-sm font-bold uppercase tracking-wide text-eb-navy lg:hidden"
         >
-          View Results &amp; Destinations
+          {buttonLabel}
           <span className="eb-square grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-eb-blue text-white">
             <ArrowUpRight className="h-5 w-5" />
           </span>
         </Link>
+        )}
       </div>
     </section>
   );
