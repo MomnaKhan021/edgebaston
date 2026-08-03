@@ -7,6 +7,8 @@ import { Reveal } from "@/components/home/Reveal";
 import { IconSpark, IconUsers, IconCrest } from "@/components/history/HistoryIcons";
 import { AppSteps } from "@/components/admissions/AppSteps";
 import { Accordion } from "@/components/admissions/Accordion";
+import { getTemplateSections } from "@/lib/sections";
+import { sectionDefaults, parseItems, parseLines, isVisible, bgStyle } from "@/lib/templates";
 
 export const metadata: Metadata = {
   title: "Admissions Requirements",
@@ -14,11 +16,7 @@ export const metadata: Metadata = {
     "Edgbaston College admissions requirements and application process — an inclusive, individual approach to every applicant.",
 };
 
-const LOOK_FOR = [
-  { Icon: IconSpark, text: "Recognize students who show genuine potential and a real enthusiasm for learning." },
-  { Icon: IconUsers, text: "Welcome students who will enjoy, and add to, the life of our community." },
-  { Icon: IconCrest, text: "Treat every applicant fairly, openly and with care." },
-];
+const LOOK_FOR_ICONS = [IconSpark, IconUsers, IconCrest];
 
 function BookIcon({ className }: { className?: string }) {
   return (
@@ -45,11 +43,6 @@ const REQUIREMENTS = [
   },
 ];
 
-const FAQS = [
-  { q: "Resits", a: "We do not accept GCSE resits and will only consider your first GCSE attempt (and in one sitting). A-Level resits are considered for all programmes." },
-  { q: "Mitigating circumstances", a: "If your grades were affected by illness or personal circumstances, let us know — we consider each application individually and take context into account." },
-];
-
 function Share() {
   const item = "grid h-9 w-9 place-items-center rounded-full border text-eb-navy transition hover:bg-eb-cream";
   return (
@@ -62,32 +55,42 @@ function Share() {
   );
 }
 
-export default function AdmissionsRequirementsPage() {
+export default async function AdmissionsRequirementsPage() {
+  const s = await getTemplateSections("admissions");
+  const d = (k: string) => ({ ...sectionDefaults("admissions", k), ...s[k] });
+  const intro = d("intro");
+  const lookFor = d("lookFor");
+  const process = d("process");
+  const requirements = d("requirements");
+  const faq = d("faq");
+  const lookForCards = parseItems(lookFor.cards);
+  const processSteps = parseItems(process.cards).map((c) => ({ title: c.title ?? "", body: c.body ?? "" }));
+  const requirementCards = parseItems(requirements.cards);
+  const faqItems = parseItems(faq.faqs).map((x) => ({ q: x.q ?? "", a: x.a ?? "" })).filter((x) => x.q);
   return (
     <>
       <SiteAnnouncement />
       <SiteNavbar variant="solid" />
 
       {/* Title + intro */}
-      <section className="bg-white">
+      <section className="bg-white" style={bgStyle(intro)}>
         <div className="mx-auto grid max-w-[1440px] gap-6 px-4 py-12 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-16 lg:px-16">
           <h1 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-eb-ink lg:text-[52px]">
-            Admissions Requirements
+            {intro.heading}
           </h1>
           <p className="text-[15px] leading-relaxed text-neutral-600 lg:text-base">
-            Edgbaston College is an academically ambitious yet inclusive learning
-            community. Above all, we look for students who we believe have the
-            potential to thrive here, and our admissions process is designed to get
-            to know each applicant as an individual.
+            {intro.body}
           </p>
         </div>
         {/* Group photo */}
+        {intro.image && (
         <div className="mx-auto max-w-[1440px] px-4 lg:px-16">
           <div className="overflow-hidden rounded-2xl">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/figma/adm-group.webp" alt="Edgbaston College students" className="aspect-[16/7] w-full object-cover" loading="lazy" decoding="async" />
+            <img src={intro.image} alt="Edgbaston College students" className="aspect-[16/7] w-full object-cover" loading="lazy" decoding="async" />
           </div>
         </div>
+        )}
         {/* Breadcrumb + share */}
         <div className="mx-auto mt-6 flex max-w-[1440px] flex-col gap-3 border-t px-4 py-4 sm:flex-row sm:items-center sm:justify-between lg:px-16">
           <nav className="text-sm text-muted-foreground">
@@ -100,72 +103,82 @@ export default function AdmissionsRequirementsPage() {
       </section>
 
       {/* What we look for */}
+      {isVisible(lookFor) && (
       <Reveal>
-        <section className="bg-white">
+        <section className="bg-white" style={bgStyle(lookFor)}>
           <div className="mx-auto max-w-[1320px] px-4 py-10 lg:py-16">
             <div className="eb-stagger mx-auto max-w-2xl text-center">
-              <p className="font-mono text-sm uppercase tracking-[0.14em] text-eb-navy/60">What We Look For</p>
+              <p className="font-mono text-sm uppercase tracking-[0.14em] text-eb-navy/60">{lookFor.eyebrow}</p>
               <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-eb-ink lg:text-[42px]">
-                When considering an application, we hope to:
+                {lookFor.heading}
               </h2>
             </div>
             <div className="mt-10 grid gap-5 md:grid-cols-3">
-              {LOOK_FOR.map(({ Icon, text }, i) => (
+              {lookForCards.map((c, i) => {
+                const Icon = LOOK_FOR_ICONS[i % LOOK_FOR_ICONS.length];
+                return (
                 <div key={i} className="eb-card rounded-2xl bg-eb-cream p-7">
                   <span className="grid h-11 w-11 place-items-center rounded-full bg-eb-blue text-white">
                     <Icon className="h-6 w-6" />
                   </span>
-                  <p className="mt-6 text-[15px] leading-relaxed text-neutral-700">{text}</p>
+                  <p className="mt-6 text-[15px] leading-relaxed text-neutral-700">{c.text}</p>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
       </Reveal>
+      )}
 
       {/* Application process */}
+      {isVisible(process) && (
       <Reveal>
-        <section className="bg-eb-navy">
+        <section className="bg-eb-navy" style={bgStyle(process)}>
           <div className="mx-auto max-w-[1320px] px-4 py-10 lg:px-16 lg:py-16">
             <div className="eb-stagger text-center">
-              <p className="font-mono text-sm uppercase tracking-[0.14em] text-white/50">How to Apply</p>
-              <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-white lg:text-[42px]">Application Process</h2>
+              <p className="font-mono text-sm uppercase tracking-[0.14em] text-white/50">{process.eyebrow}</p>
+              <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-white lg:text-[42px]">{process.heading}</h2>
               <p className="mx-auto mt-4 max-w-2xl text-[15px] leading-relaxed text-white/70">
-                Places are limited and they can vary from year to year, so we always encourage families to get in touch early. We admit students on a rolling basis, and we are happy to talk things through at any stage. The process is straightforward:
+                {process.body}
               </p>
             </div>
             <div className="mt-10 grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-              <AppSteps />
+              <AppSteps steps={processSteps} />
+              {process.image && (
               <div className="overflow-hidden rounded-2xl">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/figma/adm-process.webp" alt="Students in class" className="aspect-[4/3] w-full object-cover" loading="lazy" decoding="async" />
+                <img src={process.image} alt="Students in class" className="aspect-[4/3] w-full object-cover" loading="lazy" decoding="async" />
               </div>
+              )}
             </div>
           </div>
         </section>
       </Reveal>
+      )}
 
       {/* Requirements cards */}
+      {isVisible(requirements) && (
       <Reveal>
-        <section className="bg-white">
+        <section className="bg-white" style={bgStyle(requirements)}>
           <div className="mx-auto max-w-[1320px] px-4 py-10 lg:py-16">
             <div className="eb-stagger mx-auto max-w-2xl text-center">
-              <p className="font-mono text-sm uppercase tracking-[0.14em] text-eb-navy/60">A Guide to Entry</p>
-              <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-eb-ink lg:text-[42px]">Admissions Requirements</h2>
+              <p className="font-mono text-sm uppercase tracking-[0.14em] text-eb-navy/60">{requirements.eyebrow}</p>
+              <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-eb-ink lg:text-[42px]">{requirements.heading}</h2>
               <p className="mt-4 text-[15px] leading-relaxed text-neutral-600">
-                We prefer to consider each student as an individual rather than apply a rigid set of rules, so please do talk to us even if you are unsure. As a general guide, students who join us tend to meet the following:
+                {requirements.body}
               </p>
             </div>
             <div className="mt-10 grid gap-6 lg:grid-cols-2">
-              {REQUIREMENTS.map((r) => (
-                <div key={r.title} className="rounded-2xl bg-eb-navy p-8 text-white">
+              {requirementCards.map((r, i) => (
+                <div key={i} className="rounded-2xl bg-eb-navy p-8 text-white">
                   <span className="grid h-11 w-11 place-items-center rounded-full bg-white text-eb-navy">
                     <BookIcon className="h-6 w-6" />
                   </span>
                   <h3 className="mt-6 text-xl font-bold">{r.title}</h3>
                   <ul className="mt-4 space-y-3">
-                    {r.points.map((p, i) => (
-                      <li key={i} className="flex gap-3 text-[14px] leading-relaxed text-white/75">
+                    {parseLines(r.points).map((p, j) => (
+                      <li key={j} className="flex gap-3 text-[14px] leading-relaxed text-white/75">
                         <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-eb-blue" />
                         {p}
                       </li>
@@ -177,21 +190,24 @@ export default function AdmissionsRequirementsPage() {
           </div>
         </section>
       </Reveal>
+      )}
 
       {/* FAQ */}
+      {isVisible(faq) && (
       <Reveal>
-        <section className="bg-white">
+        <section className="bg-white" style={bgStyle(faq)}>
           <div className="mx-auto max-w-[860px] px-4 py-10 lg:py-16">
             <div className="eb-stagger text-center">
-              <p className="font-mono text-sm uppercase tracking-[0.14em] text-eb-navy/60">Good to Know</p>
-              <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-eb-ink lg:text-[42px]">Frequently Asked Questions</h2>
+              <p className="font-mono text-sm uppercase tracking-[0.14em] text-eb-navy/60">{faq.eyebrow}</p>
+              <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-eb-ink lg:text-[42px]">{faq.heading}</h2>
             </div>
             <div className="mt-10">
-              <Accordion items={FAQS} />
+              <Accordion items={faqItems} />
             </div>
           </div>
         </section>
       </Reveal>
+      )}
 
       <Reveal><FigmaFooter /></Reveal>
     </>

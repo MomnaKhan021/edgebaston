@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-const STEPS = [
+const DEFAULT_STEPS = [
   {
     title: "Get in Touch",
     body: "Complete our online enquiry form, call us on 0121 306 0182, or email admissions@edgbastoncollege.co.uk. We are glad to answer any questions you have.",
@@ -13,7 +13,8 @@ const STEPS = [
   { title: "Confirming a Place", body: "Confirm your place and we'll guide you through enrolment and induction." },
 ];
 
-export function AppSteps() {
+export function AppSteps({ steps }: { steps?: { title: string; body: string }[] }) {
+  const STEPS = steps && steps.length > 0 ? steps : DEFAULT_STEPS;
   const [open, setOpen] = useState(0);
   return (
     <div>

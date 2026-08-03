@@ -1283,11 +1283,146 @@ export const ABOUT_TEMPLATE: TemplateDef = {
   ],
 };
 
+export const ADMISSIONS_TEMPLATE: TemplateDef = {
+  key: "admissions",
+  name: "Admissions Requirements Page",
+  description: "Every section of the Admissions Requirements page.",
+  sections: [
+    {
+      key: "intro",
+      name: "Title & Intro",
+      description: "Heading, intro paragraph and the group photo.",
+      fields: [
+        toggle(),
+        textarea("heading", "Heading"),
+        textarea("body", "Intro paragraph"),
+        image("image", "Group photo"),
+        color(),
+      ],
+      defaults: {
+        visible: "1",
+        heading: "Admissions Requirements",
+        body: "Edgbaston College is an academically ambitious yet inclusive learning community. Above all, we look for students who we believe have the potential to thrive here, and our admissions process is designed to get to know each applicant as an individual.",
+        image: "/figma/adm-group.webp",
+        bgColor: "",
+      },
+    },
+    {
+      key: "lookFor",
+      name: "What We Look For",
+      description: "Eyebrow, heading and the three cards.",
+      fields: [
+        toggle(),
+        text("eyebrow", "Small label"),
+        textarea("heading", "Heading"),
+        list("cards", "Cards", "Card", [textarea("text", "Text")]),
+        color(),
+      ],
+      defaults: {
+        visible: "1",
+        eyebrow: "What We Look For",
+        heading: "When considering an application, we hope to:",
+        cards: JSON.stringify([
+          { text: "Recognize students who show genuine potential and a real enthusiasm for learning." },
+          { text: "Welcome students who will enjoy, and add to, the life of our community." },
+          { text: "Treat every applicant fairly, openly and with care." },
+        ]),
+        bgColor: "",
+      },
+    },
+    {
+      key: "process",
+      name: "Application Process",
+      description: "Eyebrow, heading, intro, the numbered steps and the photo.",
+      fields: [
+        toggle(),
+        text("eyebrow", "Small label"),
+        text("heading", "Heading"),
+        textarea("body", "Intro text"),
+        image("image", "Photo"),
+        list("cards", "Steps", "Step", [text("title", "Title"), textarea("body", "Text")]),
+        color(),
+      ],
+      defaults: {
+        visible: "1",
+        eyebrow: "How to Apply",
+        heading: "Application Process",
+        body: "Places are limited and they can vary from year to year, so we always encourage families to get in touch early. We admit students on a rolling basis, and we are happy to talk things through at any stage. The process is straightforward:",
+        image: "/figma/adm-process.webp",
+        cards: JSON.stringify([
+          { title: "Get in Touch", body: "Complete our online enquiry form, call us on 0121 306 0182, or email admissions@edgbastoncollege.co.uk. We are glad to answer any questions you have." },
+          { title: "A Look at the Application", body: "We review your application and previous results to understand your academic background." },
+          { title: "A Conversation", body: "We arrange a friendly conversation to get to know you and discuss your goals." },
+          { title: "An Offer", body: "Successful applicants receive an offer outlining their place and next steps." },
+          { title: "Confirming a Place", body: "Confirm your place and we'll guide you through enrolment and induction." },
+        ]),
+        bgColor: "",
+      },
+    },
+    {
+      key: "requirements",
+      name: "Requirements Cards",
+      description: "Eyebrow, heading, intro and the requirement cards (each with bullet points).",
+      fields: [
+        toggle(),
+        text("eyebrow", "Small label"),
+        text("heading", "Heading"),
+        textarea("body", "Intro text"),
+        list("cards", "Requirement cards", "Card", [
+          text("title", "Title"),
+          textarea("points", "Bullet points", "One point per line."),
+        ]),
+        color(),
+      ],
+      defaults: {
+        visible: "1",
+        eyebrow: "A Guide to Entry",
+        heading: "Admissions Requirements",
+        body: "We prefer to consider each student as an individual rather than apply a rigid set of rules, so please do talk to us even if you are unsure. As a general guide, students who join us tend to meet the following:",
+        cards: JSON.stringify([
+          {
+            title: "A-Level (Two-Year / Five-Term / Year 13 Entry)",
+            points: "Many of our students arrive with an average GCSE score of around 6.7 (a mid to high grade B) or equivalent, typically across at least 6 GCSEs. This gives a helpful foundation, though it is a guide rather than a fixed bar.\nA strong grasp of the subjects to be studied at A-Level helps students get off to a confident start, particularly in Mathematics and Chemistry, which build on solid GCSE foundations.",
+          },
+          {
+            title: "A-Level Retake (One Year)",
+            points: "More than anything, we look for the potential to achieve strong grades and the determination to improve university or career prospects.",
+          },
+        ]),
+        bgColor: "",
+      },
+    },
+    {
+      key: "faq",
+      name: "FAQ",
+      description: "Eyebrow, heading and the questions & answers.",
+      fields: [
+        toggle(),
+        text("eyebrow", "Small label"),
+        text("heading", "Heading"),
+        list("faqs", "Questions & Answers", "Question", [text("q", "Question"), textarea("a", "Answer")]),
+        color(),
+      ],
+      defaults: {
+        visible: "1",
+        eyebrow: "Good to Know",
+        heading: "Frequently Asked Questions",
+        faqs: JSON.stringify([
+          { q: "Resits", a: "We do not accept GCSE resits and will only consider your first GCSE attempt (and in one sitting). A-Level resits are considered for all programmes." },
+          { q: "Mitigating circumstances", a: "If your grades were affected by illness or personal circumstances, let us know — we consider each application individually and take context into account." },
+        ]),
+        bgColor: "",
+      },
+    },
+  ],
+};
+
 export const TEMPLATES: TemplateDef[] = [
   HOME_TEMPLATE,
   RETAKE_TEMPLATE,
   ABOUT_TEMPLATE,
   HISTORY_TEMPLATE,
+  ADMISSIONS_TEMPLATE,
   CONTACT_TEMPLATE,
   HEADER_TEMPLATE,
   FOOTER_TEMPLATE,
