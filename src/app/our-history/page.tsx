@@ -7,6 +7,8 @@ import { Reveal } from "@/components/home/Reveal";
 import { ArrowUpRight } from "@/components/home/icons";
 import { IconBulb, IconUsers, IconGear, IconCrest } from "@/components/history/HistoryIcons";
 import { SharePage } from "@/components/history/SharePage";
+import { getTemplateSections } from "@/lib/sections";
+import { sectionDefaults, parseItems, isVisible, bgStyle } from "@/lib/templates";
 
 export const metadata: Metadata = {
   title: "Our History",
@@ -14,14 +16,17 @@ export const metadata: Metadata = {
     "The history of Edgbaston College — our commitment to excellence, founded in 2015, and our family-owned ethos.",
 };
 
-const COMMITMENTS = [
-  { Icon: IconBulb, title: "Nurturing Potential", body: "We nurture each student's potential and encourage them to strive for excellence in every area." },
-  { Icon: IconUsers, title: "Small Class Sizes", body: "We provide small class sizes to ensure every student receives focused support and attention." },
-  { Icon: IconGear, title: "Excellent Teaching", body: "We provide excellent teaching to support students throughout their academic journeys." },
-  { Icon: IconCrest, title: "Personalised Attention", body: "We give each student personalised attention and exceptional support for their future careers." },
-];
+const COMMIT_ICONS = [IconBulb, IconUsers, IconGear, IconCrest];
 
-export default function OurHistoryPage() {
+export default async function OurHistoryPage() {
+  const s = await getTemplateSections("history");
+  const d = (k: string) => ({ ...sectionDefaults("history", k), ...s[k] });
+  const hero = d("hero");
+  const commitment = d("commitment");
+  const founded = d("founded");
+  const blockA = d("blockA");
+  const blockB = d("blockB");
+  const commitCards = parseItems(commitment.cards);
   return (
     <>
       <SiteAnnouncement />
@@ -30,16 +35,18 @@ export default function OurHistoryPage() {
       <section className="relative isolate overflow-hidden bg-eb-navy">
         <SiteNavbar />
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/figma/history-hero.webp" alt="Edgbaston College students" className="absolute inset-0 h-full w-full object-cover" fetchPriority="high" />
+        <img src={hero.bgDesktop || "/figma/history-hero.webp"} alt="Edgbaston College students" className="absolute inset-0 h-full w-full object-cover" fetchPriority="high" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30" />
         <div className="relative mx-auto flex min-h-[440px] max-w-[1440px] flex-col justify-end px-4 pb-10 pt-36 lg:min-h-[520px] lg:px-16 lg:pb-12">
           <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-[56px]">
-            Edgbaston History
+            {hero.heading}
           </h1>
-          <Link href="/contact" className="eb-cta group mt-6 inline-flex items-center gap-3 self-start rounded-full bg-white py-2 pl-6 pr-2 text-sm font-bold uppercase tracking-wide text-eb-navy">
-            Enquire About Course
+          {hero.buttonUrl && (
+          <Link href={hero.buttonUrl} className="eb-cta group mt-6 inline-flex items-center gap-3 self-start rounded-full bg-white py-2 pl-6 pr-2 text-sm font-bold uppercase tracking-wide text-eb-navy">
+            {hero.buttonLabel}
             <span className="eb-square grid h-9 w-9 place-items-center rounded-md bg-eb-blue text-white"><ArrowUpRight className="h-5 w-5" /></span>
           </Link>
+          )}
         </div>
       </section>
 
@@ -61,36 +68,42 @@ export default function OurHistoryPage() {
       </div>
 
       {/* Our Commitment to Excellence */}
+      {isVisible(commitment) && (
       <Reveal>
-        <section className="bg-white">
+        <section className="bg-white" style={bgStyle(commitment)}>
           <div className="mx-auto max-w-[1320px] px-4 py-8 lg:py-14">
             <div className="eb-stagger mx-auto max-w-2xl text-center">
-              <h2 className="text-[24px] font-extrabold tracking-tight text-eb-ink sm:text-3xl lg:text-[40px]">Our Commitment to Excellence</h2>
+              <h2 className="text-[24px] font-extrabold tracking-tight text-eb-ink sm:text-3xl lg:text-[40px]">{commitment.heading}</h2>
               <p className="mt-3 text-[14px] leading-relaxed text-neutral-600 sm:text-[15px]">
-                Our commitment to providing exceptional support for students&apos; academic journeys and future careers has resulted in first-class outcomes.
+                {commitment.body}
               </p>
             </div>
             <div className="eb-noscroll -mx-4 mt-7 flex snap-x gap-4 overflow-x-auto px-4 pb-2 sm:mt-10 sm:gap-5 lg:mx-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:px-0">
-              {COMMITMENTS.map(({ Icon, title, body }) => (
-                <div key={title} className="eb-card w-[78%] shrink-0 snap-start rounded-2xl bg-eb-cream p-5 sm:w-[300px] sm:p-6 lg:w-auto">
+              {commitCards.map((c, i) => {
+                const Icon = COMMIT_ICONS[i % COMMIT_ICONS.length];
+                return (
+                <div key={i} className="eb-card w-[78%] shrink-0 snap-start rounded-2xl bg-eb-cream p-5 sm:w-[300px] sm:p-6 lg:w-auto">
                   <Icon className="h-8 w-8 text-eb-navy sm:h-9 sm:w-9" />
-                  <h3 className="mt-3 text-[16px] font-bold text-eb-navy sm:text-lg">{title}</h3>
-                  <p className="mt-2 text-[13px] leading-relaxed text-neutral-600 sm:text-sm">{body}</p>
+                  <h3 className="mt-3 text-[16px] font-bold text-eb-navy sm:text-lg">{c.title}</h3>
+                  <p className="mt-2 text-[13px] leading-relaxed text-neutral-600 sm:text-sm">{c.body}</p>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
       </Reveal>
+      )}
 
       {/* Founded in 2015 */}
+      {isVisible(founded) && (
       <Reveal>
-        <section className="bg-eb-navy">
+        <section className="bg-eb-navy" style={bgStyle(founded)}>
           <div className="eb-stagger mx-auto max-w-[1320px] px-4 pt-8 sm:pt-12 lg:px-16 lg:pt-14">
-            <p className="font-mono text-xs uppercase tracking-[0.14em] text-white/60 sm:text-sm">Founded In</p>
-            <p className="mt-2 text-[52px] font-extrabold leading-none text-white sm:text-7xl lg:text-[100px]">2015</p>
+            <p className="font-mono text-xs uppercase tracking-[0.14em] text-white/60 sm:text-sm">{founded.eyebrow}</p>
+            <p className="mt-2 text-[52px] font-extrabold leading-none text-white sm:text-7xl lg:text-[100px]">{founded.year}</p>
             <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-white/85 sm:mt-6 sm:text-lg lg:text-xl">
-              Edgbaston College quickly gained recognition for its outstanding results. Growing steadily through word-of-mouth recommendations, our reputation for academic excellence and individualised learning has led to continuous expansion.
+              {founded.body}
             </p>
           </div>
           {/* decorative vertical-line band */}
@@ -104,48 +117,53 @@ export default function OurHistoryPage() {
           />
         </section>
       </Reveal>
+      )}
 
       {/* Content block A: image left, text right */}
+      {isVisible(blockA) && (
       <Reveal>
-        <section className="bg-white">
+        <section className="bg-white" style={bgStyle(blockA)}>
           <div className="mx-auto grid max-w-[1320px] items-stretch gap-4 px-4 py-8 lg:grid-cols-2 lg:gap-10 lg:px-16 lg:py-14">
             <div className="overflow-hidden rounded-2xl">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/figma/history-a.webp" alt="Edgbaston student" className="aspect-[4/3] h-full w-full object-cover lg:aspect-auto" loading="lazy" decoding="async" />
+              <img src={blockA.image || "/figma/history-a.webp"} alt="Edgbaston student" className="aspect-[4/3] h-full w-full object-cover lg:aspect-auto" loading="lazy" decoding="async" />
             </div>
             {/* Light card, same height as the image; intro top, note pinned bottom */}
             <div className="flex flex-col justify-between gap-8 rounded-2xl bg-eb-cream p-5 sm:p-8 lg:gap-12 lg:p-10">
               <p className="text-[18px] font-bold leading-snug text-eb-navy sm:text-[20px] lg:text-[24px]">
-                Despite our growth, Edgbaston College remains family-owned, which allows us to prioritise what truly matters – creating a welcoming and supportive environment where each student is known and valued.
+                {blockA.lead}
               </p>
               <p className="text-[13px] leading-relaxed text-eb-navy/80 sm:text-[14px]">
-                Our open-door policy ensures students and parents feel comfortable seeking guidance and support at any time, fostering a strong sense of community and shared purpose.
+                {blockA.note}
               </p>
             </div>
           </div>
         </section>
       </Reveal>
+      )}
 
       {/* Content block B: text left, image right */}
+      {isVisible(blockB) && (
       <Reveal>
-        <section className="bg-white">
+        <section className="bg-white" style={bgStyle(blockB)}>
           <div className="mx-auto grid max-w-[1320px] items-stretch gap-4 px-4 pb-12 lg:grid-cols-2 lg:gap-10 lg:px-16 lg:pb-20">
             {/* Light card, same height as the image; intro top, note pinned bottom */}
             <div className="order-2 flex flex-col justify-between gap-8 rounded-2xl bg-eb-cream p-5 sm:p-8 lg:order-1 lg:gap-12 lg:p-10">
               <p className="text-[18px] font-bold leading-snug text-eb-navy sm:text-[20px] lg:text-[24px]">
-                Our unwavering dedication to student success has consistently placed us amongst the leading providers for students seeking admission to prestigious universities and competitive courses, including Oxbridge, Medicine, and Dentistry.
+                {blockB.lead}
               </p>
               <p className="text-[13px] leading-relaxed text-eb-navy/80 sm:text-[14px]">
-                This outstanding track record is a testament to our commitment to empowering students to achieve their highest aspirations.
+                {blockB.note}
               </p>
             </div>
             <div className="order-1 overflow-hidden rounded-2xl lg:order-2">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/figma/history-grass.webp" alt="Edgbaston student outdoors" className="aspect-[4/3] h-full w-full object-cover lg:aspect-auto" loading="lazy" decoding="async" />
+              <img src={blockB.image || "/figma/history-grass.webp"} alt="Edgbaston student outdoors" className="aspect-[4/3] h-full w-full object-cover lg:aspect-auto" loading="lazy" decoding="async" />
             </div>
           </div>
         </section>
       </Reveal>
+      )}
 
       <Reveal><FigmaFooter /></Reveal>
     </>
