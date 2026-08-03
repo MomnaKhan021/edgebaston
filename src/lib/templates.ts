@@ -79,17 +79,21 @@ export function isVisible(data: Record<string, string> | undefined): boolean {
  * Parse a list-field value (JSON array of records). Falls back to legacy
  * "Label | /url" lines (mapped to {label, url}) so older saves keep working.
  */
-export function parseItems(value: string | undefined): Record<string, string>[] {
+export function parseItems(value: unknown): Record<string, string>[] {
+  const norm = (arr: unknown[]) =>
+    arr
+      .filter((x) => x && typeof x === "object")
+      .map((x) => Object.fromEntries(Object.entries(x as object).map(([k, v]) => [k, String(v ?? "")])));
+
+  // Already an array of objects (e.g. stored un-stringified in the DB).
+  if (Array.isArray(value)) return norm(value);
+
   const raw = String(value ?? "").trim();
   if (!raw) return [];
   if (raw.startsWith("[")) {
     try {
       const arr = JSON.parse(raw);
-      if (Array.isArray(arr)) {
-        return arr
-          .filter((x) => x && typeof x === "object")
-          .map((x) => Object.fromEntries(Object.entries(x).map(([k, v]) => [k, String(v ?? "")])));
-      }
+      if (Array.isArray(arr)) return norm(arr);
     } catch {
       /* fall through to line parsing */
     }

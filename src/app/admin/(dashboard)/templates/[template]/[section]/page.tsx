@@ -29,7 +29,14 @@ export default async function SectionEditor({
   } catch {
     saved = {};
   }
-  const values: Record<string, string> = { ...def.defaults, ...saved };
+  // Merge saved values over defaults. List/complex values may have been stored
+  // as objects/arrays by an earlier version — coerce them back to strings so the
+  // editors always receive what they expect.
+  const merged: Record<string, unknown> = { ...def.defaults, ...saved };
+  const values: Record<string, string> = {};
+  for (const [k, v] of Object.entries(merged)) {
+    values[k] = typeof v === "string" ? v : v == null ? "" : JSON.stringify(v);
+  }
 
   return (
     <div className="max-w-3xl">

@@ -5,8 +5,14 @@ import type { FieldDef } from "@/lib/templates";
 
 type Item = Record<string, string>;
 
-function parseInitial(value: string): Item[] {
-  const raw = (value ?? "").trim();
+function parseInitial(value: unknown): Item[] {
+  const norm = (arr: unknown[]): Item[] =>
+    arr
+      .filter((x) => x && typeof x === "object")
+      .map((x) => Object.fromEntries(Object.entries(x as object).map(([k, v]) => [k, String(v ?? "")])));
+
+  if (Array.isArray(value)) return norm(value);
+  const raw = String(value ?? "").trim();
   if (!raw) return [];
   if (raw.startsWith("[")) {
     try {
@@ -90,7 +96,7 @@ export function ListField({
   name: string;
   itemLabel?: string;
   itemFields: FieldDef[];
-  defaultValue?: string;
+  defaultValue?: unknown;
 }) {
   const [items, setItems] = useState<Item[]>(() => parseInitial(defaultValue));
 
