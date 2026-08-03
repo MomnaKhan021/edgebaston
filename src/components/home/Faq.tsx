@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { bgStyle, parseFaqItems } from "@/lib/templates";
+import { bgStyle, parseFaqItems, parseItems } from "@/lib/templates";
 import Link from "next/link";
 import { ArrowUpRight } from "./icons";
 
@@ -37,8 +37,9 @@ export function Faq({ data }: { data?: Record<string, string> }) {
   const subtitle = data?.subtitle || "Quick answers to the most common questions about retaking and resitting A-Levels in Birmingham.";
   const buttonLabel = data?.buttonLabel || "Contact Us";
   const buttonUrl = data?.buttonUrl ?? "/contact";
-  const managed = parseFaqItems(data);
-  const faqs = managed.length > 0 ? managed : FAQS;
+  const listed = parseItems(data?.faqs).map((x) => ({ q: x.q ?? "", a: x.a ?? "" })).filter((x) => x.q);
+  const legacy = parseFaqItems(data);
+  const faqs = listed.length > 0 ? listed : legacy.length > 0 ? legacy : FAQS;
   const [open, setOpen] = useState<number | null>(null);
   return (
     <section className="bg-white" style={bgStyle(data)}>

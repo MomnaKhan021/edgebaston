@@ -1,14 +1,11 @@
-import { unstable_cache } from "next/cache";
 import { db } from "@/lib/db";
 import { getTemplateDef, getSectionDef } from "@/lib/templates";
 
-// One cached query per template; admin saves call revalidateTag("sections")
-// so edits appear on the live site immediately.
-const readTemplateRows = unstable_cache(
-  async (template: string) => db.templateSection.findMany({ where: { template } }),
-  ["template-sections"],
-  { revalidate: 300, tags: ["sections"] },
-);
+// Read a template's saved rows fresh on every render. Pages that use this are
+// already `force-dynamic`, so there is no caching layer between an admin save
+// and the live site — edits publish instantly.
+const readTemplateRows = (template: string) =>
+  db.templateSection.findMany({ where: { template } });
 
 function parse(data: string | undefined): Record<string, string> {
   if (!data) return {};

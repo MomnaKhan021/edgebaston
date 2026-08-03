@@ -194,7 +194,9 @@ export default async function RetakePage() {
   const residences = parseItems(accommodation.cards);
   const excelIcons = [IconResults, IconPractice, IconTarget, IconClasses, IconSupport, IconWindow];
   const planIcons = [IconPractice, IconSupport, IconTarget];
-  const faqItems = parseFaqItems(faq);
+  const faqListed = parseItems(faq.faqs).map((x) => ({ q: x.q ?? "", a: x.a ?? "" })).filter((x) => x.q);
+  const faqLegacy = parseFaqItems(faq);
+  const faqItems = faqListed.length > 0 ? faqListed : faqLegacy;
 
   return (
     <>
