@@ -25,7 +25,7 @@ const getCourse = (slug: string) =>
     { revalidate: 60, tags: ["courses"] },
   )();
 import { SiteAnnouncement } from "@/components/home/SiteAnnouncement";
-import { Navbar } from "@/components/home/Navbar";
+import { SiteNavbar } from "@/components/home/SiteNavbar";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
 import { ArrowUpRight } from "@/components/home/icons";
@@ -61,7 +61,7 @@ export default async function CourseDetailPage({
 
       {/* Hero */}
       <section className="relative isolate overflow-hidden bg-eb-navy">
-        <Navbar />
+        <SiteNavbar />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-eb-navy via-eb-navy to-eb-navy-2" />
         <div className="relative mx-auto max-w-[1440px] px-4 pb-14 pt-32 lg:px-16 lg:pb-16">
           <div className="flex flex-wrap items-center gap-2">

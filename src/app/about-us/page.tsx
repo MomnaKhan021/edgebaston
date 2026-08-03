@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteAnnouncement } from "@/components/home/SiteAnnouncement";
-import { Navbar } from "@/components/home/Navbar";
+import { SiteNavbar } from "@/components/home/SiteNavbar";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
 import { Slider } from "@/components/home/Slider";
@@ -69,7 +69,7 @@ export default function AboutUsPage() {
 
       {/* Hero */}
       <section className="relative isolate overflow-hidden bg-eb-navy">
-        <Navbar />
+        <SiteNavbar />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/figma/course-retake.webp" alt="Edgbaston College student" className="absolute inset-0 h-full w-full object-cover object-[70%_center]" loading="lazy" decoding="async" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30" />

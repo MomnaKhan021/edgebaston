@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { Navbar } from "./Navbar";
+import { SiteNavbar } from "./SiteNavbar";
 import { ArrowUpRight } from "./icons";
 import { CountUp } from "./CountUp";
-import { num, sectionDefaults } from "@/lib/templates";
+import {num, sectionDefaults, bgStyle } from "@/lib/templates";
 
 export function Hero({ data }: { data?: Record<string, string> }) {
   const d = { ...sectionDefaults("home", "hero"), ...data };
@@ -10,8 +10,8 @@ export function Hero({ data }: { data?: Record<string, string> }) {
   const bgMobile = d.bgMobile || bgDesktop;
 
   return (
-    <section className="relative isolate overflow-hidden bg-eb-navy">
-      <Navbar />
+    <section className="relative isolate overflow-hidden bg-eb-navy" style={bgStyle(data)}>
+      <SiteNavbar />
 
       {/* Background photo (separate mobile/desktop images from the admin) */}
       <picture>

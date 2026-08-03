@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteAnnouncement } from "@/components/home/SiteAnnouncement";
-import { Navbar } from "@/components/home/Navbar";
+import { SiteNavbar } from "@/components/home/SiteNavbar";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
 import { IconSpark, IconUsers, IconCrest } from "@/components/history/HistoryIcons";
@@ -66,7 +66,7 @@ export default function AdmissionsRequirementsPage() {
   return (
     <>
       <SiteAnnouncement />
-      <Navbar variant="solid" />
+      <SiteNavbar variant="solid" />
 
       {/* Title + intro */}
       <section className="bg-white">

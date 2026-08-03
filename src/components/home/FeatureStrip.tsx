@@ -1,3 +1,4 @@
+import { bgStyle } from "@/lib/templates";
 const ITEMS = [
   "Average Class Size of Seven",
   "Strong Pastoral Support",
@@ -19,7 +20,7 @@ export function FeatureStrip({ data }: { data?: Record<string, string> }) {
   const list = items.length ? items : ITEMS;
   const row = [...list, ...list];
   return (
-    <div className="overflow-hidden border-y border-border bg-white py-5">
+    <div className="overflow-hidden border-y border-border bg-white py-5" style={bgStyle(data)}>
       <div className="eb-marquee-track">
         {row.map((item, i) => (
           <span key={i} className="flex items-center">

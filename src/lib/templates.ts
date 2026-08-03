@@ -10,7 +10,9 @@
  * Convention: any `*Url` field left empty hides its button/link on the site.
  */
 
-export type FieldType = "text" | "textarea" | "image" | "url";
+import type { CSSProperties } from "react";
+
+export type FieldType = "text" | "textarea" | "image" | "url" | "color";
 
 export type FieldDef = {
   name: string;
@@ -43,6 +45,49 @@ const url = (name: string, label: string, hint?: string): FieldDef => ({
 const text = (name: string, label: string, hint?: string): FieldDef => ({ name, label, type: "text", hint });
 const textarea = (name: string, label: string, hint?: string): FieldDef => ({ name, label, type: "textarea", hint });
 const image = (name: string, label: string, hint?: string): FieldDef => ({ name, label, type: "image", hint });
+const color = (name = "bgColor", label = "Background colour", hint = "Leave empty for the default colour."): FieldDef => ({
+  name,
+  label,
+  type: "color",
+  hint,
+});
+
+/** Parse "Label | /url" lines from a textarea into link objects. */
+export function parseLinks(value: string | undefined): { label: string; href: string }[] {
+  return String(value ?? "")
+    .split("\n")
+    .map((line) => {
+      const [label, href] = line.split("|").map((s) => s.trim());
+      return { label: label ?? "", href: href ?? "" };
+    })
+    .filter((l) => l.label && l.href);
+}
+
+/** Parse one-item-per-line textarea values. */
+export function parseLines(value: string | undefined): string[] {
+  return String(value ?? "")
+    .split("\n")
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+/** Build FAQ items from qN/aN fields, skipping empty questions. */
+export function parseFaqItems(data: Record<string, string> | undefined, max = 10): { q: string; a: string }[] {
+  if (!data) return [];
+  const out: { q: string; a: string }[] = [];
+  for (let i = 1; i <= max; i++) {
+    const q = (data[`q${i}`] ?? "").trim();
+    const a = (data[`a${i}`] ?? "").trim();
+    if (q) out.push({ q, a });
+  }
+  return out;
+}
+
+/** Inline style for a section whose background colour is editable. */
+export function bgStyle(data: Record<string, string> | undefined): CSSProperties | undefined {
+  const c = (data?.bgColor ?? "").trim();
+  return c ? { backgroundColor: c } : undefined;
+}
 
 export const HOME_TEMPLATE: TemplateDef = {
   key: "home",
@@ -58,12 +103,14 @@ export const HOME_TEMPLATE: TemplateDef = {
         text("message", "Announcement text", "Leave empty to hide the whole bar."),
         text("linkLabel", "Link label"),
         url("linkUrl", "Link URL", "Leave empty to hide the link."),
+        color(),
       ],
       defaults: {
         badge: "EXCITING NEWS:",
         message: "Admissions for Batch 2026 are Now Open! Visit our",
         linkLabel: "Admissions page",
         linkUrl: "/admissions",
+        bgColor: "",
       },
     },
     {
@@ -82,6 +129,7 @@ export const HOME_TEMPLATE: TemplateDef = {
         text("stat1Value", "Stat row 1 value (%)", "Number only, e.g. 24"),
         text("stat2Label", "Stat row 2 label"),
         text("stat2Value", "Stat row 2 value (%)", "Number only, e.g. 57"),
+        color(),
       ],
       defaults: {
         bgDesktop: "/figma/hero-building.webp",
@@ -95,13 +143,14 @@ export const HOME_TEMPLATE: TemplateDef = {
         stat1Value: "24",
         stat2Label: "A Level Results A*-B",
         stat2Value: "57",
+        bgColor: "",
       },
     },
     {
       key: "feature-strip",
       name: "Highlights Ticker",
       description: "The scrolling white strip under the banner.",
-      fields: [textarea("items", "Items", "One item per line.")],
+      fields: [textarea("items", "Items", "One item per line."), color()],
       defaults: {
         items: [
           "Average Class Size of Seven",
@@ -110,6 +159,7 @@ export const HOME_TEMPLATE: TemplateDef = {
           "Medicine & Dentistry Success",
           "Russell Group Progression",
         ].join("\n"),
+        bgColor: "",
       },
     },
     {
@@ -121,6 +171,7 @@ export const HOME_TEMPLATE: TemplateDef = {
         textarea("message", "Message"),
         text("buttonLabel", "Button label"),
         url("buttonUrl", "Button link"),
+        color(),
       ],
       defaults: {
         eyebrow: "Message from the Principal",
@@ -128,16 +179,18 @@ export const HOME_TEMPLATE: TemplateDef = {
           "Students arrive at the College aiming to excel academically and secure a place on a course at their preferred university. We achieve this with exceptional teaching, small classes, and individual attention and help for every pupil.",
         buttonLabel: "Read more",
         buttonUrl: "/about",
+        bgColor: "",
       },
     },
     {
       key: "pathways",
       name: "Courses We Offer",
       description: "Header of the course-pathways slider. (The three cards are edited in code; courses live under Courses.)",
-      fields: [text("label", "Small label"), textarea("title", "Heading")],
+      fields: [text("label", "Small label"), textarea("title", "Heading"), color()],
       defaults: {
         label: "Courses We Offer",
         title: "Choose the A-Level Pathway That Fits Your Goal",
+        bgColor: "",
       },
     },
     {
@@ -155,6 +208,7 @@ export const HOME_TEMPLATE: TemplateDef = {
         text("bar1Text", "Blue bar — left text"),
         text("bar2Value", "Blue bar — right value (%)", "Number only, e.g. 72.7"),
         text("bar2Text", "Blue bar — right text"),
+        color(),
       ],
       defaults: {
         eyebrow: "Outcome Spotlight",
@@ -167,17 +221,19 @@ export const HOME_TEMPLATE: TemplateDef = {
         bar1Text: "success rate in securing Medicine & Dentistry places",
         bar2Value: "72.7",
         bar2Text: "Russell Group Progression",
+        bgColor: "",
       },
     },
     {
       key: "stories",
       name: "Success Stories",
       description: "Header of the student stories slider. (Story cards are edited in code.)",
-      fields: [text("label", "Small label"), text("title", "Heading"), textarea("subtitle", "Subtitle")],
+      fields: [text("label", "Small label"), text("title", "Heading"), textarea("subtitle", "Subtitle"), color()],
       defaults: {
         label: "Success Stories",
         title: "Meet Our Students",
         subtitle: "Real students, real grade jumps. Watch how their retake year went.",
+        bgColor: "",
       },
     },
     {
@@ -198,6 +254,7 @@ export const HOME_TEMPLATE: TemplateDef = {
         textarea("card5Body", "Card 5 text"),
         text("buttonLabel", "Mobile button label"),
         url("buttonUrl", "Mobile button link"),
+        color(),
       ],
       defaults: {
         heading: "Why Students Choose Edgbaston College",
@@ -213,40 +270,77 @@ export const HOME_TEMPLATE: TemplateDef = {
         card5Body: "Weekly assessments, three mock exams, and targeted exam technique coaching help turn knowledge into marks.",
         buttonLabel: "View Results & Destinations",
         buttonUrl: "/courses",
+        bgColor: "",
       },
     },
     {
       key: "learn-marquee",
       name: "Learn Today Band",
       description: "The scrolling navy band.",
-      fields: [text("message", "Scrolling text")],
-      defaults: { message: "Learn Today. Lead Tomorrow." },
+      fields: [text("message", "Scrolling text"), color()],
+      defaults: { message: "Learn Today. Lead Tomorrow.", bgColor: "" },
     },
     {
       key: "faq",
       name: "FAQ",
-      description: "FAQ heading, subtitle and Contact Us button. (Questions are edited in code.)",
+      description: "FAQ heading, subtitle, Contact Us button and every question & answer.",
       fields: [
         textarea("heading", "Heading"),
         textarea("subtitle", "Subtitle"),
         text("buttonLabel", "Button label"),
         url("buttonUrl", "Button link"),
+        color(),
+        text("q1", "Question 1"),
+        textarea("a1", "Answer 1"),
+        text("q2", "Question 2"),
+        textarea("a2", "Answer 2"),
+        text("q3", "Question 3"),
+        textarea("a3", "Answer 3"),
+        text("q4", "Question 4"),
+        textarea("a4", "Answer 4"),
+        text("q5", "Question 5"),
+        textarea("a5", "Answer 5"),
+        text("q6", "Question 6"),
+        textarea("a6", "Answer 6"),
+        text("q7", "Question 7", "Leave empty to hide."),
+        textarea("a7", "Answer 7"),
+        text("q8", "Question 8", "Leave empty to hide."),
+        textarea("a8", "Answer 8"),
+        text("q9", "Question 9", "Leave empty to hide."),
+        textarea("a9", "Answer 9"),
+        text("q10", "Question 10", "Leave empty to hide."),
+        textarea("a10", "Answer 10"),
       ],
       defaults: {
         heading: "A-Level retake & resit FAQ",
         subtitle: "Quick answers to the most common questions about retaking and resitting A-Levels in Birmingham.",
         buttonLabel: "Contact Us",
         buttonUrl: "/contact",
+        bgColor: "",
+        q1: "How many A-Levels can I retake?",
+        a1: "You can retake as many A-Levels as you need. Most students retake two or three subjects to strengthen their overall grade profile.",
+        q2: "Can I retake only one subject?",
+        a2: "Yes. Whether you need to improve a single grade or several, we build a plan around exactly the subjects you want to retake.",
+        q3: "Will I receive UCAS support?",
+        a3: "Absolutely. Every student receives personalised UCAS reapplication guidance, overseen by Principal Owais Ahmed.",
+        q4: "How often are assessments?",
+        a4: "We run weekly assessments and three full mock exams across the year, with targeted feedback after each one.",
+        q5: "Is accommodation available?",
+        a5: "We can advise on trusted local accommodation options for students relocating to study with us in Birmingham.",
+        q6: "How do I apply?",
+        a6: "Simply enquire through our contact page and our admissions team will guide you through every step of the application.",
+        q7: "", a7: "", q8: "", a8: "", q9: "", a9: "", q10: "", a10: "",
       },
     },
     {
       key: "news",
       name: "What's Happening (News)",
       description: "Header of the news slider. (Articles are edited in code.)",
-      fields: [text("label", "Small label"), text("title", "Heading")],
+      fields: [text("label", "Small label"), text("title", "Heading"), color()],
       defaults: {
         label: "Find Your Local YDS Clinic",
         title: "What's happening at Edgbaston",
+        bgColor: "",
       },
     },
     {
@@ -258,18 +352,143 @@ export const HOME_TEMPLATE: TemplateDef = {
         text("message", "Offer text", "Leave empty to hide the bar."),
         text("buttonLabel", "Button label"),
         url("buttonUrl", "Button link"),
+        color(),
       ],
       defaults: {
         title: "August Offer",
         message: "30% off course fees for the first 5 eligible applicants only.",
         buttonLabel: "Enquire About Course",
         buttonUrl: "/contact",
+        bgColor: "",
       },
     },
   ],
 };
 
-export const TEMPLATES: TemplateDef[] = [HOME_TEMPLATE];
+export const HEADER_TEMPLATE: TemplateDef = {
+  key: "header",
+  name: "Header",
+  description: "The site navigation shown at the top of every page.",
+  sections: [
+    {
+      key: "navbar",
+      name: "Navigation Bar",
+      description: "Logo, menu links and the Contact button.",
+      fields: [
+        image("logoLight", "Logo (on dark banners)"),
+        image("logoDark", "Logo (on white pages)"),
+        textarea("links", "Menu links", "One per line as: Label | /url"),
+        text("contactLabel", "Contact button label"),
+        url("contactUrl", "Contact button link"),
+        color("pillColor", "Menu pill colour", "Background of the menu pills. Leave empty for white."),
+      ],
+      defaults: {
+        logoLight: "/figma/logo.svg",
+        logoDark: "/figma/logo-navy.svg",
+        links: [
+          "Courses | /courses",
+          "Admissions | /admissions",
+          "About Us | /about",
+          "Guides | #",
+        ].join("\n"),
+        contactLabel: "Contact us",
+        contactUrl: "/contact",
+        pillColor: "",
+      },
+    },
+  ],
+};
+
+export const FOOTER_TEMPLATE: TemplateDef = {
+  key: "footer",
+  name: "Footer",
+  description: "The footer shown at the bottom of every page.",
+  sections: [
+    {
+      key: "intro",
+      name: "Principal & Intro",
+      description: "Principal photo, name and the introduction paragraph.",
+      fields: [
+        image("photo", "Principal photo"),
+        text("role", "Role label"),
+        text("name", "Principal name"),
+        textarea("message", "Introduction text"),
+        color("bgColor", "Footer background colour", "Solid colour override for the whole footer. Leave empty for the default gradient."),
+      ],
+      defaults: {
+        photo: "/figma/owais-ahmed.webp",
+        role: "Principal",
+        name: "OWAIS AHMED",
+        message:
+          "Students arrive at the College aiming to excel academically and secure a place on a course at their preferred university. We achieve this with exceptional teaching, small classes, and individual attention and help for every pupil.",
+        bgColor: "",
+      },
+    },
+    {
+      key: "links",
+      name: "Useful Links",
+      description: "The link list in the footer.",
+      fields: [
+        text("heading", "Heading"),
+        textarea("items", "Links", "One per line as: Label | /url"),
+      ],
+      defaults: {
+        heading: "Useful Links",
+        items: [
+          "Enquire About A Course | /contact",
+          "One Year A-Level Retake Programme | /one-year-a-level-retake",
+          "Our Courses | /courses",
+          "Admissions Requirements | /admissions-requirements",
+          "About Us | /about-us",
+          "Our History | /our-history",
+        ].join("\n"),
+      },
+    },
+    {
+      key: "address",
+      name: "Address & Contact",
+      description: "The address card with phone, email, directions and the map.",
+      fields: [
+        text("heading", "Card heading"),
+        text("orgName", "Organisation name"),
+        textarea("address", "Address"),
+        text("phone", "Phone number"),
+        text("email", "Email address"),
+        text("directionsLabel", "Directions link label"),
+        url("mapUrl", "Google Maps link", "Used by the map image and the directions link."),
+        image("mapImage", "Map image"),
+        color("cardColor", "Card background colour", "Leave empty for the default navy."),
+      ],
+      defaults: {
+        heading: "Address",
+        orgName: "Edgbaston College",
+        address: "37 George Road, Edgbaston, Birmingham, B15 1PL",
+        phone: "0121 306 0182",
+        email: "enquiries@edgbastoncollege.co.uk",
+        directionsLabel: "Get Directions",
+        mapUrl:
+          "https://www.google.com/maps/place/Edgbaston+College/@52.4700978,-1.9147819,15z/data=!4m5!3m4!1s0x0:0xe22ea36ee96914c1!8m2!3d52.4700978!4d-1.9147819",
+        mapImage: "/figma/map.webp",
+        cardColor: "",
+      },
+    },
+    {
+      key: "brand",
+      name: "Brand & Copyright",
+      description: "The big logo lockup and the copyright line.",
+      fields: [
+        image("logo", "Large logo image"),
+        text("copyright", "Copyright text", "The year is added automatically before this text."),
+      ],
+      defaults: {
+        logo: "/figma/logo-stacked.svg",
+        copyright: "Edgbaston College. All rights reserved.",
+      },
+    },
+  ],
+};
+
+export const TEMPLATES: TemplateDef[] = [HOME_TEMPLATE, HEADER_TEMPLATE, FOOTER_TEMPLATE];
 
 export function getTemplateDef(key: string) {
   return TEMPLATES.find((t) => t.key === key);

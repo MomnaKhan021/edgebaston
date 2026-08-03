@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { parseLinks } from "@/lib/templates";
 
 const NAV = [
   { label: "Courses", href: "/courses" },
@@ -11,7 +12,13 @@ const NAV = [
   { label: "Guides", href: "#" },
 ];
 
-export function Navbar({ variant = "overlay" }: { variant?: "overlay" | "solid" }) {
+export function Navbar({
+  variant = "overlay",
+  data,
+}: {
+  variant?: "overlay" | "solid";
+  data?: Record<string, string>;
+}) {
   const [open, setOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -19,6 +26,14 @@ export function Navbar({ variant = "overlay" }: { variant?: "overlay" | "solid" 
   const router = useRouter();
   const solid = variant === "solid";
   const pill = solid ? "bg-eb-cream" : "bg-white";
+  const pillStyle = data?.pillColor ? { backgroundColor: data.pillColor } : undefined;
+  const links = data?.links ? parseLinks(data.links) : NAV;
+  const first = links[0] ?? NAV[0];
+  const rest = links.slice(1);
+  const logoLight = data?.logoLight || "/figma/logo.svg";
+  const logoDark = data?.logoDark || "/figma/logo-navy.svg";
+  const contactLabel = data?.contactLabel || "Contact us";
+  const contactUrl = data?.contactUrl ?? "/contact";
 
   const submitSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,19 +50,20 @@ export function Navbar({ variant = "overlay" }: { variant?: "overlay" | "solid" 
         {/* Logo */}
         <Link href="/" className="shrink-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={solid ? "/figma/logo-navy.svg" : "/figma/logo.svg"} alt="Edgbaston College" className="h-14 w-auto lg:h-[68px]" />
+          <img src={solid ? logoDark : logoLight} alt="Edgbaston College" className="h-14 w-auto lg:h-[68px]" />
         </Link>
 
         {/* Desktop nav */}
         <nav className="hidden items-center gap-3 lg:flex">
           <Link
-            href="/courses"
+            href={first.href}
             className={`flex items-center gap-2 rounded-full px-6 py-3.5 text-[15px] font-semibold text-eb-navy shadow-sm transition hover:brightness-95 ${pill}`}
+            style={pillStyle}
           >
-            Courses
+            {first.label}
           </Link>
-          <div className={`flex items-center gap-1 rounded-full px-3 py-2 shadow-sm ${pill}`}>
-            {NAV.slice(1).map((item) => (
+          <div className={`flex items-center gap-1 rounded-full px-3 py-2 shadow-sm ${pill}`} style={pillStyle}>
+            {rest.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
@@ -90,10 +106,11 @@ export function Navbar({ variant = "overlay" }: { variant?: "overlay" | "solid" 
             </button>
           </div>
           <Link
-            href="/contact"
+            href={contactUrl}
             className={`eb-cta rounded-full px-7 py-3.5 text-[15px] font-bold uppercase tracking-wide text-eb-navy shadow-sm ${pill}`}
+            style={pillStyle}
           >
-            Contact us
+            {contactLabel}
           </Link>
         </nav>
 
@@ -130,7 +147,7 @@ export function Navbar({ variant = "overlay" }: { variant?: "overlay" | "solid" 
               <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="5.5" stroke="currentColor" strokeWidth="1.6"/><path d="M12.5 12.5L16 16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>
             </button>
           </form>
-          {NAV.map((item) => (
+          {links.map((item) => (
             <Link
               key={item.label}
               href={item.href}
@@ -141,11 +158,11 @@ export function Navbar({ variant = "overlay" }: { variant?: "overlay" | "solid" 
             </Link>
           ))}
           <Link
-            href="/contact"
+            href={contactUrl}
             onClick={() => setOpen(false)}
             className="mt-2 block rounded-full bg-eb-navy px-4 py-3 text-center text-sm font-bold uppercase tracking-wide text-white"
           >
-            Contact us
+            {contactLabel}
           </Link>
         </div>
       )}

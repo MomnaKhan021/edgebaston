@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { ArrowUpRight } from "./icons";
 import { WordReveal } from "./WordReveal";
-import { sectionDefaults } from "@/lib/templates";
+import {sectionDefaults, bgStyle } from "@/lib/templates";
 
 export function PrincipalMessage({ data }: { data?: Record<string, string> }) {
   const d = { ...sectionDefaults("home", "principal"), ...data };
   return (
-    <section className="bg-eb-navy">
+    <section className="bg-eb-navy" style={bgStyle(data)}>
       <div className="mx-auto max-w-[1440px] px-4 py-10 text-center lg:px-20 lg:py-20">
         <p className="font-mono text-[14px] font-medium tracking-[0.08em] text-white sm:text-[16px]">
           {d.eyebrow}

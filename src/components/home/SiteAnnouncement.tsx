@@ -10,6 +10,7 @@ export async function SiteAnnouncement() {
       message={d.message}
       linkLabel={d.linkLabel}
       linkUrl={d.linkUrl}
+      bgColor={d.bgColor}
     />
   );
 }

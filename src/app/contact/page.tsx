@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { SiteAnnouncement } from "@/components/home/SiteAnnouncement";
-import { Navbar } from "@/components/home/Navbar";
+import { SiteNavbar } from "@/components/home/SiteNavbar";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
 import { GetDirections } from "@/components/contact/GetDirections";
@@ -53,7 +53,7 @@ export default function ContactPage() {
 
       {/* Hero */}
       <section className="relative isolate overflow-hidden bg-eb-navy">
-        <Navbar />
+        <SiteNavbar />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/figma/retake-hero.webp" alt="Edgbaston College students" className="absolute inset-0 h-full w-full object-cover object-[center_30%]" fetchPriority="high" />
         <div className="absolute inset-0 bg-gradient-to-r from-eb-navy/85 via-eb-navy/45 to-eb-navy/10" />

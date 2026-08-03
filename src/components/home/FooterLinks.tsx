@@ -15,7 +15,13 @@ function Arrow() {
  * "Useful Links" — a collapsible accordion on mobile (toggle with the +/−),
  * always expanded on desktop.
  */
-export function FooterLinks({ links }: { links: { label: string; href: string }[] }) {
+export function FooterLinks({
+  links,
+  heading = "Useful Links",
+}: {
+  links: { label: string; href: string }[];
+  heading?: string;
+}) {
   const [open, setOpen] = useState(false);
   return (
     <div>
@@ -25,7 +31,7 @@ export function FooterLinks({ links }: { links: { label: string; href: string }[
         aria-expanded={open}
         className="flex w-full items-center justify-between lg:pointer-events-none"
       >
-        <h3 className="text-base font-bold uppercase tracking-wide">Useful Links</h3>
+        <h3 className="text-base font-bold uppercase tracking-wide">{heading}</h3>
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none" className="lg:hidden">
           <path d="M11 4v14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" className={open ? "opacity-0" : ""} />
           <path d="M4 11h14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />

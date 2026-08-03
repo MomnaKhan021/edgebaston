@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteAnnouncement } from "@/components/home/SiteAnnouncement";
-import { Navbar } from "@/components/home/Navbar";
+import { SiteNavbar } from "@/components/home/SiteNavbar";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
 import { CountUp } from "@/components/home/CountUp";
@@ -227,7 +227,7 @@ export default function RetakePage() {
 
       {/* Hero */}
       <section className="relative isolate overflow-hidden bg-eb-navy">
-        <Navbar />
+        <SiteNavbar />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/figma/retake-hero.webp" alt="Edgbaston College retake students" className="absolute inset-0 h-full w-full object-cover object-[center_30%]" fetchPriority="high" />
         {/* Neutral darkening for text legibility (no blue tint) */}

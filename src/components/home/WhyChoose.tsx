@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { bgStyle } from "@/lib/templates";
 import { ArrowUpRight } from "./icons";
 
 const ITEMS = [
@@ -57,7 +58,7 @@ export function WhyChoose({ data }: { data?: Record<string, string> }) {
   const buttonLabel = data?.buttonLabel || "View Results & Destinations";
   const buttonUrl = data?.buttonUrl ?? "/courses";
   return (
-    <section className="bg-white">
+    <section className="bg-white" style={bgStyle(data)}>
       <div className="mx-auto max-w-[1440px] px-4 py-10 lg:px-[60px] lg:py-20">
         <h2 className="mx-auto max-w-4xl text-center text-[26px] font-extrabold leading-[1.1] text-black sm:text-4xl sm:leading-[1.02] lg:text-[62px] lg:tracking-tight">
           {heading}

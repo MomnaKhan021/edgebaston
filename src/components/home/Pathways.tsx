@@ -1,4 +1,5 @@
 import { Slider } from "./Slider";
+import { bgStyle } from "@/lib/templates";
 import { ArrowRight } from "./icons";
 import { CountUp } from "./CountUp";
 
@@ -31,7 +32,7 @@ const CARDS = [
 
 export function Pathways({ data }: { data?: Record<string, string> }) {
   return (
-    <section className="bg-eb-cream">
+    <section className="bg-eb-cream" style={bgStyle(data)}>
       <div className="mx-auto max-w-[1440px] px-4 py-10 lg:px-[60px] lg:py-20">
         <Slider
           label={data?.label || "Courses We Offer"}

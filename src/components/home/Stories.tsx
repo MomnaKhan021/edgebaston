@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { bgStyle } from "@/lib/templates";
 import Link from "next/link";
 import { Slider } from "./Slider";
 
@@ -94,7 +95,7 @@ function CompactCard({ c }: { c: Story }) {
 export function Stories({ data }: { data?: Record<string, string> }) {
   const featured = STUDENTS[0];
   return (
-    <section className="bg-eb-cream">
+    <section className="bg-eb-cream" style={bgStyle(data)}>
       <div className="mx-auto max-w-[1440px] px-4 py-10 lg:px-[60px] lg:py-20">
         <Slider
           label={data?.label || "Success Stories"}

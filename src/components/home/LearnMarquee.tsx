@@ -1,10 +1,11 @@
 import { ArrowUpRight } from "./icons";
+import { bgStyle } from "@/lib/templates";
 
 export function LearnMarquee({ data }: { data?: Record<string, string> }) {
   const message = data?.message || "Learn Today. Lead Tomorrow.";
   const items = Array.from({ length: 8 });
   return (
-    <div className="overflow-hidden bg-eb-navy py-4 sm:py-6 lg:py-10">
+    <div className="overflow-hidden bg-eb-navy py-4 sm:py-6 lg:py-10" style={bgStyle(data)}>
       <div className="eb-marquee-track eb-marquee-fast items-center">
         {items.map((_, i) => (
           <span key={i} className="flex items-center gap-3 pr-5 lg:gap-4">

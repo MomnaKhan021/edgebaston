@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "./icons";
+import { bgStyle } from "@/lib/templates";
 import { NewsSlider } from "./NewsSlider";
 
 const NEWS = [
@@ -11,7 +12,7 @@ const NEWS = [
 
 export function News({ data }: { data?: Record<string, string> }) {
   return (
-    <section className="overflow-hidden bg-eb-cream py-10 lg:py-14">
+    <section className="overflow-hidden bg-eb-cream py-10 lg:py-14" style={bgStyle(data)}>
       <NewsSlider label={data?.label || "Find Your Local YDS Clinic"} title={data?.title || "What's happening at Edgbaston"}>
         {NEWS.map((n) => (
           <article key={n.title} className="group w-[78%] shrink-0 snap-center sm:w-[300px]">

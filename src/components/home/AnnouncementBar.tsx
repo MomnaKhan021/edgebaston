@@ -8,16 +8,18 @@ export function AnnouncementBar({
   message = "Admissions for Batch 2026 are Now Open! Visit our",
   linkLabel = "Admissions page",
   linkUrl = "/admissions",
+  bgColor = "",
 }: {
   badge?: string;
   message?: string;
   linkLabel?: string;
   linkUrl?: string;
+  bgColor?: string;
 }) {
   const [open, setOpen] = useState(true);
   if (!open || !message) return null;
   return (
-    <div className="bg-eb-navy-2 text-white">
+    <div className="bg-eb-navy-2 text-white" style={bgColor ? { backgroundColor: bgColor } : undefined}>
       <div className="relative mx-auto flex max-w-[1440px] items-center justify-center gap-2 px-10 py-2 text-center text-[15px] lg:px-[60px]">
         <p className="font-medium leading-tight text-white">
           {badge && <span className="font-bold">{badge}</span>}{" "}

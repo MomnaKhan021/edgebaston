@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { SiteAnnouncement } from "@/components/home/SiteAnnouncement";
-import { Navbar } from "@/components/home/Navbar";
+import { SiteNavbar } from "@/components/home/SiteNavbar";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { ArrowUpRight } from "@/components/home/icons";
 
@@ -68,7 +68,7 @@ export default async function SearchPage({
       <SiteAnnouncement />
 
       <section className="relative isolate overflow-hidden bg-eb-navy">
-        <Navbar />
+        <SiteNavbar />
         <div className="relative mx-auto max-w-[1440px] px-4 pb-12 pt-32 lg:px-16 lg:pb-14">
           <p className="font-mono text-xs uppercase tracking-[0.16em] text-white/70">
             Edgbaston College

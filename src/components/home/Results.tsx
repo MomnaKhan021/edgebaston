@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "./icons";
 import { CountUp } from "./CountUp";
 import { Reveal } from "./Reveal";
-import { num, sectionDefaults } from "@/lib/templates";
+import {num, sectionDefaults, bgStyle } from "@/lib/templates";
 
 type Info = { label: string; title: string; body?: string; place?: string };
 
@@ -38,7 +38,7 @@ function Medal({ className }: { className?: string }) {
 export function Results({ data }: { data?: Record<string, string> }) {
   const d = { ...sectionDefaults("home", "results"), ...data };
   return (
-    <section className="overflow-hidden bg-eb-navy">
+    <section className="overflow-hidden bg-eb-navy" style={bgStyle(data)}>
       <div className="mx-auto max-w-[1440px] px-4 pb-10 pt-10 lg:px-10 lg:pb-10 lg:pt-20">
         {/* Heading block (centered) */}
         <Reveal>

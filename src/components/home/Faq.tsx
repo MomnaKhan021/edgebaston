@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { bgStyle, parseFaqItems } from "@/lib/templates";
 import Link from "next/link";
 import { ArrowUpRight } from "./icons";
 
@@ -36,9 +37,11 @@ export function Faq({ data }: { data?: Record<string, string> }) {
   const subtitle = data?.subtitle || "Quick answers to the most common questions about retaking and resitting A-Levels in Birmingham.";
   const buttonLabel = data?.buttonLabel || "Contact Us";
   const buttonUrl = data?.buttonUrl ?? "/contact";
+  const managed = parseFaqItems(data);
+  const faqs = managed.length > 0 ? managed : FAQS;
   const [open, setOpen] = useState<number | null>(null);
   return (
-    <section className="bg-white">
+    <section className="bg-white" style={bgStyle(data)}>
       <div className="mx-auto flex max-w-[1440px] flex-col gap-6 px-4 py-10 lg:grid lg:grid-cols-[0.85fr_1.15fr] lg:grid-rows-[auto_1fr] lg:gap-x-12 lg:gap-y-7 lg:px-[60px] lg:py-20">
         {/* Heading + subtitle */}
         <div className="text-center lg:col-start-1 lg:row-start-1 lg:text-left">
@@ -52,7 +55,7 @@ export function Faq({ data }: { data?: Record<string, string> }) {
 
         {/* Accordion */}
         <div className="lg:col-start-2 lg:row-span-2 lg:row-start-1">
-          {FAQS.map((item, i) => {
+          {faqs.map((item, i) => {
             const isOpen = open === i;
             return (
               <div key={item.q} className="border-b border-dashed border-neutral-300">
