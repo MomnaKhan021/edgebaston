@@ -125,6 +125,26 @@ function IconHandshake({ className = "h-10 w-10" }: IcoP) {
   );
 }
 
+function IconScholarship({ className = "h-9 w-9" }: IcoP) {
+  return (
+    <svg viewBox="0 0 40 40" fill="none" className={className} aria-hidden>
+      <circle cx="21" cy="13" r="7" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M18.6 13h4.8M21 10.4v5.2M19.8 10.8c1.7-.7 3 .4 3 1.4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+      <path d="M5 26c2.6-1.7 4.8-1.2 6.8.3l2.6 1.9h4.7c1.2 0 1.2 1.9 0 1.9h-4.4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M10.5 28.2c3.2 3.2 7 4.4 11 4.4 3.6 0 6.4-2.4 9.2-4.5 1-.8.2-2.4-1-2l-5.1 1.4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M5 25v6l2.5 1" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  );
+}
+function IconEnvelope({ className = "h-9 w-9" }: IcoP) {
+  return (
+    <svg viewBox="0 0 40 40" fill="none" className={className} aria-hidden>
+      <rect x="6" y="10" width="28" height="20" rx="3" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M7 12l13 10 13-10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 function IcoAward({ className = "h-6 w-6" }: IcoP) {
   return (
     <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
@@ -502,6 +522,49 @@ export default function FiveTermPage() {
               <span className="font-bold text-eb-navy">See our leavers&apos; destinations.</span>{" "}
               If you are aiming for Medicine or Dentistry, ask us about specialist admissions support.
             </p>
+          </div>
+        </section>
+      </Reveal>
+
+      {/* Fees & how to apply */}
+      <Reveal>
+        <section className="bg-white">
+          <div className="mx-auto max-w-[1440px] px-4 py-12 lg:px-[60px] lg:py-16">
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-eb-navy sm:text-[13px]">Scholarships &amp; Contact Us</p>
+              <h2 className="mt-2 text-[26px] font-extrabold tracking-tight text-eb-ink sm:text-3xl lg:text-[44px]">Fees &amp; how to apply</h2>
+            </div>
+            <div className="mt-8 grid gap-5 sm:mt-10 md:grid-cols-2">
+              {/* Scholarships */}
+              <div className="flex flex-col rounded-2xl bg-eb-cream p-6 sm:p-8 lg:p-10">
+                <IconScholarship className="h-9 w-9 text-eb-navy" />
+                <h3 className="mt-5 text-[20px] font-bold text-eb-navy sm:text-[22px]">Scholarships</h3>
+                <p className="mt-2 text-[13px] leading-relaxed text-eb-navy/75 sm:text-[14px]">
+                  Please visit the page below for further information on scholarships.
+                </p>
+                <div className="mt-8 sm:mt-auto sm:pt-10">
+                  <Link href="/contact" className="text-[12px] font-bold uppercase tracking-wide text-eb-navy underline underline-offset-[6px] transition hover:text-eb-blue">
+                    Scholarships
+                  </Link>
+                </div>
+              </div>
+              {/* Contact Us */}
+              <div className="flex flex-col rounded-2xl bg-eb-cream p-6 sm:p-8 lg:p-10">
+                <IconEnvelope className="h-9 w-9 text-eb-navy" />
+                <h3 className="mt-5 text-[20px] font-bold text-eb-navy sm:text-[22px]">Contact Us</h3>
+                <p className="mt-2 text-[13px] leading-relaxed text-eb-navy/75 sm:text-[14px]">
+                  For more information about the Five-Term A-Level course and how to apply, you can call us or fill out the online enquiry form and we will get in touch as soon as possible. Please also feel free to email or call us.
+                </p>
+                <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 sm:mt-auto sm:pt-10">
+                  <a href="mailto:enquiries@edgbastoncollege.co.uk" className="text-[12px] font-bold uppercase tracking-wide text-eb-navy underline underline-offset-[6px] transition hover:text-eb-blue">
+                    enquiries@edgbastoncollege.co.uk
+                  </a>
+                  <a href="tel:01213060182" className="text-[12px] font-bold uppercase tracking-wide text-eb-navy underline underline-offset-[6px] transition hover:text-eb-blue">
+                    Call 0121 306 0182.
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
       </Reveal>
