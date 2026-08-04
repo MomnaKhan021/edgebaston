@@ -48,6 +48,12 @@ const STRUCTURE = [
   { Icon: IconSupport, text: "Weekly timed assessments and three mock exams, all with personalised feedback, ensure you're on track for success" },
 ];
 
+const CAREERS_PROGRAM = [
+  { n: "01", title: "Regular Careers Trips", body: "Gaining valuable insights into potential career paths and academic choices through visits to universities and employers" },
+  { n: "02", title: "Personal Development Sessions", body: "Enhancing their leadership, resilience, teamwork, and other key skills through fortnightly workshops" },
+  { n: "03", title: "Guest Speaker Series", body: "Broadening their horizons and discovering diverse career possibilities by hearing from professionals in various fields, such as doctors, investment bankers, and engineers" },
+];
+
 const TRANSFORMATIONS = [
   { from: "DE", to: "AA", who: "Manelle · Medicine, Southampton" },
   { from: "UU", to: "AB", who: "Mohammed · Politics, KCL" },
@@ -316,6 +322,67 @@ export default function FiveTermPage() {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+        </section>
+      </Reveal>
+
+      {/* Individualised Careers Support */}
+      <Reveal>
+        <section className="bg-eb-cream">
+          <div className="mx-auto grid max-w-[1440px] items-center gap-6 px-4 py-10 sm:gap-8 lg:grid-cols-2 lg:gap-14 lg:px-[60px] lg:py-16">
+            <div className="order-1 overflow-hidden rounded-2xl">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/figma/retake-intro.webp" alt="Personalised careers support at Edgbaston College" className="aspect-square w-full object-cover" loading="lazy" decoding="async" />
+            </div>
+            <div className="order-2">
+              <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-eb-blue sm:text-[13px]">The Edgbaston Experience</p>
+              <h2 className="mt-2 text-[30px] font-extrabold leading-[1.1] tracking-tight text-eb-ink sm:text-4xl lg:text-[46px]">
+                Individualised Careers Support
+              </h2>
+              <p className="mt-6 text-[14px] leading-relaxed text-eb-navy/75 sm:mt-8 sm:text-[15px]">
+                Students receive personalised guidance and support with their university and career aspirations. Their dedicated personal tutors, Principal Owais Ahmed, and our experienced educational consultants at <strong className="font-semibold text-eb-navy">Edgbaston Education</strong> work closely with each student to develop a tailored plan, ensuring students are equipped to achieve their individual goals. We offer expert advice on course selection, university applications (including Oxbridge, Medicine, Dentistry, and Law), personal statement crafting, interview preparation, and admissions test support. Our proven track record of successful placements demonstrates our commitment to student success.
+              </p>
+            </div>
+          </div>
+        </section>
+      </Reveal>
+
+      {/* Comprehensive College Careers Program */}
+      <Reveal>
+        <section className="bg-eb-cream">
+          <div className="mx-auto max-w-[1440px] px-4 pb-12 pt-2 lg:px-[60px] lg:pb-16 lg:pt-4">
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-eb-navy sm:text-[13px]">The Edgbaston Experience</p>
+              <h2 className="mt-2 text-[26px] font-extrabold leading-[1.1] tracking-tight text-eb-ink sm:text-3xl lg:text-[44px]">Comprehensive College Careers Program</h2>
+              <p className="mx-auto mt-3 max-w-2xl text-[14px] leading-relaxed text-neutral-600 sm:text-[15px]">
+                Complementing our one-on-one guidance, our comprehensive careers program provides a wealth of resources and opportunities to explore their options and develop essential skills. Students benefit from:
+              </p>
+            </div>
+            <div className="eb-stagger mt-8 grid gap-4 sm:mt-10 sm:gap-5 md:grid-cols-3">
+              {CAREERS_PROGRAM.map(({ n, title, body }) => (
+                <div key={n} className="eb-card relative flex min-h-[220px] flex-col justify-end rounded-xl bg-eb-navy p-5 sm:min-h-[280px] sm:p-6 lg:min-h-[300px]">
+                  <span className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full border border-white/40 font-mono text-[12px] font-bold text-white sm:right-5 sm:top-5 sm:h-11 sm:w-11 sm:text-[13px]">
+                    {n}
+                  </span>
+                  <h3 className="text-[18px] font-bold text-white sm:text-xl lg:text-[22px]">{title}</h3>
+                  <p className="mt-1.5 text-[13px] leading-relaxed text-white/75 sm:mt-2 sm:text-[14px]">{body}</p>
+                </div>
+              ))}
+            </div>
+            <p className="mx-auto mt-8 max-w-2xl text-center text-[13px] leading-relaxed text-neutral-600 sm:text-[14px]">
+              This dual approach – combining personalised guidance with a robust college-wide program – ensures that our students receive the support and resources necessary to make informed decisions and thrive in their chosen paths.
+            </p>
+            <div className="mt-6 flex justify-center">
+              <Link
+                href="/courses"
+                className="eb-cta group flex w-full items-center justify-between gap-3 rounded-lg bg-white py-1.5 pl-5 pr-1.5 text-xs font-bold uppercase tracking-wide text-eb-navy sm:inline-flex sm:w-auto sm:justify-start sm:text-[13px]"
+              >
+                Leavers&apos; Destinations
+                <span className="eb-square grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-eb-blue text-white">
+                  <ArrowUpRight className="h-5 w-5" />
+                </span>
+              </Link>
             </div>
           </div>
         </section>
