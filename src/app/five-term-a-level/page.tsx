@@ -39,6 +39,30 @@ function UnderlineLink({ href, children }: { href: string; children: React.React
 
 type IcoP = { className?: string };
 
+/** Corner-radius override for an image wrapper (a px number or a CSS length). */
+function radiusStyle(v?: string): React.CSSProperties | undefined {
+  const t = (v ?? "").trim();
+  if (!t) return undefined;
+  return { borderRadius: /^\d+$/.test(t) ? `${t}px` : t };
+}
+
+/** A card's icon: an uploaded image if provided, otherwise the default SVG. */
+function CardMedia({
+  src,
+  Fallback,
+  className,
+}: {
+  src?: string;
+  Fallback: (p: IcoP) => React.ReactElement;
+  className?: string;
+}) {
+  if (src) {
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img src={src} alt="" className={`${className ?? ""} object-contain`} loading="lazy" decoding="async" />;
+  }
+  return <Fallback className={className} />;
+}
+
 /* Benefit-card icons (match the Figma glyphs). */
 function IconCalendarYear({ className = "h-10 w-10" }: IcoP) {
   return (
@@ -227,7 +251,7 @@ export default async function FiveTermPage() {
       <Reveal>
         <section className="bg-white" style={bgStyle(intro)}>
           <div className="mx-auto grid max-w-[1440px] items-stretch gap-4 px-4 py-10 sm:gap-5 lg:grid-cols-2 lg:gap-6 lg:px-[60px] lg:py-16">
-            <div className="order-1 overflow-hidden rounded-2xl">
+            <div className="order-1 overflow-hidden rounded-2xl" style={radiusStyle(intro.imageRadius)}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={intro.image || "/figma/retake-intro.webp"} alt="Five-Term A-Level student studying at Edgbaston College" className="aspect-[4/3] h-full w-full object-cover lg:aspect-auto" loading="lazy" decoding="async" />
             </div>
@@ -243,6 +267,15 @@ export default async function FiveTermPage() {
               <p className="mt-4 text-[14px] leading-relaxed text-eb-navy/75 sm:text-[15px]">
                 {intro.body2a}<strong className="font-semibold text-eb-navy">{intro.body2Strong}</strong>{intro.body2b}
               </p>
+              {intro.buttonUrl && (
+                <Link
+                  href={intro.buttonUrl}
+                  className="eb-cta group mt-6 inline-flex items-center gap-3 self-start rounded-lg bg-eb-navy py-1.5 pl-5 pr-1.5 text-xs font-bold uppercase tracking-wide text-white sm:text-[13px]"
+                >
+                  {intro.buttonLabel}
+                  <span className="eb-square grid h-9 w-9 place-items-center rounded-lg bg-eb-blue text-white"><ArrowUpRight className="h-5 w-5" /></span>
+                </Link>
+              )}
             </div>
           </div>
         </section>
@@ -266,7 +299,7 @@ export default async function FiveTermPage() {
                 const Icon = benefitIcons[i % benefitIcons.length];
                 return (
                 <div key={i} className="eb-card rounded-2xl bg-eb-cream p-6 text-center sm:p-8">
-                  <Icon className="mx-auto h-10 w-10 text-eb-navy" />
+                  <CardMedia src={c.icon} Fallback={Icon} className="mx-auto h-10 w-10 text-eb-navy" />
                   <h3 className="mt-4 text-[18px] font-bold text-eb-navy sm:text-[19px]">{c.title}</h3>
                   <p className="mt-2 text-[13px] leading-relaxed text-eb-navy/70 sm:text-[14px]">{c.body}</p>
                 </div>
@@ -295,7 +328,7 @@ export default async function FiveTermPage() {
                 const Icon = offerIcons[i % offerIcons.length];
                 return (
                 <div key={i} className="eb-card rounded-2xl bg-eb-cream p-6 text-center sm:p-7">
-                  <Icon className="mx-auto h-9 w-9 text-eb-navy" />
+                  <CardMedia src={c.icon} Fallback={Icon} className="mx-auto h-9 w-9 text-eb-navy" />
                   <h3 className="mt-4 text-[17px] font-bold text-eb-navy sm:text-[18px]">{c.title}</h3>
                   <p className="mt-2 text-[13px] leading-relaxed text-eb-navy/70 sm:text-[14px]">{c.body}</p>
                 </div>
@@ -313,7 +346,7 @@ export default async function FiveTermPage() {
         <section className="bg-eb-navy" style={bgStyle(structure)}>
           <div className="mx-auto grid max-w-[1440px] items-center gap-8 px-4 py-12 lg:grid-cols-2 lg:gap-14 lg:px-[60px] lg:py-16">
             {/* Image — top on mobile, right on desktop */}
-            <div className="order-1 overflow-hidden rounded-2xl lg:order-2">
+            <div className="order-1 overflow-hidden rounded-2xl lg:order-2" style={radiusStyle(structure.imageRadius)}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={structure.image || "/figma/adm-process.webp"} alt="Students working together at Edgbaston College" className="aspect-[4/3] h-full w-full object-cover" loading="lazy" decoding="async" />
             </div>
@@ -333,7 +366,7 @@ export default async function FiveTermPage() {
                   const Icon = structureIcons[i % structureIcons.length];
                   return (
                   <div key={i} className="flex items-center gap-4 rounded-xl bg-white p-4 sm:p-5">
-                    <Icon className="h-8 w-8 shrink-0 text-eb-navy" />
+                    <CardMedia src={row.icon} Fallback={Icon} className="h-8 w-8 shrink-0 text-eb-navy" />
                     <p className="text-[13px] font-medium leading-snug text-eb-navy sm:text-[14px]">{row.text}</p>
                   </div>
                   );
@@ -350,7 +383,7 @@ export default async function FiveTermPage() {
       <Reveal>
         <section className="bg-eb-cream" style={bgStyle(careersSupport)}>
           <div className="mx-auto grid max-w-[1440px] items-center gap-6 px-4 py-10 sm:gap-8 lg:grid-cols-2 lg:gap-14 lg:px-[60px] lg:py-16">
-            <div className="order-1 overflow-hidden rounded-2xl">
+            <div className="order-1 overflow-hidden rounded-2xl" style={radiusStyle(careersSupport.imageRadius)}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={careersSupport.image || "/figma/retake-intro.webp"} alt="Personalised careers support at Edgbaston College" className="aspect-square w-full object-cover" loading="lazy" decoding="async" />
             </div>
@@ -485,7 +518,7 @@ export default async function FiveTermPage() {
                   { Icon: IcoPerson, text: <>Personal statement &amp; UCAS</> },
                 ]}
               />
-              <div className="overflow-hidden rounded-2xl">
+              <div className="overflow-hidden rounded-2xl" style={radiusStyle(guidance.imageRadius)}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={guidance.image || "/figma/adm-process.webp"} alt="Edgbaston College students in class" className="h-full min-h-[280px] w-full object-cover" loading="lazy" decoding="async" />
               </div>
@@ -501,7 +534,7 @@ export default async function FiveTermPage() {
 
             {/* Mobile: image first, then a peek slider of the two ring cards */}
             <div className="md:hidden">
-              <div className="mt-6 overflow-hidden rounded-2xl">
+              <div className="mt-6 overflow-hidden rounded-2xl" style={radiusStyle(guidance.imageRadius)}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={guidance.image || "/figma/adm-process.webp"} alt="Edgbaston College students in class" className="aspect-[4/5] w-full object-cover" loading="lazy" decoding="async" />
               </div>
