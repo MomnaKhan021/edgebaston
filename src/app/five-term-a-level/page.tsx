@@ -10,6 +10,14 @@ import { SharePage } from "@/components/site/SharePage";
 import { StorySlider } from "@/components/course/StorySlider";
 import { StoryCard, type Story } from "@/components/course/StoryCard";
 import { FaqList } from "@/components/course/FaqList";
+import {
+  IconResults,
+  IconPractice,
+  IconTarget,
+  IconClasses,
+  IconSupport,
+  IconWindow,
+} from "@/components/course/RetakeIcons";
 
 export const metadata: Metadata = {
   title: "Five Term A-Level",
@@ -25,10 +33,19 @@ const BENEFITS = [
   { Icon: IconHandshake, title: "Holistic Support", body: "Five-term students receive the same comprehensive support, including expert advice and guidance for university applications, as our two-year students." },
 ];
 
-const STEPS = [
-  { n: "01", title: "Start in January", body: "join the five-term programme mid-year with a structured plan built around your target grades." },
-  { n: "02", title: "Cover the full A-Level", body: "re-learn the complete specification across five terms in small, focused classes." },
-  { n: "03", title: "Sit your exams in June", body: "walk into the summer A-Level series fully prepared, with mocks and feedback behind you." },
+const OFFERS = [
+  { Icon: IconResults, title: "Exceptional Grades", body: "Students consistently achieving outstanding A-Level exam results. (76% A*–B in 2023)" },
+  { Icon: IconTarget, title: "Bespoke University & Careers Guidance", body: "Receive personalised support from your personal tutor, experienced advisors, and Principal Owais Ahmed throughout your application journey. Our proven track record of successful placements speaks for itself" },
+  { Icon: IconClasses, title: "Individual Attention", body: "Benefit from small class sizes (average of 7 students) and dedicated one-on-one time with your personal tutor and subject teachers to ensure you reach your full potential" },
+  { Icon: IconPractice, title: "Frequent Exam Practice & Continuous Feedback", body: "Our rigorous approach to exam preparation includes weekly assessments and 3 mock exams throughout the year, each with individualised feedback to pinpoint areas of improvement. This ensures you're always aware of your academic standing and making steady progress toward your goals" },
+  { Icon: IconSupport, title: "Supportive environment", body: "As a family-run Sixth Form College, we offer a personal, socially relaxed and supportive environment where every student is encouraged to be ambitious, both academically and in their career" },
+  { Icon: IconWindow, title: "Enrichment Program", body: "Enhance your experience with diverse range of clubs, events and exciting trips. Examples include debating society, sports teams, charity fundraisers, cultural excursions, and even go-karting adventures" },
+];
+
+const STRUCTURE = [
+  { Icon: IconPractice, text: "Students may study between 3–4 subjects" },
+  { Icon: IconResults, text: "Full coverage of the A-Level specifications in your chosen subjects" },
+  { Icon: IconSupport, text: "Weekly timed assessments and three mock exams, all with personalised feedback, ensure you're on track for success" },
 ];
 
 const TRANSFORMATIONS = [
@@ -254,36 +271,51 @@ export default function FiveTermPage() {
         </section>
       </Reveal>
 
-      {/* How it works */}
+      {/* What Edgbaston College offers */}
       <Reveal>
         <section className="bg-white">
-          <div className="mx-auto max-w-[1440px] px-4 pb-10 pt-12 lg:px-[60px] lg:pb-16 lg:pt-16">
+          <div className="mx-auto max-w-[1440px] px-4 py-12 lg:px-[60px] lg:py-16">
             <div className="mx-auto max-w-2xl text-center">
-              <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-eb-navy sm:text-[13px]">How It Works</p>
-              <h2 className="mt-2 text-[26px] font-extrabold tracking-tight text-eb-ink sm:text-3xl lg:text-[44px]">How the five-term A-Level works</h2>
-              <p className="mt-2 text-[14px] text-neutral-600 sm:mt-3">A structured mid-year start that gets you exam-ready by summer.</p>
+              <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-eb-navy sm:text-[13px]">Why Choose Edgbaston College</p>
+              <h2 className="mt-2 text-[26px] font-extrabold tracking-tight text-eb-ink sm:text-3xl lg:text-[44px]">What Edgbaston College offers</h2>
             </div>
-            <div className="eb-stagger mt-6 grid gap-4 sm:mt-8 sm:gap-5 md:grid-cols-3">
-              {STEPS.map(({ n, title, body }) => (
-                <div key={n} className="eb-card relative flex min-h-[220px] flex-col justify-end rounded-xl bg-eb-navy p-5 sm:min-h-[280px] sm:p-6 lg:min-h-[340px]">
-                  <span className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full border border-white/40 font-mono text-[12px] font-bold text-white sm:right-5 sm:top-5 sm:h-11 sm:w-11 sm:text-[13px]">
-                    {n}
-                  </span>
-                  <h3 className="text-[18px] font-bold text-white sm:text-xl lg:text-[22px]">{title}</h3>
-                  <p className="mt-1.5 text-[13px] leading-relaxed text-white/75 sm:mt-2 sm:text-[14px]">{body}</p>
+            <div className="eb-stagger mt-8 grid gap-4 sm:mt-10 sm:grid-cols-2 lg:grid-cols-3">
+              {OFFERS.map(({ Icon, title, body }) => (
+                <div key={title} className="eb-card rounded-2xl bg-eb-cream p-6 text-center sm:p-7">
+                  <Icon className="mx-auto h-9 w-9 text-eb-navy" />
+                  <h3 className="mt-4 text-[17px] font-bold text-eb-navy sm:text-[18px]">{title}</h3>
+                  <p className="mt-2 text-[13px] leading-relaxed text-eb-navy/70 sm:text-[14px]">{body}</p>
                 </div>
               ))}
             </div>
-            <div className="mt-4 flex justify-center sm:mt-8">
-              <Link
-                href="/contact"
-                className="eb-cta group flex w-full items-center justify-between gap-3 rounded-lg bg-eb-cream py-1.5 pl-5 pr-1.5 text-xs font-bold uppercase tracking-wide text-eb-navy sm:inline-flex sm:w-auto sm:justify-start sm:text-[13px]"
-              >
-                See The List Of Available Subjects
-                <span className="eb-square grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-eb-blue text-white">
-                  <ArrowUpRight className="h-5 w-5" />
-                </span>
-              </Link>
+          </div>
+        </section>
+      </Reveal>
+
+      {/* Course Structure */}
+      <Reveal>
+        <section className="bg-eb-navy">
+          <div className="mx-auto grid max-w-[1440px] items-center gap-8 px-4 py-12 lg:grid-cols-2 lg:gap-14 lg:px-[60px] lg:py-16">
+            {/* Image — top on mobile, right on desktop */}
+            <div className="order-1 overflow-hidden rounded-2xl lg:order-2">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/figma/adm-process.webp" alt="Students working together at Edgbaston College" className="aspect-[4/3] h-full w-full object-cover" loading="lazy" decoding="async" />
+            </div>
+            <div className="order-2 lg:order-1">
+              <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-white/70 sm:text-[13px]">How The Structure Works</p>
+              <h2 className="mt-2 text-[28px] font-extrabold tracking-tight text-white sm:text-3xl lg:text-[40px]">Course Structure</h2>
+              <p className="mt-4 text-[14px] leading-relaxed text-white/75 sm:text-[15px]">
+                Students study 3–4 A-Level subjects over two years. The two-year course starts each September and students sit their final A-Level examinations at the end of their two years of study. Students may choose from the whole range of A-Level <Link href="/courses" className="underline underline-offset-2 hover:text-white">subjects offered</Link> in any combination that suits them.
+              </p>
+              <p className="mt-6 text-[14px] font-bold text-white sm:text-[15px]">Here&apos;s how the structure works:</p>
+              <div className="eb-stagger mt-4 flex flex-col gap-3">
+                {STRUCTURE.map(({ Icon, text }) => (
+                  <div key={text} className="flex items-center gap-4 rounded-xl bg-white p-4 sm:p-5">
+                    <Icon className="h-8 w-8 shrink-0 text-eb-navy" />
+                    <p className="text-[13px] font-medium leading-snug text-eb-navy sm:text-[14px]">{text}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
