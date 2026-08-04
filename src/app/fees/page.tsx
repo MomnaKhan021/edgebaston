@@ -52,7 +52,7 @@ export default async function FeesPage() {
       {/* Title + intro */}
       {isVisible(intro) && (
         <section className="bg-white" style={bgStyle(intro)}>
-          <div className="mx-auto grid max-w-[1440px] gap-6 px-4 py-12 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-16 lg:px-16">
+          <div className="mx-auto grid max-w-[1440px] gap-4 px-4 py-8 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-16 lg:px-16 lg:py-12">
             <h1 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-eb-ink lg:text-[64px]">
               {intro.heading}
             </h1>
@@ -72,7 +72,7 @@ export default async function FeesPage() {
               </div>
             </div>
           )}
-          <div className="mx-auto mt-6 flex max-w-[1440px] flex-col gap-3 border-t px-4 py-4 sm:flex-row sm:items-center sm:justify-between lg:px-16">
+          <div className="mx-auto mt-4 flex max-w-[1440px] flex-col items-center gap-3 border-t px-4 py-4 text-center sm:mt-6 sm:flex-row sm:items-center sm:justify-between sm:text-left lg:px-16">
             <nav className="text-sm text-muted-foreground">
               <Link href="/" className="hover:text-eb-navy">Home</Link><span className="px-2">/</span>
               <Link href="/admissions-requirements" className="hover:text-eb-navy">Admissions</Link><span className="px-2">/</span>
@@ -87,7 +87,7 @@ export default async function FeesPage() {
       {isVisible(fulltime) && (
         <Reveal>
           <section className="bg-eb-navy" style={bgStyle(fulltime)}>
-            <div className="mx-auto max-w-[1200px] px-4 py-12 lg:py-20">
+            <div className="mx-auto max-w-[1200px] px-4 py-10 lg:py-20">
               <div className="eb-stagger text-center">
                 <p className="font-mono text-sm uppercase tracking-[0.14em] text-white/50">{fulltime.eyebrow}</p>
                 <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-white lg:text-[48px]">{fulltime.heading}</h2>
@@ -135,7 +135,7 @@ export default async function FeesPage() {
       {isVisible(retake) && (
         <Reveal>
           <section className="bg-eb-cream" style={bgStyle(retake)}>
-            <div className="mx-auto max-w-[1200px] px-4 py-12 lg:py-20">
+            <div className="mx-auto max-w-[1200px] px-4 py-10 lg:py-20">
               <div className="eb-stagger mx-auto max-w-2xl text-center">
                 <p className="font-mono text-sm uppercase tracking-[0.14em] text-eb-navy/60">{retake.eyebrow}</p>
                 <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-eb-ink lg:text-[48px]">{retake.heading}</h2>
@@ -191,7 +191,7 @@ export default async function FeesPage() {
               <img src={tuition.image} alt="Private tuition" className="absolute inset-0 h-full w-full object-cover" loading="lazy" decoding="async" />
             )}
             <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-black/25" />
-            <div className="relative mx-auto flex min-h-[360px] max-w-[1200px] flex-col justify-center px-4 py-12 lg:px-16 lg:py-16">
+            <div className="relative mx-auto flex min-h-[280px] max-w-[1200px] flex-col justify-center px-4 py-10 lg:min-h-[360px] lg:px-16 lg:py-16">
               <p className="font-mono text-sm uppercase tracking-[0.14em] text-white/60">{tuition.eyebrow}</p>
               <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-white lg:text-[48px]">{tuition.heading}</h2>
               <div className="mt-8 flex flex-col gap-4 rounded-2xl bg-white/95 p-6 backdrop-blur sm:flex-row sm:items-center sm:justify-between sm:gap-8 lg:max-w-2xl lg:p-7">
@@ -210,7 +210,7 @@ export default async function FeesPage() {
       {isVisible(medicine) && (
         <Reveal>
           <section className="bg-eb-navy" style={bgStyle(medicine)}>
-            <div className="mx-auto max-w-[1200px] px-4 py-12 lg:px-16 lg:py-20">
+            <div className="mx-auto max-w-[1200px] px-4 py-10 lg:px-16 lg:py-20">
               <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-start lg:gap-16">
                 <div className="eb-stagger">
                   <p className="font-mono text-sm uppercase tracking-[0.14em] text-white/50">{medicine.eyebrow}</p>
@@ -240,7 +240,7 @@ export default async function FeesPage() {
       {isVisible(other) && (
         <Reveal>
           <section className="bg-eb-cream" style={bgStyle(other)}>
-            <div className="mx-auto max-w-[900px] px-4 py-12 lg:py-20">
+            <div className="mx-auto max-w-[900px] px-4 py-10 lg:py-20">
               <div className="eb-stagger text-center">
                 <p className="font-mono text-sm uppercase tracking-[0.14em] text-eb-navy/60">{other.eyebrow}</p>
                 <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-eb-ink lg:text-[48px]">{other.heading}</h2>
@@ -266,7 +266,7 @@ export default async function FeesPage() {
       {isVisible(notes) && (
         <Reveal>
           <section className="bg-white" style={bgStyle(notes)}>
-            <div className="mx-auto max-w-[1200px] px-4 py-12 lg:py-20">
+            <div className="mx-auto max-w-[1200px] px-4 py-10 lg:py-20">
               <div className="eb-stagger text-center">
                 <p className="font-mono text-sm uppercase tracking-[0.14em] text-eb-navy/60">{notes.eyebrow}</p>
                 <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-eb-ink lg:text-[48px]">{notes.heading}</h2>
