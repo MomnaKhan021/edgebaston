@@ -10,14 +10,6 @@ import { SharePage } from "@/components/site/SharePage";
 import { StorySlider } from "@/components/course/StorySlider";
 import { StoryCard, type Story } from "@/components/course/StoryCard";
 import { FaqList } from "@/components/course/FaqList";
-import {
-  IconResults,
-  IconPractice,
-  IconTarget,
-  IconClasses,
-  IconSupport,
-  IconWindow,
-} from "@/components/course/RetakeIcons";
 
 export const metadata: Metadata = {
   title: "Five Term A-Level",
@@ -27,13 +19,10 @@ export const metadata: Metadata = {
 
 /* --------------------------------- Data --------------------------------- */
 
-const EXCEL = [
-  { Icon: IconResults, title: "A flexible mid-year start", body: "Begin in January and cover the full A-Level across five focused terms — ideal if you missed the September window." },
-  { Icon: IconPractice, title: "Frequent exam practice", body: "Weekly assessments under exam conditions and regular mock exams, each with individual feedback." },
-  { Icon: IconTarget, title: "Personalised UCAS support", body: "Bespoke university and careers guidance from Principal Owais Ahmed, who oversees every application." },
-  { Icon: IconClasses, title: "Genuinely small classes", body: "A maximum of 10 students per class (typically 7), so every student gets individual attention." },
-  { Icon: IconSupport, title: "Supportive environment", body: "A family-run college with a personal, relaxed atmosphere where every student is encouraged to aim high." },
-  { Icon: IconWindow, title: "Structured route to June exams", body: "A steady, well-paced plan that prepares you thoroughly for the summer A-Level series." },
+const BENEFITS = [
+  { Icon: IconCalendarYear, title: "No Gap Year", body: "Students can seamlessly continue their educational journey without the need for a 9-month break (between January and the following September)" },
+  { Icon: IconGlobePerson, title: "Ideal for International Students", body: "This program suits students whose academic calendars may not align with a September start" },
+  { Icon: IconHandshake, title: "Holistic Support", body: "Five-term students receive the same comprehensive support, including expert advice and guidance for university applications, as our two-year students." },
 ];
 
 const STEPS = [
@@ -81,6 +70,38 @@ function UnderlineLink({ href, children }: { href: string; children: React.React
 }
 
 type IcoP = { className?: string };
+
+/* Benefit-card icons (match the Figma glyphs). */
+function IconCalendarYear({ className = "h-10 w-10" }: IcoP) {
+  return (
+    <svg viewBox="0 0 40 40" fill="none" className={className} aria-hidden>
+      <rect x="7" y="9" width="26" height="24" rx="3" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M7 15h26M13 6v5M27 6v5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <text x="20" y="28" textAnchor="middle" fontSize="7.5" fontWeight="700" letterSpacing="0.3" fill="currentColor">YEAR</text>
+    </svg>
+  );
+}
+function IconGlobePerson({ className = "h-10 w-10" }: IcoP) {
+  return (
+    <svg viewBox="0 0 40 40" fill="none" className={className} aria-hidden>
+      <circle cx="15" cy="13" r="4.5" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M6 30c0-5 4-8 9-8 2.2 0 4.2.6 5.7 1.7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <circle cx="27.5" cy="25.5" r="7.5" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M20 25.5h15M27.5 18c2.6 2.4 2.6 12.6 0 15M27.5 18c-2.6 2.4-2.6 12.6 0 15" stroke="currentColor" strokeWidth="1.4" />
+    </svg>
+  );
+}
+function IconHandshake({ className = "h-10 w-10" }: IcoP) {
+  return (
+    <svg viewBox="0 0 40 40" fill="none" className={className} aria-hidden>
+      <path d="M4 15l6-3 8 3 4-2 8 3 2-1v11l-4 1-6-5" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round" />
+      <path d="M22 16l-4 3a2.2 2.2 0 003 3l1-1 3 3a2 2 0 003-3l-1-1 1 1a2 2 0 003-3l-4-4" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round" />
+      <path d="M4 15v10l3 1" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M8 8l2 2M14 6l1 2M20 7l1 2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 function IcoAward({ className = "h-6 w-6" }: IcoP) {
   return (
     <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
@@ -184,44 +205,51 @@ export default function FiveTermPage() {
       {/* Intro: image + copy */}
       <Reveal>
         <section className="bg-white">
-          <div className="mx-auto grid max-w-[1440px] items-center gap-6 px-4 py-10 sm:gap-8 lg:grid-cols-2 lg:gap-14 lg:px-[60px] lg:py-16">
+          <div className="mx-auto grid max-w-[1440px] items-stretch gap-4 px-4 py-10 sm:gap-5 lg:grid-cols-2 lg:gap-6 lg:px-[60px] lg:py-16">
             <div className="order-1 overflow-hidden rounded-2xl">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/figma/retake-intro.webp" alt="Students studying at Edgbaston College" className="aspect-[4/3] w-full object-cover" loading="lazy" decoding="async" />
+              <img src="/figma/retake-intro.webp" alt="Five-Term A-Level student studying at Edgbaston College" className="aspect-[4/3] h-full w-full object-cover lg:aspect-auto" loading="lazy" decoding="async" />
             </div>
-            <div className="order-2">
-              <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-eb-blue sm:text-[13px]">The Course</p>
-              <h2 className="mt-2 text-[26px] font-extrabold leading-[1.15] tracking-tight text-eb-ink sm:text-3xl lg:text-[40px]">
-                Level up your grades in five terms
+            {/* Text sits on a light card, matching the design */}
+            <div className="order-2 flex flex-col justify-center rounded-2xl bg-eb-cream p-6 sm:p-8 lg:p-12">
+              <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-eb-blue sm:text-[13px]">Five-Term A-Level Course</p>
+              <h2 className="mt-3 text-[30px] font-extrabold leading-[1.1] tracking-tight text-eb-ink sm:text-4xl lg:text-[44px]">
+                Achieve Top Grades In 18 Months
               </h2>
               <p className="mt-4 text-[14px] leading-relaxed text-eb-navy/75 sm:text-[15px]">
-                The Five Term A-Level is designed for students who want to cover the full A-Level content with additional, structured support. Starting in January, the five-term pathway lets you progress at a steady pace and sit your exams in the June A-Level series — a strong alternative to the traditional two-year route.
+                Our Five-Term (18 Month) A-Level course starts in January of Year 12 and students complete Year 12 A-Level content within the first two terms, with additional support provided by the College. The remaining three terms (Year 13) allow you to progress at a normal pace, culminating in June A-Level exams alongside traditional two-year students.
               </p>
               <p className="mt-4 text-[14px] leading-relaxed text-eb-navy/75 sm:text-[15px]">
-                With small classes, frequent assessment and personalised university guidance, it&apos;s built to turn a mid-year start into outstanding results.
+                We have consistently empowered students to achieve top grades, <strong className="font-semibold text-eb-navy">securing acceptance to prestigious universities and competitive courses</strong>. With an average class size of just 7 students, our teaching is tailored to each individual&apos;s needs. Weekly assessments and regular mock exams provide continuous, individualised feedback, ensuring steady progress and a clear understanding of where students are academically. Our comprehensive careers program further enhances student success, guiding them towards fulfilling and rewarding career paths. This holistic approach has led to outstanding academic achievements and excellent career outcomes for our students.
               </p>
             </div>
           </div>
         </section>
       </Reveal>
 
-      {/* Why the five-term route works */}
+      {/* Benefit of the Five-Term A-Level Course */}
       <Reveal>
-        <section className="bg-eb-cream">
-          <div className="mx-auto max-w-[1440px] px-4 py-10 lg:px-[60px] lg:py-16">
+        <section className="bg-eb-navy">
+          <div className="mx-auto max-w-[1440px] px-4 py-12 lg:px-[60px] lg:py-16">
             <div className="mx-auto max-w-2xl text-center">
-              <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-eb-navy sm:text-[13px]">Why Edgbaston</p>
-              <h2 className="mt-2 text-[26px] font-extrabold tracking-tight text-eb-ink sm:text-3xl lg:text-[44px]">Why the five-term route works</h2>
+              <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-white/70 sm:text-[13px]">Five-Term A-Level Benefits</p>
+              <h2 className="mt-2 text-[26px] font-extrabold leading-[1.1] tracking-tight text-white sm:text-3xl lg:text-[44px]">Benefit of the Five-Term A-Level Course</h2>
+              <p className="mx-auto mt-3 max-w-xl text-[14px] leading-relaxed text-white/75 sm:text-[15px]">
+                Sometimes a September start isn&apos;t always possible. Whether you&apos;re looking for a fresh start or your academic calendar doesn&apos;t fit the traditional schedule, our Five-Term A-Level course could be the solution.
+              </p>
             </div>
-            <div className="eb-stagger mt-8 grid gap-4 sm:mt-10 sm:grid-cols-2 lg:grid-cols-3">
-              {EXCEL.map(({ Icon, title, body }) => (
-                <div key={title} className="eb-card rounded-2xl bg-white p-5 sm:p-6">
-                  <Icon className="h-9 w-9 text-eb-navy" />
-                  <h3 className="mt-4 text-[17px] font-bold text-eb-navy sm:text-[18px]">{title}</h3>
-                  <p className="mt-2 text-[13px] leading-relaxed text-neutral-600 sm:text-[14px]">{body}</p>
+            <div className="eb-stagger mt-8 grid gap-4 sm:mt-10 sm:gap-5 md:grid-cols-3">
+              {BENEFITS.map(({ Icon, title, body }) => (
+                <div key={title} className="eb-card rounded-2xl bg-eb-cream p-6 text-center sm:p-8">
+                  <Icon className="mx-auto h-10 w-10 text-eb-navy" />
+                  <h3 className="mt-4 text-[18px] font-bold text-eb-navy sm:text-[19px]">{title}</h3>
+                  <p className="mt-2 text-[13px] leading-relaxed text-eb-navy/70 sm:text-[14px]">{body}</p>
                 </div>
               ))}
             </div>
+            <p className="mx-auto mt-8 max-w-2xl text-center text-[13px] leading-relaxed text-white/70 sm:mt-10 sm:text-[14px]">
+              The 18-month A-Level course offers a unique opportunity for motivated students to fast-track their studies without compromising the quality of their education or the personalised support they receive.
+            </p>
           </div>
         </section>
       </Reveal>
