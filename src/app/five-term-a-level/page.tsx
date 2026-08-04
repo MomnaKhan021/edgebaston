@@ -1,0 +1,468 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { AnnouncementBar } from "@/components/home/AnnouncementBar";
+import { Navbar } from "@/components/home/Navbar";
+import { FigmaFooter } from "@/components/home/FigmaFooter";
+import { Reveal } from "@/components/home/Reveal";
+import { ArrowUpRight } from "@/components/home/icons";
+import { ProgressRing } from "@/components/course/ProgressRing";
+import { SharePage } from "@/components/site/SharePage";
+import { StorySlider } from "@/components/course/StorySlider";
+import { StoryCard, type Story } from "@/components/course/StoryCard";
+import { FaqList } from "@/components/course/FaqList";
+import {
+  IconResults,
+  IconPractice,
+  IconTarget,
+  IconClasses,
+  IconSupport,
+  IconWindow,
+} from "@/components/course/RetakeIcons";
+
+export const metadata: Metadata = {
+  title: "Five Term A-Level",
+  description:
+    "The Five Term A-Level at Edgbaston College — a structured mid-year pathway starting in January that covers the full A-Level in five terms, with small classes and personalised support.",
+};
+
+/* --------------------------------- Data --------------------------------- */
+
+const EXCEL = [
+  { Icon: IconResults, title: "A flexible mid-year start", body: "Begin in January and cover the full A-Level across five focused terms — ideal if you missed the September window." },
+  { Icon: IconPractice, title: "Frequent exam practice", body: "Weekly assessments under exam conditions and regular mock exams, each with individual feedback." },
+  { Icon: IconTarget, title: "Personalised UCAS support", body: "Bespoke university and careers guidance from Principal Owais Ahmed, who oversees every application." },
+  { Icon: IconClasses, title: "Genuinely small classes", body: "A maximum of 10 students per class (typically 7), so every student gets individual attention." },
+  { Icon: IconSupport, title: "Supportive environment", body: "A family-run college with a personal, relaxed atmosphere where every student is encouraged to aim high." },
+  { Icon: IconWindow, title: "Structured route to June exams", body: "A steady, well-paced plan that prepares you thoroughly for the summer A-Level series." },
+];
+
+const STEPS = [
+  { n: "01", title: "Start in January", body: "join the five-term programme mid-year with a structured plan built around your target grades." },
+  { n: "02", title: "Cover the full A-Level", body: "re-learn the complete specification across five terms in small, focused classes." },
+  { n: "03", title: "Sit your exams in June", body: "walk into the summer A-Level series fully prepared, with mocks and feedback behind you." },
+];
+
+const TRANSFORMATIONS = [
+  { from: "DE", to: "AA", who: "Manelle · Medicine, Southampton" },
+  { from: "UU", to: "AB", who: "Mohammed · Politics, KCL" },
+  { from: "BB", to: "A*A*", who: "Adham · Medicine, Bristol" },
+];
+
+const STORIES: Story[] = [
+  { name: "Alishba", img: "/figma/pathway-1.webp", from: "BB", to: "A*A*", course: "Law at University of Cambridge", quote: "The five-term structure gave me the time and support to completely turn my grades around." },
+  { name: "Nicole", img: "/figma/news-1.webp", from: "BB", to: "A*A*", course: "Dentistry at King's College London", quote: "Small classes and weekly mocks gave me the confidence to jump from BB to A*A* and secure my dentistry place." },
+  { name: "Tara", img: "/figma/news-2.webp", from: "BB", to: "AA", course: "Medicine at Edge Hill University", quote: "Starting in January suited me perfectly — the personalised UCAS support made all the difference." },
+  { name: "Jacob", img: "/figma/pathway-3.webp", from: "CC", to: "A*A", course: "Engineering at University of Warwick", quote: "Weekly assessments kept me on track and my grades climbed two full levels across the year." },
+  { name: "Manelle", img: "/figma/pathway-2.webp", from: "DE", to: "AA", course: "Medicine at University of Southampton", quote: "One focused pathway with the right support completely changed where I ended up." },
+];
+
+const RESIDENCES = [
+  { label: "Closest", name: "Five Ways Residence", walk: "2–3 minute walk to college" },
+  { label: "Closest", name: "Beech Gardens, Edgbaston", walk: "4–5 minute walk to college" },
+];
+
+const FAQ = [
+  { q: "What is the Five Term A-Level?", a: "It's a flexible A-Level pathway that starts in January and covers the full A-Level over five terms — ideal for students who missed the September start but want a complete, well-structured route to university." },
+  { q: "Who is the five-term pathway for?", a: "Students who need a mid-year start, are re-planning their sixth form, or want extra time and structure to cover the full A-Level content before sitting exams in the summer series." },
+  { q: "When will I sit my exams?", a: "You sit the full A-Level exams in the standard summer series (May–June), fully prepared through weekly assessments and mock exams across the five terms." },
+  { q: "How many subjects can I take?", a: "Most students take one to three A-Levels. We build your timetable around exactly the subjects you need for your target university course." },
+  { q: "Will I receive UCAS support?", a: "Yes — personalised UCAS guidance from Principal Owais Ahmed is built into the programme, from university selection to your personal statement and interviews." },
+  { q: "How do I apply?", a: "Enquire online or call 0121 306 0182. We review your goals, agree your subjects and target grades, and confirm your place — simple and quick." },
+];
+
+/* ------------------------------ Small pieces ----------------------------- */
+
+function UnderlineLink({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <a href={href} className="text-[12px] font-bold uppercase tracking-wide text-white underline underline-offset-[6px] transition hover:text-white/80">
+      {children}
+    </a>
+  );
+}
+
+type IcoP = { className?: string };
+function IcoAward({ className = "h-6 w-6" }: IcoP) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+      <circle cx="12" cy="9" r="6" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M9 13.5 8 22l4-2.2L16 22l-1-8.5" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      <path d="M12 6.6l.9 1.8 2 .3-1.45 1.4.34 2L12 11.15 10.2 12.1l.34-2L9.1 8.7l2-.3.9-1.8Z" fill="currentColor" />
+    </svg>
+  );
+}
+function IcoPerson({ className = "h-6 w-6" }: IcoP) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+      <circle cx="12" cy="7.5" r="3.5" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M12 13c-3.2 0-5 2.2-5 4.8 0 .7.4 1.2 1.2 1.2h7.6c.8 0 1.2-.5 1.2-1.2C17 15.2 15.2 13 12 13Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+    </svg>
+  );
+}
+function IcoCap({ className = "h-6 w-6" }: IcoP) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+      <path d="M2 9.5 12 5l10 4.5-10 4.5L2 9.5Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      <path d="M6 11.5V16c0 1.3 2.7 2.6 6 2.6s6-1.3 6-2.6v-4.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M22 9.5V15" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+function IcoBadge({ className = "h-6 w-6" }: IcoP) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+      <rect x="3.5" y="4.5" width="17" height="15" rx="2.5" stroke="currentColor" strokeWidth="1.6" />
+      <circle cx="9" cy="10.5" r="2.2" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M6 16c0-1.7 1.4-2.8 3-2.8s3 1.1 3 2.8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+      <path d="M14.5 9.5H18M14.5 13H18" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+type Chip = { Icon: (p: IcoP) => React.ReactElement; text: React.ReactNode };
+
+function MiniChip({ Icon, children }: { Icon: (p: IcoP) => React.ReactElement; children: React.ReactNode }) {
+  return (
+    <div className="flex items-center gap-2.5 rounded-lg bg-white px-3 py-3 text-[12px] font-semibold leading-snug text-eb-navy sm:flex-col sm:gap-2 sm:py-4 sm:text-center">
+      <Icon className="h-6 w-6 shrink-0 text-eb-navy sm:h-7 sm:w-7" />
+      <span>{children}</span>
+    </div>
+  );
+}
+
+function RingCard({ value, label, chips }: { value: number; label: string; chips: [Chip, Chip] }) {
+  return (
+    <div className="flex h-full flex-col gap-2.5 rounded-2xl bg-eb-cream p-2.5">
+      <div className="flex flex-1 flex-col items-center justify-center rounded-xl bg-white px-5 py-8">
+        <ProgressRing value={value} label={label} />
+      </div>
+      <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+        {chips.map((c, i) => (
+          <MiniChip key={i} Icon={c.Icon}>{c.text}</MiniChip>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* --------------------------------- Page ---------------------------------- */
+
+export default function FiveTermPage() {
+  return (
+    <>
+      <AnnouncementBar />
+
+      {/* Hero */}
+      <section className="relative isolate overflow-hidden bg-eb-navy">
+        <Navbar />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/figma/adm-process.webp" alt="Edgbaston College five-term students" className="absolute inset-0 h-full w-full object-cover object-[center_25%]" fetchPriority="high" />
+        <div className="absolute inset-0 bg-black/45" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/40" />
+        <div className="relative mx-auto flex min-h-[420px] max-w-[1440px] flex-col justify-end px-4 pb-10 pt-32 lg:min-h-[460px] lg:px-[60px] lg:pb-12">
+          <h1 className="max-w-[320px] text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:max-w-[420px] sm:text-5xl lg:max-w-[520px] lg:text-[56px]">
+            Five Term A-Level
+          </h1>
+        </div>
+      </section>
+
+      {/* Breadcrumb + share */}
+      <div className="bg-white">
+        <div className="mx-auto max-w-[1440px] px-4 lg:px-[60px]">
+          <div className="flex flex-col items-center gap-3 border-b border-black/10 py-4 text-center sm:flex-row sm:items-center sm:justify-between sm:py-5 sm:text-left">
+            <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground">
+              <Link href="/" className="hover:text-eb-navy">Home</Link>
+              <span className="px-2 text-neutral-300">/</span>
+              <Link href="/courses" className="hover:text-eb-navy">Courses</Link>
+              <span className="px-2 text-neutral-300">/</span>
+              <span className="font-medium text-eb-navy">Five Term A-Level</span>
+            </nav>
+            <SharePage title="Five Term A-Level — Edgbaston College" />
+          </div>
+        </div>
+      </div>
+
+      {/* Intro: image + copy */}
+      <Reveal>
+        <section className="bg-white">
+          <div className="mx-auto grid max-w-[1440px] items-center gap-6 px-4 py-10 sm:gap-8 lg:grid-cols-2 lg:gap-14 lg:px-[60px] lg:py-16">
+            <div className="order-1 overflow-hidden rounded-2xl">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/figma/retake-intro.webp" alt="Students studying at Edgbaston College" className="aspect-[4/3] w-full object-cover" loading="lazy" decoding="async" />
+            </div>
+            <div className="order-2">
+              <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-eb-blue sm:text-[13px]">The Course</p>
+              <h2 className="mt-2 text-[26px] font-extrabold leading-[1.15] tracking-tight text-eb-ink sm:text-3xl lg:text-[40px]">
+                Level up your grades in five terms
+              </h2>
+              <p className="mt-4 text-[14px] leading-relaxed text-eb-navy/75 sm:text-[15px]">
+                The Five Term A-Level is designed for students who want to cover the full A-Level content with additional, structured support. Starting in January, the five-term pathway lets you progress at a steady pace and sit your exams in the June A-Level series — a strong alternative to the traditional two-year route.
+              </p>
+              <p className="mt-4 text-[14px] leading-relaxed text-eb-navy/75 sm:text-[15px]">
+                With small classes, frequent assessment and personalised university guidance, it&apos;s built to turn a mid-year start into outstanding results.
+              </p>
+            </div>
+          </div>
+        </section>
+      </Reveal>
+
+      {/* Why the five-term route works */}
+      <Reveal>
+        <section className="bg-eb-cream">
+          <div className="mx-auto max-w-[1440px] px-4 py-10 lg:px-[60px] lg:py-16">
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-eb-navy sm:text-[13px]">Why Edgbaston</p>
+              <h2 className="mt-2 text-[26px] font-extrabold tracking-tight text-eb-ink sm:text-3xl lg:text-[44px]">Why the five-term route works</h2>
+            </div>
+            <div className="eb-stagger mt-8 grid gap-4 sm:mt-10 sm:grid-cols-2 lg:grid-cols-3">
+              {EXCEL.map(({ Icon, title, body }) => (
+                <div key={title} className="eb-card rounded-2xl bg-white p-5 sm:p-6">
+                  <Icon className="h-9 w-9 text-eb-navy" />
+                  <h3 className="mt-4 text-[17px] font-bold text-eb-navy sm:text-[18px]">{title}</h3>
+                  <p className="mt-2 text-[13px] leading-relaxed text-neutral-600 sm:text-[14px]">{body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </Reveal>
+
+      {/* How it works */}
+      <Reveal>
+        <section className="bg-white">
+          <div className="mx-auto max-w-[1440px] px-4 pb-10 pt-12 lg:px-[60px] lg:pb-16 lg:pt-16">
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-eb-navy sm:text-[13px]">How It Works</p>
+              <h2 className="mt-2 text-[26px] font-extrabold tracking-tight text-eb-ink sm:text-3xl lg:text-[44px]">How the five-term A-Level works</h2>
+              <p className="mt-2 text-[14px] text-neutral-600 sm:mt-3">A structured mid-year start that gets you exam-ready by summer.</p>
+            </div>
+            <div className="eb-stagger mt-6 grid gap-4 sm:mt-8 sm:gap-5 md:grid-cols-3">
+              {STEPS.map(({ n, title, body }) => (
+                <div key={n} className="eb-card relative flex min-h-[220px] flex-col justify-end rounded-xl bg-eb-navy p-5 sm:min-h-[280px] sm:p-6 lg:min-h-[340px]">
+                  <span className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full border border-white/40 font-mono text-[12px] font-bold text-white sm:right-5 sm:top-5 sm:h-11 sm:w-11 sm:text-[13px]">
+                    {n}
+                  </span>
+                  <h3 className="text-[18px] font-bold text-white sm:text-xl lg:text-[22px]">{title}</h3>
+                  <p className="mt-1.5 text-[13px] leading-relaxed text-white/75 sm:mt-2 sm:text-[14px]">{body}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 flex justify-center sm:mt-8">
+              <Link
+                href="/contact"
+                className="eb-cta group flex w-full items-center justify-between gap-3 rounded-lg bg-eb-cream py-1.5 pl-5 pr-1.5 text-xs font-bold uppercase tracking-wide text-eb-navy sm:inline-flex sm:w-auto sm:justify-start sm:text-[13px]"
+              >
+                See The List Of Available Subjects
+                <span className="eb-square grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-eb-blue text-white">
+                  <ArrowUpRight className="h-5 w-5" />
+                </span>
+              </Link>
+            </div>
+          </div>
+        </section>
+      </Reveal>
+
+      {/* Success stories */}
+      <Reveal>
+        <section className="bg-eb-cream">
+          <div className="mx-auto max-w-[1440px] px-4 py-12 lg:px-[60px] lg:py-20">
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="font-mono text-[12px] uppercase tracking-[0.06em] text-eb-navy sm:text-[13px]">Success Stories</p>
+              <h2 className="mt-3 text-[26px] font-extrabold leading-[1.15] tracking-tight text-eb-ink sm:text-3xl lg:text-[44px]">Five-term success stories</h2>
+              <p className="mx-auto mt-2.5 max-w-[300px] text-[13px] leading-relaxed text-neutral-600 sm:mt-3 sm:max-w-none sm:text-[14px]">Real students, real grade jumps. See how their year went.</p>
+            </div>
+            <div className="mt-8 sm:mt-10">
+              <StorySlider>
+                {STORIES.map((s) => (
+                  <StoryCard key={s.name} story={s} className="h-[400px] w-[78%] snap-center sm:h-[420px] sm:w-[300px] sm:snap-start" />
+                ))}
+              </StorySlider>
+            </div>
+          </div>
+        </section>
+      </Reveal>
+
+      {/* More 2025 transformations */}
+      <Reveal>
+        <section className="bg-eb-navy">
+          <div className="mx-auto flex max-w-[1440px] flex-col items-center gap-6 px-4 py-9 text-center lg:grid lg:grid-cols-[minmax(0,auto)_1fr] lg:items-center lg:gap-x-12 lg:gap-y-4 lg:px-[60px] lg:py-12 lg:text-left">
+            <h2 className="order-1 max-w-[260px] text-[22px] font-extrabold leading-tight tracking-tight text-white sm:text-2xl lg:col-start-1 lg:row-start-1 lg:max-w-[240px] lg:text-[28px]">
+              More 2025 transformations
+            </h2>
+            <div className="order-2 grid w-full grid-cols-3 gap-3 sm:gap-6 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:gap-8">
+              {TRANSFORMATIONS.map((t) => (
+                <div key={t.who}>
+                  <p className="text-[15px] font-extrabold tracking-tight text-white sm:text-[20px]">
+                    {t.from} <span className="text-eb-blue">→</span> {t.to}
+                  </p>
+                  <p className="mt-1 text-[11px] leading-snug text-white/70 sm:text-[13px]">{t.who}</p>
+                </div>
+              ))}
+            </div>
+            <div className="order-3 lg:col-start-1 lg:row-start-2">
+              <UnderlineLink href="/contact">See All Our 2025 Grade Improvements</UnderlineLink>
+            </div>
+          </div>
+        </section>
+      </Reveal>
+
+      {/* University & careers guidance */}
+      <Reveal>
+        <section className="bg-white">
+          <div className="mx-auto max-w-[1440px] px-4 py-10 lg:px-[60px] lg:py-16">
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-eb-navy sm:text-[13px]">From Grades To Offers</p>
+              <h2 className="mt-2 text-[26px] font-extrabold tracking-tight text-eb-ink sm:text-3xl lg:text-[44px]">University &amp; careers guidance</h2>
+              <p className="mt-3 text-[14px] leading-relaxed text-neutral-600">
+                A better set of grades is only half the story. Every five-term student gets personalised applications guidance from Principal Owais Ahmed, with a proven record on placement into competitive courses like Oxbridge, Medicine, Dentistry, Law and Economics.
+              </p>
+            </div>
+
+            {/* Desktop: ring · image · ring */}
+            <div className="mt-8 hidden items-stretch gap-5 md:grid md:grid-cols-3">
+              <RingCard
+                value={72.7}
+                label="to Russell Group universities (2025)"
+                chips={[
+                  { Icon: IcoAward, text: "Predicted grades" },
+                  { Icon: IcoPerson, text: <>Personal statement &amp; UCAS</> },
+                ]}
+              />
+              <div className="overflow-hidden rounded-2xl">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/figma/adm-process.webp" alt="Edgbaston College students in class" className="h-full min-h-[280px] w-full object-cover" loading="lazy" decoding="async" />
+              </div>
+              <RingCard
+                value={96}
+                label="Medicine & Dentistry offer success (2025)"
+                chips={[
+                  { Icon: IcoCap, text: "University selection" },
+                  { Icon: IcoBadge, text: <>Admissions tests &amp; interviews</> },
+                ]}
+              />
+            </div>
+
+            {/* Mobile: image first, then a peek slider of the two ring cards */}
+            <div className="md:hidden">
+              <div className="mt-6 overflow-hidden rounded-2xl">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/figma/adm-process.webp" alt="Edgbaston College students in class" className="aspect-[4/5] w-full object-cover" loading="lazy" decoding="async" />
+              </div>
+              <div className="eb-noscroll mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-1">
+                <div className="w-[calc(100%-40px)] shrink-0 snap-start">
+                  <RingCard
+                    value={96}
+                    label="Medicine & Dentistry offer success (2025)"
+                    chips={[
+                      { Icon: IcoCap, text: "University selection" },
+                      { Icon: IcoBadge, text: <>Admissions tests &amp; interviews</> },
+                    ]}
+                  />
+                </div>
+                <div className="w-[calc(100%-40px)] shrink-0 snap-start">
+                  <RingCard
+                    value={72.7}
+                    label="to Russell Group universities (2025)"
+                    chips={[
+                      { Icon: IcoAward, text: "Predicted grades" },
+                      { Icon: IcoPerson, text: <>Personal statement &amp; UCAS</> },
+                    ]}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <p className="mx-auto mt-8 max-w-xl text-center text-[13px] leading-relaxed text-neutral-600">
+              <span className="font-bold text-eb-navy">See our leavers&apos; destinations.</span>{" "}
+              If you are aiming for Medicine or Dentistry, ask us about specialist admissions support.
+            </p>
+          </div>
+        </section>
+      </Reveal>
+
+      {/* Accommodation */}
+      <Reveal>
+        <section className="bg-eb-cream">
+          <div className="mx-auto grid max-w-[1440px] gap-6 px-4 py-10 text-center sm:gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-16 lg:px-[60px] lg:py-20 lg:text-left">
+            <div>
+              <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-eb-navy sm:text-[13px]">Accommodation Support</p>
+              <h2 className="mt-2 text-[26px] font-extrabold tracking-tight text-eb-ink sm:text-3xl lg:mt-3 lg:text-[44px]">Accommodation</h2>
+              <p className="mx-auto mt-3 max-w-sm text-[14px] leading-relaxed text-eb-navy/70 lg:mx-0">
+                For students relocating to Birmingham, we&apos;ve partnered with quality student accommodation just minutes from college.
+              </p>
+            </div>
+            <div className="eb-stagger grid gap-4 sm:grid-cols-2">
+              {RESIDENCES.map((r) => (
+                <div key={r.name} className="eb-card rounded-2xl bg-white p-5 text-left sm:p-6">
+                  <p className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-eb-blue">{r.label}</p>
+                  <h3 className="mt-2.5 text-[18px] font-bold text-eb-navy sm:text-[19px]">{r.name}</h3>
+                  <p className="mt-2 flex items-center gap-1.5 text-[13px] text-eb-navy/80">
+                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden className="shrink-0 text-eb-navy">
+                      <path d="M6.5 1a4 4 0 014 4c0 2.7-4 7-4 7s-4-4.3-4-7a4 4 0 014-4z" stroke="currentColor" strokeWidth="1.2" />
+                      <circle cx="6.5" cy="5" r="1.4" stroke="currentColor" strokeWidth="1.1" />
+                    </svg>
+                    {r.walk}
+                  </p>
+                  <hr className="my-4 border-black/10" />
+                  <p className="text-[12px] text-neutral-500">Bills included · Secure access · 24/7 support</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </Reveal>
+
+      {/* CTA — navy block wrapped in cream */}
+      <Reveal>
+        <section className="bg-eb-cream">
+          <div className="mx-auto max-w-[1440px] px-4 pb-10 pt-2 lg:px-[60px] lg:pb-20 lg:pt-4">
+            <div className="rounded-2xl bg-eb-navy px-5 py-10 text-center sm:px-6 lg:py-16">
+              <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-white/80 sm:text-[13px]">Take The Next Step</p>
+              <h2 className="mx-auto mt-3 max-w-[560px] text-[28px] font-extrabold leading-[1.1] tracking-tight text-white sm:text-4xl lg:text-[52px]">
+                Start your Five-Term A-Level in Birmingham
+              </h2>
+              <p className="mx-auto mt-3 max-w-md text-[14px] text-white/75">Fill out the online enquiry form, email us, or give us a call.</p>
+              <div className="mx-auto mt-7 flex max-w-md flex-col items-stretch justify-center gap-3 sm:max-w-none sm:flex-row sm:items-center">
+                <Link
+                  href="/contact"
+                  className="eb-cta group flex items-center justify-between gap-3 rounded-lg bg-white py-1.5 pl-5 pr-1.5 text-xs font-bold uppercase tracking-wide text-eb-navy sm:inline-flex sm:justify-start sm:text-[13px]"
+                >
+                  Enquire About Course
+                  <span className="eb-square grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-eb-blue text-white">
+                    <ArrowUpRight className="h-5 w-5" />
+                  </span>
+                </Link>
+                <a
+                  href="tel:01213060182"
+                  className="inline-flex items-center justify-center rounded-lg border border-white/40 px-6 py-3.5 text-xs font-bold uppercase tracking-wide text-white transition hover:bg-white/10 sm:py-3 sm:text-[13px]"
+                >
+                  Call 0121 306 0182
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </Reveal>
+
+      {/* FAQ */}
+      <Reveal>
+        <section className="bg-white">
+          <div className="mx-auto grid max-w-[1440px] gap-8 px-4 pb-14 pt-6 lg:grid-cols-[minmax(0,380px)_1fr] lg:gap-24 lg:px-[60px] lg:pb-24 lg:pt-10">
+            <div className="text-center lg:sticky lg:top-24 lg:self-start lg:text-left">
+              <h2 className="mx-auto max-w-[300px] text-[22px] font-extrabold leading-[1.15] tracking-tight text-eb-ink lg:mx-0 lg:max-w-none lg:text-[40px]">
+                Five Term A-Level FAQ
+              </h2>
+              <p className="mx-auto mt-2.5 max-w-[320px] text-[12.5px] leading-relaxed text-eb-navy/80 lg:mx-0 lg:mt-3 lg:max-w-[300px] lg:text-[13px]">
+                Quick answers to the most common questions about the five-term A-Level pathway in Birmingham.
+              </p>
+            </div>
+            <div>
+              <FaqList items={FAQ} />
+            </div>
+          </div>
+        </section>
+      </Reveal>
+
+      <Reveal><FigmaFooter /></Reveal>
+    </>
+  );
+}
