@@ -12,7 +12,7 @@
 
 import type { CSSProperties } from "react";
 
-export type FieldType = "text" | "textarea" | "image" | "url" | "color" | "toggle" | "list";
+export type FieldType = "text" | "textarea" | "rich" | "image" | "url" | "color" | "toggle" | "list";
 
 export type FieldDef = {
   name: string;
@@ -48,6 +48,7 @@ const url = (name: string, label: string, hint?: string): FieldDef => ({
 });
 const text = (name: string, label: string, hint?: string): FieldDef => ({ name, label, type: "text", hint });
 const textarea = (name: string, label: string, hint?: string): FieldDef => ({ name, label, type: "textarea", hint });
+const rich = (name: string, label: string, hint?: string): FieldDef => ({ name, label, type: "rich", hint });
 const image = (name: string, label: string, hint?: string): FieldDef => ({ name, label, type: "image", hint });
 const color = (name = "bgColor", label = "Background colour", hint = "Leave empty for the default colour."): FieldDef => ({
   name,
@@ -603,7 +604,7 @@ export const RETAKE_TEMPLATE: TemplateDef = {
         image("image", "Image"),
         text("eyebrow", "Small label"),
         textarea("heading", "Heading"),
-        textarea("body", "Body text"),
+        rich("body", "Body text"),
         color(),
       ],
       defaults: {
@@ -804,7 +805,7 @@ export const RETAKE_TEMPLATE: TemplateDef = {
         toggle(),
         text("eyebrow", "Small label"),
         text("heading", "Heading"),
-        textarea("body", "Body text"),
+        rich("body", "Body text"),
         image("image", "Centre image"),
         text("ring1Value", "Ring 1 — value (%)"),
         text("ring1Label", "Ring 1 — label"),
@@ -970,7 +971,7 @@ export const FIVE_TERM_TEMPLATE: TemplateDef = {
         image("image", "Image"),
         text("eyebrow", "Small label"),
         textarea("heading", "Heading"),
-        textarea("body", "Paragraph 1"),
+        rich("body", "Paragraph 1"),
         textarea("body2a", "Paragraph 2 — before highlight"),
         text("body2Strong", "Paragraph 2 — highlighted phrase"),
         textarea("body2b", "Paragraph 2 — after highlight"),
@@ -1211,7 +1212,7 @@ export const FIVE_TERM_TEMPLATE: TemplateDef = {
         toggle(),
         text("eyebrow", "Small label"),
         text("heading", "Heading"),
-        textarea("body", "Body text"),
+        rich("body", "Body text"),
         image("image", "Centre image"),
         text("imageRadius", "Image corner radius", "Rounding in px, e.g. 0, 16 or 24. Empty = default."),
         text("ring1Value", "Ring 1 — value (%)"),
@@ -1385,7 +1386,7 @@ export const HISTORY_TEMPLATE: TemplateDef = {
       fields: [
         toggle(),
         text("heading", "Heading"),
-        textarea("body", "Intro text"),
+        rich("body", "Intro text"),
         list("cards", "Cards", "Card", [text("title", "Title"), textarea("body", "Text")]),
         color(),
       ],
@@ -1560,8 +1561,8 @@ export const ABOUT_TEMPLATE: TemplateDef = {
         toggle(),
         image("image", "Photo"),
         text("heading", "Heading"),
-        textarea("para1", "Paragraph 1"),
-        textarea("para2", "Paragraph 2"),
+        rich("para1", "Paragraph 1"),
+        rich("para2", "Paragraph 2"),
         textarea("quote", "Pull-quote"),
         text("buttonLabel", "Button label"),
         url("buttonUrl", "Button link"),
@@ -1714,7 +1715,7 @@ export const ADMISSIONS_TEMPLATE: TemplateDef = {
       fields: [
         toggle(),
         textarea("heading", "Heading"),
-        textarea("body", "Intro paragraph"),
+        rich("body", "Intro paragraph"),
         image("image", "Group photo"),
         color(),
       ],
@@ -1848,7 +1849,7 @@ export const FEES_TEMPLATE: TemplateDef = {
       fields: [
         toggle(),
         textarea("heading", "Heading"),
-        textarea("body", "Intro paragraph"),
+        rich("body", "Intro paragraph"),
         image("image", "Photo"),
         color(),
       ],
@@ -2176,8 +2177,8 @@ export const RESULTS_TEMPLATE: TemplateDef = {
         toggle(),
         text("eyebrow", "Small label"),
         textarea("heading", "Heading"),
-        textarea("body", "Intro paragraph"),
-        textarea("body2", "Second paragraph"),
+        rich("body", "Intro paragraph"),
+        rich("body2", "Second paragraph"),
         text("storyLabel", "Story card — small label"),
         text("storyLinkLabel", "Story card — button label"),
         url("storyLinkUrl", "Story card — button link"),

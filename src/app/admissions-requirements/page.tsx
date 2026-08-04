@@ -7,6 +7,7 @@ import { Reveal } from "@/components/home/Reveal";
 import { IconSpark, IconUsers, IconCrest } from "@/components/history/HistoryIcons";
 import { AppSteps } from "@/components/admissions/AppSteps";
 import { Accordion } from "@/components/admissions/Accordion";
+import { RichText } from "@/components/site/RichText";
 import { getTemplateSections } from "@/lib/sections";
 import { sectionDefaults, parseItems, parseLines, isVisible, bgStyle } from "@/lib/templates";
 
@@ -78,9 +79,7 @@ export default async function AdmissionsRequirementsPage() {
           <h1 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-eb-ink lg:text-[52px]">
             {intro.heading}
           </h1>
-          <p className="text-[15px] leading-relaxed text-neutral-600 lg:text-base">
-            {intro.body}
-          </p>
+          <RichText html={intro.body} className="text-[15px] leading-relaxed text-neutral-600 lg:text-base" />
         </div>
         {/* Group photo */}
         {intro.image && (

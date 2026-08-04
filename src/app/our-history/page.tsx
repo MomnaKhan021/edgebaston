@@ -7,6 +7,7 @@ import { Reveal } from "@/components/home/Reveal";
 import { ArrowUpRight } from "@/components/home/icons";
 import { IconBulb, IconUsers, IconGear, IconCrest } from "@/components/history/HistoryIcons";
 import { SharePage } from "@/components/history/SharePage";
+import { RichText } from "@/components/site/RichText";
 import { getTemplateSections } from "@/lib/sections";
 import { sectionDefaults, parseItems, isVisible, bgStyle } from "@/lib/templates";
 
@@ -74,9 +75,7 @@ export default async function OurHistoryPage() {
           <div className="mx-auto max-w-[1320px] px-4 py-8 lg:py-14">
             <div className="eb-stagger mx-auto max-w-2xl text-center">
               <h2 className="text-[24px] font-extrabold tracking-tight text-eb-ink sm:text-3xl lg:text-[40px]">{commitment.heading}</h2>
-              <p className="mt-3 text-[14px] leading-relaxed text-neutral-600 sm:text-[15px]">
-                {commitment.body}
-              </p>
+              <RichText html={commitment.body} className="mt-3 text-[14px] leading-relaxed text-neutral-600 sm:text-[15px]" />
             </div>
             <div className="eb-noscroll -mx-4 mt-7 flex snap-x gap-4 overflow-x-auto px-4 pb-2 sm:mt-10 sm:gap-5 lg:mx-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:px-0">
               {commitCards.map((c, i) => {

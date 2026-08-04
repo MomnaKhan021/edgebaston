@@ -5,6 +5,7 @@ import { SiteNavbar } from "@/components/home/SiteNavbar";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
 import { SharePage } from "@/components/history/SharePage";
+import { RichText } from "@/components/site/RichText";
 import { getTemplateSections } from "@/lib/sections";
 import { sectionDefaults, parseItems, isVisible, bgStyle } from "@/lib/templates";
 
@@ -56,7 +57,7 @@ export default async function FeesPage() {
             <h1 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-eb-ink lg:text-[64px]">
               {intro.heading}
             </h1>
-            <p className="text-[15px] leading-relaxed text-neutral-600 lg:text-base">{intro.body}</p>
+            <RichText html={intro.body} className="text-[15px] leading-relaxed text-neutral-600 lg:text-base" />
           </div>
           {intro.image && (
             <div className="mx-auto max-w-[1440px] px-4 lg:px-16">

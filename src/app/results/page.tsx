@@ -8,6 +8,7 @@ import { ArrowUpRight } from "@/components/home/icons";
 import { SharePage } from "@/components/history/SharePage";
 import { Accordion } from "@/components/admissions/Accordion";
 import { StudentDestinations, type DestinationCard } from "@/components/results/StudentDestinations";
+import { RichText } from "@/components/site/RichText";
 import { getTemplateSections } from "@/lib/sections";
 import { sectionDefaults, parseItems, parseLines, isVisible, bgStyle, num } from "@/lib/templates";
 
@@ -188,8 +189,8 @@ export default async function ResultsPage() {
                     </div>
 
                     <div className="mt-5 max-w-3xl space-y-3 text-[15px] leading-relaxed text-neutral-600">
-                      <p>{summary.body}</p>
-                      {summary.body2 && <p>{summary.body2}</p>}
+                      <RichText html={summary.body} />
+                      <RichText html={summary.body2} />
                     </div>
 
                     {/* Three headline stats */}

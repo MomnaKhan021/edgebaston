@@ -261,6 +261,7 @@ export async function saveSection(formData: FormData) {
     if (field.type === "image" && value.startsWith("data:image/")) {
       value = await compressDataUri(value);
     }
+    if (field.type === "rich") value = await compressInlineImages(value);
     if (field.type === "url") value = redirectUrl(formData, field.name);
     if (field.type === "list") {
       // Keep only the defined item fields and compress uploaded images.

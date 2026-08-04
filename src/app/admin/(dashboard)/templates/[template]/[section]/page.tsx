@@ -9,6 +9,7 @@ import { ImageUpload } from "@/components/admin/ImageUpload";
 import { ColorField } from "@/components/admin/ColorField";
 import { ToggleField } from "@/components/admin/ToggleField";
 import { ListField } from "@/components/admin/ListField";
+import { RichTextEditor } from "@/components/admin/RichTextEditor";
 
 export default async function SectionEditor({
   params,
@@ -78,6 +79,8 @@ export default async function SectionEditor({
               <ListField name={f.name} itemLabel={f.itemLabel} itemFields={f.itemFields ?? []} defaultValue={values[f.name] ?? ""} />
             ) : f.type === "color" ? (
               <ColorField name={f.name} defaultValue={values[f.name] ?? ""} />
+            ) : f.type === "rich" ? (
+              <RichTextEditor name={f.name} defaultValue={values[f.name] ?? ""} />
             ) : f.type === "textarea" ? (
               <Textarea id={f.name} name={f.name} rows={4} defaultValue={values[f.name] ?? ""} />
             ) : (

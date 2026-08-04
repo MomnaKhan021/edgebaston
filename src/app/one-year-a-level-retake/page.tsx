@@ -12,6 +12,7 @@ import { SharePage } from "@/components/site/SharePage";
 import { StorySlider } from "@/components/course/StorySlider";
 import { StoryCard, type Story } from "@/components/course/StoryCard";
 import { FaqList } from "@/components/course/FaqList";
+import { RichText } from "@/components/site/RichText";
 import { getTemplateSections } from "@/lib/sections";
 import { sectionDefaults, parseItems, parseFaqItems, isVisible, bgStyle, num } from "@/lib/templates";
 import {
@@ -250,9 +251,7 @@ export default async function RetakePage() {
                 <h2 className="mt-3 text-[26px] font-extrabold leading-[1.1] tracking-tight text-eb-ink sm:text-3xl lg:mt-4 lg:text-[44px]">
                   {intro.heading}
                 </h2>
-                <p className="mt-5 text-[14px] leading-relaxed text-neutral-600 sm:text-[15px] lg:mt-auto lg:pt-10">
-                  {intro.body}
-                </p>
+                <RichText html={intro.body} className="mt-5 text-[14px] leading-relaxed text-neutral-600 sm:text-[15px] lg:mt-auto lg:pt-10" />
               </div>
             </div>
           </div>
@@ -460,9 +459,7 @@ export default async function RetakePage() {
             <div className="mx-auto max-w-2xl text-center">
               <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-eb-navy sm:text-[13px]">{guidance.eyebrow}</p>
               <h2 className="mt-2 text-[26px] font-extrabold tracking-tight text-eb-ink sm:text-3xl lg:text-[44px]">{guidance.heading}</h2>
-              <p className="mt-3 text-[14px] leading-relaxed text-neutral-600">
-                {guidance.body}
-              </p>
+              <RichText html={guidance.body} className="mt-3 text-[14px] leading-relaxed text-neutral-600" />
             </div>
 
             {/* Desktop: ring · image · ring */}

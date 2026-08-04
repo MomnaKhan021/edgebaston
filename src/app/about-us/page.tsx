@@ -7,6 +7,7 @@ import { Reveal } from "@/components/home/Reveal";
 import { Slider } from "@/components/home/Slider";
 import { ArrowUpRight } from "@/components/home/icons";
 import { InspectionTabs } from "@/components/about/InspectionTabs";
+import { RichText } from "@/components/site/RichText";
 import { getTemplateSections } from "@/lib/sections";
 import { sectionDefaults, parseItems, isVisible, bgStyle } from "@/lib/templates";
 
@@ -94,12 +95,8 @@ export default async function AboutUsPage() {
             </div>
             <div>
               <h2 className="text-3xl font-extrabold tracking-tight text-eb-ink lg:text-[40px]">{principal.heading}</h2>
-              <p className="mt-6 text-[15px] leading-relaxed text-neutral-600">
-                {principal.para1}
-              </p>
-              <p className="mt-4 text-[15px] leading-relaxed text-neutral-600">
-                {principal.para2}
-              </p>
+              <RichText html={principal.para1} className="mt-6 text-[15px] leading-relaxed text-neutral-600" />
+              <RichText html={principal.para2} className="mt-4 text-[15px] leading-relaxed text-neutral-600" />
               {principal.quote && (
               <blockquote className="mt-6 border-l-4 border-eb-blue pl-5 text-lg font-bold text-eb-navy">
                 &ldquo;{principal.quote}&rdquo;
