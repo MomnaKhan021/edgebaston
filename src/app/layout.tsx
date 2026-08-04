@@ -48,7 +48,7 @@ export default async function RootLayout({
     >
       <body className="flex min-h-full flex-col">
         {children}
-        {isVisible(offer) && <OfferBar title={offer.title} message={offer.message} buttonLabel={offer.buttonLabel} buttonUrl={offer.buttonUrl} bgColor={offer.bgColor} />}
+        {isVisible(offer) && <OfferBar title={offer.title} message={offer.message} endDate={offer.endDate} buttonLabel={offer.buttonLabel} buttonUrl={offer.buttonUrl} bgColor={offer.bgColor} />}
       </body>
     </html>
   );

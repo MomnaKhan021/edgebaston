@@ -11,9 +11,22 @@ function nextAugust(now: Date) {
   return now < thisYear ? thisYear : new Date(now.getFullYear() + 1, 7, 1, 0, 0, 0);
 }
 
+/**
+ * Parse the admin "Offer ends" value. Accepts "YYYY-MM-DD HH:MM",
+ * "YYYY-MM-DD" or full ISO; interpreted in the visitor's local time.
+ * Returns null when empty or unparseable so the caller can fall back.
+ */
+function parseEndDate(value?: string): Date | null {
+  const raw = (value ?? "").trim();
+  if (!raw) return null;
+  const iso = raw.replace(" ", "T");
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? null : d;
+}
+
 type T = { d: number; h: number; m: number; s: number };
-function remaining(now: Date): T {
-  let ms = nextAugust(now).getTime() - now.getTime();
+function remaining(now: Date, target: Date): T {
+  let ms = target.getTime() - now.getTime();
   if (ms < 0) ms = 0;
   const d = Math.floor(ms / 86400000);
   const h = Math.floor((ms % 86400000) / 3600000);
@@ -66,12 +79,14 @@ export function OfferBar({
   bgColor = "",
   title = "August Offer",
   message = "30% off course fees for the first 5 eligible applicants only.",
+  endDate = "",
   buttonLabel = "Enquire About Course",
   buttonUrl = "/contact",
 }: {
   bgColor?: string;
   title?: string;
   message?: string;
+  endDate?: string;
   buttonLabel?: string;
   buttonUrl?: string;
 }) {
@@ -83,11 +98,14 @@ export function OfferBar({
   useEffect(() => {
     setMounted(true);
     setOpen(sessionStorage.getItem("eb-offer-dismissed") !== "1");
-    const tick = () => setT(remaining(new Date()));
+    const tick = () => {
+      const now = new Date();
+      setT(remaining(now, parseEndDate(endDate) ?? nextAugust(now)));
+    };
     tick();
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
-  }, []);
+  }, [endDate]);
 
   if (!mounted || !open || !message) return null;
   if (pathname?.startsWith("/admin")) return null;
