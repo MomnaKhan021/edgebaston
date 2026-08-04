@@ -1,20 +1,26 @@
 import Link from "next/link";
 import { TEMPLATES } from "@/lib/templates";
 import { db } from "@/lib/db";
-import { IconTemplates } from "@/components/admin/icons";
+import { INSTANCE_TEMPLATES } from "@/lib/templateInstances";
+import { createPageFromTemplate } from "@/app/admin/actions";
+import { IconTemplates, IconExternal } from "@/components/admin/icons";
 import { DuplicatePanel } from "@/components/admin/DuplicatePanel";
+import { SubmitButton } from "@/components/admin/ui";
 
 export default async function TemplatesAdmin({
   searchParams,
 }: {
-  searchParams: Promise<{ copied?: string; name?: string }>;
+  searchParams: Promise<{ copied?: string; name?: string; created?: string }>;
 }) {
-  const { copied, name } = await searchParams;
+  const { copied, name, created } = await searchParams;
 
   // Courses and custom pages join the designed-page templates in the copy tool.
-  const [courses, pages] = await Promise.all([
+  const [courses, pages, instancePages] = await Promise.all([
     db.course.findMany({ orderBy: { order: "asc" }, select: { id: true, title: true } }).catch(() => []),
     db.page.findMany({ orderBy: { order: "asc" }, select: { id: true, title: true } }).catch(() => []),
+    db.page
+      .findMany({ where: { NOT: { templateKey: "" } }, orderBy: { updatedAt: "desc" }, select: { id: true, title: true, slug: true, templateKey: true } })
+      .catch(() => []),
   ]);
 
   const groups = [
@@ -26,6 +32,9 @@ export default async function TemplatesAdmin({
       ? [{ label: "Custom pages", options: pages.map((p) => ({ value: `page:${p.id}`, name: p.title })) }]
       : []),
   ];
+
+  const templateName = (key: string) => INSTANCE_TEMPLATES.find((t) => t.key === key)?.name ?? key;
+  const select = "min-w-[220px] rounded-lg border bg-background px-3 py-2 text-sm outline-none focus:border-eb-blue";
 
   return (
     <div>
@@ -50,6 +59,12 @@ export default async function TemplatesAdmin({
         </div>
       ) : null}
 
+      {created === "invalid" && (
+        <div className="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+          Please enter a page name and pick a template to create from.
+        </div>
+      )}
+
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {TEMPLATES.map((t) => (
           <Link
@@ -71,7 +86,69 @@ export default async function TemplatesAdmin({
         ))}
       </div>
 
-      <div className="mt-8">
+      {/* Create a new page from a template */}
+      <div className="mt-8 rounded-2xl border bg-background p-5 shadow-sm">
+        <h2 className="text-sm font-bold text-eb-navy">Create a new page from a template</h2>
+        <p className="mt-1 text-xs text-muted-foreground">
+          Makes a brand-new page that uses a designed template&apos;s layout, pre-filled with a copy of its
+          current content. The new page lives at its own URL and is edited independently — the original is untouched.
+        </p>
+        <form action={createPageFromTemplate} className="mt-4 flex flex-wrap items-end gap-3">
+          <label className="flex flex-col gap-1">
+            <span className="text-xs font-semibold text-muted-foreground">Template</span>
+            <select name="template" defaultValue={INSTANCE_TEMPLATES[0]?.key} className={select}>
+              {INSTANCE_TEMPLATES.map((t) => (
+                <option key={t.key} value={t.key}>{t.name}</option>
+              ))}
+            </select>
+          </label>
+          <label className="flex flex-col gap-1">
+            <span className="text-xs font-semibold text-muted-foreground">New page name</span>
+            <input name="title" required placeholder="e.g. Online One Year Retake" className={select} />
+          </label>
+          <label className="flex flex-col gap-1">
+            <span className="text-xs font-semibold text-muted-foreground">URL slug (optional)</span>
+            <input name="slug" placeholder="auto from name" className={select} />
+          </label>
+          <SubmitButton>Create page</SubmitButton>
+        </form>
+      </div>
+
+      {/* Pages built from templates */}
+      {instancePages.length > 0 && (
+        <div className="mt-6 rounded-2xl border bg-background p-5 shadow-sm">
+          <h2 className="text-sm font-bold text-eb-navy">Pages built from templates</h2>
+          <ul className="mt-3 divide-y">
+            {instancePages.map((p) => (
+              <li key={p.id} className="flex flex-wrap items-center justify-between gap-3 py-3">
+                <div>
+                  <div className="font-medium text-eb-navy">{p.title}</div>
+                  <div className="text-xs text-muted-foreground">
+                    {templateName(p.templateKey)} · /{p.slug}
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Link
+                    href={`/admin/templates/inst_${p.id}`}
+                    className="rounded-lg border px-3 py-1.5 text-xs font-semibold text-eb-navy hover:bg-eb-cream"
+                  >
+                    Edit sections
+                  </Link>
+                  <Link
+                    href={`/${p.slug}`}
+                    target="_blank"
+                    className="inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-semibold text-eb-navy hover:bg-eb-cream"
+                  >
+                    View live <IconExternal className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <div className="mt-6">
         <DuplicatePanel groups={groups} />
       </div>
     </div>

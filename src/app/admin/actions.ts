@@ -239,10 +239,20 @@ export async function saveSettings(formData: FormData) {
 export async function saveSection(formData: FormData) {
   await assertAuth();
   const { getSectionDef } = await import("@/lib/templates");
+  const { instancePageId } = await import("@/lib/templateInstances");
 
   const template = str(formData, "_template");
   const key = str(formData, "_section");
-  const def = getSectionDef(template, key);
+  // For a template-backed page, rows live under "inst_<id>" but the field
+  // definitions come from its base template.
+  const pageId = instancePageId(template);
+  let baseKey = template;
+  if (pageId) {
+    const pg = await db.page.findUnique({ where: { id: pageId } });
+    if (!pg) throw new Error("Unknown page");
+    baseKey = pg.templateKey;
+  }
+  const def = getSectionDef(baseKey, key);
   if (!def) throw new Error("Unknown section");
 
   const data: Record<string, string> = {};
@@ -362,4 +372,36 @@ export async function duplicateTemplate(formData: FormData) {
   revalidateTag("sections", "max");
   revalidatePath("/", "layout");
   redirect(`/admin/templates?copied=${copied}&name=${encodeURIComponent(name)}`);
+}
+
+/**
+ * Create a brand-new page from a designed template. The new Page renders that
+ * template's layout at its own slug, pre-filled with a copy of the template's
+ * current content (stored under the "inst_<id>" namespace) that can then be
+ * edited independently.
+ */
+export async function createPageFromTemplate(formData: FormData) {
+  await assertAuth();
+  const { canInstance, instanceNamespace } = await import("@/lib/templateInstances");
+  const templateKey = str(formData, "template");
+  const title = str(formData, "title").trim();
+  if (!title || !canInstance(templateKey)) {
+    redirect("/admin/templates?created=invalid");
+  }
+
+  const slug = await uniqueSlug("page", str(formData, "slug").trim() || title);
+  const page = await db.page.create({
+    data: { title, slug, templateKey, published: true },
+  });
+
+  // Seed the new page's content with a copy of the template's current content.
+  const ns = instanceNamespace(page.id);
+  const rows = await db.templateSection.findMany({ where: { template: templateKey } });
+  for (const r of rows) {
+    await db.templateSection.create({ data: { template: ns, key: r.key, data: r.data } });
+  }
+
+  revalidateTag("sections", "max");
+  revalidatePath("/", "layout");
+  redirect(`/admin/templates/${ns}?created=1`);
 }

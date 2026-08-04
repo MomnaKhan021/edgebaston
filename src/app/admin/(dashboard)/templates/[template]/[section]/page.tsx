@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
 import { getSectionDef, getTemplateDef } from "@/lib/templates";
+import { instancePageId } from "@/lib/templateInstances";
 import { saveSection } from "@/app/admin/actions";
 import { Field, Input, Textarea, SubmitButton } from "@/components/admin/ui";
 import { ImageUpload } from "@/components/admin/ImageUpload";
@@ -15,8 +16,19 @@ export default async function SectionEditor({
   params: Promise<{ template: string; section: string }>;
 }) {
   const { template, section } = await params;
-  const templateDef = getTemplateDef(template);
-  const def = getSectionDef(template, section);
+  // Template-backed page (inst_<id>): field defs come from the base template,
+  // but content is read/written under the "inst_<id>" namespace (= `template`).
+  const pageId = instancePageId(template);
+  let baseKey = template;
+  let templateName: string | undefined;
+  if (pageId) {
+    const pg = await db.page.findUnique({ where: { id: pageId } }).catch(() => null);
+    if (!pg) notFound();
+    baseKey = pg.templateKey;
+    templateName = pg.title;
+  }
+  const templateDef = getTemplateDef(baseKey);
+  const def = getSectionDef(baseKey, section);
   if (!templateDef || !def) notFound();
 
   // Read the saved row directly (fresh, not via the public cache).
@@ -44,7 +56,7 @@ export default async function SectionEditor({
         <div className="text-xs text-muted-foreground">
           <Link href="/admin/templates" className="hover:text-eb-navy">Templates</Link>
           <span className="px-1.5">/</span>
-          <Link href={`/admin/templates/${template}`} className="hover:text-eb-navy">{templateDef.name}</Link>
+          <Link href={`/admin/templates/${template}`} className="hover:text-eb-navy">{templateName ?? templateDef.name}</Link>
           <span className="px-1.5">/</span>
           {def.name}
         </div>

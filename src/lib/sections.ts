@@ -1,5 +1,25 @@
+import { AsyncLocalStorage } from "node:async_hooks";
 import { db } from "@/lib/db";
 import { getTemplateDef, getSectionDef } from "@/lib/templates";
+
+/**
+ * Per-request override that lets a duplicated page render a designed template
+ * with its OWN saved content. Maps a base template key (e.g. "retake") to the
+ * DB namespace its rows live under (e.g. "inst_<pageId>"). Field definitions
+ * and defaults still come from the base template; only the stored rows differ.
+ */
+const nsStore = new AsyncLocalStorage<Record<string, string>>();
+
+/** Run `fn` (typically a rendered page) with template→namespace overrides active. */
+export function withSectionNamespace<T>(map: Record<string, string>, fn: () => T): T {
+  return nsStore.run(map, fn);
+}
+
+/** Which DB template string to read rows from for a given base key. */
+function rowsTemplate(baseKey: string): string {
+  const map = nsStore.getStore();
+  return (map && map[baseKey]) || baseKey;
+}
 
 // Read a template's saved rows fresh on every render. Pages that use this are
 // already `force-dynamic`, so there is no caching layer between an admin save
@@ -27,7 +47,7 @@ export async function getTemplateSections(template: string): Promise<Record<stri
   if (!def) return {};
   let rows: { key: string; data: string }[] = [];
   try {
-    rows = await readTemplateRows(template);
+    rows = await readTemplateRows(rowsTemplate(template));
   } catch {
     rows = [];
   }

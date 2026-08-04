@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
+import type { ReactElement } from "react";
 import { notFound, redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { excerpt } from "@/lib/utils";
+import { withSectionNamespace } from "@/lib/sections";
+import { canInstance, getInstanceRenderer, instanceNamespace } from "@/lib/templateInstances";
 
 /** Join the catch-all segments back into a stored slug, e.g. ["guard","course"] → "guard/course". */
 function joinSlug(segments: string[]): string {
@@ -29,6 +32,18 @@ export default async function DynamicPage({
 
   if (!page || !page.published) notFound();
   if (page.redirectUrl) redirect(page.redirectUrl);
+
+  // Template-backed page: render the designed layout with this page's own
+  // content (read from the "inst_<id>" namespace via the async-context override).
+  if (page.templateKey && canInstance(page.templateKey)) {
+    const load = getInstanceRenderer(page.templateKey)!;
+    const mod = await load();
+    const rendered = await withSectionNamespace(
+      { [page.templateKey]: instanceNamespace(page.id) },
+      () => mod.default({}),
+    );
+    return rendered as ReactElement;
+  }
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">

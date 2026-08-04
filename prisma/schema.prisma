@@ -74,6 +74,7 @@ model Page {
   title       String
   slug        String   @unique
   content     String   @default("") // rich-text HTML
+  templateKey String   @default("") // if set, the page renders this designed template (its content lives under "inst_<id>")
   redirectUrl String   @default("") // if set, the public page 307-redirects here
   showInNav   Boolean  @default(false)
   published   Boolean  @default(true)

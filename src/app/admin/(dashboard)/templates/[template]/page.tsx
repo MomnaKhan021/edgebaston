@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
 import { getTemplateDef } from "@/lib/templates";
+import { instancePageId } from "@/lib/templateInstances";
 import { IconExternal } from "@/components/admin/icons";
 
 export default async function TemplateSectionsAdmin({
@@ -9,12 +10,33 @@ export default async function TemplateSectionsAdmin({
   searchParams,
 }: {
   params: Promise<{ template: string }>;
-  searchParams: Promise<{ saved?: string }>;
+  searchParams: Promise<{ saved?: string; created?: string }>;
 }) {
   const { template } = await params;
-  const { saved } = await searchParams;
-  const def = getTemplateDef(template);
-  if (!def) notFound();
+  const { saved, created } = await searchParams;
+
+  // A template-backed page (inst_<id>) uses its base template's field defs but
+  // its own title, live URL and stored content namespace.
+  const pageId = instancePageId(template);
+  let title: string;
+  let description: string;
+  let liveHref: string;
+  let def: ReturnType<typeof getTemplateDef>;
+  if (pageId) {
+    const pg = await db.page.findUnique({ where: { id: pageId } }).catch(() => null);
+    if (!pg) notFound();
+    def = getTemplateDef(pg.templateKey);
+    if (!def) notFound();
+    title = pg.title;
+    description = `Page built from the ${def.name} template. Edit its sections below.`;
+    liveHref = `/${pg.slug}`;
+  } else {
+    def = getTemplateDef(template);
+    if (!def) notFound();
+    title = def.name;
+    description = def.description;
+    liveHref = template === "home" ? "/" : `/${template}`;
+  }
 
   const rows = await db.templateSection
     .findMany({ where: { template } })
@@ -28,19 +50,25 @@ export default async function TemplateSectionsAdmin({
           <div className="text-xs text-muted-foreground">
             <Link href="/admin/templates" className="hover:text-eb-navy">Templates</Link>
             <span className="px-1.5">/</span>
-            {def.name}
+            {title}
           </div>
-          <h1 className="mt-1 text-2xl font-bold text-eb-navy">{def.name}</h1>
-          <p className="text-sm text-muted-foreground">{def.description}</p>
+          <h1 className="mt-1 text-2xl font-bold text-eb-navy">{title}</h1>
+          <p className="text-sm text-muted-foreground">{description}</p>
         </div>
         <Link
-          href={template === "home" ? "/" : `/${template}`}
+          href={liveHref}
           target="_blank"
           className="inline-flex shrink-0 items-center gap-2 rounded-lg border px-4 py-2 text-sm font-semibold text-eb-navy transition hover:bg-eb-cream"
         >
           View live <IconExternal className="h-4 w-4" />
         </Link>
       </div>
+
+      {created && (
+        <div className="mb-5 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800">
+          Page created from the template. Edit any section below, or view it live — changes publish instantly.
+        </div>
+      )}
 
       {saved && (
         <div className="mb-5 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800">
