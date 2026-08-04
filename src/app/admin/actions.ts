@@ -300,49 +300,72 @@ export async function saveSection(formData: FormData) {
   redirect(`/admin/templates/${template}?saved=${key}`);
 }
 
-/** Copy the saved content of one page's template onto another existing page. */
+/**
+ * Copy saved content between two items. Values are "<type>:<id>":
+ *   template:<key>  — a designed page template
+ *   inst:<pageId>   — a page built from a template (section content in inst_<id>)
+ *   course:<id>     — a course
+ *   page:<id>       — a plain rich-text page
+ * Section-based items (template + inst) copy with each other; courses copy with
+ * courses; plain pages copy with plain pages. Anything else is a mismatch.
+ */
 export async function duplicateTemplate(formData: FormData) {
   await assertAuth();
+  const { getTemplateDef } = await import("@/lib/templates");
+  const { instanceNamespace } = await import("@/lib/templateInstances");
   const from = str(formData, "from");
   const to = str(formData, "to");
   if (!from || !to || from === to) redirect("/admin/templates?copied=invalid");
 
-  // Values are "<type>:<id>" — template:<key>, course:<id> or page:<id>.
-  const [fromType, ...fromRest] = from.split(":");
-  const [toType, ...toRest] = to.split(":");
-  const fromId = fromRest.join(":");
-  const toId = toRest.join(":");
-  // Content only copies between two items of the same type.
-  if (fromType !== toType) redirect("/admin/templates?copied=mismatch");
+  const split = (v: string) => {
+    const [type, ...rest] = v.split(":");
+    return { type, id: rest.join(":") };
+  };
+  const family = (type: string) =>
+    type === "template" || type === "inst" ? "section" : type;
+
+  const a = split(from);
+  const b = split(to);
+  if (family(a.type) !== family(b.type)) redirect("/admin/templates?copied=mismatch");
+
+  // Resolve a section-based item to its base template def + DB namespace + name.
+  const resolveSection = async (item: { type: string; id: string }) => {
+    if (item.type === "template") {
+      const def = getTemplateDef(item.id);
+      return def ? { def, ns: item.id, name: def.name } : null;
+    }
+    const pg = await db.page.findUnique({ where: { id: item.id } });
+    if (!pg) return null;
+    const def = getTemplateDef(pg.templateKey);
+    return def ? { def, ns: instanceNamespace(pg.id), name: pg.title } : null;
+  };
 
   let copied = 0;
   let name = "";
 
-  if (fromType === "template") {
-    const { getTemplateDef } = await import("@/lib/templates");
-    const fromDef = getTemplateDef(fromId);
-    const toDef = getTemplateDef(toId);
-    if (!fromDef || !toDef) redirect("/admin/templates?copied=invalid");
-    name = toDef.name;
-    // Only copy sections that also exist on the target page (matching keys).
-    const toKeys = new Set(toDef.sections.map((s) => s.key));
-    const rows = await db.templateSection.findMany({ where: { template: fromId } });
+  if (family(a.type) === "section") {
+    const src = await resolveSection(a);
+    const tgt = await resolveSection(b);
+    if (!src || !tgt) redirect("/admin/templates?copied=invalid");
+    name = tgt.name;
+    // Only copy sections that also exist on the target (matching keys).
+    const toKeys = new Set(tgt.def.sections.map((s) => s.key));
+    const rows = await db.templateSection.findMany({ where: { template: src.ns } });
     for (const r of rows) {
       if (!toKeys.has(r.key)) continue;
       await db.templateSection.upsert({
-        where: { template_key: { template: toId, key: r.key } },
+        where: { template_key: { template: tgt.ns, key: r.key } },
         update: { data: r.data },
-        create: { template: toId, key: r.key, data: r.data },
+        create: { template: tgt.ns, key: r.key, data: r.data },
       });
       copied++;
     }
-  } else if (fromType === "course") {
-    const src = await db.course.findUnique({ where: { id: fromId } });
-    const tgt = await db.course.findUnique({ where: { id: toId } });
+  } else if (a.type === "course") {
+    const src = await db.course.findUnique({ where: { id: a.id } });
+    const tgt = await db.course.findUnique({ where: { id: b.id } });
     if (!src || !tgt) redirect("/admin/templates?copied=invalid");
-    // Copy the content fields; leave the target's identity (slug/title/order) intact.
     await db.course.update({
-      where: { id: toId },
+      where: { id: b.id },
       data: {
         category: src.category,
         level: src.level,
@@ -355,12 +378,12 @@ export async function duplicateTemplate(formData: FormData) {
     });
     copied = 1;
     name = tgt.title;
-  } else if (fromType === "page") {
-    const src = await db.page.findUnique({ where: { id: fromId } });
-    const tgt = await db.page.findUnique({ where: { id: toId } });
+  } else if (a.type === "page") {
+    const src = await db.page.findUnique({ where: { id: a.id } });
+    const tgt = await db.page.findUnique({ where: { id: b.id } });
     if (!src || !tgt) redirect("/admin/templates?copied=invalid");
     await db.page.update({
-      where: { id: toId },
+      where: { id: b.id },
       data: { content: src.content, redirectUrl: src.redirectUrl },
     });
     copied = 1;

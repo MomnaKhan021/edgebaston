@@ -14,22 +14,26 @@ export default async function TemplatesAdmin({
 }) {
   const { copied, name, created } = await searchParams;
 
-  // Courses and custom pages join the designed-page templates in the copy tool.
-  const [courses, pages, instancePages] = await Promise.all([
+  // Courses and every page join the designed-page templates in the copy tool.
+  const [courses, allPages] = await Promise.all([
     db.course.findMany({ orderBy: { order: "asc" }, select: { id: true, title: true } }).catch(() => []),
-    db.page.findMany({ orderBy: { order: "asc" }, select: { id: true, title: true } }).catch(() => []),
     db.page
-      .findMany({ where: { NOT: { templateKey: "" } }, orderBy: { updatedAt: "desc" }, select: { id: true, title: true, slug: true, templateKey: true } })
+      .findMany({ orderBy: { order: "asc" }, select: { id: true, title: true, slug: true, templateKey: true } })
       .catch(() => []),
   ]);
+  const plainPages = allPages.filter((p) => !p.templateKey);
+  const instancePages = allPages.filter((p) => p.templateKey);
 
   const groups = [
     { label: "Designed pages", options: TEMPLATES.map((t) => ({ value: `template:${t.key}`, name: t.name })) },
+    ...(instancePages.length
+      ? [{ label: "Pages built from templates", options: instancePages.map((p) => ({ value: `inst:${p.id}`, name: p.title })) }]
+      : []),
     ...(courses.length
       ? [{ label: "Courses", options: courses.map((c) => ({ value: `course:${c.id}`, name: c.title })) }]
       : []),
-    ...(pages.length
-      ? [{ label: "Custom pages", options: pages.map((p) => ({ value: `page:${p.id}`, name: p.title })) }]
+    ...(plainPages.length
+      ? [{ label: "Custom pages", options: plainPages.map((p) => ({ value: `page:${p.id}`, name: p.title })) }]
       : []),
   ];
 

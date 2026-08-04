@@ -19,8 +19,13 @@ export function DuplicatePanel({ groups }: { groups: Group[] }) {
   const select =
     "min-w-[220px] rounded-lg border bg-background px-3 py-2 text-sm outline-none focus:border-eb-blue";
 
-  // Same type = same prefix before the ":" (template / course / page).
-  const sameType = from.split(":")[0] === to.split(":")[0];
+  // Copy families: designed pages + pages built from templates share sections
+  // ("section"); courses and plain custom pages copy within their own kind.
+  const family = (v: string) => {
+    const type = v.split(":")[0];
+    return type === "template" || type === "inst" ? "section" : type;
+  };
+  const sameType = family(from) === family(to);
   const disabled = from === to || !sameType;
 
   const renderOptions = () =>
@@ -36,9 +41,9 @@ export function DuplicatePanel({ groups }: { groups: Group[] }) {
     <form action={duplicateTemplate} className="rounded-2xl border bg-background p-5 shadow-sm">
       <h2 className="text-sm font-bold text-eb-navy">Copy content between items</h2>
       <p className="mt-1 text-xs text-muted-foreground">
-        Copies the saved content of one item onto another of the <strong>same type</strong> — page → page,
-        course → course, or custom page → custom page. For designed pages, only sections both pages share are
-        copied. The target is overwritten; this can&apos;t be undone.
+        Copies saved content between two items of the same kind — designed pages and pages built from
+        templates copy with each other; courses copy with courses; custom pages with custom pages. Only
+        sections both share are copied. The target is overwritten; this can&apos;t be undone.
       </p>
       <div className="mt-4 flex flex-wrap items-end gap-3">
         <label className="flex flex-col gap-1">
