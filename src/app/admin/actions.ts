@@ -293,31 +293,73 @@ export async function saveSection(formData: FormData) {
 /** Copy the saved content of one page's template onto another existing page. */
 export async function duplicateTemplate(formData: FormData) {
   await assertAuth();
-  const { getTemplateDef } = await import("@/lib/templates");
   const from = str(formData, "from");
   const to = str(formData, "to");
-  const fromDef = getTemplateDef(from);
-  const toDef = getTemplateDef(to);
-  if (!fromDef || !toDef || from === to) {
-    redirect("/admin/templates?copied=invalid");
-  }
+  if (!from || !to || from === to) redirect("/admin/templates?copied=invalid");
 
-  // Only copy sections that also exist on the target page, so nothing junk is
-  // written. Matching sections (same key) receive the source's saved content.
-  const toKeys = new Set(toDef.sections.map((s) => s.key));
-  const rows = await db.templateSection.findMany({ where: { template: from } });
+  // Values are "<type>:<id>" — template:<key>, course:<id> or page:<id>.
+  const [fromType, ...fromRest] = from.split(":");
+  const [toType, ...toRest] = to.split(":");
+  const fromId = fromRest.join(":");
+  const toId = toRest.join(":");
+  // Content only copies between two items of the same type.
+  if (fromType !== toType) redirect("/admin/templates?copied=mismatch");
+
   let copied = 0;
-  for (const r of rows) {
-    if (!toKeys.has(r.key)) continue;
-    await db.templateSection.upsert({
-      where: { template_key: { template: to, key: r.key } },
-      update: { data: r.data },
-      create: { template: to, key: r.key, data: r.data },
+  let name = "";
+
+  if (fromType === "template") {
+    const { getTemplateDef } = await import("@/lib/templates");
+    const fromDef = getTemplateDef(fromId);
+    const toDef = getTemplateDef(toId);
+    if (!fromDef || !toDef) redirect("/admin/templates?copied=invalid");
+    name = toDef.name;
+    // Only copy sections that also exist on the target page (matching keys).
+    const toKeys = new Set(toDef.sections.map((s) => s.key));
+    const rows = await db.templateSection.findMany({ where: { template: fromId } });
+    for (const r of rows) {
+      if (!toKeys.has(r.key)) continue;
+      await db.templateSection.upsert({
+        where: { template_key: { template: toId, key: r.key } },
+        update: { data: r.data },
+        create: { template: toId, key: r.key, data: r.data },
+      });
+      copied++;
+    }
+  } else if (fromType === "course") {
+    const src = await db.course.findUnique({ where: { id: fromId } });
+    const tgt = await db.course.findUnique({ where: { id: toId } });
+    if (!src || !tgt) redirect("/admin/templates?copied=invalid");
+    // Copy the content fields; leave the target's identity (slug/title/order) intact.
+    await db.course.update({
+      where: { id: toId },
+      data: {
+        category: src.category,
+        level: src.level,
+        duration: src.duration,
+        fee: src.fee,
+        summary: src.summary,
+        content: src.content,
+        imageUrl: src.imageUrl,
+      },
     });
-    copied++;
+    copied = 1;
+    name = tgt.title;
+  } else if (fromType === "page") {
+    const src = await db.page.findUnique({ where: { id: fromId } });
+    const tgt = await db.page.findUnique({ where: { id: toId } });
+    if (!src || !tgt) redirect("/admin/templates?copied=invalid");
+    await db.page.update({
+      where: { id: toId },
+      data: { content: src.content, redirectUrl: src.redirectUrl },
+    });
+    copied = 1;
+    name = tgt.title;
+  } else {
+    redirect("/admin/templates?copied=invalid");
   }
 
   revalidateTag("sections", "max");
   revalidatePath("/", "layout");
-  redirect(`/admin/templates?copied=${copied}&to=${to}`);
+  redirect(`/admin/templates?copied=${copied}&name=${encodeURIComponent(name)}`);
 }

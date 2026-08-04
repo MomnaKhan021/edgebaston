@@ -1,15 +1,32 @@
 import Link from "next/link";
 import { TEMPLATES } from "@/lib/templates";
+import { db } from "@/lib/db";
 import { IconTemplates } from "@/components/admin/icons";
 import { DuplicatePanel } from "@/components/admin/DuplicatePanel";
 
 export default async function TemplatesAdmin({
   searchParams,
 }: {
-  searchParams: Promise<{ copied?: string; to?: string }>;
+  searchParams: Promise<{ copied?: string; name?: string }>;
 }) {
-  const { copied, to } = await searchParams;
-  const toName = TEMPLATES.find((t) => t.key === to)?.name;
+  const { copied, name } = await searchParams;
+
+  // Courses and custom pages join the designed-page templates in the copy tool.
+  const [courses, pages] = await Promise.all([
+    db.course.findMany({ orderBy: { order: "asc" }, select: { id: true, title: true } }).catch(() => []),
+    db.page.findMany({ orderBy: { order: "asc" }, select: { id: true, title: true } }).catch(() => []),
+  ]);
+
+  const groups = [
+    { label: "Designed pages", options: TEMPLATES.map((t) => ({ value: `template:${t.key}`, name: t.name })) },
+    ...(courses.length
+      ? [{ label: "Courses", options: courses.map((c) => ({ value: `course:${c.id}`, name: c.title })) }]
+      : []),
+    ...(pages.length
+      ? [{ label: "Custom pages", options: pages.map((p) => ({ value: `page:${p.id}`, name: p.title })) }]
+      : []),
+  ];
+
   return (
     <div>
       <div className="mb-6">
@@ -21,11 +38,15 @@ export default async function TemplatesAdmin({
 
       {copied === "invalid" ? (
         <div className="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
-          Please choose two different pages to copy between.
+          Please choose two different items to copy between.
+        </div>
+      ) : copied === "mismatch" ? (
+        <div className="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+          You can only copy between two items of the same type — page → page, course → course, or custom page → custom page.
         </div>
       ) : copied ? (
         <div className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-700">
-          Copied {copied} section{copied === "1" ? "" : "s"}{toName ? ` to ${toName}` : ""}. The changes are live now.
+          Copied content{name ? ` to ${name}` : ""}. The changes are live now.
         </div>
       ) : null}
 
@@ -51,7 +72,7 @@ export default async function TemplatesAdmin({
       </div>
 
       <div className="mt-8">
-        <DuplicatePanel templates={TEMPLATES.map((t) => ({ key: t.key, name: t.name }))} />
+        <DuplicatePanel groups={groups} />
       </div>
     </div>
   );

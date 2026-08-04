@@ -17,32 +17,52 @@ export const metadata: Metadata = {
     "Edgbaston College A-Level results and university destinations — outstanding grades, subject excellence and where our students progress.",
 };
 
-/** A person icon; `filled` colours it blue, otherwise a faint navy. */
+/** A person icon; `filled` colours it blue, otherwise solid navy. */
 function Person({ filled }: { filled: boolean }) {
   return (
-    <svg viewBox="0 0 24 24" className={"h-5 w-5 " + (filled ? "text-eb-blue" : "text-eb-navy/15")} fill="currentColor" aria-hidden>
-      <circle cx="12" cy="7" r="4" />
-      <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8v1H4v-1Z" />
+    <svg viewBox="0 0 24 24" className={"h-6 w-6 " + (filled ? "text-eb-blue" : "text-eb-navy")} fill="currentColor" aria-hidden>
+      <circle cx="12" cy="6.5" r="3.5" />
+      <path d="M5 21c0-4 3.1-7 7-7s7 3 7 7v.5H5V21Z" />
     </svg>
   );
 }
 
-/** Desktop pictograph: 20 people, a share of them filled to the percentage. */
+/** Pictograph highlight: a bold label, 20 people filled to the percentage, big blue figure. */
 function PeopleStat({ value, label }: { value: number; label: string }) {
   const total = 20;
   const filled = Math.round((value / 100) * total);
   return (
-    <div>
-      <div className="grid max-w-[280px] grid-cols-10 gap-1.5">
+    <div className="rounded-2xl bg-white p-6 ring-1 ring-black/5">
+      <p className="text-sm font-bold text-eb-navy">{label}</p>
+      <div className="mt-5 grid max-w-[300px] grid-cols-10 gap-1.5">
         {Array.from({ length: total }).map((_, i) => (
           <Person key={i} filled={i < filled} />
         ))}
       </div>
-      <p className="mt-5 text-5xl font-extrabold text-eb-navy lg:text-6xl">
-        {value % 1 === 0 ? value : value.toFixed(1)}<span className="text-eb-blue">%</span>
+      <p className="mt-6 text-6xl font-extrabold leading-none text-eb-blue lg:text-7xl">
+        {value % 1 === 0 ? value : value.toFixed(1)}<span className="text-3xl align-top lg:text-4xl">%</span>
       </p>
-      <p className="mt-2 max-w-[260px] text-sm leading-snug text-neutral-600">{label}</p>
     </div>
+  );
+}
+
+/** Small outline icons for the subject rows. */
+const SUBJECT_ICONS = [
+  // Leaf (Biology)
+  (c: string) => (<svg viewBox="0 0 24 24" className={c} fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M5 19c0-8 5-13 14-13 0 9-5 14-13 14M5 19c3-5 6-7 10-9" /></svg>),
+  // Flask (Chemistry)
+  (c: string) => (<svg viewBox="0 0 24 24" className={c} fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 18l-5-9V3M7.5 15h9" /></svg>),
+  // Sigma (Mathematics)
+  (c: string) => (<svg viewBox="0 0 24 24" className={c} fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M17 5H7l5 7-5 7h10" /></svg>),
+];
+
+/** Small PDF/document glyph for the success-story card. */
+function PdfIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z" />
+      <path d="M14 3v5h5" />
+    </svg>
   );
 }
 
@@ -137,109 +157,106 @@ export default async function ResultsPage() {
         </section>
       )}
 
-      {/* Results summary */}
-      {isVisible(summary) && (
+      {/* Results detail — one light container holding summary, subjects and destinations */}
+      {(isVisible(summary) || isVisible(subjectsSec) || isVisible(destinations)) && (
         <Reveal>
-          <section className="bg-white" style={bgStyle(summary)}>
+          <section className="bg-white">
             <div className="mx-auto max-w-[1320px] px-4 py-10 lg:px-16 lg:py-14">
-              <div className="rounded-3xl bg-eb-cream p-5 sm:p-8 lg:p-10">
-                <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-                  <div className="max-w-2xl">
-                    <p className="font-mono text-sm uppercase tracking-[0.14em] text-eb-navy/60">{summary.eyebrow}</p>
-                    <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-eb-ink lg:text-[40px]">{summary.heading}</h2>
-                  </div>
-                  {/* Success-story card */}
-                  <div className="flex items-center gap-3 rounded-2xl bg-white p-3 shadow-sm ring-1 ring-black/5">
-                    {summary.storyImage && (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={summary.storyImage} alt="" className="h-12 w-12 rounded-xl object-cover" loading="lazy" decoding="async" />
-                    )}
-                    <div>
-                      <p className="font-mono text-[11px] uppercase tracking-wide text-eb-navy/50">{summary.storyLabel}</p>
-                      {summary.storyLinkUrl && (
-                        <Link href={summary.storyLinkUrl} className="inline-flex items-center gap-1.5 text-sm font-bold text-eb-navy hover:text-eb-blue">
-                          {summary.storyLinkLabel}
-                          <ArrowUpRight className="h-4 w-4 text-eb-blue" />
-                        </Link>
-                      )}
-                    </div>
-                  </div>
-                </div>
+              <div className="space-y-6 rounded-[28px] bg-eb-cream p-4 sm:p-6 lg:p-8" style={bgStyle(summary)}>
 
-                <p className="mt-5 max-w-3xl text-[15px] leading-relaxed text-neutral-600">{summary.body}</p>
-
-                {/* Three headline stats */}
-                <div className="mt-8 grid gap-4 sm:grid-cols-3">
-                  {stats.map((st, i) => (
-                    <div key={i} className="rounded-2xl bg-white p-6 text-center shadow-sm ring-1 ring-black/5">
-                      <p className="text-4xl font-extrabold text-eb-navy lg:text-5xl">
-                        {num(st.value, 0)}<span className="text-eb-blue">%</span>
-                      </p>
-                      <p className="mt-2 text-[13px] leading-snug text-neutral-600">{st.label}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
-        </Reveal>
-      )}
-
-      {/* Subject excellence + grades gained */}
-      {isVisible(subjectsSec) && (
-        <Reveal>
-          <section className="bg-white" style={bgStyle(subjectsSec)}>
-            <div className="mx-auto grid max-w-[1320px] gap-6 px-4 pb-10 lg:grid-cols-[1.6fr_1fr] lg:items-stretch lg:px-16 lg:pb-14">
-              {/* Subject bars */}
-              <div className="rounded-3xl bg-eb-cream p-5 sm:p-8">
-                <h3 className="text-xl font-extrabold text-eb-navy lg:text-2xl">{subjectsSec.heading}</h3>
-                <p className="mt-1 text-sm text-neutral-600">{subjectsSec.subtitle}</p>
-                <div className="mt-6 space-y-5">
-                  {subjectBars.map((b, i) => {
-                    const pct = num(b.percent, 0);
-                    return (
-                      <div key={i}>
-                        <div className="mb-1.5 flex items-center justify-between text-sm">
-                          <span className="font-semibold text-eb-navy">
-                            {b.name} <span className="ml-1 font-mono text-xs text-eb-navy/50">{b.grade}</span>
-                          </span>
-                          <span className="font-bold text-eb-navy">{pct}%</span>
+                {/* Summary */}
+                {isVisible(summary) && (
+                  <div>
+                    <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+                      <div className="max-w-2xl">
+                        <p className="font-mono text-xs uppercase tracking-[0.14em] text-eb-navy/60">{summary.eyebrow}</p>
+                        <h2 className="mt-3 text-3xl font-extrabold leading-[1.1] tracking-tight text-eb-ink lg:text-[40px]">{summary.heading}</h2>
+                      </div>
+                      {/* Success-story card */}
+                      <div className="w-full shrink-0 rounded-2xl bg-white p-4 ring-1 ring-black/5 lg:w-[300px]">
+                        <div className="flex items-start justify-between gap-3">
+                          <p className="text-sm font-semibold text-eb-navy">{summary.storyLabel}</p>
+                          <PdfIcon className="h-5 w-5 shrink-0 text-eb-navy/70" />
                         </div>
-                        <div className="h-2.5 w-full overflow-hidden rounded-full bg-eb-navy/10">
-                          <div className="h-full rounded-full bg-eb-blue" style={{ width: `${Math.min(100, pct)}%` }} />
+                        {summary.storyLinkUrl && (
+                          <Link href={summary.storyLinkUrl} className="mt-4 flex items-center justify-between gap-3 rounded-xl border border-eb-navy/15 py-2 pl-4 pr-2 transition hover:border-eb-blue">
+                            <span className="text-xs font-bold uppercase tracking-wide text-eb-navy">{summary.storyLinkLabel}</span>
+                            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-eb-blue text-white"><ArrowUpRight className="h-4 w-4" /></span>
+                          </Link>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="mt-5 max-w-3xl space-y-3 text-[15px] leading-relaxed text-neutral-600">
+                      <p>{summary.body}</p>
+                      {summary.body2 && <p>{summary.body2}</p>}
+                    </div>
+
+                    {/* Three headline stats */}
+                    <div className="mt-6 grid grid-cols-1 divide-y divide-black/5 overflow-hidden rounded-2xl bg-white ring-1 ring-black/5 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+                      {stats.map((st, i) => (
+                        <div key={i} className="p-6 text-center">
+                          <p className="text-3xl font-extrabold text-eb-navy lg:text-4xl">{st.value}%</p>
+                          <p className="mt-1 text-sm font-bold text-eb-blue">{st.label}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Subject excellence + grades gained */}
+                {isVisible(subjectsSec) && (
+                  <div className="grid gap-6 lg:grid-cols-[1.7fr_1fr] lg:items-stretch">
+                    <div className="rounded-2xl bg-white p-5 ring-1 ring-black/5 sm:p-7">
+                      <h3 className="text-xl font-extrabold text-eb-navy lg:text-2xl">{subjectsSec.heading}</h3>
+                      <p className="mt-1 text-sm text-neutral-600">{subjectsSec.subtitle}</p>
+                      <div className="mt-6 space-y-5">
+                        {subjectBars.map((b, i) => {
+                          const pct = num(b.percent, 0);
+                          const icon = SUBJECT_ICONS[i % SUBJECT_ICONS.length];
+                          return (
+                            <div key={i} className="flex items-center gap-3 sm:gap-4">
+                              <span className="shrink-0 text-eb-navy">{icon("h-6 w-6")}</span>
+                              <div className="flex w-28 shrink-0 items-center gap-2 sm:w-40">
+                                <span className="text-sm font-semibold text-eb-navy">{b.name}</span>
+                                {b.grade && <span className="rounded bg-eb-blue/10 px-2 py-0.5 text-[11px] font-bold text-eb-navy">{b.grade}</span>}
+                              </div>
+                              <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-eb-navy/10">
+                                <div className="h-full rounded-full bg-eb-blue" style={{ width: `${Math.min(100, pct)}%` }} />
+                              </div>
+                              <span className="w-14 shrink-0 text-right text-sm font-bold text-eb-navy">{pct.toFixed(1)}%</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                    {/* Grades gained ring — white card, blue ring */}
+                    <div className="flex flex-col rounded-2xl bg-white p-6 ring-1 ring-black/5">
+                      <h3 className="text-lg font-extrabold text-eb-navy">{subjectsSec.gradesLabel}</h3>
+                      <div className="flex flex-1 items-center justify-center py-4">
+                        <div className="relative grid h-40 w-40 place-items-center">
+                          <svg width="160" height="160" viewBox="0 0 160 160" className="-rotate-90">
+                            <circle cx="80" cy="80" r="70" fill="none" stroke="rgba(14,47,73,0.10)" strokeWidth="14" />
+                            <circle cx="80" cy="80" r="70" fill="none" stroke="var(--eb-blue, #2781c8)" strokeWidth="14" strokeLinecap="round" strokeDasharray={2 * Math.PI * 70} strokeDashoffset={2 * Math.PI * 70 * 0.14} />
+                          </svg>
+                          <span className="absolute text-4xl font-extrabold text-eb-blue">{subjectsSec.gradesValue}</span>
                         </div>
                       </div>
-                    );
-                  })}
-                </div>
-              </div>
-              {/* Grades gained ring */}
-              <div className="flex flex-col items-center justify-center gap-4 rounded-3xl bg-eb-navy p-8 text-center">
-                <div className="relative grid h-40 w-40 place-items-center">
-                  <svg width="160" height="160" viewBox="0 0 160 160" className="-rotate-90">
-                    <circle cx="80" cy="80" r="70" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="12" />
-                    <circle cx="80" cy="80" r="70" fill="none" stroke="var(--eb-blue, #2781c8)" strokeWidth="12" strokeLinecap="round" strokeDasharray={2 * Math.PI * 70} strokeDashoffset={2 * Math.PI * 70 * 0.16} />
-                  </svg>
-                  <span className="absolute text-3xl font-extrabold text-white">{subjectsSec.gradesValue}</span>
-                </div>
-                <p className="max-w-[200px] text-sm font-medium text-white/80">{subjectsSec.gradesLabel}</p>
-              </div>
-            </div>
-          </section>
-        </Reveal>
-      )}
+                    </div>
+                  </div>
+                )}
 
-      {/* University destinations highlights */}
-      {isVisible(destinations) && (
-        <Reveal>
-          <section className="bg-white" style={bgStyle(destinations)}>
-            <div className="mx-auto max-w-[1320px] px-4 pb-10 lg:px-16 lg:pb-16">
-              <div className="rounded-3xl border p-5 sm:p-8 lg:p-10">
-                <h3 className="text-xl font-extrabold text-eb-navy lg:text-2xl">{destinations.heading}</h3>
-                <div className="mt-8 grid gap-10 sm:grid-cols-2">
-                  <PeopleStat value={num(destinations.dest1Value, 0)} label={destinations.dest1Label} />
-                  <PeopleStat value={num(destinations.dest2Value, 0)} label={destinations.dest2Label} />
-                </div>
+                {/* University destinations highlights */}
+                {isVisible(destinations) && (
+                  <div>
+                    <h3 className="text-xl font-extrabold text-eb-navy lg:text-2xl">{destinations.heading}</h3>
+                    <div className="mt-5 grid gap-5 sm:grid-cols-2">
+                      <PeopleStat value={num(destinations.dest1Value, 0)} label={destinations.dest1Label} />
+                      <PeopleStat value={num(destinations.dest2Value, 0)} label={destinations.dest2Label} />
+                    </div>
+                  </div>
+                )}
+
               </div>
             </div>
           </section>
