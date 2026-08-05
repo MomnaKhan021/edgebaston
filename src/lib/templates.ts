@@ -2403,10 +2403,55 @@ export const RESULTS_TEMPLATE: TemplateDef = {
   ],
 };
 
+export const SUBJECTS_TEMPLATE: TemplateDef = {
+  key: "subjects",
+  name: "Subjects Page",
+  description: "The A-Level Subjects page — banner, intro and the subject accordions (each subject has a title, image and a definition you can write as HTML).",
+  sections: [
+    {
+      key: "hero",
+      name: "Banner",
+      description: "Top banner: background image and heading.",
+      fields: [
+        image("bgDesktop", "Background image", "Leave empty to show a plain navy banner."),
+        text("heading", "Heading"),
+      ],
+      defaults: {
+        bgDesktop: "/figma/history-hero.webp",
+        heading: "Subjects",
+      },
+    },
+    {
+      key: "list",
+      name: "Subjects",
+      description: "Intro text and the accordion of subjects. Each subject has a title, an image, and a definition (you can paste/write HTML — it renders on the page).",
+      fields: [
+        toggle(),
+        text("heading", "Heading"),
+        textarea("intro", "Intro text"),
+        list("items", "Subjects", "Subject", [
+          text("title", "Subject name"),
+          image("image", "Image", "Optional — shown when the subject is expanded."),
+          textarea("html", "Definition", "Plain text or HTML (e.g. <p>…</p>, <ul><li>…</li></ul>)."),
+        ]),
+      ],
+      defaults: {
+        visible: "1",
+        heading: "Subjects",
+        intro:
+          "Edgbaston College offers a broad range of A-Level subjects. Explore each subject below to learn more about what you will study.",
+        items:
+          "[{\"title\":\"Biology\",\"image\":\"\",\"html\":\"<p>A-Level Biology explores living organisms and the processes of life, from molecules and cells to whole ecosystems. Students develop strong practical and analytical skills that prepare them for medicine, dentistry and the biological sciences.</p>\"},{\"title\":\"Chemistry\",\"image\":\"\",\"html\":\"<p>A-Level Chemistry covers physical, inorganic and organic chemistry, combining rigorous theory with regular practical work — an essential subject for medicine, pharmacy and engineering routes.</p>\"},{\"title\":\"Mathematics\",\"image\":\"\",\"html\":\"<p>A-Level Mathematics builds fluency in pure maths, statistics and mechanics, developing the logical reasoning valued across science, economics and engineering degrees.</p>\"}]",
+      },
+    },
+  ],
+};
+
 export const TEMPLATES: TemplateDef[] = [
   HOME_TEMPLATE,
   RETAKE_TEMPLATE,
   FIVE_TERM_TEMPLATE,
+  SUBJECTS_TEMPLATE,
   ABOUT_TEMPLATE,
   HISTORY_TEMPLATE,
   ADMISSIONS_TEMPLATE,
