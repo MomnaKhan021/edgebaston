@@ -10,6 +10,7 @@ import { ColorField } from "@/components/admin/ColorField";
 import { ToggleField } from "@/components/admin/ToggleField";
 import { ListField } from "@/components/admin/ListField";
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
+import { MenuBuilder } from "@/components/admin/MenuBuilder";
 
 export default async function SectionEditor({
   params,
@@ -77,6 +78,8 @@ export default async function SectionEditor({
               <ToggleField name={f.name} defaultValue={values[f.name] ?? "1"} />
             ) : f.type === "list" ? (
               <ListField name={f.name} itemLabel={f.itemLabel} itemFields={f.itemFields ?? []} defaultValue={values[f.name] ?? ""} />
+            ) : f.type === "menu" ? (
+              <MenuBuilder name={f.name} defaultValue={values[f.name] ?? ""} />
             ) : f.type === "color" ? (
               <ColorField name={f.name} defaultValue={values[f.name] ?? ""} />
             ) : f.type === "rich" ? (

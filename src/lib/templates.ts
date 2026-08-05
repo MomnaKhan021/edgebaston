@@ -12,7 +12,44 @@
 
 import type { CSSProperties } from "react";
 
-export type FieldType = "text" | "textarea" | "rich" | "image" | "url" | "color" | "toggle" | "list";
+export type FieldType = "text" | "textarea" | "rich" | "image" | "url" | "color" | "toggle" | "list" | "menu";
+
+/** A navigation menu item; `children` (if any) render as a hover dropdown. */
+export type MenuNode = { label: string; url: string; children: MenuNode[] };
+
+/** Parse a nested menu value (JSON tree) with safe fallbacks for legacy data. */
+export function parseMenu(value: unknown): MenuNode[] {
+  const norm = (arr: unknown): MenuNode[] =>
+    (Array.isArray(arr) ? arr : [])
+      .filter((x) => x && typeof x === "object")
+      .map((x) => {
+        const o = x as Record<string, unknown>;
+        return {
+          label: String(o.label ?? "").trim(),
+          url: String(o.url ?? o.href ?? "").trim(),
+          children: norm(o.children),
+        };
+      })
+      .filter((n) => n.label);
+  if (Array.isArray(value)) return norm(value);
+  const raw = String(value ?? "").trim();
+  if (!raw) return [];
+  if (raw.startsWith("[")) {
+    try {
+      return norm(JSON.parse(raw));
+    } catch {
+      /* fall through */
+    }
+  }
+  // Legacy "Label | /url" lines → flat items.
+  return raw
+    .split("\n")
+    .map((line) => {
+      const [label, url] = line.split("|").map((s) => s.trim());
+      return { label: label ?? "", url: url ?? "", children: [] as MenuNode[] };
+    })
+    .filter((n) => n.label);
+}
 
 export type FieldDef = {
   name: string;
@@ -49,6 +86,7 @@ const url = (name: string, label: string, hint?: string): FieldDef => ({
 const text = (name: string, label: string, hint?: string): FieldDef => ({ name, label, type: "text", hint });
 const textarea = (name: string, label: string, hint?: string): FieldDef => ({ name, label, type: "textarea", hint });
 const rich = (name: string, label: string, hint?: string): FieldDef => ({ name, label, type: "rich", hint });
+const menu = (name: string, label: string, hint?: string): FieldDef => ({ name, label, type: "menu", hint });
 const image = (name: string, label: string, hint?: string): FieldDef => ({ name, label, type: "image", hint });
 const color = (name = "bgColor", label = "Background colour", hint = "Leave empty for the default colour."): FieldDef => ({
   name,
@@ -470,10 +508,7 @@ export const HEADER_TEMPLATE: TemplateDef = {
       fields: [
         image("logoLight", "Logo (on dark banners)"),
         image("logoDark", "Logo (on white pages)"),
-        list("links", "Menu items", "Menu item", [
-          text("label", "Menu name"),
-          url("url", "Menu link", "Where this menu item goes."),
-        ]),
+        menu("links", "Menu", "Add menu items and reorder them. Give an item sub-items (and sub-sub-items) — any item with sub-items becomes a hover dropdown on the site. Each item has its own link."),
         text("contactLabel", "Contact button label"),
         url("contactUrl", "Contact button link"),
         color("pillColor", "Menu pill colour", "Background of the menu pills. Leave empty for white."),
@@ -481,7 +516,36 @@ export const HEADER_TEMPLATE: TemplateDef = {
       defaults: {
         logoLight: "/figma/logo.svg",
         logoDark: "/figma/logo-navy.svg",
-        links: "[{\"label\":\"Courses\",\"url\":\"/courses\"},{\"label\":\"Admissions\",\"url\":\"/admissions\"},{\"label\":\"About Us\",\"url\":\"/about\"},{\"label\":\"Guides\",\"url\":\"#\"}]",
+        links: JSON.stringify([
+          {
+            label: "Courses",
+            url: "/courses",
+            children: [
+              { label: "One Year A-Level Retake", url: "/one-year-a-level-retake", children: [] },
+              { label: "Five Term A-Level", url: "/five-term-a-level", children: [] },
+              { label: "Fees", url: "/fees", children: [] },
+              { label: "All Courses", url: "/courses", children: [] },
+            ],
+          },
+          {
+            label: "Admissions",
+            url: "/admissions-requirements",
+            children: [
+              { label: "Admissions Requirements", url: "/admissions-requirements", children: [] },
+              { label: "Term Dates", url: "/term-dates", children: [] },
+              { label: "Results & Destinations", url: "/results", children: [] },
+            ],
+          },
+          {
+            label: "About Us",
+            url: "/about-us",
+            children: [
+              { label: "About Edgbaston", url: "/about-us", children: [] },
+              { label: "Our History", url: "/our-history", children: [] },
+            ],
+          },
+          { label: "Guides", url: "#", children: [] },
+        ]),
         contactLabel: "Contact us",
         contactUrl: "/contact",
         pillColor: "",
