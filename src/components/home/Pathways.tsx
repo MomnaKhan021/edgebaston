@@ -57,37 +57,43 @@ export function Pathways({ data }: { data?: Record<string, string> }) {
           startIndex={1}
           edgeClassName="w-4"
         >
-          {cards.map((c) => (
-            <article
-              key={c.title}
-              className="group flex w-[calc(100%-64px)] shrink-0 snap-center flex-col rounded-xl bg-white p-4 sm:w-[440px] sm:snap-start sm:p-6 lg:w-[calc((100%-3rem)/3)]"
-            >
-              <div className="flex flex-1 flex-col gap-2.5 sm:gap-3">
-                <h3 className="text-[20px] font-bold leading-tight text-eb-navy sm:text-[28px]">{c.title}</h3>
-                <p className="text-[14px] leading-snug text-black sm:text-[16px]">{c.body}</p>
-                <div className="flex items-center justify-between gap-3 rounded-lg bg-eb-cream p-3">
-                  <CountUp to={c.stat} decimals={1} suffix="%" className="shrink-0 text-[20px] font-extrabold text-eb-blue sm:text-[30px]" />
-                  <span className="text-right text-[10px] font-semibold leading-snug text-eb-blue sm:text-[12px]">
-                    {c.statLabel}
-                  </span>
+          {cards.map((c) => {
+            // The whole card is the link (only the arrow was before). When a
+            // card has no link it renders as a plain, non-clickable article.
+            const cardClass =
+              "group flex w-[calc(100%-64px)] shrink-0 snap-center flex-col rounded-xl bg-white p-4 sm:w-[440px] sm:snap-start sm:p-6 lg:w-[calc((100%-3rem)/3)]";
+            const inner = (
+              <>
+                <div className="flex flex-1 flex-col gap-2.5 sm:gap-3">
+                  <h3 className="text-[20px] font-bold leading-tight text-eb-navy sm:text-[28px]">{c.title}</h3>
+                  <p className="text-[14px] leading-snug text-black sm:text-[16px]">{c.body}</p>
+                  <div className="flex items-center justify-between gap-3 rounded-lg bg-eb-cream p-3">
+                    <CountUp to={c.stat} decimals={1} suffix="%" className="shrink-0 text-[20px] font-extrabold text-eb-blue sm:text-[30px]" />
+                    <span className="text-right text-[10px] font-semibold leading-snug text-eb-blue sm:text-[12px]">
+                      {c.statLabel}
+                    </span>
+                  </div>
                 </div>
-              </div>
-              {/* Image (inset within the card, rounded) */}
-              <div className="relative mt-2 aspect-[16/11] w-full overflow-hidden rounded-lg bg-white sm:mt-3">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={c.img} alt={c.title} className={`h-full w-full object-cover ${c.objPos} transition duration-500 group-hover:scale-105`} />
-                {c.url ? (
-                  <Link href={c.url} aria-label={c.title} className="eb-square absolute bottom-3 right-3 grid h-12 w-12 place-items-center rounded-lg bg-eb-blue text-white">
-                    <ArrowRight className="h-5 w-5" />
-                  </Link>
-                ) : (
+                {/* Image (inset within the card, rounded) */}
+                <div className="relative mt-2 aspect-[16/11] w-full overflow-hidden rounded-lg bg-white sm:mt-3">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={c.img} alt={c.title} className={`h-full w-full object-cover ${c.objPos} transition duration-500 group-hover:scale-105`} />
                   <span className="eb-square absolute bottom-3 right-3 grid h-12 w-12 place-items-center rounded-lg bg-eb-blue text-white">
                     <ArrowRight className="h-5 w-5" />
                   </span>
-                )}
-              </div>
-            </article>
-          ))}
+                </div>
+              </>
+            );
+            return c.url ? (
+              <Link key={c.title} href={c.url} aria-label={c.title} className={`eb-card ${cardClass}`}>
+                {inner}
+              </Link>
+            ) : (
+              <article key={c.title} className={cardClass}>
+                {inner}
+              </article>
+            );
+          })}
         </Slider>
       </div>
     </section>

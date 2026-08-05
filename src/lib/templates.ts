@@ -281,7 +281,7 @@ export const HOME_TEMPLATE: TemplateDef = {
     {
       key: "pathways",
       name: "Courses We Offer",
-      description: "Header of the course-pathways slider. (The three cards are edited in code; courses live under Courses.)",
+      description: "Heading and the course cards. Add, remove and reorder cards — with 4+ cards the section becomes a slider. Each card links to the page in its Card link field; the whole card is clickable.",
       fields: [
         toggle(),
         text("label", "Small label"),
@@ -301,7 +301,7 @@ export const HOME_TEMPLATE: TemplateDef = {
         label: "Courses We Offer",
         title: "Choose the A-Level Pathway That Fits Your Goal",
         bgColor: "",
-        cards: "[{\"title\":\"One Year A-Level Retake\",\"body\":\"Focused retake support in a specialist environment. Small classes, regular mocks, and dedicated university guidance to help you secure the grades you need.\",\"stat\":\"16.0\",\"statLabel\":\"of 2025 A-Level grades achieved the top A* grade\",\"image\":\"/figma/course-retake.webp\",\"url\":\"/one-year-a-level-retake\"},{\"title\":\"Five Term A-Level\",\"body\":\"A flexible five-term pathway starting in January. Ideal for students who missed the September entry window but want a full and structured route to university.\",\"stat\":\"16.0\",\"statLabel\":\"of 2025 A-Level grades achieved the top A* grade\",\"image\":\"/figma/course-fiveterm.webp\",\"url\":\"/courses\"},{\"title\":\"Transfer into Year 13\",\"body\":\"Already in Year 12 elsewhere? Transfer mid-course into more focused, supportive environment where you'll receive the individual attention to push for top grades.\",\"stat\":\"72.7\",\"statLabel\":\"of students progressed to Russell Group universities\",\"image\":\"/figma/course-transfer.webp\",\"url\":\"/courses\"}]",
+        cards: "[{\"title\":\"One Year A-Level Retake\",\"body\":\"Focused retake support in a specialist environment. Small classes, regular mocks, and dedicated university guidance to help you secure the grades you need.\",\"stat\":\"16.0\",\"statLabel\":\"of 2025 A-Level grades achieved the top A* grade\",\"image\":\"/figma/course-retake.webp\",\"url\":\"/one-year-a-level-retake\"},{\"title\":\"Five Term A-Level\",\"body\":\"A flexible five-term pathway starting in January. Ideal for students who missed the September entry window but want a full and structured route to university.\",\"stat\":\"16.0\",\"statLabel\":\"of 2025 A-Level grades achieved the top A* grade\",\"image\":\"/figma/course-fiveterm.webp\",\"url\":\"/five-term-a-level\"},{\"title\":\"Transfer into Year 13\",\"body\":\"Already in Year 12 elsewhere? Transfer mid-course into more focused, supportive environment where you'll receive the individual attention to push for top grades.\",\"stat\":\"72.7\",\"statLabel\":\"of students progressed to Russell Group universities\",\"image\":\"/figma/course-transfer.webp\",\"url\":\"/courses\"}]",
       },
     },
     {
