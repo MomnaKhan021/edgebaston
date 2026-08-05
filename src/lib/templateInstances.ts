@@ -19,6 +19,7 @@ const RENDERERS: Record<string, Renderer> = {
   home: () => import("@/app/(home)/page"),
   retake: () => import("@/app/one-year-a-level-retake/page"),
   "five-term": () => import("@/app/five-term-a-level/page"),
+  subjects: () => import("@/app/subjects/page"),
   about: () => import("@/app/about-us/page"),
   history: () => import("@/app/our-history/page"),
   admissions: () => import("@/app/admissions-requirements/page"),
