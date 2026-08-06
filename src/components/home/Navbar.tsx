@@ -152,7 +152,7 @@ export function Navbar({
         <nav className="hidden items-center gap-3 lg:flex">
           <NavItem
             item={first}
-            className={`rounded-full px-6 py-3.5 text-[15px] font-semibold text-eb-navy shadow-sm transition hover:brightness-95 ${pill}`}
+            className={`rounded-full px-6 py-3.5 text-[15px] font-semibold text-eb-navy shadow-sm transition ${pill}`}
             style={pillStyle}
           />
           <div className={`flex items-center gap-1 rounded-full px-3 py-2 shadow-sm ${pill}`} style={pillStyle}>
