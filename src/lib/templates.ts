@@ -2447,11 +2447,52 @@ export const SUBJECTS_TEMPLATE: TemplateDef = {
   ],
 };
 
+export const INQUIRY_TEMPLATE: TemplateDef = {
+  key: "inquiry",
+  name: "Inquiry Page",
+  description: "The enquiry page — banner (image, heading and text) and the embedded enquiry form. Form submissions land in the Inquiries tab.",
+  sections: [
+    {
+      key: "hero",
+      name: "Banner",
+      description: "Top banner: background image, heading and short text.",
+      fields: [
+        image("bgDesktop", "Background image", "Leave empty to show a plain navy banner."),
+        text("heading", "Heading"),
+        textarea("subtext", "Text under the heading"),
+      ],
+      defaults: {
+        bgDesktop: "/figma/history-hero.webp",
+        heading: "Make an Enquiry",
+        subtext: "",
+      },
+    },
+    {
+      key: "form",
+      name: "Enquiry Form",
+      description: "Intro text and the embedded Typeform. Paste the Typeform form ID (the code after tf-live, e.g. 01ABC…). Responses are saved to the Inquiries tab.",
+      fields: [
+        toggle(),
+        text("heading", "Heading above the form"),
+        textarea("intro", "Intro text"),
+        text("formId", "Typeform form ID", "The ID from your Typeform embed, e.g. 01KZ9DZ99T2ACMDS893B17446X."),
+      ],
+      defaults: {
+        visible: "1",
+        heading: "Send us your details",
+        intro: "Fill in the form below and our admissions team will get back to you as soon as possible.",
+        formId: "01KZ9DZ99T2ACMDS893B17446X",
+      },
+    },
+  ],
+};
+
 export const TEMPLATES: TemplateDef[] = [
   HOME_TEMPLATE,
   RETAKE_TEMPLATE,
   FIVE_TERM_TEMPLATE,
   SUBJECTS_TEMPLATE,
+  INQUIRY_TEMPLATE,
   ABOUT_TEMPLATE,
   HISTORY_TEMPLATE,
   ADMISSIONS_TEMPLATE,
