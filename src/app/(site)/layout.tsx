@@ -1,42 +1,18 @@
-import { Header, type NavLink } from "@/components/site/Header";
-import { Footer } from "@/components/site/Footer";
-import { getSettings } from "@/lib/settings";
-import { db } from "@/lib/db";
+import { AnnouncementBar } from "@/components/home/AnnouncementBar";
+import { Navbar } from "@/components/home/Navbar";
+import { FigmaFooter } from "@/components/home/FigmaFooter";
 
-export default async function SiteLayout({
+export default function SiteLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [settings, navPages] = await Promise.all([
-    getSettings(),
-    db.page.findMany({
-      where: { published: true, showInNav: true },
-      orderBy: { order: "asc" },
-    }),
-  ]);
-
-  const navLinks: NavLink[] = [
-    { label: "Home", href: "/" },
-    { label: "Courses", href: "/courses" },
-    { label: "Faculty", href: "/faculty" },
-    { label: "About", href: "/about" },
-    ...navPages.map((p) => ({ label: p.title, href: `/${p.slug}` })),
-    { label: "Contact", href: "/contact" },
-  ];
-
   return (
     <>
-      <Header siteName={settings.siteName} navLinks={navLinks} />
-      <main className="flex-1">{children}</main>
-      <Footer
-        siteName={settings.siteName}
-        tagline={settings.tagline}
-        email={settings.email}
-        phone={settings.phone}
-        address={settings.address}
-        navLinks={navLinks}
-      />
+      <AnnouncementBar />
+      <Navbar variant="solid" />
+      <main className="flex-1 bg-white">{children}</main>
+      <FigmaFooter />
     </>
   );
 }

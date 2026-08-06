@@ -3,11 +3,11 @@ import type { ReactElement } from "react";
 import { notFound, redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { excerpt } from "@/lib/utils";
-import { getSettings } from "@/lib/settings";
 import { withSectionNamespace } from "@/lib/sections";
 import { canInstance, getInstanceRenderer, instanceNamespace } from "@/lib/templateInstances";
-import { Header, type NavLink } from "@/components/site/Header";
-import { Footer } from "@/components/site/Footer";
+import { AnnouncementBar } from "@/components/home/AnnouncementBar";
+import { Navbar } from "@/components/home/Navbar";
+import { FigmaFooter } from "@/components/home/FigmaFooter";
 
 /** Join the catch-all segments back into a stored slug, e.g. ["guard","course"] → "guard/course". */
 function joinSlug(segments: string[]): string {
@@ -50,28 +50,15 @@ export default async function DynamicPage({
     return rendered as ReactElement;
   }
 
-  // Plain rich-text page: wrap it in the standard site header/footer.
-  const [settings, navPages] = await Promise.all([
-    getSettings(),
-    db.page
-      .findMany({ where: { published: true, showInNav: true }, orderBy: { order: "asc" } })
-      .catch(() => [] as { title: string; slug: string }[]),
-  ]);
-  const navLinks: NavLink[] = [
-    { label: "Home", href: "/" },
-    { label: "Courses", href: "/courses" },
-    { label: "Faculty", href: "/faculty" },
-    { label: "About", href: "/about" },
-    ...navPages.map((p) => ({ label: p.title, href: `/${p.slug}` })),
-    { label: "Contact", href: "/contact" },
-  ];
-
+  // Plain rich-text page: wrap it in the same header/footer as the rest of the
+  // site (the branded Navbar + FigmaFooter), not a separate simple chrome.
   return (
     <>
-      <Header siteName={settings.siteName} navLinks={navLinks} />
-      <main className="flex-1">
-        <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
-          <h1 className="mb-6 text-4xl font-extrabold text-brand">{page.title}</h1>
+      <AnnouncementBar />
+      <Navbar variant="solid" />
+      <main className="bg-white">
+        <div className="mx-auto max-w-3xl px-4 py-12 lg:py-16">
+          <h1 className="mb-6 text-3xl font-extrabold tracking-tight text-eb-ink lg:text-[44px]">{page.title}</h1>
           {page.content ? (
             <div className="prose-content" dangerouslySetInnerHTML={{ __html: page.content }} />
           ) : (
@@ -79,14 +66,7 @@ export default async function DynamicPage({
           )}
         </div>
       </main>
-      <Footer
-        siteName={settings.siteName}
-        tagline={settings.tagline}
-        email={settings.email}
-        phone={settings.phone}
-        address={settings.address}
-        navLinks={navLinks}
-      />
+      <FigmaFooter />
     </>
   );
 }
