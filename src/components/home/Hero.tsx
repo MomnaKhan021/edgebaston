@@ -39,7 +39,7 @@ export function Hero({ data }: { data?: Record<string, string> }) {
             <div className="px-3 pb-3 pr-12 pt-2 sm:pb-4 sm:pr-16 sm:pt-3">
               <div className="flex items-baseline gap-2">
                 <span className="text-[22px] font-extrabold leading-none text-eb-blue sm:text-[43px]">{d.statHeadline}</span>
-                <span className="text-[12px] font-medium leading-snug text-eb-navy sm:max-w-[190px] sm:text-[17px]">
+                <span className="text-[12px] font-medium leading-snug text-eb-navy sm:text-[17px]">
                   {d.statCaption}
                 </span>
               </div>
