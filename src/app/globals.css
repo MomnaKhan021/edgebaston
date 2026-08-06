@@ -54,6 +54,22 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Tailwind v4's reset drops the pointer cursor on buttons — restore it. */
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]),
+label[for],
+summary,
+[type="button"]:not(:disabled),
+[type="submit"]:not(:disabled),
+[type="reset"]:not(:disabled) {
+  cursor: pointer;
+}
+button:disabled,
+[type="button"]:disabled,
+[type="submit"]:disabled {
+  cursor: not-allowed;
+}
+
 /* Consistent hover animation for pill CTAs across the site */
 .eb-cta {
   transition:
