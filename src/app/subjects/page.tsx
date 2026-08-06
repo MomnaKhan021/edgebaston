@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AnnouncementBar } from "@/components/home/AnnouncementBar";
-import { Navbar } from "@/components/home/Navbar";
+import { SiteNavbar } from "@/components/home/SiteNavbar";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
 import { SharePage } from "@/components/site/SharePage";
@@ -33,7 +33,7 @@ export default async function SubjectsPage() {
 
       {/* Hero */}
       <section className="relative isolate overflow-hidden bg-eb-navy">
-        <Navbar />
+        <SiteNavbar />
         {hero.bgDesktop && (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={hero.bgDesktop} alt="Edgbaston College subjects" className="absolute inset-0 h-full w-full object-cover object-[center_30%]" fetchPriority="high" />

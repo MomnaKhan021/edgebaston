@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { AnnouncementBar } from "@/components/home/AnnouncementBar";
-import { Navbar } from "@/components/home/Navbar";
+import { SiteNavbar } from "@/components/home/SiteNavbar";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
 import { SharePage } from "@/components/site/SharePage";
@@ -33,7 +33,7 @@ export default async function StaffPage() {
 
       {/* Hero */}
       <section className="relative isolate overflow-hidden bg-eb-navy">
-        <Navbar />
+        <SiteNavbar />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/figma/history-hero.webp" alt="Edgbaston College staff and students" className="absolute inset-0 h-full w-full object-cover object-[center_30%]" fetchPriority="high" />
         <div className="absolute inset-0 bg-black/45" />

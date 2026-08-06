@@ -6,7 +6,7 @@ import { excerpt } from "@/lib/utils";
 import { withSectionNamespace } from "@/lib/sections";
 import { canInstance, getInstanceRenderer, instanceNamespace } from "@/lib/templateInstances";
 import { AnnouncementBar } from "@/components/home/AnnouncementBar";
-import { Navbar } from "@/components/home/Navbar";
+import { SiteNavbar } from "@/components/home/SiteNavbar";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
 
 /** Join the catch-all segments back into a stored slug, e.g. ["guard","course"] → "guard/course". */
@@ -55,7 +55,7 @@ export default async function DynamicPage({
   return (
     <>
       <AnnouncementBar />
-      <Navbar variant="solid" />
+      <SiteNavbar variant="solid" />
       <main className="bg-white">
         <div className="mx-auto max-w-3xl px-4 py-12 lg:py-16">
           <h1 className="mb-6 text-3xl font-extrabold tracking-tight text-eb-ink lg:text-[44px]">{page.title}</h1>

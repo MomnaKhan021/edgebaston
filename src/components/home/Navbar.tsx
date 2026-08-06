@@ -141,7 +141,12 @@ export function Navbar({
 
   return (
     <div className={solid ? "relative z-30 border-b bg-white" : "absolute inset-x-0 top-0 z-30"}>
-      <div className="mx-auto flex max-w-[1440px] items-center justify-between px-4 py-4 lg:px-[60px] lg:py-5">
+      {/* On image banners, darken the top strip so the white logo stays legible
+          on any hero photo (light or dark). */}
+      {!solid && (
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/55 via-black/25 to-transparent" aria-hidden />
+      )}
+      <div className="relative mx-auto flex max-w-[1440px] items-center justify-between px-4 py-4 lg:px-[60px] lg:py-5">
         {/* Logo */}
         <Link href="/" className="shrink-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
