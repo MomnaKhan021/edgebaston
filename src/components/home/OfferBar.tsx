@@ -127,23 +127,25 @@ export function OfferBar({
     <div className="fixed inset-x-0 bottom-0 z-50">
       <div className="mx-3 mb-3 overflow-hidden rounded-2xl bg-gradient-to-r from-eb-navy to-eb-blue shadow-2xl ring-1 ring-white/10 lg:mx-0 lg:mb-0 lg:rounded-none lg:ring-0" style={bgColor ? { background: bgColor } : undefined}>
         <div className="mx-auto max-w-[1440px] px-4 py-3 lg:px-[60px] lg:py-3.5">
-          {/* Desktop — the button is centred; any timer/title/text sits beside it */}
-          <div className="hidden items-center justify-center gap-6 lg:flex">
+          {/* Desktop — the button is truly centred on the bar; the timer/text
+              sits on the left (absolutely, with a capped width) so it can never
+              push the button off centre. The button always shows. */}
+          <div className="relative hidden min-h-[44px] items-center justify-center lg:flex">
             {info && (
-              <div className="flex items-center gap-6">
+              <div className="absolute left-0 top-1/2 flex max-w-[calc(50%-150px)] -translate-y-1/2 items-center gap-5 overflow-hidden">
                 {hasTimer && <Countdown t={t} />}
                 {(title || message) && (
-                  <div className={hasTimer ? "border-l border-white/20 pl-6" : ""}>
-                    {title && <p className="text-sm font-extrabold uppercase tracking-wide text-white">{title}</p>}
-                    {message && <p className="text-sm text-white/80">{message}</p>}
+                  <div className={"min-w-0 " + (hasTimer ? "border-l border-white/20 pl-5" : "")}>
+                    {title && <p className="truncate text-sm font-extrabold uppercase tracking-wide text-white">{title}</p>}
+                    {message && <p className="truncate text-sm text-white/80">{message}</p>}
                   </div>
                 )}
               </div>
             )}
-            {buttonUrl && <EnquireBtn label={buttonLabel} href={buttonUrl} />}
+            <EnquireBtn label={buttonLabel} href={buttonUrl || "/contact"} />
           </div>
 
-          {/* Mobile */}
+          {/* Mobile — the button always shows, full width, below the offer text */}
           <div className="lg:hidden">
             {info && (
               <div className="flex items-start justify-between gap-3">
@@ -156,11 +158,9 @@ export function OfferBar({
                 {hasTimer && <Countdown t={t} />}
               </div>
             )}
-            {buttonUrl && (
-              <div className={info ? "mt-3" : ""}>
-                <EnquireBtn full label={buttonLabel} href={buttonUrl} />
-              </div>
-            )}
+            <div className={info ? "mt-3" : ""}>
+              <EnquireBtn full label={buttonLabel} href={buttonUrl || "/contact"} />
+            </div>
           </div>
         </div>
       </div>
