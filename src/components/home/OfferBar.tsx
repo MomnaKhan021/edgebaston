@@ -106,6 +106,10 @@ export function OfferBar({
 
   const target = parseEndDate(endDate);
   const hasTimer = target !== null;
+  // Treat whitespace-only values as empty so a blank title never prints a
+  // stray ":" (or an empty text block) on the bar.
+  title = (title ?? "").trim();
+  message = (message ?? "").trim();
 
   useEffect(() => {
     setMounted(true);
@@ -151,7 +155,7 @@ export function OfferBar({
               <div className="flex items-start justify-between gap-3">
                 {(title || message) && (
                   <p className="max-w-[52%] text-xs leading-snug text-white/85">
-                    {title && <span className="font-bold text-white">{title}: </span>}
+                    {title && <span className="font-bold text-white">{title}{message ? ": " : ""}</span>}
                     {message}
                   </p>
                 )}
