@@ -83,6 +83,24 @@ model Page {
   updatedAt   DateTime @updatedAt
 }
 
+/// Blog / news article ("Suite Talk"-style listing + branded article page).
+model Post {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  excerpt     String   @default("") // short blurb for the listing cards
+  content     String   @default("") // rich-text HTML for the article body
+  category    String   @default("") // e.g. Implants, Orthodontics — drives the filter tabs
+  imageUrl    String   @default("")
+  authorName  String   @default("")
+  authorImage String   @default("")
+  published   Boolean  @default(true)
+  featured    Boolean  @default(false)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
 /// Contact form submissions from the public site.
 model Inquiry {
   id        String   @id @default(cuid())

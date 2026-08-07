@@ -6,7 +6,7 @@ import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
 import { SharePage } from "@/components/history/SharePage";
 import { getTemplateSections } from "@/lib/sections";
-import { sectionDefaults, parseItems, isVisible, bgStyle } from "@/lib/templates";
+import { sectionDefaults, parseItems, isVisible, bgStyle, overlayOn } from "@/lib/templates";
 
 export const metadata: Metadata = {
   title: "Term Dates",
@@ -49,7 +49,9 @@ export default async function TermDatesPage() {
               fetchPriority="high"
             />
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent" />
+          {overlayOn(hero) && (
+            <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent" />
+          )}
           <div className="relative mx-auto flex min-h-[420px] max-w-[1440px] flex-col justify-end px-4 pb-10 pt-36 lg:min-h-[500px] lg:px-16 lg:pb-12">
             <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-[56px]">
               {hero.heading}
@@ -67,7 +69,7 @@ export default async function TermDatesPage() {
               <span className="px-2">/</span>
               <Link href="/admissions-requirements" className="hover:text-eb-navy">Admissions</Link>
               <span className="px-2">/</span>
-              <span className="text-eb-navy">Term Dates</span>
+              <span className="text-eb-navy">{hero.heading || "Term Dates"}</span>
             </nav>
             <SharePage title="Edgbaston College — Term Dates" />
           </div>

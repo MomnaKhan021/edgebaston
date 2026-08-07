@@ -11,6 +11,7 @@ import {
   IconCourses,
   IconStaff,
   IconPages,
+  IconBlog,
   IconInquiries,
   IconSettings,
   IconExternal,
@@ -25,6 +26,7 @@ const NAV = [
   { label: "Courses", href: "/admin/courses", Icon: IconCourses },
   { label: "Staff", href: "/admin/staff", Icon: IconStaff },
   { label: "Pages", href: "/admin/pages", Icon: IconPages },
+  { label: "Blog", href: "/admin/blog", Icon: IconBlog },
   { label: "Inquiries", href: "/admin/inquiries", Icon: IconInquiries },
   { label: "Settings", href: "/admin/settings", Icon: IconSettings },
 ];

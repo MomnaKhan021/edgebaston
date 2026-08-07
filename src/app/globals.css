@@ -219,16 +219,109 @@ button:disabled,
 .eb-rich em { font-style: italic; }
 .eb-rich u { text-decoration: underline; }
 .eb-rich s { text-decoration: line-through; }
-.eb-rich a { text-decoration: underline; }
+/* Links pick up the brand blue + a hover; the blue reads on light and navy
+   sections alike, and opacity-hover keeps it background-agnostic so it never
+   disturbs the section's own colour scheme. */
+.eb-rich a {
+  color: var(--eb-blue);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+  transition: opacity 0.15s ease;
+}
+.eb-rich a:hover { opacity: 0.8; }
 .eb-rich ul { list-style: disc; padding-left: 1.25rem; margin: 0.5em 0; }
 .eb-rich ol { list-style: decimal; padding-left: 1.25rem; margin: 0.5em 0; }
 .eb-rich li { margin: 0.25em 0; }
 .eb-rich h1, .eb-rich h2, .eb-rich h3 { font-weight: 700; line-height: 1.2; margin: 0.6em 0 0.3em; }
+
+/* Branded blog article body — admin-authored HTML adopts the site's styling. */
+.blog-prose {
+  color: #3f4a52;
+  font-size: 1.0625rem;
+  line-height: 1.8;
+}
+.blog-prose > :first-child { margin-top: 0; }
+.blog-prose h1, .blog-prose h2, .blog-prose h3, .blog-prose h4 {
+  color: var(--eb-navy, #0e2f49);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin: 1.6em 0 0.5em;
+}
+.blog-prose h1 { font-size: 2.25rem; }
+.blog-prose h2 { font-size: 1.85rem; }
+.blog-prose h3 { font-size: 1.4rem; }
+.blog-prose h4 { font-size: 1.15rem; }
+.blog-prose p { margin: 1.1em 0; }
+.blog-prose strong { color: var(--eb-navy, #0e2f49); font-weight: 700; }
+.blog-prose em { font-style: italic; }
+.blog-prose ul { list-style: disc; padding-left: 1.4rem; margin: 1.1em 0; }
+.blog-prose ol { list-style: decimal; padding-left: 1.4rem; margin: 1.1em 0; }
+.blog-prose li { margin: 0.4em 0; }
+.blog-prose a {
+  color: var(--eb-blue, #2781c8);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.blog-prose a:hover { color: var(--eb-navy, #0e2f49); }
+.blog-prose img { border-radius: 1rem; margin: 1.6em 0; width: 100%; height: auto; }
+.blog-prose blockquote {
+  border-left: 4px solid var(--eb-blue, #2781c8);
+  background: var(--eb-cream, #f4f4f1);
+  padding: 1rem 1.25rem;
+  border-radius: 0 0.75rem 0.75rem 0;
+  font-style: italic;
+  color: var(--eb-navy, #0e2f49);
+  margin: 1.5em 0;
+}
+.blog-prose hr { border: 0; border-top: 1px solid rgba(14, 47, 73, 0.12); margin: 2em 0; }
+/* Any anchor marked as a button (class btn/button or data-button) becomes a brand pill. */
+.blog-prose a.btn,
+.blog-prose a.button,
+.blog-prose a[data-button],
+.blog-prose .wp-block-button a,
+.blog-prose .button a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--eb-navy, #0e2f49);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.8rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: 999px;
+  transition: background 0.2s;
+}
+.blog-prose a.btn:hover,
+.blog-prose a.button:hover,
+.blog-prose a[data-button]:hover,
+.blog-prose .wp-block-button a:hover,
+.blog-prose .button a:hover { background: var(--eb-blue, #2781c8); color: #fff; }
+.eb-rich blockquote {
+  border-left: 3px solid var(--eb-blue);
+  padding-left: 1rem;
+  margin: 1em 0;
+  font-style: italic;
+  opacity: 0.9;
+}
+.eb-rich img { max-width: 100%; height: auto; border-radius: 0.5rem; margin: 1em 0; }
+.eb-rich code {
+  background: color-mix(in srgb, currentColor 10%, transparent);
+  padding: 0.15em 0.4em;
+  border-radius: 0.3rem;
+  font-size: 0.88em;
+}
 .prose-content h1,
 .prose-content h2,
 .prose-content h3 {
   font-weight: 700;
-  color: var(--brand);
+  color: var(--eb-navy);
   line-height: 1.25;
   margin: 1.4em 0 0.5em;
 }
@@ -259,11 +352,18 @@ button:disabled,
   margin: 0.3em 0;
 }
 .prose-content a {
-  color: var(--accent);
+  color: var(--eb-blue);
+  font-weight: 600;
   text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+  transition: opacity 0.15s ease;
+}
+.prose-content a:hover {
+  opacity: 0.8;
 }
 .prose-content blockquote {
-  border-left: 4px solid var(--accent);
+  border-left: 4px solid var(--eb-blue);
   padding-left: 1rem;
   color: var(--muted-foreground);
   font-style: italic;

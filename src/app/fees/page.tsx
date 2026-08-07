@@ -77,7 +77,7 @@ export default async function FeesPage() {
             <nav className="text-sm text-muted-foreground">
               <Link href="/" className="hover:text-eb-navy">Home</Link><span className="px-2">/</span>
               <Link href="/admissions-requirements" className="hover:text-eb-navy">Admissions</Link><span className="px-2">/</span>
-              <span className="text-eb-navy">Fees</span>
+              <span className="text-eb-navy">{intro.heading || "Fees"}</span>
             </nav>
             <SharePage title="Edgbaston College — Fees" />
           </div>

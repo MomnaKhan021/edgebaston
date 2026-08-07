@@ -7,7 +7,7 @@ import { Reveal } from "@/components/home/Reveal";
 import { SharePage } from "@/components/site/SharePage";
 import { DetailAccordion, type AccordionItem } from "@/components/site/DetailAccordion";
 import { getTemplateSections } from "@/lib/sections";
-import { parseItems, isVisible } from "@/lib/templates";
+import { parseItems, isVisible, overlayOn } from "@/lib/templates";
 
 export const metadata: Metadata = {
   title: "Subjects",
@@ -38,8 +38,12 @@ export default async function SubjectsPage() {
           // eslint-disable-next-line @next/next/no-img-element
           <img src={hero.bgDesktop} alt="Edgbaston College subjects" className="absolute inset-0 h-full w-full object-cover object-[center_30%]" fetchPriority="high" />
         )}
-        <div className="absolute inset-0 bg-black/45" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/40" />
+        {overlayOn(hero) && (
+          <>
+            <div className="absolute inset-0 bg-black/45" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/40" />
+          </>
+        )}
         <div className="relative mx-auto flex min-h-[360px] max-w-[1440px] flex-col justify-end px-4 pb-10 pt-32 lg:min-h-[420px] lg:px-[60px] lg:pb-12">
           <h1 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-[56px]">
             {hero.heading || "Subjects"}
@@ -56,7 +60,7 @@ export default async function SubjectsPage() {
               <span className="px-2 text-neutral-300">/</span>
               <Link href="/courses" className="hover:text-eb-navy">Courses</Link>
               <span className="px-2 text-neutral-300">/</span>
-              <span className="font-medium text-eb-navy">Subjects</span>
+              <span className="font-medium text-eb-navy">{hero.heading || "Subjects"}</span>
             </nav>
             <SharePage title="Subjects — Edgbaston College" />
           </div>

@@ -95,7 +95,7 @@ export default async function AdmissionsRequirementsPage() {
           <nav className="text-sm text-muted-foreground">
             <Link href="/" className="hover:text-eb-navy">Home</Link><span className="px-2">/</span>
             <Link href="/courses" className="hover:text-eb-navy">Courses</Link><span className="px-2">/</span>
-            <span className="text-eb-navy">Admissions Requirements</span>
+            <span className="text-eb-navy">{intro.heading || "Admissions Requirements"}</span>
           </nav>
           <Share />
         </div>

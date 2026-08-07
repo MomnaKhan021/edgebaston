@@ -12,7 +12,7 @@ import { StoryCard, type Story } from "@/components/course/StoryCard";
 import { FaqList } from "@/components/course/FaqList";
 import { RichText } from "@/components/site/RichText";
 import { getTemplateSections } from "@/lib/sections";
-import { sectionDefaults, parseItems, isVisible, bgStyle, num } from "@/lib/templates";
+import { sectionDefaults, parseItems, isVisible, bgStyle, num, overlayOn } from "@/lib/templates";
 import {
   IconResults,
   IconPractice,
@@ -222,8 +222,12 @@ export default async function FiveTermPage() {
         <SiteNavbar />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={hero.bgDesktop || "/figma/adm-process.webp"} alt="Edgbaston College five-term students" className="absolute inset-0 h-full w-full object-cover object-[center_25%]" fetchPriority="high" />
-        <div className="absolute inset-0 bg-black/45" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/40" />
+        {overlayOn(hero) && (
+          <>
+            <div className="absolute inset-0 bg-black/45" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/40" />
+          </>
+        )}
         <div className="relative mx-auto flex min-h-[420px] max-w-[1440px] flex-col justify-end px-4 pb-10 pt-32 lg:min-h-[460px] lg:px-[60px] lg:pb-12">
           <h1 className="max-w-[320px] text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:max-w-[420px] sm:text-5xl lg:max-w-[520px] lg:text-[56px]">
             {hero.heading}
@@ -240,7 +244,7 @@ export default async function FiveTermPage() {
               <span className="px-2 text-neutral-300">/</span>
               <Link href="/courses" className="hover:text-eb-navy">Courses</Link>
               <span className="px-2 text-neutral-300">/</span>
-              <span className="font-medium text-eb-navy">Five Term A-Level</span>
+              <span className="font-medium text-eb-navy">{hero.heading || "Five Term A-Level"}</span>
             </nav>
             <SharePage title="Five Term A-Level — Edgbaston College" />
           </div>

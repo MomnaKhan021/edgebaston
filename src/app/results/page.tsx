@@ -10,7 +10,7 @@ import { Accordion } from "@/components/admissions/Accordion";
 import { StudentDestinations, type DestinationCard } from "@/components/results/StudentDestinations";
 import { RichText } from "@/components/site/RichText";
 import { getTemplateSections } from "@/lib/sections";
-import { sectionDefaults, parseItems, parseLines, isVisible, bgStyle, num } from "@/lib/templates";
+import { sectionDefaults, parseItems, parseLines, isVisible, bgStyle, num, overlayOn } from "@/lib/templates";
 
 export const metadata: Metadata = {
   title: "Results & Destinations",
@@ -103,7 +103,9 @@ export default async function ResultsPage() {
             // eslint-disable-next-line @next/next/no-img-element
             <img src={hero.bgDesktop} alt="Edgbaston College students with their results" className="absolute inset-0 h-full w-full object-cover" fetchPriority="high" />
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent" />
+          {overlayOn(hero) && (
+            <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent" />
+          )}
           <div className="relative mx-auto flex min-h-[420px] max-w-[1440px] flex-col justify-end px-4 pb-10 pt-36 lg:min-h-[500px] lg:px-16 lg:pb-12">
             <h1 className="max-w-[16ch] text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-[56px]">
               {hero.heading}
@@ -121,7 +123,7 @@ export default async function ResultsPage() {
               <span className="px-2">/</span>
               <Link href="/admissions-requirements" className="hover:text-eb-navy">Admissions</Link>
               <span className="px-2">/</span>
-              <span className="text-eb-navy">Results &amp; Destinations</span>
+              <span className="text-eb-navy">{hero.heading || "Results & Destinations"}</span>
             </nav>
             <SharePage title="Edgbaston College — Results & Destinations" />
           </div>

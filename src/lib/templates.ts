@@ -114,6 +114,11 @@ export function isVisible(data: Record<string, string> | undefined): boolean {
   return (data?.visible ?? "1") !== "0";
 }
 
+/** Banner overlay is on unless explicitly turned off in the admin. */
+export function overlayOn(data: Record<string, string> | undefined): boolean {
+  return (data?.overlay ?? "1") !== "0";
+}
+
 /**
  * Parse a list-field value (JSON array of records). Falls back to legacy
  * "Label | /url" lines (mapped to {label, url}) so older saves keep working.
@@ -199,7 +204,7 @@ export const HOME_TEMPLATE: TemplateDef = {
         badge: "EXCITING NEWS:",
         message: "Admissions for Batch 2026 are Now Open! Visit our",
         linkLabel: "Admissions page",
-        linkUrl: "/admissions",
+        linkUrl: "/admissions-requirements",
         bgColor: "",
       },
     },
@@ -210,6 +215,7 @@ export const HOME_TEMPLATE: TemplateDef = {
       fields: [
         toggle(),
         image("bgDesktop", "Background image (desktop)"),
+        toggle("overlay", "Show dark overlay on the banner", "Untick to remove the dark overlay from the banner image."),
         image("bgMobile", "Background image (mobile)", "Optional — falls back to the desktop image."),
         textarea("heading", "Heading"),
         text("buttonLabel", "Button label"),
@@ -225,6 +231,7 @@ export const HOME_TEMPLATE: TemplateDef = {
       defaults: {
         visible: "1",
         bgDesktop: "/figma/hero-building.webp",
+        overlay: "1",
         bgMobile: "",
         heading: "Birmingham's Top-Performing Independent Sixth Form College",
         buttonLabel: "Enquire About Course",
@@ -544,6 +551,7 @@ export const HEADER_TEMPLATE: TemplateDef = {
               { label: "Our History", url: "/our-history", children: [] },
             ],
           },
+          { label: "Blog", url: "/blog", children: [] },
           { label: "Guides", url: "#", children: [] },
         ]),
         contactLabel: "Contact us",
@@ -651,11 +659,13 @@ export const RETAKE_TEMPLATE: TemplateDef = {
       fields: [
         toggle(),
         image("bgDesktop", "Background image"),
+        toggle("overlay", "Show dark overlay on the banner", "Untick to remove the dark overlay from the banner image."),
         textarea("heading", "Heading"),
       ],
       defaults: {
         visible: "1",
         bgDesktop: "/figma/retake-hero.webp",
+        overlay: "1",
         heading: "One Year A-Level Retake",
       },
     },
@@ -1018,11 +1028,13 @@ export const FIVE_TERM_TEMPLATE: TemplateDef = {
       fields: [
         toggle(),
         image("bgDesktop", "Background image"),
+        toggle("overlay", "Show dark overlay on the banner", "Untick to remove the dark overlay from the banner image."),
         textarea("heading", "Heading"),
       ],
       defaults: {
         visible: "1",
         bgDesktop: "/figma/adm-process.webp",
+        overlay: "1",
         heading: "Five Term A-Level",
       },
     },
@@ -1431,6 +1443,7 @@ export const HISTORY_TEMPLATE: TemplateDef = {
       fields: [
         toggle(),
         image("bgDesktop", "Background image"),
+        toggle("overlay", "Show dark overlay on the banner", "Untick to remove the dark overlay from the banner image."),
         textarea("heading", "Heading"),
         text("buttonLabel", "Button label"),
         url("buttonUrl", "Button link"),
@@ -1438,6 +1451,7 @@ export const HISTORY_TEMPLATE: TemplateDef = {
       defaults: {
         visible: "1",
         bgDesktop: "/figma/history-hero.webp",
+        overlay: "1",
         heading: "Edgbaston History",
         buttonLabel: "Enquire About Course",
         buttonUrl: "/contact",
@@ -1539,6 +1553,7 @@ export const CONTACT_TEMPLATE: TemplateDef = {
       fields: [
         toggle(),
         image("bgDesktop", "Background image"),
+        toggle("overlay", "Show dark overlay on the banner", "Untick to remove the dark overlay from the banner image."),
         textarea("heading", "Heading"),
         text("phone", "Phone number"),
         text("email", "Email address"),
@@ -1546,6 +1561,7 @@ export const CONTACT_TEMPLATE: TemplateDef = {
       defaults: {
         visible: "1",
         bgDesktop: "/figma/retake-hero.webp",
+        overlay: "1",
         heading: "Contact Edgbaston College.",
         phone: "0121 306 0182",
         email: "enquiries@edgbastoncollege.co.uk",
@@ -2125,12 +2141,14 @@ export const TERM_DATES_TEMPLATE: TemplateDef = {
       fields: [
         toggle(),
         image("bgDesktop", "Background image", "Leave empty to show a plain colour banner."),
+        toggle("overlay", "Show dark overlay on the banner", "Untick to remove the dark overlay from the banner image."),
         textarea("heading", "Heading"),
         color("bgColor", "Banner colour", "The colour behind the image (and the whole banner if no image is set)."),
       ],
       defaults: {
         visible: "1",
         bgDesktop: "/figma/retake-hero.webp",
+        overlay: "1",
         heading: "Term Dates",
         bgColor: "",
       },
@@ -2202,12 +2220,14 @@ export const RESULTS_TEMPLATE: TemplateDef = {
       fields: [
         toggle(),
         image("bgDesktop", "Background image", "Leave empty to show a plain colour banner."),
+        toggle("overlay", "Show dark overlay on the banner", "Untick to remove the dark overlay from the banner image."),
         textarea("heading", "Heading"),
         color("bgColor", "Banner colour", "The colour behind the image (and the whole banner if no image is set)."),
       ],
       defaults: {
         visible: "1",
         bgDesktop: "/figma/retake-hero.webp",
+        overlay: "1",
         heading: "Results & Destinations",
         bgColor: "",
       },
@@ -2414,10 +2434,12 @@ export const SUBJECTS_TEMPLATE: TemplateDef = {
       description: "Top banner: background image and heading.",
       fields: [
         image("bgDesktop", "Background image", "Leave empty to show a plain navy banner."),
+        toggle("overlay", "Show dark overlay on the banner", "Untick to remove the dark overlay from the banner image."),
         text("heading", "Heading"),
       ],
       defaults: {
         bgDesktop: "/figma/history-hero.webp",
+        overlay: "1",
         heading: "Subjects",
       },
     },
@@ -2458,11 +2480,13 @@ export const INQUIRY_TEMPLATE: TemplateDef = {
       description: "Top banner: background image, heading and short text.",
       fields: [
         image("bgDesktop", "Background image", "Leave empty to show a plain navy banner."),
+        toggle("overlay", "Show dark overlay on the banner", "Untick to remove the dark overlay from the banner image."),
         text("heading", "Heading"),
         textarea("subtext", "Text under the heading"),
       ],
       defaults: {
         bgDesktop: "/figma/history-hero.webp",
+        overlay: "1",
         heading: "Make an Enquiry",
         subtext: "",
       },
@@ -2487,7 +2511,51 @@ export const INQUIRY_TEMPLATE: TemplateDef = {
   ],
 };
 
+export const BLOG_TEMPLATE: TemplateDef = {
+  key: "blog",
+  name: "Blog Page",
+  description: "The blog listing page — banner and category filter labels. Articles are written under Blog.",
+  sections: [
+    {
+      key: "hero",
+      name: "Banner",
+      description: "Top banner with the small label and heading.",
+      fields: [
+        toggle(),
+        image("bgDesktop", "Background image", "Optional — leave empty for a plain colour banner."),
+        text("eyebrow", "Small label"),
+        textarea("heading", "Heading"),
+        color("bgColor", "Banner colour", "Background of the banner. Leave empty for the default cream."),
+      ],
+      defaults: {
+        visible: "1",
+        bgDesktop: "",
+        eyebrow: "Blog",
+        heading: "News & Insights",
+        bgColor: "",
+      },
+    },
+    {
+      key: "list",
+      name: "Listing",
+      description: "Labels for the category filter above the article grid.",
+      fields: [
+        text("categoriesLabel", "Categories label"),
+        text("allLabel", "'All posts' tab label"),
+        color(),
+      ],
+      defaults: {
+        visible: "1",
+        categoriesLabel: "Categories",
+        allLabel: "All Posts",
+        bgColor: "",
+      },
+    },
+  ],
+};
+
 export const TEMPLATES: TemplateDef[] = [
+  BLOG_TEMPLATE,
   HOME_TEMPLATE,
   RETAKE_TEMPLATE,
   FIVE_TERM_TEMPLATE,

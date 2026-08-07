@@ -50,6 +50,16 @@ export function IconPages({ className = base }: P) {
   );
 }
 
+export function IconBlog({ className = base }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...common}>
+      <rect x="3" y="4" width="14" height="16" rx="2" />
+      <path d="M17 8h3a1 1 0 011 1v9a2 2 0 01-2 2h0a2 2 0 01-2-2V8z" />
+      <path d="M6.5 8h7M6.5 11.5h7M6.5 15h4" />
+    </svg>
+  );
+}
+
 export function IconInquiries({ className = base }: P) {
   return (
     <svg viewBox="0 0 24 24" className={className} {...common}>

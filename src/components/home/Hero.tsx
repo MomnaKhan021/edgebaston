@@ -2,7 +2,7 @@ import Link from "next/link";
 import { SiteNavbar } from "./SiteNavbar";
 import { ArrowUpRight } from "./icons";
 import { CountUp } from "./CountUp";
-import {num, sectionDefaults, bgStyle } from "@/lib/templates";
+import {num, sectionDefaults, bgStyle, overlayOn } from "@/lib/templates";
 
 export function Hero({ data }: { data?: Record<string, string> }) {
   const d = { ...sectionDefaults("home", "hero"), ...data };
@@ -22,8 +22,12 @@ export function Hero({ data }: { data?: Record<string, string> }) {
           alt="Edgbaston College"
           className="absolute inset-0 h-full w-full object-cover object-[center_28%]" fetchPriority="high" />
       </picture>
-      <div className="absolute inset-0 bg-black/20" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/25" />
+      {overlayOn(d) && (
+        <>
+          <div className="absolute inset-0 bg-black/20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/25" />
+        </>
+      )}
 
       <div className="relative mx-auto flex min-h-[600px] max-w-[1440px] flex-col justify-end px-4 pb-8 pt-32 sm:min-h-[720px] sm:pt-36 lg:min-h-[780px] lg:px-[60px] lg:pb-14">
         <div className="grid gap-3 lg:grid-cols-[1fr_440px] lg:items-end lg:gap-8">

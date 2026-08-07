@@ -7,7 +7,7 @@ import { GetDirections } from "@/components/contact/GetDirections";
 import { Socials } from "@/components/contact/Socials";
 import { ArrowUpRight } from "@/components/home/icons";
 import { getTemplateSections } from "@/lib/sections";
-import { sectionDefaults, parseItems, isVisible, bgStyle } from "@/lib/templates";
+import { sectionDefaults, parseItems, isVisible, bgStyle, overlayOn } from "@/lib/templates";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -58,8 +58,12 @@ export default async function ContactPage() {
         <SiteNavbar />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={hero.bgDesktop || "/figma/retake-hero.webp"} alt="Edgbaston College students" className="absolute inset-0 h-full w-full object-cover object-[center_30%]" fetchPriority="high" />
-        <div className="absolute inset-0 bg-gradient-to-r from-eb-navy/85 via-eb-navy/45 to-eb-navy/10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-eb-navy/80 to-transparent" />
+        {overlayOn(hero) && (
+          <>
+            <div className="absolute inset-0 bg-gradient-to-r from-eb-navy/85 via-eb-navy/45 to-eb-navy/10" />
+            <div className="absolute inset-0 bg-gradient-to-t from-eb-navy/80 to-transparent" />
+          </>
+        )}
         <div className="relative mx-auto flex min-h-[420px] max-w-[1440px] flex-col justify-end px-4 pb-9 pt-32 lg:min-h-[520px] lg:px-16 lg:pb-12">
           <h1 className="max-w-2xl text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-[56px]">
             {hero.heading}

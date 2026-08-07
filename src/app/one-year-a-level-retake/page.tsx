@@ -14,7 +14,7 @@ import { StoryCard, type Story } from "@/components/course/StoryCard";
 import { FaqList } from "@/components/course/FaqList";
 import { RichText } from "@/components/site/RichText";
 import { getTemplateSections } from "@/lib/sections";
-import { sectionDefaults, parseItems, parseFaqItems, isVisible, bgStyle, num } from "@/lib/templates";
+import { sectionDefaults, parseItems, parseFaqItems, isVisible, bgStyle, num, overlayOn } from "@/lib/templates";
 import {
   IconResults,
   IconPractice,
@@ -209,8 +209,12 @@ export default async function RetakePage() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={hero.bgDesktop || "/figma/retake-hero.webp"} alt="Edgbaston College retake students" className="absolute inset-0 h-full w-full object-cover object-[center_30%]" fetchPriority="high" />
         {/* Neutral darkening for text legibility (no blue tint) */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/45 via-black/10 to-transparent" />
+        {overlayOn(hero) && (
+          <>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/45 via-black/10 to-transparent" />
+          </>
+        )}
         <div className="relative mx-auto flex min-h-[420px] max-w-[1440px] flex-col justify-end px-4 pb-10 pt-32 lg:min-h-[460px] lg:px-[60px] lg:pb-12">
           <h1 className="max-w-[320px] text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:max-w-[420px] sm:text-5xl lg:max-w-[520px] lg:text-[56px]">
             {hero.heading}
@@ -228,7 +232,7 @@ export default async function RetakePage() {
               <span className="px-2 text-neutral-300">/</span>
               <Link href="/courses" className="hover:text-eb-navy">Courses</Link>
               <span className="px-2 text-neutral-300">/</span>
-              <span className="font-medium text-eb-navy">One Year A-Level Retake</span>
+              <span className="font-medium text-eb-navy">{hero.heading || "One Year A-Level Retake"}</span>
             </nav>
             <SharePage title="One Year A-Level Retake — Edgbaston College" />
           </div>

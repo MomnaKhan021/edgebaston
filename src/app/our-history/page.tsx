@@ -9,7 +9,7 @@ import { IconBulb, IconUsers, IconGear, IconCrest } from "@/components/history/H
 import { SharePage } from "@/components/history/SharePage";
 import { RichText } from "@/components/site/RichText";
 import { getTemplateSections } from "@/lib/sections";
-import { sectionDefaults, parseItems, isVisible, bgStyle } from "@/lib/templates";
+import { sectionDefaults, parseItems, isVisible, bgStyle, overlayOn } from "@/lib/templates";
 
 export const metadata: Metadata = {
   title: "Our History",
@@ -37,7 +37,9 @@ export default async function OurHistoryPage() {
         <SiteNavbar />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={hero.bgDesktop || "/figma/history-hero.webp"} alt="Edgbaston College students" className="absolute inset-0 h-full w-full object-cover" fetchPriority="high" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30" />
+        {overlayOn(hero) && (
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30" />
+        )}
         <div className="relative mx-auto flex min-h-[440px] max-w-[1440px] flex-col justify-end px-4 pb-10 pt-36 lg:min-h-[520px] lg:px-16 lg:pb-12">
           <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-[56px]">
             {hero.heading}
@@ -61,7 +63,7 @@ export default async function OurHistoryPage() {
               <span className="px-2">/</span>
               <Link href="/courses" className="hover:text-eb-navy">Courses</Link>
               <span className="px-2">/</span>
-              <span className="text-eb-navy">Our History</span>
+              <span className="text-eb-navy">{hero.heading || "Our History"}</span>
             </nav>
             <SharePage title="Edgbaston College — Our History" />
           </div>

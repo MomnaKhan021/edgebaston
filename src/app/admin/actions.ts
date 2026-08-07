@@ -34,11 +34,11 @@ function redirectUrl(formData: FormData, key: string): string {
 
 /** Ensure a slug is unique for a model, appending -2, -3, … if needed. */
 async function uniqueSlug(
-  model: "course" | "page",
+  model: "course" | "page" | "post",
   base: string,
   currentId?: string,
 ): Promise<string> {
-  // Pages may live at nested paths (e.g. "guard/course"); courses are flat.
+  // Pages may live at nested paths (e.g. "guard/course"); courses/posts are flat.
   const root = (model === "page" ? toPathSlug(base) : toSlug(base)) || "item";
   let slug = root;
   let i = 1;
@@ -47,7 +47,9 @@ async function uniqueSlug(
     const existing =
       model === "course"
         ? await db.course.findUnique({ where: { slug } })
-        : await db.page.findUnique({ where: { slug } });
+        : model === "post"
+          ? await db.post.findUnique({ where: { slug } })
+          : await db.page.findUnique({ where: { slug } });
     if (!existing || existing.id === currentId) return slug;
     i += 1;
     slug = `${root}-${i}`;
@@ -180,6 +182,56 @@ export async function deletePage(formData: FormData) {
   if (id) await db.page.delete({ where: { id } });
   revalidatePath("/", "layout");
   revalidatePath("/admin/pages");
+}
+
+/* ------------------------------ Blog posts ------------------------------ */
+
+export async function savePost(formData: FormData) {
+  await assertAuth();
+  const id = str(formData, "id");
+  const title = str(formData, "title").trim();
+  if (!title) throw new Error("Title is required");
+
+  const slug = await uniqueSlug("post", str(formData, "slug") || title, id || undefined);
+
+  let authorImage = str(formData, "authorImage");
+  if (authorImage.startsWith("data:image/")) authorImage = await compressDataUri(authorImage, 200);
+  let imageUrl = str(formData, "imageUrl");
+  if (imageUrl.startsWith("data:image/")) imageUrl = await compressDataUri(imageUrl, 1400);
+
+  const data = {
+    title,
+    slug,
+    excerpt: str(formData, "excerpt").trim(),
+    content: await compressInlineImages(str(formData, "content")),
+    category: str(formData, "category").trim(),
+    imageUrl,
+    authorName: str(formData, "authorName").trim(),
+    authorImage,
+    published: bool(formData, "published"),
+    featured: bool(formData, "featured"),
+    order: int(formData, "order"),
+  };
+
+  if (id) {
+    await db.post.update({ where: { id }, data });
+  } else {
+    await db.post.create({ data });
+  }
+
+  revalidateTag("sections", "max");
+  revalidatePath("/blog");
+  revalidatePath(`/blog/${slug}`);
+  revalidatePath("/admin/blog");
+  redirect("/admin/blog");
+}
+
+export async function deletePost(formData: FormData) {
+  await assertAuth();
+  const id = str(formData, "id");
+  if (id) await db.post.delete({ where: { id } });
+  revalidatePath("/blog");
+  revalidatePath("/admin/blog");
 }
 
 /* ---------------------------- Inquiries ---------------------------- */
