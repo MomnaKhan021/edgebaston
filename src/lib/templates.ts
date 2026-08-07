@@ -516,6 +516,10 @@ export const HEADER_TEMPLATE: TemplateDef = {
         image("logoLight", "Logo (on dark banners)"),
         image("logoDark", "Logo (on white pages)"),
         menu("links", "Menu", "Add menu items and reorder them. Give an item sub-items (and sub-sub-items) — any item with sub-items becomes a hover dropdown on the site. Each item has its own link."),
+        list("portals", "Login links (globe icon)", "Link", [
+          text("label", "Label"),
+          url("url", "Link URL"),
+        ], "Shown in the dropdown under the globe icon in the header. External links open in a new tab. Leave empty to hide the globe icon."),
         text("contactLabel", "Contact button label"),
         url("contactUrl", "Contact button link"),
         color("pillColor", "Menu pill colour", "Background of the menu pills. Leave empty for white."),
@@ -554,6 +558,10 @@ export const HEADER_TEMPLATE: TemplateDef = {
           },
           { label: "Blog", url: "/blog", children: [] },
           { label: "Guides", url: "#", children: [] },
+        ]),
+        portals: JSON.stringify([
+          { label: "Engage Login", url: "https://edgbastoncollege.engagehosted.com/Login.aspx?ReturnUrl=%2f" },
+          { label: "Teams Login", url: "https://teams.microsoft.com/" },
         ]),
         contactLabel: "Contact us",
         contactUrl: "/contact",

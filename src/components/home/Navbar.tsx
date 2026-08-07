@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { parseMenu, type MenuNode } from "@/lib/templates";
+import { parseItems, parseMenu, type MenuNode } from "@/lib/templates";
 
 const NAV: MenuNode[] = [
   { label: "Courses", url: "/courses", children: [] },
@@ -12,11 +12,71 @@ const NAV: MenuNode[] = [
   { label: "Guides", url: "#", children: [] },
 ];
 
+type Portal = { label: string; url: string };
+const DEFAULT_PORTALS: Portal[] = [
+  { label: "Engage Login", url: "https://edgbastoncollege.engagehosted.com/Login.aspx?ReturnUrl=%2f" },
+  { label: "Teams Login", url: "https://teams.microsoft.com/" },
+];
+
 function Chevron({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 12 12" fill="none" className={className} aria-hidden>
       <path d="M3 4.5 6 7.5 9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
+  );
+}
+
+function GlobeIcon({ className }: { className?: string }) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className={className} aria-hidden>
+      <circle cx="9" cy="9" r="7" stroke="currentColor" strokeWidth="1.4" />
+      <path d="M2 9h14M9 2c2 2.5 2 11.5 0 14M9 2C7 4.5 7 13.5 9 16" stroke="currentColor" strokeWidth="1.2" />
+    </svg>
+  );
+}
+
+function ExternalArrow({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" className={className} aria-hidden>
+      <path d="M5 11 11 5M6 5h5v5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+/** Reads the admin-configured login portals; falls back to the defaults. */
+function usePortals(data?: Record<string, string>): Portal[] {
+  const parsed = parseItems(data?.portals) as Portal[];
+  return parsed.length ? parsed : DEFAULT_PORTALS;
+}
+
+/** Globe icon in the header that opens a dropdown of external login links. */
+function PortalMenu({ portals }: { portals: Portal[] }) {
+  return (
+    <div className="group relative">
+      <button
+        type="button"
+        aria-label="Login portals"
+        className="grid h-9 w-9 place-items-center rounded-full text-eb-navy transition hover:bg-eb-cream"
+      >
+        <GlobeIcon />
+      </button>
+      <div className="invisible absolute right-0 top-full z-40 translate-y-1 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+        <div className="min-w-[200px] rounded-2xl bg-white p-2 shadow-xl ring-1 ring-black/5">
+          {portals.map((p, i) => (
+            <a
+              key={i}
+              href={p.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-between gap-3 rounded-lg px-4 py-2.5 text-[14px] font-medium text-eb-navy transition hover:bg-eb-cream"
+            >
+              {p.label}
+              <ExternalArrow className="h-4 w-4 shrink-0 text-eb-navy/50" />
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -97,7 +157,9 @@ function MobileItem({ item, onNavigate }: { item: MenuNode; onNavigate: () => vo
     );
   }
   return (
-    <details className="group">
+    // Shared name → native single-open accordion: expanding one section
+    // collapses the others, so the menu stays compact and never runs long.
+    <details name="eb-mobile-menu" className="group border-b border-black/5 last:border-b-0">
       <summary className="flex cursor-pointer list-none items-center justify-between rounded-lg px-4 py-3 text-[15px] font-semibold text-eb-navy hover:bg-eb-cream">
         {item.label}
         <Chevron className="h-4 w-4 text-eb-navy/60 transition-transform group-open:rotate-180" />
@@ -144,6 +206,7 @@ export function Navbar({
   const logoDark = data?.logoDark || "/figma/logo-navy.svg";
   const contactLabel = data?.contactLabel || "Contact us";
   const contactUrl = data?.contactUrl ?? "/contact";
+  const portals = usePortals(data);
 
   const submitSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -212,9 +275,7 @@ export function Navbar({
             >
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="5.5" stroke="currentColor" strokeWidth="1.6"/><path d="M12.5 12.5L16 16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>
             </button>
-            <button aria-label="Language" className="grid h-9 w-9 place-items-center rounded-full text-eb-navy transition hover:bg-eb-cream">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="currentColor" strokeWidth="1.4"/><path d="M2 9h14M9 2c2 2.5 2 11.5 0 14M9 2C7 4.5 7 13.5 9 16" stroke="currentColor" strokeWidth="1.2"/></svg>
-            </button>
+            {portals.length > 0 && <PortalMenu portals={portals} />}
           </div>
           <Link
             href={contactUrl}
@@ -283,6 +344,23 @@ export function Navbar({
             {menu.map((item, i) => (
               <MobileItem key={i} item={item} onNavigate={() => setOpen(false)} />
             ))}
+            {portals.length > 0 && (
+              <div className="mt-3 border-t border-black/5 pt-3">
+                {portals.map((p, i) => (
+                  <a
+                    key={i}
+                    href={p.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setOpen(false)}
+                    className="flex items-center justify-between rounded-lg px-4 py-3 text-[15px] font-semibold text-eb-navy hover:bg-eb-cream"
+                  >
+                    {p.label}
+                    <ExternalArrow className="h-4 w-4 shrink-0 text-eb-navy/50" />
+                  </a>
+                ))}
+              </div>
+            )}
             <Link
               href={contactUrl}
               onClick={() => setOpen(false)}
