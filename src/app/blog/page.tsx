@@ -42,7 +42,7 @@ export default async function BlogPage() {
       {/* Banner */}
       {isVisible(hero) && (
         <section
-          className={"relative isolate overflow-hidden " + (hasImage ? "bg-eb-navy" : "bg-eb-cream")}
+          className={"relative z-[60] isolate overflow-x-clip " + (hasImage ? "bg-eb-navy" : "bg-eb-cream")}
           style={bgStyle(hero)}
         >
           {hasImage && (

@@ -48,8 +48,11 @@ export function TypeformEmbed({ formId }: { formId: string }) {
 
   if (!formId) return null;
   return (
-    <div className="overflow-hidden rounded-2xl">
-      <div data-tf-live={formId} style={{ width: "100%", minHeight: "600px" }} />
+    <div className="tf-embed overflow-hidden rounded-2xl">
+      {/* Responsive height: taller on mobile so the form isn't cramped, capped
+          on desktop. The .tf-embed CSS forces Typeform's injected wrapper +
+          iframe to fill this box so there's no dead space below the form. */}
+      <div data-tf-live={formId} className="h-[80vh] min-h-[520px] w-full sm:h-[640px]" />
     </div>
   );
 }

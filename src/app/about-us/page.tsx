@@ -60,7 +60,7 @@ export default async function AboutUsPage() {
       <SiteAnnouncement />
 
       {/* Hero */}
-      <section className="relative isolate overflow-hidden bg-eb-navy">
+      <section className="relative z-[60] isolate overflow-x-clip bg-eb-navy">
         <SiteNavbar />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={hero.bgDesktop || "/figma/course-retake.webp"} alt="Edgbaston College student" className="absolute inset-0 h-full w-full object-cover object-[70%_center]" loading="lazy" decoding="async" />

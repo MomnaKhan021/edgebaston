@@ -186,7 +186,7 @@ export default async function FeesPage() {
       {/* Private Tuition band */}
       {isVisible(tuition) && (
         <Reveal>
-          <section className="relative isolate overflow-hidden bg-eb-navy">
+          <section className="relative z-[60] isolate overflow-x-clip bg-eb-navy">
             {tuition.image && (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={tuition.image} alt="Private tuition" className="absolute inset-0 h-full w-full object-cover" loading="lazy" decoding="async" />

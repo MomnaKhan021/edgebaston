@@ -218,7 +218,7 @@ export default async function FiveTermPage() {
       <AnnouncementBar />
 
       {/* Hero */}
-      <section className="relative isolate overflow-hidden bg-eb-navy">
+      <section className="relative z-[60] isolate overflow-x-clip bg-eb-navy">
         <SiteNavbar />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={hero.bgDesktop || "/figma/adm-process.webp"} alt="Edgbaston College five-term students" className="absolute inset-0 h-full w-full object-cover object-[center_25%]" fetchPriority="high" />

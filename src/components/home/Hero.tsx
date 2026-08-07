@@ -10,7 +10,7 @@ export function Hero({ data }: { data?: Record<string, string> }) {
   const bgMobile = d.bgMobile || bgDesktop;
 
   return (
-    <section className="relative isolate overflow-hidden bg-eb-navy" style={bgStyle(data)}>
+    <section className="relative z-[60] isolate overflow-x-clip bg-eb-navy" style={bgStyle(data)}>
       <SiteNavbar />
 
       {/* Background photo (separate mobile/desktop images from the admin) */}

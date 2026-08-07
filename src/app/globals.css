@@ -404,6 +404,16 @@ button:disabled,
   margin: 1.5em 0;
 }
 
+/* Typeform inline embed: Typeform injects a wrapper with a fixed 500px height,
+   which leaves dead space inside our sized container. Force its wrapper +
+   iframe to fill the container so the form is responsive and gap-free. */
+.tf-embed [data-tf-live] > div,
+.tf-embed .tf-v1-widget,
+.tf-embed [data-tf-live] iframe {
+  height: 100% !important;
+  width: 100% !important;
+}
+
 /* TipTap editor placeholder + focus styling in the dashboard. */
 .ProseMirror {
   min-height: 260px;

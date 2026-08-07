@@ -38,7 +38,7 @@ export default async function TermDatesPage() {
 
       {/* Banner */}
       {isVisible(hero) && (
-        <section className="relative isolate overflow-hidden bg-eb-navy" style={bgStyle(hero)}>
+        <section className="relative z-[60] isolate overflow-x-clip bg-eb-navy" style={bgStyle(hero)}>
           <SiteNavbar />
           {hero.bgDesktop && (
             // eslint-disable-next-line @next/next/no-img-element

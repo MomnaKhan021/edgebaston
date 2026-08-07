@@ -32,7 +32,7 @@ export default async function SubjectsPage() {
       <AnnouncementBar />
 
       {/* Hero */}
-      <section className="relative isolate overflow-hidden bg-eb-navy">
+      <section className="relative z-[60] isolate overflow-x-clip bg-eb-navy">
         <SiteNavbar />
         {hero.bgDesktop && (
           // eslint-disable-next-line @next/next/no-img-element

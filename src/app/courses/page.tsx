@@ -60,7 +60,7 @@ export default async function CoursesPage({
       <SiteAnnouncement />
 
       {/* Hero */}
-      <section className="relative isolate overflow-hidden bg-eb-navy">
+      <section className="relative z-[60] isolate overflow-x-clip bg-eb-navy">
         <SiteNavbar />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-eb-navy via-eb-navy to-eb-navy-2" />
         <div className="relative mx-auto max-w-[1440px] px-4 pb-14 pt-32 lg:px-16 lg:pb-16">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { parseMenu, type MenuNode } from "@/lib/templates";
@@ -20,29 +20,42 @@ function Chevron({ className }: { className?: string }) {
   );
 }
 
-/** A dropdown entry. If it has children they render as an indented group. */
-function DropdownItem({ item }: { item: MenuNode }) {
-  const kids = item.children ?? [];
-  if (kids.length === 0) {
-    return (
-      <Link href={item.url || "#"} className="block rounded-lg px-4 py-2.5 text-[14px] font-medium text-eb-navy transition hover:bg-eb-cream">
-        {item.label}
-      </Link>
-    );
-  }
+/**
+ * Renders dropdown contents as one flat list: a leaf item is a link, and a
+ * group (an item with children) becomes a NON-clickable section label followed
+ * by its links. Shared by the desktop hover panel and the mobile expanded menu
+ * so both show exactly the same options with no extra nested toggles.
+ */
+function DropdownList({ items, onNavigate }: { items: MenuNode[]; onNavigate?: () => void }) {
   return (
-    <div className="px-2 py-2">
-      <Link href={item.url || "#"} className="block px-2 text-[12px] font-bold uppercase tracking-[0.1em] text-eb-navy/70 transition hover:text-eb-blue">
-        {item.label}
-      </Link>
-      <div className="mt-1 space-y-0.5">
-        {kids.map((c, i) => (
-          <Link key={i} href={c.url || "#"} className="block rounded-lg px-2 py-2 text-[14px] text-eb-navy transition hover:bg-eb-cream">
-            {c.label}
-          </Link>
-        ))}
-      </div>
-    </div>
+    <>
+      {items.map((item, i) => {
+        const kids = item.children ?? [];
+        if (kids.length === 0) {
+          return (
+            <Link
+              key={i}
+              href={item.url || "#"}
+              onClick={onNavigate}
+              className="block rounded-lg px-4 py-2.5 text-[14px] font-medium text-eb-navy transition hover:bg-eb-cream"
+            >
+              {item.label}
+            </Link>
+          );
+        }
+        return (
+          <div key={i} className="px-2 pb-1 pt-2 first:pt-0">
+            {/* Section label — a heading, not a link */}
+            <p className="px-2 pb-1 text-[12px] font-bold uppercase tracking-[0.1em] text-eb-navy/60">
+              {item.label}
+            </p>
+            <div className="space-y-0.5">
+              <DropdownList items={kids} onNavigate={onNavigate} />
+            </div>
+          </div>
+        );
+      })}
+    </>
   );
 }
 
@@ -64,42 +77,33 @@ function NavItem({ item, className, style }: { item: MenuNode; className?: strin
       </Link>
       {/* pt-3 bridges the gap so the panel stays open while the cursor travels to it */}
       <div className="invisible absolute left-0 top-full z-40 translate-y-1 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-        <div className="min-w-[248px] rounded-2xl bg-white p-2 shadow-xl ring-1 ring-black/5">
-          {kids.map((c, i) => (
-            <DropdownItem key={i} item={c} />
-          ))}
+        <div className="max-h-[calc(100vh-7rem)] min-w-[248px] overflow-y-auto rounded-2xl bg-white p-2 shadow-xl ring-1 ring-black/5">
+          <DropdownList items={kids} />
         </div>
       </div>
     </div>
   );
 }
 
-/** Mobile menu item: items with children use a native <details> disclosure. */
-function MobileItem({ item, onNavigate, depth = 0 }: { item: MenuNode; onNavigate: () => void; depth?: number }) {
+/** Mobile menu item: a top-level item with children expands once to reveal all
+ *  of its options flat — the same list the desktop dropdown shows. */
+function MobileItem({ item, onNavigate }: { item: MenuNode; onNavigate: () => void }) {
   const kids = item.children ?? [];
-  const pad = depth === 0 ? "px-4" : depth === 1 ? "px-6" : "px-8";
   if (kids.length === 0) {
     return (
-      <Link href={item.url || "#"} onClick={onNavigate} className={`block rounded-lg ${pad} py-3 text-[15px] font-semibold text-eb-navy hover:bg-eb-cream`}>
+      <Link href={item.url || "#"} onClick={onNavigate} className="block rounded-lg px-4 py-3 text-[15px] font-semibold text-eb-navy hover:bg-eb-cream">
         {item.label}
       </Link>
     );
   }
   return (
     <details className="group">
-      <summary className={`flex cursor-pointer list-none items-center justify-between rounded-lg ${pad} py-3 text-[15px] font-semibold text-eb-navy hover:bg-eb-cream`}>
+      <summary className="flex cursor-pointer list-none items-center justify-between rounded-lg px-4 py-3 text-[15px] font-semibold text-eb-navy hover:bg-eb-cream">
         {item.label}
         <Chevron className="h-4 w-4 text-eb-navy/60 transition-transform group-open:rotate-180" />
       </summary>
-      <div className="mt-0.5">
-        {item.url && item.url !== "#" && (
-          <Link href={item.url} onClick={onNavigate} className={`block rounded-lg ${depth === 0 ? "px-6" : "px-8"} py-2 text-[13px] font-medium text-eb-navy/60 hover:bg-eb-cream`}>
-            View {item.label}
-          </Link>
-        )}
-        {kids.map((c, i) => (
-          <MobileItem key={i} item={c} onNavigate={onNavigate} depth={depth + 1} />
-        ))}
+      <div className="mb-1 mt-0.5 pl-1">
+        <DropdownList items={kids} onNavigate={onNavigate} />
       </div>
     </details>
   );
@@ -118,6 +122,17 @@ export function Navbar({
   const searchRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const solid = variant === "solid";
+
+  // Lock background scroll while the full-screen mobile menu is open.
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
   const pill = solid ? "bg-eb-cream" : "bg-white";
   const pillStyle = data?.pillColor ? { backgroundColor: data.pillColor } : undefined;
 
@@ -229,30 +244,53 @@ export function Navbar({
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu — a fixed full-screen sheet so it's never clipped by a
+          hero's overflow-hidden, and scrolls internally when the menu is tall
+          or a dropdown is expanded. */}
       {open && (
-        <div className="mx-4 rounded-2xl bg-white p-3 shadow-lg lg:hidden">
-          <form onSubmit={submitSearch} className="relative mb-2">
-            <input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search…"
-              className="w-full rounded-full border border-eb-navy/20 bg-white py-2.5 pl-4 pr-11 text-[15px] text-eb-navy outline-none placeholder:text-eb-navy/50 focus:border-eb-blue"
-            />
-            <button type="submit" aria-label="Search" className="absolute right-1.5 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-full bg-eb-navy text-white">
-              <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="5.5" stroke="currentColor" strokeWidth="1.6"/><path d="M12.5 12.5L16 16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>
+        <div className="fixed inset-0 z-[70] flex flex-col bg-white lg:hidden">
+          {/* Sheet header mirrors the bar so the logo + close stay in place */}
+          <div className="flex shrink-0 items-center justify-between border-b border-black/5 px-4 py-4">
+            <Link href="/" onClick={() => setOpen(false)} className="shrink-0">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={logoDark} alt="Edgbaston College" className="h-14 w-auto" />
+            </Link>
+            <button
+              type="button"
+              aria-label="Close menu"
+              onClick={() => setOpen(false)}
+              className={`grid h-11 w-11 place-items-center rounded-full text-eb-navy shadow-sm ${pill}`}
+              style={pillStyle}
+            >
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              </svg>
             </button>
-          </form>
-          {menu.map((item, i) => (
-            <MobileItem key={i} item={item} onNavigate={() => setOpen(false)} />
-          ))}
-          <Link
-            href={contactUrl}
-            onClick={() => setOpen(false)}
-            className="mt-2 block rounded-full bg-eb-navy px-4 py-3 text-center text-sm font-bold uppercase tracking-wide text-white"
-          >
-            {contactLabel}
-          </Link>
+          </div>
+          {/* Scrollable body */}
+          <div className="flex-1 overflow-y-auto overscroll-contain px-3 pb-8 pt-3">
+            <form onSubmit={submitSearch} className="relative mb-2">
+              <input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search…"
+                className="w-full rounded-full border border-eb-navy/20 bg-white py-2.5 pl-4 pr-11 text-[15px] text-eb-navy outline-none placeholder:text-eb-navy/50 focus:border-eb-blue"
+              />
+              <button type="submit" aria-label="Search" className="absolute right-1.5 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-full bg-eb-navy text-white">
+                <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="5.5" stroke="currentColor" strokeWidth="1.6"/><path d="M12.5 12.5L16 16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>
+              </button>
+            </form>
+            {menu.map((item, i) => (
+              <MobileItem key={i} item={item} onNavigate={() => setOpen(false)} />
+            ))}
+            <Link
+              href={contactUrl}
+              onClick={() => setOpen(false)}
+              className="mt-3 block rounded-full bg-eb-navy px-4 py-3 text-center text-sm font-bold uppercase tracking-wide text-white"
+            >
+              {contactLabel}
+            </Link>
+          </div>
         </div>
       )}
     </div>

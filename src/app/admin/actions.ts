@@ -24,12 +24,30 @@ function int(formData: FormData, key: string, fallback = 0): number {
   const n = parseInt(str(formData, key), 10);
   return Number.isNaN(n) ? fallback : n;
 }
-/** Normalise a redirect URL: trim, drop if empty, ensure it has a scheme. */
+/**
+ * A full URL pointing at our own deploy host (e.g. *.vercel.app) is rewritten
+ * to a relative path so links keep working after the real domain goes live.
+ */
+function toRelativeIfInternal(u: string): string {
+  try {
+    const p = new URL(u);
+    if (/(^|\.)vercel\.app$/i.test(p.hostname)) return (p.pathname + p.search + p.hash) || "/";
+  } catch {
+    /* not absolute — leave as-is */
+  }
+  return u;
+}
+
+/**
+ * Normalise a link: trim, drop if empty, keep site-relative paths as-is, and
+ * ensure external links have a scheme (rewriting our own deploy host to a path).
+ */
 function redirectUrl(formData: FormData, key: string): string {
   const raw = str(formData, key).trim();
   if (!raw) return "";
-  if (/^(https?:)?\/\//i.test(raw) || raw.startsWith("/")) return raw;
-  return `https://${raw}`;
+  if (raw.startsWith("/")) return raw; // already a site-relative path
+  const withScheme = /^(https?:)?\/\//i.test(raw) ? raw.replace(/^\/\//, "https://") : `https://${raw}`;
+  return toRelativeIfInternal(withScheme);
 }
 
 /** Ensure a slug is unique for a model, appending -2, -3, … if needed. */

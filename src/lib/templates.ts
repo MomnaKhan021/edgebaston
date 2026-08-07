@@ -81,7 +81,7 @@ const url = (name: string, label: string, hint?: string): FieldDef => ({
   name,
   label,
   type: "url",
-  hint: hint ?? "Leave empty to hide this button.",
+  hint: hint ?? "For a page on this site, use a path like /inquiry (keeps working on any domain). Use a full https:// link only for external sites. Leave empty to hide this button.",
 });
 const text = (name: string, label: string, hint?: string): FieldDef => ({ name, label, type: "text", hint });
 const textarea = (name: string, label: string, hint?: string): FieldDef => ({ name, label, type: "textarea", hint });
@@ -480,11 +480,11 @@ export const HOME_TEMPLATE: TemplateDef = {
       fields: [
         toggle(),
         text("title", "Offer title"),
-        text("message", "Offer text", "Leave empty to hide the bar."),
+        text("message", "Offer text", "Leave empty to hide the offer text."),
         text(
           "endDate",
-          "Offer ends (countdown target)",
-          "When the countdown reaches zero. Format: YYYY-MM-DD HH:MM (24-hour), e.g. 2026-08-31 23:59. Leave empty to count down to the next 1st of August.",
+          "Countdown timer (optional)",
+          "Leave empty for NO timer. To show a countdown, enter the end date/time as YYYY-MM-DD HH:MM (24-hour), e.g. 2026-08-31 23:59.",
         ),
         text("buttonLabel", "Button label"),
         url("buttonUrl", "Button link"),
@@ -532,6 +532,7 @@ export const HEADER_TEMPLATE: TemplateDef = {
               { label: "Five Term A-Level", url: "/five-term-a-level", children: [] },
               { label: "Fees", url: "/fees", children: [] },
               { label: "All Courses", url: "/courses", children: [] },
+              { label: "Subjects", url: "/subjects", children: [] },
             ],
           },
           {

@@ -67,7 +67,7 @@ export default async function SearchPage({
     <>
       <SiteAnnouncement />
 
-      <section className="relative isolate overflow-hidden bg-eb-navy">
+      <section className="relative z-[60] isolate overflow-x-clip bg-eb-navy">
         <SiteNavbar />
         <div className="relative mx-auto max-w-[1440px] px-4 pb-12 pt-32 lg:px-16 lg:pb-14">
           <p className="font-mono text-xs uppercase tracking-[0.16em] text-white/70">
