@@ -67,7 +67,7 @@ export default async function InquiryPage() {
       {isVisible(form) && (
         <Reveal>
           <section className="bg-white">
-            <div className="mx-auto max-w-[900px] px-4 py-10 lg:px-[60px] lg:py-16">
+            <div className="mx-auto max-w-[1200px] px-4 py-10 lg:px-[60px] lg:py-16">
               {(form.heading || form.intro) && (
                 <div className="mb-8 text-center">
                   {form.heading && (

@@ -81,51 +81,27 @@ function PortalMenu({ portals }: { portals: Portal[] }) {
 }
 
 /**
- * Renders dropdown contents. A leaf item is a link. A parent that has its own
- * link is also a normal clickable link (it navigates), with its sub-items listed
- * beneath it; a parent with no link of its own is a plain section heading.
- * Shared by the desktop hover panel and the mobile expanded menu so both show
- * exactly the same options with no extra nested toggles.
+ * Renders dropdown contents as a single, uniform list of links. Every entry —
+ * whether or not it has sub-items — uses the exact same styling and left
+ * alignment; nothing is rendered as a differently-styled, indented section
+ * heading. Any sub-items are shown as further links at the same level. Shared
+ * by the desktop hover panel and the mobile expanded menu.
  */
 function DropdownList({ items, onNavigate }: { items: MenuNode[]; onNavigate?: () => void }) {
   return (
     <>
       {items.map((item, i) => {
         const kids = item.children ?? [];
-        const hasUrl = Boolean(item.url && item.url !== "#");
-        if (kids.length === 0) {
-          return (
+        return (
+          <div key={i} className="contents">
             <Link
-              key={i}
               href={item.url || "#"}
               onClick={onNavigate}
               className="block rounded-lg px-4 py-2.5 text-[14px] font-medium text-eb-navy transition hover:bg-eb-cream"
             >
               {item.label}
             </Link>
-          );
-        }
-        // A parent that has its own link is a normal, clickable menu item (it
-        // navigates), with its sub-items listed under it. Only a parent WITHOUT
-        // a link acts as a plain, non-clickable section heading.
-        return (
-          <div key={i} className={hasUrl ? "" : "px-2 pb-1 pt-2 first:pt-0"}>
-            {hasUrl ? (
-              <Link
-                href={item.url}
-                onClick={onNavigate}
-                className="block rounded-lg px-4 py-2.5 text-[14px] font-semibold text-eb-navy transition hover:bg-eb-cream"
-              >
-                {item.label}
-              </Link>
-            ) : (
-              <p className="px-2 pb-1 text-[12px] font-bold uppercase tracking-[0.1em] text-eb-navy/60">
-                {item.label}
-              </p>
-            )}
-            <div className={hasUrl ? "pl-3" : "space-y-0.5"}>
-              <DropdownList items={kids} onNavigate={onNavigate} />
-            </div>
+            {kids.length > 0 && <DropdownList items={kids} onNavigate={onNavigate} />}
           </div>
         );
       })}
