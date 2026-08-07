@@ -246,18 +246,25 @@ export function Navbar({
                 className="rounded-full px-3.5 py-1.5 text-[15px] font-semibold text-eb-navy transition hover:bg-eb-cream"
               />
             ))}
-            {searchOpen && (
-              <form onSubmit={submitSearch} className="ml-1">
-                <input
-                  ref={searchRef}
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  onKeyDown={(e) => e.key === "Escape" && setSearchOpen(false)}
-                  placeholder="Search…"
-                  className="w-40 rounded-full border border-eb-navy/20 bg-white px-3 py-1.5 text-sm text-eb-navy outline-none placeholder:text-eb-navy/50 focus:border-eb-blue"
-                />
-              </form>
-            )}
+            {/* Search field: always mounted, slides/fades open for a smooth reveal */}
+            <form
+              onSubmit={submitSearch}
+              className={
+                "overflow-hidden transition-all duration-300 ease-out " +
+                (searchOpen ? "ml-1 w-40 opacity-100" : "pointer-events-none w-0 opacity-0")
+              }
+            >
+              <input
+                ref={searchRef}
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={(e) => e.key === "Escape" && setSearchOpen(false)}
+                placeholder="Search…"
+                tabIndex={searchOpen ? 0 : -1}
+                aria-hidden={!searchOpen}
+                className="w-40 rounded-full border border-eb-navy/20 bg-white px-3 py-1.5 text-sm text-eb-navy outline-none placeholder:text-eb-navy/50 focus:border-eb-blue"
+              />
+            </form>
             <button
               aria-label="Search"
               onClick={(e) => {

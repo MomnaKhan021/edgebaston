@@ -62,23 +62,37 @@ export function Faq({ data }: { data?: Record<string, string> }) {
               <div key={item.q} className="border-b border-dashed border-neutral-300">
                 <button
                   onClick={() => setOpen(isOpen ? null : i)}
+                  aria-expanded={isOpen}
                   className="flex w-full items-center justify-between gap-6 py-4 text-left sm:py-6"
                 >
                   <span className="text-[16px] font-bold text-eb-navy sm:text-xl lg:text-[28px]">
                     {item.q}
                   </span>
+                  {/* Plus rotates to a minus as it opens */}
                   <span className="grid h-7 w-7 shrink-0 place-items-center text-eb-navy">
                     <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                      <path d="M11 4v14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" className={isOpen ? "opacity-0" : ""} />
+                      <path
+                        d="M11 4v14"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        className={"origin-center transition-all duration-300 ease-out " + (isOpen ? "rotate-90 opacity-0" : "")}
+                      />
                       <path d="M4 11h14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
                     </svg>
                   </span>
                 </button>
-                {isOpen && (
-                  <p className="-mt-1 pb-5 pr-10 text-[14px] leading-relaxed text-eb-navy/75 sm:-mt-2 sm:pb-6 sm:text-[15px]">
-                    {item.a}
-                  </p>
-                )}
+                {/* Smooth height reveal via a 0fr → 1fr grid row */}
+                <div
+                  className="grid transition-all duration-300 ease-out"
+                  style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
+                >
+                  <div className="overflow-hidden">
+                    <p className="pb-5 pr-10 text-[14px] leading-relaxed text-eb-navy/75 sm:pb-6 sm:text-[15px]">
+                      {item.a}
+                    </p>
+                  </div>
+                </div>
               </div>
             );
           })}
