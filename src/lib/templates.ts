@@ -470,7 +470,7 @@ export const HOME_TEMPLATE: TemplateDef = {
         label: "Find Your Local YDS Clinic",
         title: "What's happening at Edgbaston",
         bgColor: "",
-        articles: "[{\"date\":\"12 Sep 2024\",\"title\":\"Edgbaston College Celebrates Outstanding A-Level Results\",\"image\":\"/figma/news-results.webp\",\"url\":\"\"},{\"date\":\"22 Nov 2024\",\"title\":\"Maneek Wins the Great College Bake Off to Support Children…\",\"image\":\"/figma/news-cake.webp\",\"url\":\"\"},{\"date\":\"15 Oct 2024\",\"title\":\"Year 12 Students Explore Future Opportunities at UK University…\",\"image\":\"/figma/news-uni.webp\",\"url\":\"\"},{\"date\":\"3 Oct 2024\",\"title\":\"Edgbaston College Students Build Life-Saving Skills with St John…\",\"image\":\"/figma/news-firstaid.webp\",\"url\":\"\"},{\"date\":\"7 Oct 2024\",\"title\":\"Students Hit the Track for Karting Fun\",\"image\":\"/figma/news-karting.webp\",\"url\":\"\"}]",
+        articles: "[{\"date\":\"12 Sep 2024\",\"title\":\"5 Tips to Ace Your A-Level Retake\",\"image\":\"/figma/news-results.webp\",\"url\":\"/blog/5-tips-to-ace-your-a-level-retake\"},{\"date\":\"22 Nov 2024\",\"title\":\"Maneek Wins the Great College Bake Off to Support Children…\",\"image\":\"/figma/news-cake.webp\",\"url\":\"\"},{\"date\":\"15 Oct 2024\",\"title\":\"Year 12 Students Explore Future Opportunities at UK University…\",\"image\":\"/figma/news-uni.webp\",\"url\":\"\"},{\"date\":\"3 Oct 2024\",\"title\":\"Edgbaston College Students Build Life-Saving Skills with St John…\",\"image\":\"/figma/news-firstaid.webp\",\"url\":\"\"},{\"date\":\"7 Oct 2024\",\"title\":\"Students Hit the Track for Karting Fun\",\"image\":\"/figma/news-karting.webp\",\"url\":\"\"}]",
       },
     },
     {

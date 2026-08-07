@@ -3,6 +3,39 @@ import { PrismaClient } from "../src/generated/prisma";
 const db = new PrismaClient();
 
 async function main() {
+  // Starter blog post — seeded once when the blog is empty, even on an existing
+  // database, so a demo article appears the first time the blog ships. Runs
+  // before the courses guard below (which would otherwise skip everything).
+  const existingPosts = await db.post.count().catch(() => 1);
+  if (existingPosts === 0) {
+    await db.post.create({
+      data: {
+        title: "5 Tips to Ace Your A-Level Retake",
+        slug: "5-tips-to-ace-your-a-level-retake",
+        category: "Study Tips",
+        excerpt:
+          "Retaking your A-Levels is a fresh start, not a setback. Here are five practical tips to turn last year's results into the grades you need.",
+        authorName: "Owais Ahmed",
+        featured: true,
+        content:
+          "<p>Retaking your A-Levels is one of the smartest decisions you can make for your future. A single year of focused study can be the difference between the grades you got and the grades you need. Here is how to make it count.</p>" +
+          "<h2>1. Start with an honest review</h2>" +
+          "<p>Before you open a textbook, look back at exactly where marks were lost. Was it exam technique, gaps in knowledge, or timing under pressure? Knowing the real cause lets you target your effort where it matters most.</p>" +
+          "<h3>Build a realistic plan</h3>" +
+          "<ul><li>Map every topic against the specification.</li><li>Schedule regular, timed practice — little and often beats cramming.</li><li>Book in mock exams so there are no surprises in the summer.</li></ul>" +
+          "<h2>2. Get feedback early and often</h2>" +
+          "<p>The fastest way to improve is to have your work marked by an expert who can show you precisely how to pick up more marks. Weekly assessments keep you on track and make progress visible.</p>" +
+          "<blockquote>Small classes and individual attention are what turn a disappointing result into an outstanding one.</blockquote>" +
+          "<h2>3. Look after yourself</h2>" +
+          "<p>Sleep, exercise and breaks are not luxuries — they are part of the strategy. A rested mind retains more and performs better on the day.</p>" +
+          "<p><a class=\"btn\" href=\"/inquiry\">Enquire about a retake place</a></p>",
+        published: true,
+        order: 1,
+      },
+    });
+    console.log("📝 Seeded a starter blog post.");
+  }
+
   // Idempotent guard: only seed a fresh database. This runs on every Vercel
   // build, so we must never wipe content the client has already added.
   const existingCourses = await db.course.count().catch(() => 0);
