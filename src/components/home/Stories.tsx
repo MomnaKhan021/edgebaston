@@ -158,7 +158,7 @@ export function Stories({ data }: { data?: Record<string, string> }) {
               <p className="text-[18px] font-bold leading-[1.35] text-eb-navy">&ldquo;{featured.quote}&rdquo;</p>
               {moreUrl && (
                 <Link href={moreUrl} className="mt-6 self-start text-[12px] font-semibold uppercase tracking-wide text-black underline underline-offset-4">
-                  View full profile
+                  {data?.profileLabel || "View full profile"}
                 </Link>
               )}
             </div>

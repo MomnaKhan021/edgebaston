@@ -42,7 +42,7 @@ export function News({ data }: { data?: Record<string, string> }) {
                 />
               </div>
               <p className="mt-4 font-mono text-[12px] font-medium uppercase tracking-[0.08em] text-eb-blue sm:text-[13px]">
-                News <span className="px-0.5">•</span> {n.date}
+                {data?.tag || "News"} <span className="px-0.5">•</span> {n.date}
               </p>
               <h3 className="mt-2 min-h-[52px] text-[16px] font-bold leading-snug text-eb-navy transition group-hover:text-eb-blue sm:text-[18px]">
                 {n.title}
@@ -51,7 +51,7 @@ export function News({ data }: { data?: Record<string, string> }) {
               {n.url && (
                 <span className="eb-cta mt-3 flex items-stretch gap-1">
                   <span className="flex flex-1 items-center bg-white px-4 py-3 text-[11px] font-bold uppercase tracking-wide text-eb-navy">
-                    Read Article
+                    {data?.readLabel || "Read Article"}
                   </span>
                   <span className="eb-square grid w-10 shrink-0 place-items-center rounded-sm bg-eb-blue text-white">
                     <ArrowUpRight className="h-4 w-4" />
