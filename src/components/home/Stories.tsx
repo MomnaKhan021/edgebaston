@@ -4,6 +4,7 @@ import { useState } from "react";
 import { bgStyle, parseItems } from "@/lib/templates";
 import Link from "next/link";
 import { Slider } from "./Slider";
+import { ArrowUpRight } from "./icons";
 
 /** Double-triangle "grade jump" glyph between the before/after grades. */
 function GradeJump() {
@@ -46,13 +47,15 @@ const STUDENTS: Story[] = [
   { name: "Jacob", img: "/figma/pathway-3.webp", grade: "CC → A*A", course: "Engineering at University of Warwick", quote: "Weekly assessments kept me on track and my grades climbed two full levels over the year." },
 ];
 
-function CompactCard({ c }: { c: Story }) {
+function CompactCard({ c, grid }: { c: Story; grid?: boolean }) {
   const [open, setOpen] = useState(false);
   return (
     <div
       className={
-        "group relative aspect-[4/5] w-[calc(100%-64px)] shrink-0 snap-center overflow-hidden rounded-lg bg-eb-navy sm:aspect-auto sm:h-[420px] sm:w-[292px] sm:snap-start " +
-        (c.mobileOnly ? "sm:hidden" : "")
+        "group relative aspect-[4/5] overflow-hidden rounded-lg bg-eb-navy sm:aspect-auto sm:h-[420px] " +
+        (grid
+          ? "w-full"
+          : "w-[calc(100%-64px)] shrink-0 snap-center sm:w-[292px] sm:snap-start " + (c.mobileOnly ? "sm:hidden" : ""))
       }
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -105,13 +108,35 @@ export function Stories({ data }: { data?: Record<string, string> }) {
       }))
     : STUDENTS;
   const featured = students[0];
+  // Where "View full profile" and the "See more" button link (empty = hidden).
+  const moreUrl = data?.moreUrl ?? "/results";
+  const moreLabel = data?.moreLabel || "See All Success Stories";
+  const label = data?.label || "Success Stories";
+  const title = data?.title || "Real Students. Real Grade Transformation.";
+  const subtitle = data?.subtitle || "Real students, real grade jumps. Watch how their retake year went.";
+  const showGrid = data?.gridLayout === "1";
   return (
     <section className="bg-eb-cream" style={bgStyle(data)}>
       <div className="mx-auto max-w-[1440px] px-4 py-10 lg:px-[60px] lg:py-20">
+        {showGrid ? (
+          <>
+            {/* Grid layout — no swiper, every student as a card */}
+            <div className="max-w-2xl">
+              <p className="font-mono text-sm uppercase tracking-[0.14em] text-black">{label}</p>
+              <h2 className="mt-3 text-[28px] font-extrabold leading-[1.05] tracking-tight text-black sm:text-4xl lg:text-[52px]">{title}</h2>
+              {subtitle && <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-neutral-600">{subtitle}</p>}
+            </div>
+            <div className="mt-8 grid gap-4 sm:mt-10 sm:grid-cols-2 lg:grid-cols-4">
+              {students.map((c) => (
+                <CompactCard key={c.name} c={{ ...c, mobileOnly: false }} grid />
+              ))}
+            </div>
+          </>
+        ) : (
         <Slider
-          label={data?.label || "Success Stories"}
-          title={data?.title || "Real Students. Real Grade Transformation."}
-          subtitle={data?.subtitle || "Real students, real grade jumps. Watch how their retake year went."}
+          label={label}
+          title={title}
+          subtitle={subtitle}
           labelClassName="text-black"
           titleClassName="text-black"
           trackClassName="mt-[40px] gap-4 sm:mt-[60px] sm:gap-6"
@@ -131,9 +156,11 @@ export function Stories({ data }: { data?: Record<string, string> }) {
             </div>
             <div className="flex flex-col justify-between p-6">
               <p className="text-[18px] font-bold leading-[1.35] text-eb-navy">&ldquo;{featured.quote}&rdquo;</p>
-              <Link href="/about" className="mt-6 self-start text-[12px] font-semibold uppercase tracking-wide text-black underline underline-offset-4">
-                View full profile
-              </Link>
+              {moreUrl && (
+                <Link href={moreUrl} className="mt-6 self-start text-[12px] font-semibold uppercase tracking-wide text-black underline underline-offset-4">
+                  View full profile
+                </Link>
+              )}
             </div>
           </div>
 
@@ -142,6 +169,20 @@ export function Stories({ data }: { data?: Record<string, string> }) {
             <CompactCard key={c.name} c={c} />
           ))}
         </Slider>
+        )}
+        {moreUrl && (
+          <div className="mt-8 flex justify-center sm:mt-10">
+            <Link
+              href={moreUrl}
+              className="eb-cta group inline-flex items-center gap-3 rounded-lg bg-eb-navy py-2 pl-5 pr-2 text-xs font-bold uppercase tracking-wide text-white sm:text-sm"
+            >
+              {moreLabel}
+              <span className="eb-square grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-eb-blue text-white">
+                <ArrowUpRight className="h-5 w-5" />
+              </span>
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );

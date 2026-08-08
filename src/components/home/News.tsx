@@ -21,6 +21,9 @@ export function News({ data }: { data?: Record<string, string> }) {
         url: a.url ?? "",
       }))
     : NEWS.map((n) => ({ ...n, url: "" }));
+  // "View full blog" button below the articles (empty URL = hidden).
+  const moreUrl = data?.moreUrl ?? "/blog";
+  const moreLabel = data?.moreLabel || "View Full Blog";
   return (
     <section className="overflow-hidden bg-eb-cream py-10 lg:py-14" style={bgStyle(data)}>
       <NewsSlider label={data?.label || "Find Your Local YDS Clinic"} title={data?.title || "What's happening at Edgbaston"}>
@@ -69,6 +72,19 @@ export function News({ data }: { data?: Record<string, string> }) {
           );
         })}
       </NewsSlider>
+      {moreUrl && (
+        <div className="mx-auto mt-8 flex max-w-[1440px] justify-center px-4 sm:mt-10 lg:px-[60px]">
+          <Link
+            href={moreUrl}
+            className="eb-cta group inline-flex items-center gap-3 rounded-lg bg-eb-navy py-2 pl-5 pr-2 text-xs font-bold uppercase tracking-wide text-white sm:text-sm"
+          >
+            {moreLabel}
+            <span className="eb-square grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-eb-blue text-white">
+              <ArrowUpRight className="h-5 w-5" />
+            </span>
+          </Link>
+        </div>
+      )}
     </section>
   );
 }

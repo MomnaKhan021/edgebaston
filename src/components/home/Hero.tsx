@@ -93,10 +93,12 @@ function Medal({ className }: { className?: string }) {
 }
 
 function StatRow({ label, to }: { label: string; to: number }) {
+  // Show one decimal place when the value has one (e.g. 72.7), whole otherwise.
+  const decimals = Number.isInteger(to) ? 0 : 1;
   return (
     <div className="flex items-center justify-between py-3 sm:py-4">
       <span className="text-[14px] font-medium text-eb-navy sm:text-[18px]">{label}</span>
-      <CountUp to={to} suffix="%" className="text-[24px] font-extrabold leading-none text-eb-blue sm:text-[40px]" />
+      <CountUp to={to} decimals={decimals} suffix="%" className="text-[24px] font-extrabold leading-none text-eb-blue sm:text-[40px]" />
     </div>
   );
 }

@@ -32,10 +32,12 @@ export function NewsSlider({
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
-  // Start with the middle card centred, like the design.
+  // Centre the middle card on mobile only; on desktop the track starts at the
+  // left (aligned with the heading) so the first card isn't clipped at the edge.
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    if (window.matchMedia("(min-width: 640px)").matches) return;
     const mid = el.children[Math.floor(el.children.length / 2)] as HTMLElement | undefined;
     if (mid) el.scrollLeft = mid.offsetLeft - (el.clientWidth - mid.clientWidth) / 2;
   }, []);
@@ -80,13 +82,16 @@ export function NewsSlider({
         </div>
       </div>
 
-      {/* Full-bleed centre-snap track — no side padding, edges clip the cards */}
-      <div
-        ref={ref}
-        className="mt-7 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-1 sm:mt-10 sm:gap-5"
-        style={{ scrollbarWidth: "none" }}
-      >
-        {children}
+      {/* Track aligned to the page gutter (like the header) so the cards don't
+          run to the hard screen edge on desktop; still edge-to-edge on mobile. */}
+      <div className="mx-auto max-w-[1440px] px-4 lg:px-[60px]">
+        <div
+          ref={ref}
+          className="eb-noscroll -mx-4 mt-7 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-1 sm:mt-10 sm:gap-5 sm:px-4 lg:mx-0 lg:px-0"
+          style={{ scrollbarWidth: "none" }}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );
