@@ -127,5 +127,9 @@ model SiteSetting {
   address      String   @default("Edgbaston, Birmingham, UK")
   primaryColor String   @default("#1e3a5f")
   accentColor  String   @default("#c9a227")
+  // SEO / metadata (shown in search results and browser tabs)
+  metaTitle       String @default("") // <title> / og:title; falls back to site name + tagline
+  metaDescription String @default("") // meta description; falls back to tagline
+  faviconUrl      String @default("") // browser-tab icon (data URI or path)
   updatedAt    DateTime @updatedAt
 }

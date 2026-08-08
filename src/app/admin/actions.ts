@@ -285,6 +285,9 @@ export async function saveSettings(formData: FormData) {
     address: str(formData, "address"),
     primaryColor: str(formData, "primaryColor", "#1e3a5f"),
     accentColor: str(formData, "accentColor", "#c9a227"),
+    metaTitle: str(formData, "metaTitle"),
+    metaDescription: str(formData, "metaDescription"),
+    faviconUrl: await compressDataUri(str(formData, "faviconUrl")),
   };
 
   await db.siteSetting.upsert({

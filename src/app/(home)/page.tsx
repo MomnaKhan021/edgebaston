@@ -14,12 +14,22 @@ import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
 import { getTemplateSections } from "@/lib/sections";
 import { isVisible } from "@/lib/templates";
+import { getSettings } from "@/lib/settings";
 
-export const metadata: Metadata = {
-  title: "Edgbaston College — Birmingham's Top-Performing Sixth Form College",
-  description:
-    "Edgbaston College is Birmingham's top-performing independent sixth form college, offering A-Level retakes, five-term and transfer pathways with small classes and outstanding results.",
-};
+// The homepage title/description come from the admin SEO settings when set,
+// otherwise from these sensible defaults. `absolute` lets the admin control the
+// exact title (no "| Site name" suffix).
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSettings();
+  return {
+    title: settings.metaTitle
+      ? { absolute: settings.metaTitle }
+      : "Edgbaston College — Birmingham's Top-Performing Sixth Form College",
+    description:
+      settings.metaDescription ||
+      "Edgbaston College is Birmingham's top-performing independent sixth form college, offering A-Level retakes, five-term and transfer pathways with small classes and outstanding results.",
+  };
+}
 
 export default async function HomePage() {
   const s = await getTemplateSections("home");

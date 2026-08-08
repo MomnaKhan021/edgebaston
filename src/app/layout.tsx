@@ -16,13 +16,30 @@ const geistMono = saansMono;
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
-  return {
+  // Admin-configured SEO values, with sensible fallbacks so the tags are never empty.
+  const defaultTitle = settings.metaTitle || `${settings.siteName} — ${settings.tagline}`;
+  const description = settings.metaDescription || settings.tagline;
+
+  const meta: Metadata = {
     title: {
-      default: `${settings.siteName} — ${settings.tagline}`,
+      default: defaultTitle,
       template: `%s | ${settings.siteName}`,
     },
-    description: settings.tagline,
+    description,
+    openGraph: { title: defaultTitle, description, siteName: settings.siteName },
+    twitter: { card: "summary_large_image", title: defaultTitle, description },
   };
+
+  // Custom favicon (browser-tab icon) when one is uploaded in the admin.
+  if (settings.faviconUrl) {
+    meta.icons = {
+      icon: settings.faviconUrl,
+      shortcut: settings.faviconUrl,
+      apple: settings.faviconUrl,
+    };
+  }
+
+  return meta;
 }
 
 export default async function RootLayout({

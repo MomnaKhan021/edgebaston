@@ -65,6 +65,42 @@ export default async function SettingsAdmin({
         </div>
       </section>
 
+      {/* SEO & metadata */}
+      <section className="rounded-2xl border bg-background p-6 shadow-sm">
+        <h2 className="mb-1 font-bold text-eb-navy">SEO &amp; metadata</h2>
+        <p className="mb-4 text-sm text-muted-foreground">
+          The title and description search engines (Google) and browser tabs show, plus the favicon (the little icon in the browser tab).
+        </p>
+        <div className="space-y-4">
+          <Field
+            label="Meta title"
+            htmlFor="metaTitle"
+            hint="Shown in the browser tab and as the headline in search results. Aim for ~50–60 characters. Leave empty to use the site name and tagline."
+          >
+            <Input id="metaTitle" name="metaTitle" defaultValue={settings.metaTitle} placeholder="Edgbaston College — Sixth Form in Birmingham" />
+          </Field>
+          <Field
+            label="Meta description"
+            htmlFor="metaDescription"
+            hint="The summary under the title in search results. Aim for ~150–160 characters. Leave empty to use the tagline."
+          >
+            <Textarea
+              id="metaDescription"
+              name="metaDescription"
+              rows={3}
+              defaultValue={settings.metaDescription}
+              placeholder="Birmingham's top-performing independent sixth form college…"
+            />
+          </Field>
+          <Field
+            label="Favicon"
+            hint="The small icon shown in the browser tab. Upload a square PNG or ICO (32×32 or larger)."
+          >
+            <ImageUpload name="faviconUrl" defaultValue={settings.faviconUrl} aspect="aspect-square" />
+          </Field>
+        </div>
+      </section>
+
       {/* Homepage hero */}
       <section className="rounded-2xl border bg-background p-6 shadow-sm">
         <h2 className="mb-4 font-bold text-eb-navy">Homepage hero</h2>

@@ -14,6 +14,9 @@ export type Settings = {
   address: string;
   primaryColor: string;
   accentColor: string;
+  metaTitle: string;
+  metaDescription: string;
+  faviconUrl: string;
   updatedAt: Date;
 };
 
@@ -30,6 +33,9 @@ const DEFAULTS: Settings = {
   address: "37 George Road, Edgbaston, Birmingham, B15 1PL",
   primaryColor: "#0e2f49",
   accentColor: "#2781c8",
+  metaTitle: "",
+  metaDescription: "",
+  faviconUrl: "",
   updatedAt: new Date(0),
 };
 
