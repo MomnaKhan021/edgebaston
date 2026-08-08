@@ -109,7 +109,7 @@ export function Stories({ data }: { data?: Record<string, string> }) {
     : STUDENTS;
   const featured = students[0];
   // Where "View full profile" and the "See more" button link (empty = hidden).
-  const moreUrl = data?.moreUrl ?? "/results";
+  const moreUrl = data?.moreUrl ?? "/what-our-students-say";
   const moreLabel = data?.moreLabel || "See All Success Stories";
   const label = data?.label || "Success Stories";
   const title = data?.title || "Real Students. Real Grade Transformation.";

@@ -393,7 +393,7 @@ export const HOME_TEMPLATE: TemplateDef = {
         title: "Meet Our Students",
         subtitle: "Real students, real grade jumps. Watch how their retake year went.",
         moreLabel: "See All Success Stories",
-        moreUrl: "/results",
+        moreUrl: "/what-our-students-say",
         gridLayout: "0",
         bgColor: "",
         students: "[{\"name\":\"Alishba\",\"image\":\"/figma/pathway-1.webp\",\"grade\":\"BB → A*A*\",\"course\":\"Law at University of Cambridge\",\"quote\":\"The career guidance was absolutely transformative for me. Umar's Chemistry teaching helped me jump from a D to an A, whilst Owais's university advice gave me clear direction.\"},{\"name\":\"Nicole\",\"image\":\"/figma/news-1.webp\",\"grade\":\"BB → A*A*\",\"course\":\"Dentistry at King's College London\",\"quote\":\"The small classes and mock exams gave me the confidence to jump from BB to A*A* and secure my dentistry place.\"},{\"name\":\"Tara\",\"image\":\"/figma/news-2.webp\",\"grade\":\"BB → AA\",\"course\":\"Medicine at Edge Hill University\",\"quote\":\"The personalised UCAS support was the difference — I reapplied and got my medicine offer.\"},{\"name\":\"Jacob\",\"image\":\"/figma/pathway-3.webp\",\"grade\":\"CC → A*A\",\"course\":\"Engineering at University of Warwick\",\"quote\":\"Weekly assessments kept me on track and my grades climbed two full levels over the year.\"}]",
