@@ -208,7 +208,7 @@ export function Navbar({
   };
 
   return (
-    <div className={solid ? "relative z-30 border-b bg-white" : "absolute inset-x-0 top-0 z-30"}>
+    <div className={solid ? "relative z-[70] border-b bg-white" : "absolute inset-x-0 top-0 z-[70]"}>
       {/* On image banners, darken the top strip so the white logo stays legible
           on any hero photo (light or dark). */}
       {!solid && (
