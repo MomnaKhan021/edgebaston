@@ -2,13 +2,12 @@ import { Slider } from "./Slider";
 import Link from "next/link";
 import { bgStyle, parseItems } from "@/lib/templates";
 import { ArrowRight } from "./icons";
-import { CountUp } from "./CountUp";
 
 const CARDS = [
   {
     title: "One Year A-Level Retake",
     body: "Focused retake support in a specialist environment. Small classes, regular mocks, and dedicated university guidance to help you secure the grades you need.",
-    stat: 16.0,
+    stat: "16.0%",
     statLabel: "of 2025 A-Level grades achieved the top A* grade",
     img: "/figma/course-retake.webp",
     objPos: "object-[70%_center]",
@@ -16,7 +15,7 @@ const CARDS = [
   {
     title: "Five Term A-Level",
     body: "A flexible five-term pathway starting in January. Ideal for students who missed the September entry window but want a full and structured route to university.",
-    stat: 16.0,
+    stat: "16.0%",
     statLabel: "of 2025 A-Level grades achieved the top A* grade",
     img: "/figma/course-fiveterm.webp",
     objPos: "object-[55%_center]",
@@ -24,7 +23,7 @@ const CARDS = [
   {
     title: "Transfer into Year 13",
     body: "Already in Year 12 elsewhere? Transfer mid-course into more focused, supportive environment where you'll receive the individual attention to push for top grades.",
-    stat: 72.7,
+    stat: "72.7%",
     statLabel: "of students progressed to Russell Group universities",
     img: "/figma/course-transfer.webp",
     objPos: "object-[45%_center]",
@@ -37,7 +36,7 @@ export function Pathways({ data }: { data?: Record<string, string> }) {
     ? managed.map((c) => ({
         title: c.title ?? "",
         body: c.body ?? "",
-        stat: parseFloat(c.stat || "0") || 0,
+        stat: c.stat ?? "",
         statLabel: c.statLabel ?? "",
         img: c.image || "/figma/course-retake.webp",
         objPos: "object-center",
@@ -68,7 +67,7 @@ export function Pathways({ data }: { data?: Record<string, string> }) {
                   <h3 className="text-[20px] font-bold leading-tight text-eb-navy sm:text-[28px]">{c.title}</h3>
                   <p className="text-[14px] leading-snug text-black sm:text-[16px]">{c.body}</p>
                   <div className="flex items-center justify-between gap-3 rounded-lg bg-eb-cream p-3">
-                    <CountUp to={c.stat} decimals={1} suffix="%" className="shrink-0 text-[20px] font-extrabold text-eb-blue sm:text-[30px]" />
+                    <span className="shrink-0 text-[20px] font-extrabold text-eb-blue sm:text-[30px]">{c.stat}</span>
                     <span className="text-right text-[10px] font-semibold leading-snug text-eb-blue sm:text-[12px]">
                       {c.statLabel}
                     </span>

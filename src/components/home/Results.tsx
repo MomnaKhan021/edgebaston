@@ -66,8 +66,8 @@ export function Results({ data }: { data?: Record<string, string> }) {
           <div className="mx-auto mt-10 flex items-center justify-center sm:mt-[60px]">
             {/* Left box — higher */}
             <div className="z-10 w-[128px] shrink-0 -translate-y-8 rounded-xl bg-white/[0.08] px-3 py-4 text-center sm:w-[210px] sm:-translate-y-10 sm:p-[26px] lg:w-[240px] lg:-translate-y-12">
-              <p className="font-mono text-[11px] font-medium text-white sm:text-[15px]">National Ranking</p>
-              <CountUp to={num(d.rankingValue, 25)} prefix="#" className="my-1.5 block text-[34px] font-extrabold leading-none text-white sm:my-2 sm:text-5xl lg:text-[64px]" />
+              <p className="font-mono text-[11px] font-medium text-white sm:text-[15px]">{d.rankingLabel}</p>
+              <span className="my-1.5 block text-[34px] font-extrabold leading-none text-white sm:my-2 sm:text-5xl lg:text-[64px]">{d.rankingValue}</span>
               <p className="text-[11px] leading-tight text-white/80 sm:text-[15px] sm:leading-snug">{d.rankingCaption}</p>
             </div>
 
@@ -89,8 +89,8 @@ export function Results({ data }: { data?: Record<string, string> }) {
             {/* Right box — lower, with rosette medal top-left */}
             <div className="relative z-10 w-[128px] shrink-0 translate-y-8 rounded-xl bg-white/[0.08] px-3 py-4 text-center sm:w-[210px] sm:translate-y-10 sm:p-[26px] lg:w-[240px] lg:translate-y-12">
               <Medal className="absolute right-2 top-2 h-5 w-5 sm:left-4 sm:right-auto sm:top-3 sm:h-8 sm:w-8" />
-              <p className="font-mono text-[11px] font-medium text-white sm:text-[15px]">Value Added</p>
-              <CountUp to={num(d.valueAddedValue, 1)} prefix="#" className="my-1.5 block text-[34px] font-extrabold leading-none text-white sm:my-2 sm:text-5xl lg:text-[64px]" />
+              <p className="font-mono text-[11px] font-medium text-white sm:text-[15px]">{d.valueAddedLabel}</p>
+              <span className="my-1.5 block text-[34px] font-extrabold leading-none text-white sm:my-2 sm:text-5xl lg:text-[64px]">{d.valueAddedValue}</span>
               <p className="text-[11px] leading-tight text-white/80 sm:text-[15px] sm:leading-snug">{d.valueAddedCaption}</p>
             </div>
           </div>
