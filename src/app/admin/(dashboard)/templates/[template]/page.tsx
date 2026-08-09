@@ -49,7 +49,11 @@ export default async function TemplateSectionsAdmin({
   // (home / header / footer are excluded so the homepage can't be hidden).
   const showPublish = pageId ? true : canUnpublish(template);
   const published = pageId ? instancePublished : showPublish ? await getPagePublished(template) : true;
-  const meta = showPublish ? await getPageMeta(template) : { metaTitle: "", metaDescription: "" };
+  // The __page SEO fields apply to a BUILT-IN designed page. A template-backed
+  // instance edits its own SEO on the Pages editor (its Page row), so we don't
+  // show the (no-op) __page SEO form there.
+  const showPageMeta = showPublish && !pageId;
+  const meta = showPageMeta ? await getPageMeta(template) : { metaTitle: "", metaDescription: "" };
 
   const rows = await db.templateSection
     .findMany({ where: { template } })
@@ -106,8 +110,9 @@ export default async function TemplateSectionsAdmin({
         </form>
       )}
 
-      {/* SEO title/description for this whole page */}
-      {showPublish && (
+      {/* SEO title/description for this whole page (built-in designed pages;
+          instances edit their SEO on the Pages editor) */}
+      {showPageMeta && (
         <form action={savePageMeta} className="mb-5 rounded-2xl border bg-background p-5 shadow-sm sm:p-6">
           <input type="hidden" name="template" value={template} />
           <p className="text-sm font-bold text-eb-navy">SEO &amp; metadata</p>
