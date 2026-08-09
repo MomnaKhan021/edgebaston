@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { SiteAnnouncement } from "@/components/home/SiteAnnouncement";
 import { SiteNavbar } from "@/components/home/SiteNavbar";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
@@ -32,6 +32,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const { slug } = await params;
   const post = await db.post.findUnique({ where: { slug } });
   if (!post || !post.published) notFound();
+  if (post.redirectUrl) redirect(post.redirectUrl);
 
   return (
     <>

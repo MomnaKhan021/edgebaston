@@ -230,6 +230,7 @@ export async function savePost(formData: FormData) {
     imageUrl,
     authorName: str(formData, "authorName").trim(),
     authorImage,
+    redirectUrl: redirectUrl(formData, "redirectUrl"),
     published: bool(formData, "published"),
     featured: bool(formData, "featured"),
     order: int(formData, "order"),
@@ -446,6 +447,7 @@ export async function savePageMeta(formData: FormData) {
   await upsertPageMeta(template, {
     metaTitle: str(formData, "metaTitle").trim(),
     metaDescription: str(formData, "metaDescription").trim(),
+    redirectUrl: redirectUrl(formData, "redirectUrl"),
   });
   revalidateTag("sections", "max");
   revalidatePath("/", "layout");

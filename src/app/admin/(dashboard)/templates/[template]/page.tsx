@@ -4,9 +4,10 @@ import { db } from "@/lib/db";
 import { getTemplateDef } from "@/lib/templates";
 import { instancePageId } from "@/lib/templateInstances";
 import { PAGE_ROUTES, canUnpublish } from "@/lib/pageRoutes";
-import { getPagePublished, getPageMeta } from "@/lib/sections";
+import { getPagePublished, getPageMeta, getPageRedirect } from "@/lib/sections";
 import { setPagePublished, savePageMeta } from "@/app/admin/actions";
 import { ToggleField } from "@/components/admin/ToggleField";
+import { RedirectField } from "@/components/admin/RedirectField";
 import { Field, Input, SubmitButton, Textarea } from "@/components/admin/ui";
 import { IconExternal } from "@/components/admin/icons";
 
@@ -54,6 +55,7 @@ export default async function TemplateSectionsAdmin({
   // show the (no-op) __page SEO form there.
   const showPageMeta = showPublish && !pageId;
   const meta = showPageMeta ? await getPageMeta(template) : { metaTitle: "", metaDescription: "" };
+  const redirectTo = showPageMeta ? await getPageRedirect(template) : "";
 
   const rows = await db.templateSection
     .findMany({ where: { template } })
@@ -115,9 +117,9 @@ export default async function TemplateSectionsAdmin({
       {showPageMeta && (
         <form action={savePageMeta} className="mb-5 rounded-2xl border bg-background p-5 shadow-sm sm:p-6">
           <input type="hidden" name="template" value={template} />
-          <p className="text-sm font-bold text-eb-navy">SEO &amp; metadata</p>
+          <p className="text-sm font-bold text-eb-navy">SEO, metadata &amp; redirect</p>
           <p className="mt-0.5 text-xs text-muted-foreground">
-            Control how this page appears in Google and when shared. Leave blank to use the page&apos;s built-in defaults.
+            Control how this page appears in Google and when shared, or send visitors elsewhere. Leave blank to use the page&apos;s built-in defaults.
           </p>
           <div className="mt-4 space-y-4">
             <Field
@@ -134,6 +136,9 @@ export default async function TemplateSectionsAdmin({
             >
               <Textarea id="metaDescription" name="metaDescription" rows={3} defaultValue={meta.metaDescription} />
             </Field>
+            <div className="border-t pt-4">
+              <RedirectField defaultValue={redirectTo} noun="page" />
+            </div>
             <SubmitButton>Save</SubmitButton>
           </div>
         </form>

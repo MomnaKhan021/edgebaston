@@ -19,12 +19,19 @@ export function RichTextEditor({
   name,
   defaultValue = "",
   placeholder = "Start writing…",
+  onChange,
 }: {
   name: string;
   defaultValue?: string;
   placeholder?: string;
+  /** When provided, the parent owns the value (no internal hidden input). */
+  onChange?: (html: string) => void;
 }) {
-  const [html, setHtml] = useState(defaultValue);
+  const [html, setHtmlState] = useState(defaultValue);
+  const setHtml = (v: string) => {
+    setHtmlState(v);
+    onChange?.(v);
+  };
   const [mode, setMode] = useState<"rich" | "html">("rich");
 
   const editor = useEditor({
@@ -70,7 +77,7 @@ export function RichTextEditor({
           placeholder="<p>Write or paste raw HTML…</p>"
         />
       )}
-      <input type="hidden" name={name} value={html} />
+      {!onChange && <input type="hidden" name={name} value={html} />}
     </div>
   );
 }

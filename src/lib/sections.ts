@@ -111,3 +111,20 @@ export async function getPageMeta(
     return { metaTitle: "", metaDescription: "" };
   }
 }
+
+/**
+ * A designed page's admin-set redirect URL (stored in the "__page" section).
+ * When set, the live page should 307-redirect visitors here instead of
+ * rendering. Returns "" when unset or the DB is unavailable.
+ */
+export async function getPageRedirect(template: string): Promise<string> {
+  try {
+    const row = await db.templateSection.findUnique({
+      where: { template_key: { template, key: PAGE_META_KEY } },
+    });
+    if (!row) return "";
+    return parse(row.data).redirectUrl ?? "";
+  } catch {
+    return "";
+  }
+}

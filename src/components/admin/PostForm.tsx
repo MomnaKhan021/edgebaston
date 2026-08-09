@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { savePost } from "@/app/admin/actions";
-import { RichTextEditor } from "@/components/admin/RichTextEditor";
+import { ArticleEditor } from "@/components/admin/ArticleEditor";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 import { Field, Input, Textarea, Toggle, SubmitButton } from "@/components/admin/ui";
 
@@ -16,6 +16,7 @@ type PostValues = {
   imageUrl?: string;
   authorName?: string;
   authorImage?: string;
+  redirectUrl?: string;
   published?: boolean;
   featured?: boolean;
   order?: number;
@@ -70,8 +71,18 @@ export function PostForm({ post }: { post?: PostValues }) {
       </div>
 
       <div className="rounded-2xl border bg-background p-6 shadow-sm">
-        <Field label="Article content" hint="Full rich text. Headings, links and buttons take the site's branding automatically.">
-          <RichTextEditor name="content" defaultValue={p.content ?? ""} placeholder="Write the article…" />
+        <Field label="Article content" hint="Type in Visual, or switch to the HTML tab to paste full HTML markup (kept exactly). Headings, links and buttons take the site's branding automatically.">
+          <ArticleEditor name="content" defaultValue={p.content ?? ""} />
+        </Field>
+      </div>
+
+      <div className="rounded-2xl border bg-background p-6 shadow-sm">
+        <Field
+          label="Redirect URL"
+          htmlFor="redirectUrl"
+          hint="If set, this article sends visitors straight to another URL instead of showing its content. Use a path like /contact or a full https:// link. Leave empty for a normal article."
+        >
+          <Input id="redirectUrl" name="redirectUrl" defaultValue={p.redirectUrl} placeholder="/inquiry or https://…" />
         </Field>
       </div>
 
