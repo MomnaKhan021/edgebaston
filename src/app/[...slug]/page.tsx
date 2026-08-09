@@ -22,7 +22,16 @@ export async function generateMetadata({
   const { slug } = await params;
   const page = await db.page.findUnique({ where: { slug: joinSlug(slug) } }).catch(() => null);
   if (!page) return { title: "Page not found" };
-  return { title: page.title, description: excerpt(page.content) };
+
+  // Per-page SEO from the admin; fall back to the page title / a content excerpt.
+  // `absolute` lets the admin control the exact title (no "| Site name" suffix).
+  const title = page.metaTitle ? { absolute: page.metaTitle } : page.title;
+  const description = page.metaDescription || excerpt(page.content) || undefined;
+  return {
+    title,
+    description,
+    openGraph: { title: page.metaTitle || page.title, description },
+  };
 }
 
 export default async function DynamicPage({

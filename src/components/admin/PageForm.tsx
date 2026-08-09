@@ -2,13 +2,15 @@ import Link from "next/link";
 import { savePage } from "@/app/admin/actions";
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
 import { RedirectField } from "@/components/admin/RedirectField";
-import { Field, Input, Toggle, SubmitButton } from "@/components/admin/ui";
+import { Field, Input, Textarea, Toggle, SubmitButton } from "@/components/admin/ui";
 
 type PageValues = {
   id?: string;
   title?: string;
   slug?: string;
   content?: string;
+  metaTitle?: string;
+  metaDescription?: string;
   redirectUrl?: string;
   showInNav?: boolean;
   published?: boolean;
@@ -71,6 +73,30 @@ export function PageForm({ page }: { page?: PageValues }) {
 
       <div className="rounded-2xl border bg-background p-6 shadow-sm">
         <RedirectField defaultValue={p.redirectUrl} noun="page" />
+      </div>
+
+      {/* SEO — per-page meta title & description (also used by template copies) */}
+      <div className="rounded-2xl border bg-background p-6 shadow-sm">
+        <h2 className="mb-1 font-bold text-eb-navy">SEO &amp; metadata</h2>
+        <p className="mb-4 text-sm text-muted-foreground">
+          The title and description that search engines (Google) and browser tabs show for this page.
+        </p>
+        <div className="space-y-4">
+          <Field
+            label="Meta title"
+            htmlFor="metaTitle"
+            hint="Shown in the browser tab and as the headline in search results (~50–60 characters). Leave empty to use the page title."
+          >
+            <Input id="metaTitle" name="metaTitle" defaultValue={p.metaTitle} />
+          </Field>
+          <Field
+            label="Meta description"
+            htmlFor="metaDescription"
+            hint="The summary under the title in search results (~150–160 characters). Leave empty to auto-generate from the page content."
+          >
+            <Textarea id="metaDescription" name="metaDescription" rows={3} defaultValue={p.metaDescription} />
+          </Field>
+        </div>
       </div>
 
       <div className="rounded-2xl border bg-background p-6 shadow-sm">

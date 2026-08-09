@@ -177,6 +177,8 @@ export async function savePage(formData: FormData) {
     title,
     slug,
     content: await compressInlineImages(str(formData, "content")),
+    metaTitle: str(formData, "metaTitle").trim(),
+    metaDescription: str(formData, "metaDescription").trim(),
     redirectUrl: redirectUrl(formData, "redirectUrl"),
     showInNav: bool(formData, "showInNav"),
     published: bool(formData, "published"),
