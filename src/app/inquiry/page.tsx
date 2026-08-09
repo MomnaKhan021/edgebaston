@@ -7,14 +7,18 @@ import { Reveal } from "@/components/home/Reveal";
 import { SharePage } from "@/components/site/SharePage";
 import { TypeformEmbed } from "@/components/site/TypeformEmbed";
 import { notFound } from "next/navigation";
-import { getTemplateSections, getPagePublished } from "@/lib/sections";
+import { getTemplateSections, getPagePublished, getPageMeta } from "@/lib/sections";
 import { isVisible, overlayOn } from "@/lib/templates";
 
-export const metadata: Metadata = {
-  title: "Make an Enquiry",
-  description:
-    "Enquire about A-Level courses and admissions at Edgbaston College — fill in the form and our team will get back to you.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const m = await getPageMeta("inquiry");
+  return {
+    title: m.metaTitle ? { absolute: m.metaTitle } : "Make an Enquiry",
+    description:
+      m.metaDescription ||
+      "Enquire about A-Level courses and admissions at Edgbaston College — fill in the form and our team will get back to you.",
+  };
+}
 
 export default async function InquiryPage() {
   if (!(await getPagePublished("inquiry"))) notFound();

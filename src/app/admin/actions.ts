@@ -391,20 +391,65 @@ export async function saveSection(formData: FormData) {
  * Section-based items (template + inst) copy with each other; courses copy with
  * courses; plain pages copy with plain pages. Anything else is a mismatch.
  */
-/** Turn a designed page (template) on/off on the live site. */
+/**
+ * Turn a page on/off on the live site from the template dashboard. Works for
+ * both a designed page template (stored in the "__page" section flag) and a
+ * template-backed page instance ("inst_<id>", stored on its Page row).
+ */
+/** Read a designed page's existing "__page" settings (published + SEO meta). */
+async function readPageMeta(template: string): Promise<Record<string, string>> {
+  const row = await db.templateSection.findUnique({
+    where: { template_key: { template, key: "__page" } },
+  });
+  if (!row?.data) return {};
+  try {
+    const obj = JSON.parse(row.data);
+    return obj && typeof obj === "object" ? (obj as Record<string, string>) : {};
+  } catch {
+    return {};
+  }
+}
+
+/** Merge new fields into a page's "__page" settings without clobbering the rest. */
+async function upsertPageMeta(template: string, patch: Record<string, string>) {
+  const merged = { ...(await readPageMeta(template)), ...patch };
+  const data = JSON.stringify(merged);
+  await db.templateSection.upsert({
+    where: { template_key: { template, key: "__page" } },
+    update: { data },
+    create: { template, key: "__page", data },
+  });
+}
+
 export async function setPagePublished(formData: FormData) {
   await assertAuth();
   const template = str(formData, "template");
   if (!template) redirect("/admin/templates");
   const published = bool(formData, "published");
-  await db.templateSection.upsert({
-    where: { template_key: { template, key: "__page" } },
-    update: { data: JSON.stringify({ published: published ? "1" : "0" }) },
-    create: { template, key: "__page", data: JSON.stringify({ published: published ? "1" : "0" }) },
-  });
+  const { instancePageId } = await import("@/lib/templateInstances");
+  const pageId = instancePageId(template);
+  if (pageId) {
+    await db.page.update({ where: { id: pageId }, data: { published } });
+  } else {
+    await upsertPageMeta(template, { published: published ? "1" : "0" });
+  }
   revalidateTag("sections", "max");
   revalidatePath("/", "layout");
   redirect(`/admin/templates/${template}?status=${published ? "on" : "off"}`);
+}
+
+/** Save a designed page's SEO meta title/description (merged into "__page"). */
+export async function savePageMeta(formData: FormData) {
+  await assertAuth();
+  const template = str(formData, "template");
+  if (!template) redirect("/admin/templates");
+  await upsertPageMeta(template, {
+    metaTitle: str(formData, "metaTitle").trim(),
+    metaDescription: str(formData, "metaDescription").trim(),
+  });
+  revalidateTag("sections", "max");
+  revalidatePath("/", "layout");
+  redirect(`/admin/templates/${template}?saved=meta`);
 }
 
 export async function duplicateTemplate(formData: FormData) {

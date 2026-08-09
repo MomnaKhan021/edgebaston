@@ -91,3 +91,23 @@ export async function getPagePublished(template: string): Promise<boolean> {
     return true;
   }
 }
+
+/**
+ * A designed page's admin-editable SEO overrides (stored in the "__page"
+ * section). Returns empty strings when nothing is set or the DB is
+ * unavailable, so callers can fall back to the page's own defaults.
+ */
+export async function getPageMeta(
+  template: string,
+): Promise<{ metaTitle: string; metaDescription: string }> {
+  try {
+    const row = await db.templateSection.findUnique({
+      where: { template_key: { template, key: PAGE_META_KEY } },
+    });
+    if (!row) return { metaTitle: "", metaDescription: "" };
+    const data = parse(row.data);
+    return { metaTitle: data.metaTitle ?? "", metaDescription: data.metaDescription ?? "" };
+  } catch {
+    return { metaTitle: "", metaDescription: "" };
+  }
+}

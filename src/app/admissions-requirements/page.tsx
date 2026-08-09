@@ -9,14 +9,18 @@ import { AppSteps } from "@/components/admissions/AppSteps";
 import { Accordion } from "@/components/admissions/Accordion";
 import { RichText } from "@/components/site/RichText";
 import { notFound } from "next/navigation";
-import { getTemplateSections, getPagePublished } from "@/lib/sections";
+import { getTemplateSections, getPagePublished, getPageMeta } from "@/lib/sections";
 import { sectionDefaults, parseItems, parseLines, isVisible, bgStyle } from "@/lib/templates";
 
-export const metadata: Metadata = {
-  title: "Admissions Requirements",
-  description:
-    "Edgbaston College admissions requirements and application process — an inclusive, individual approach to every applicant.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const m = await getPageMeta("admissions");
+  return {
+    title: m.metaTitle ? { absolute: m.metaTitle } : "Admissions Requirements",
+    description:
+      m.metaDescription ||
+      "Edgbaston College admissions requirements and application process — an inclusive, individual approach to every applicant.",
+  };
+}
 
 const LOOK_FOR_ICONS = [IconSpark, IconUsers, IconCrest];
 

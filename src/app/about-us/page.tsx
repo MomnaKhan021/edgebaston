@@ -9,14 +9,18 @@ import { ArrowUpRight } from "@/components/home/icons";
 import { InspectionTabs } from "@/components/about/InspectionTabs";
 import { RichText } from "@/components/site/RichText";
 import { notFound } from "next/navigation";
-import { getTemplateSections, getPagePublished } from "@/lib/sections";
+import { getTemplateSections, getPagePublished, getPageMeta } from "@/lib/sections";
 import { sectionDefaults, parseItems, isVisible, bgStyle } from "@/lib/templates";
 
-export const metadata: Metadata = {
-  title: "About Us",
-  description:
-    "About Edgbaston College — a family-owned, top-performing sixth form college in Birmingham. Meet our principal, our mission, our history and our teachers.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const m = await getPageMeta("about");
+  return {
+    title: m.metaTitle ? { absolute: m.metaTitle } : "About Us",
+    description:
+      m.metaDescription ||
+      "About Edgbaston College — a family-owned, top-performing sixth form college in Birmingham. Meet our principal, our mission, our history and our teachers.",
+  };
+}
 
 function Share() {
   const item = "grid h-9 w-9 place-items-center rounded-full border text-eb-navy transition hover:bg-eb-cream";

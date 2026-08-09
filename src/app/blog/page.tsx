@@ -7,13 +7,16 @@ import { Reveal } from "@/components/home/Reveal";
 import { BlogList, type PostCard } from "@/components/blog/BlogList";
 import { db } from "@/lib/db";
 import { notFound } from "next/navigation";
-import { getTemplateSections, getPagePublished } from "@/lib/sections";
+import { getTemplateSections, getPagePublished, getPageMeta } from "@/lib/sections";
 import { sectionDefaults, isVisible, bgStyle } from "@/lib/templates";
 
-export const metadata: Metadata = {
-  title: "Blog",
-  description: "News, insights and guides from Edgbaston College.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const m = await getPageMeta("blog");
+  return {
+    title: m.metaTitle ? { absolute: m.metaTitle } : "Blog",
+    description: m.metaDescription || "News, insights and guides from Edgbaston College.",
+  };
+}
 
 export default async function BlogPage() {
   if (!(await getPagePublished("blog"))) notFound();

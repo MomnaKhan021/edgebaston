@@ -12,7 +12,7 @@ import { StoryCard, type Story } from "@/components/course/StoryCard";
 import { FaqList } from "@/components/course/FaqList";
 import { RichText } from "@/components/site/RichText";
 import { notFound } from "next/navigation";
-import { getTemplateSections, getPagePublished } from "@/lib/sections";
+import { getTemplateSections, getPagePublished, getPageMeta } from "@/lib/sections";
 import { sectionDefaults, parseItems, isVisible, bgStyle, num, overlayOn } from "@/lib/templates";
 import {
   IconResults,
@@ -23,11 +23,15 @@ import {
   IconWindow,
 } from "@/components/course/RetakeIcons";
 
-export const metadata: Metadata = {
-  title: "Five Term A-Level",
-  description:
-    "The Five Term A-Level at Edgbaston College — a structured mid-year pathway starting in January that covers the full A-Level in five terms, with small classes and personalised support.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const m = await getPageMeta("five-term");
+  return {
+    title: m.metaTitle ? { absolute: m.metaTitle } : "Five Term A-Level",
+    description:
+      m.metaDescription ||
+      "The Five Term A-Level at Edgbaston College — a structured mid-year pathway starting in January that covers the full A-Level in five terms, with small classes and personalised support.",
+  };
+}
 
 /* ------------------------------ Small pieces ----------------------------- */
 

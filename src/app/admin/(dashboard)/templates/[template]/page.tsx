@@ -4,10 +4,10 @@ import { db } from "@/lib/db";
 import { getTemplateDef } from "@/lib/templates";
 import { instancePageId } from "@/lib/templateInstances";
 import { PAGE_ROUTES, canUnpublish } from "@/lib/pageRoutes";
-import { getPagePublished } from "@/lib/sections";
-import { setPagePublished } from "@/app/admin/actions";
+import { getPagePublished, getPageMeta } from "@/lib/sections";
+import { setPagePublished, savePageMeta } from "@/app/admin/actions";
 import { ToggleField } from "@/components/admin/ToggleField";
-import { SubmitButton } from "@/components/admin/ui";
+import { Field, Input, SubmitButton, Textarea } from "@/components/admin/ui";
 import { IconExternal } from "@/components/admin/icons";
 
 export default async function TemplateSectionsAdmin({
@@ -27,6 +27,7 @@ export default async function TemplateSectionsAdmin({
   let description: string;
   let liveHref: string;
   let def: ReturnType<typeof getTemplateDef>;
+  let instancePublished = true;
   if (pageId) {
     const pg = await db.page.findUnique({ where: { id: pageId } }).catch(() => null);
     if (!pg) notFound();
@@ -35,6 +36,7 @@ export default async function TemplateSectionsAdmin({
     title = pg.title;
     description = `Page built from the ${def.name} template. Edit its sections below.`;
     liveHref = `/${pg.slug}`;
+    instancePublished = pg.published;
   } else {
     def = getTemplateDef(template);
     if (!def) notFound();
@@ -43,10 +45,11 @@ export default async function TemplateSectionsAdmin({
     liveHref = PAGE_ROUTES[template] ?? `/${template}`;
   }
 
-  // Base designed pages (not instances, not home/header/footer) can be turned
-  // off from the live site.
-  const showPublish = !pageId && canUnpublish(template);
-  const published = showPublish ? await getPagePublished(template) : true;
+  // Both designed pages and template-backed pages can be turned off from here
+  // (home / header / footer are excluded so the homepage can't be hidden).
+  const showPublish = pageId ? true : canUnpublish(template);
+  const published = pageId ? instancePublished : showPublish ? await getPagePublished(template) : true;
+  const meta = showPublish ? await getPageMeta(template) : { metaTitle: "", metaDescription: "" };
 
   const rows = await db.templateSection
     .findMany({ where: { template } })
@@ -103,7 +106,41 @@ export default async function TemplateSectionsAdmin({
         </form>
       )}
 
-      {saved && (
+      {/* SEO title/description for this whole page */}
+      {showPublish && (
+        <form action={savePageMeta} className="mb-5 rounded-2xl border bg-background p-5 shadow-sm sm:p-6">
+          <input type="hidden" name="template" value={template} />
+          <p className="text-sm font-bold text-eb-navy">SEO &amp; metadata</p>
+          <p className="mt-0.5 text-xs text-muted-foreground">
+            Control how this page appears in Google and when shared. Leave blank to use the page&apos;s built-in defaults.
+          </p>
+          <div className="mt-4 space-y-4">
+            <Field
+              label="Meta title"
+              htmlFor="metaTitle"
+              hint="Around 50–60 characters. Falls back to the page's own title if left blank."
+            >
+              <Input id="metaTitle" name="metaTitle" defaultValue={meta.metaTitle} />
+            </Field>
+            <Field
+              label="Meta description"
+              htmlFor="metaDescription"
+              hint="Around 150–160 characters. Falls back to the page's built-in description if left blank."
+            >
+              <Textarea id="metaDescription" name="metaDescription" rows={3} defaultValue={meta.metaDescription} />
+            </Field>
+            <SubmitButton>Save</SubmitButton>
+          </div>
+        </form>
+      )}
+
+      {saved === "meta" && (
+        <div className="mb-5 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800">
+          SEO settings saved.
+        </div>
+      )}
+
+      {saved && saved !== "meta" && (
         <div className="mb-5 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800">
           Section saved — the live site has been updated.
         </div>

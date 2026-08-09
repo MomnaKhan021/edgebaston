@@ -10,14 +10,18 @@ import { Accordion } from "@/components/admissions/Accordion";
 import { StudentDestinations, type DestinationCard } from "@/components/results/StudentDestinations";
 import { RichText } from "@/components/site/RichText";
 import { notFound } from "next/navigation";
-import { getTemplateSections, getPagePublished } from "@/lib/sections";
+import { getTemplateSections, getPagePublished, getPageMeta } from "@/lib/sections";
 import { sectionDefaults, parseItems, parseLines, isVisible, bgStyle, num, overlayOn } from "@/lib/templates";
 
-export const metadata: Metadata = {
-  title: "Results & Destinations",
-  description:
-    "Edgbaston College A-Level results and university destinations — outstanding grades, subject excellence and where our students progress.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const m = await getPageMeta("results");
+  return {
+    title: m.metaTitle ? { absolute: m.metaTitle } : "Results & Destinations",
+    description:
+      m.metaDescription ||
+      "Edgbaston College A-Level results and university destinations — outstanding grades, subject excellence and where our students progress.",
+  };
+}
 
 /** A person icon; `filled` colours it blue, otherwise solid navy. */
 function Person({ filled }: { filled: boolean }) {

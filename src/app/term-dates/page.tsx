@@ -6,14 +6,18 @@ import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
 import { SharePage } from "@/components/history/SharePage";
 import { notFound } from "next/navigation";
-import { getTemplateSections, getPagePublished } from "@/lib/sections";
+import { getTemplateSections, getPagePublished, getPageMeta } from "@/lib/sections";
 import { sectionDefaults, parseItems, isVisible, bgStyle, overlayOn } from "@/lib/templates";
 
-export const metadata: Metadata = {
-  title: "Term Dates",
-  description:
-    "Edgbaston College term dates — the Autumn, Spring and Summer term schedule, including half terms and key dates.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const m = await getPageMeta("term-dates");
+  return {
+    title: m.metaTitle ? { absolute: m.metaTitle } : "Term Dates",
+    description:
+      m.metaDescription ||
+      "Edgbaston College term dates — the Autumn, Spring and Summer term schedule, including half terms and key dates.",
+  };
+}
 
 /** Parse "Label | Value" lines from a term card's rows field. */
 function parseRows(value: string | undefined): { label: string; value: string }[] {

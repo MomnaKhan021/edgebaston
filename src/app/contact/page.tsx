@@ -7,14 +7,18 @@ import { GetDirections } from "@/components/contact/GetDirections";
 import { Socials } from "@/components/contact/Socials";
 import { ArrowUpRight } from "@/components/home/icons";
 import { notFound } from "next/navigation";
-import { getTemplateSections, getPagePublished } from "@/lib/sections";
+import { getTemplateSections, getPagePublished, getPageMeta } from "@/lib/sections";
 import { sectionDefaults, parseItems, isVisible, bgStyle, overlayOn } from "@/lib/templates";
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description:
-    "Get in touch with Edgbaston College — call, email or find directions to our Birmingham campus at 37 George Road, Edgbaston.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const m = await getPageMeta("contact");
+  return {
+    title: m.metaTitle ? { absolute: m.metaTitle } : "Contact",
+    description:
+      m.metaDescription ||
+      "Get in touch with Edgbaston College — call, email or find directions to our Birmingham campus at 37 George Road, Edgbaston.",
+  };
+}
 
 function PhoneIcon() {
   return (

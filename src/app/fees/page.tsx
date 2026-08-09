@@ -7,14 +7,18 @@ import { Reveal } from "@/components/home/Reveal";
 import { SharePage } from "@/components/history/SharePage";
 import { RichText } from "@/components/site/RichText";
 import { notFound } from "next/navigation";
-import { getTemplateSections, getPagePublished } from "@/lib/sections";
+import { getTemplateSections, getPagePublished, getPageMeta } from "@/lib/sections";
 import { sectionDefaults, parseItems, isVisible, bgStyle } from "@/lib/templates";
 
-export const metadata: Metadata = {
-  title: "Fees",
-  description:
-    "Edgbaston College fees — full-time A-Level, one-year retake, private tuition and Medicine & Dentistry pathway prices, charged per term.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const m = await getPageMeta("fees");
+  return {
+    title: m.metaTitle ? { absolute: m.metaTitle } : "Fees",
+    description:
+      m.metaDescription ||
+      "Edgbaston College fees — full-time A-Level, one-year retake, private tuition and Medicine & Dentistry pathway prices, charged per term.",
+  };
+}
 
 /** Parse "Label | exc | inc" rows from a comparison card's rows field. */
 function parsePriceRows(value: string | undefined): { label: string; exc: string; inc: string }[] {

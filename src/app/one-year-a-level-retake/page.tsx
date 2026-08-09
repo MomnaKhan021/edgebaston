@@ -14,7 +14,7 @@ import { StoryCard, type Story } from "@/components/course/StoryCard";
 import { FaqList } from "@/components/course/FaqList";
 import { RichText } from "@/components/site/RichText";
 import { notFound } from "next/navigation";
-import { getTemplateSections, getPagePublished } from "@/lib/sections";
+import { getTemplateSections, getPagePublished, getPageMeta } from "@/lib/sections";
 import { sectionDefaults, parseItems, parseFaqItems, isVisible, bgStyle, num, overlayOn } from "@/lib/templates";
 import {
   IconResults,
@@ -25,11 +25,15 @@ import {
   IconWindow,
 } from "@/components/course/RetakeIcons";
 
-export const metadata: Metadata = {
-  title: "One Year A-Level Retake",
-  description:
-    "Birmingham's most successful A-Level retake programme. Small classes, frequent mock exams and personalised UCAS support to transform your grades.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const m = await getPageMeta("retake");
+  return {
+    title: m.metaTitle ? { absolute: m.metaTitle } : "One Year A-Level Retake",
+    description:
+      m.metaDescription ||
+      "Birmingham's most successful A-Level retake programme. Small classes, frequent mock exams and personalised UCAS support to transform your grades.",
+  };
+}
 
 /* ------------------------------ Small pieces ----------------------------- */
 

@@ -9,14 +9,18 @@ import { IconBulb, IconUsers, IconGear, IconCrest } from "@/components/history/H
 import { SharePage } from "@/components/history/SharePage";
 import { RichText } from "@/components/site/RichText";
 import { notFound } from "next/navigation";
-import { getTemplateSections, getPagePublished } from "@/lib/sections";
+import { getTemplateSections, getPagePublished, getPageMeta } from "@/lib/sections";
 import { sectionDefaults, parseItems, isVisible, bgStyle, overlayOn } from "@/lib/templates";
 
-export const metadata: Metadata = {
-  title: "Our History",
-  description:
-    "The history of Edgbaston College — our commitment to excellence, founded in 2015, and our family-owned ethos.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const m = await getPageMeta("history");
+  return {
+    title: m.metaTitle ? { absolute: m.metaTitle } : "Our History",
+    description:
+      m.metaDescription ||
+      "The history of Edgbaston College — our commitment to excellence, founded in 2015, and our family-owned ethos.",
+  };
+}
 
 const COMMIT_ICONS = [IconBulb, IconUsers, IconGear, IconCrest];
 

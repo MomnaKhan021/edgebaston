@@ -6,13 +6,18 @@ import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
 import { StoryCard, type Story } from "@/components/course/StoryCard";
 import { notFound } from "next/navigation";
-import { getTemplateSections, getPagePublished } from "@/lib/sections";
+import { getTemplateSections, getPagePublished, getPageMeta } from "@/lib/sections";
 import { sectionDefaults, parseItems, isVisible, bgStyle } from "@/lib/templates";
 
-export const metadata: Metadata = {
-  title: "What Our Students Say",
-  description: "Real success stories from Edgbaston College students — grade jumps and university places.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const m = await getPageMeta("success-stories");
+  return {
+    title: m.metaTitle ? { absolute: m.metaTitle } : "What Our Students Say",
+    description:
+      m.metaDescription ||
+      "Real success stories from Edgbaston College students — grade jumps and university places.",
+  };
+}
 
 export default async function WhatOurStudentsSayPage() {
   if (!(await getPagePublished("success-stories"))) notFound();

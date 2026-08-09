@@ -7,14 +7,18 @@ import { Reveal } from "@/components/home/Reveal";
 import { SharePage } from "@/components/site/SharePage";
 import { DetailAccordion, type AccordionItem } from "@/components/site/DetailAccordion";
 import { notFound } from "next/navigation";
-import { getTemplateSections, getPagePublished } from "@/lib/sections";
+import { getTemplateSections, getPagePublished, getPageMeta } from "@/lib/sections";
 import { parseItems, isVisible, overlayOn } from "@/lib/templates";
 
-export const metadata: Metadata = {
-  title: "Subjects",
-  description:
-    "Explore the range of A-Level subjects offered at Edgbaston College, with a definition of what you'll study in each.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const m = await getPageMeta("subjects");
+  return {
+    title: m.metaTitle ? { absolute: m.metaTitle } : "Subjects",
+    description:
+      m.metaDescription ||
+      "Explore the range of A-Level subjects offered at Edgbaston College, with a definition of what you'll study in each.",
+  };
+}
 
 export default async function SubjectsPage() {
   if (!(await getPagePublished("subjects"))) notFound();
