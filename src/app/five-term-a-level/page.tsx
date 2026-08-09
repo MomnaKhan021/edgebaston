@@ -11,8 +11,8 @@ import { StorySlider } from "@/components/course/StorySlider";
 import { StoryCard, type Story } from "@/components/course/StoryCard";
 import { FaqList } from "@/components/course/FaqList";
 import { RichText } from "@/components/site/RichText";
-import { notFound } from "next/navigation";
-import { getTemplateSections, getPagePublished, getPageMeta } from "@/lib/sections";
+import { notFound, redirect } from "next/navigation";
+import { getTemplateSections, getPagePublished, getPageMeta, getPageRedirect } from "@/lib/sections";
 import { sectionDefaults, parseItems, isVisible, bgStyle, num, overlayOn } from "@/lib/templates";
 import {
   IconResults,
@@ -187,6 +187,8 @@ function RingCard({ value, label, chips }: { value: number; label: string; chips
 
 export default async function FiveTermPage() {
   if (!(await getPagePublished("five-term"))) notFound();
+  const redirectTo = await getPageRedirect("five-term");
+  if (redirectTo) redirect(redirectTo);
   const s = await getTemplateSections("five-term");
   const d = (k: string) => ({ ...sectionDefaults("five-term", k), ...s[k] });
   const hero = d("hero");

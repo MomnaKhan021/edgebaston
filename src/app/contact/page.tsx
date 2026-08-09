@@ -6,8 +6,8 @@ import { Reveal } from "@/components/home/Reveal";
 import { GetDirections } from "@/components/contact/GetDirections";
 import { Socials } from "@/components/contact/Socials";
 import { ArrowUpRight } from "@/components/home/icons";
-import { notFound } from "next/navigation";
-import { getTemplateSections, getPagePublished, getPageMeta } from "@/lib/sections";
+import { notFound, redirect } from "next/navigation";
+import { getTemplateSections, getPagePublished, getPageMeta, getPageRedirect } from "@/lib/sections";
 import { sectionDefaults, parseItems, isVisible, bgStyle, overlayOn } from "@/lib/templates";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -47,6 +47,8 @@ function DetailRow({ label, children }: { label: string; children: React.ReactNo
 
 export default async function ContactPage() {
   if (!(await getPagePublished("contact"))) notFound();
+  const redirectTo = await getPageRedirect("contact");
+  if (redirectTo) redirect(redirectTo);
   const s = await getTemplateSections("contact");
   const d = (k: string) => ({ ...sectionDefaults("contact", k), ...s[k] });
   const hero = d("hero");

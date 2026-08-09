@@ -8,8 +8,8 @@ import { IconSpark, IconUsers, IconCrest } from "@/components/history/HistoryIco
 import { AppSteps } from "@/components/admissions/AppSteps";
 import { Accordion } from "@/components/admissions/Accordion";
 import { RichText } from "@/components/site/RichText";
-import { notFound } from "next/navigation";
-import { getTemplateSections, getPagePublished, getPageMeta } from "@/lib/sections";
+import { notFound, redirect } from "next/navigation";
+import { getTemplateSections, getPagePublished, getPageMeta, getPageRedirect } from "@/lib/sections";
 import { sectionDefaults, parseItems, parseLines, isVisible, bgStyle } from "@/lib/templates";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -63,6 +63,8 @@ function Share() {
 
 export default async function AdmissionsRequirementsPage() {
   if (!(await getPagePublished("admissions"))) notFound();
+  const redirectTo = await getPageRedirect("admissions");
+  if (redirectTo) redirect(redirectTo);
   const s = await getTemplateSections("admissions");
   const d = (k: string) => ({ ...sectionDefaults("admissions", k), ...s[k] });
   const intro = d("intro");

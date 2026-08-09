@@ -8,8 +8,8 @@ import { Slider } from "@/components/home/Slider";
 import { ArrowUpRight } from "@/components/home/icons";
 import { InspectionTabs } from "@/components/about/InspectionTabs";
 import { RichText } from "@/components/site/RichText";
-import { notFound } from "next/navigation";
-import { getTemplateSections, getPagePublished, getPageMeta } from "@/lib/sections";
+import { notFound, redirect } from "next/navigation";
+import { getTemplateSections, getPagePublished, getPageMeta, getPageRedirect } from "@/lib/sections";
 import { sectionDefaults, parseItems, isVisible, bgStyle } from "@/lib/templates";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -46,6 +46,8 @@ function GradeBadge({ from, to }: { from: string; to: string }) {
 
 export default async function AboutUsPage() {
   if (!(await getPagePublished("about"))) notFound();
+  const redirectTo = await getPageRedirect("about");
+  if (redirectTo) redirect(redirectTo);
   const s = await getTemplateSections("about");
   const d = (k: string) => ({ ...sectionDefaults("about", k), ...s[k] });
   const hero = d("hero");

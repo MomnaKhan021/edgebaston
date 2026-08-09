@@ -8,8 +8,8 @@ import { ArrowUpRight } from "@/components/home/icons";
 import { IconBulb, IconUsers, IconGear, IconCrest } from "@/components/history/HistoryIcons";
 import { SharePage } from "@/components/history/SharePage";
 import { RichText } from "@/components/site/RichText";
-import { notFound } from "next/navigation";
-import { getTemplateSections, getPagePublished, getPageMeta } from "@/lib/sections";
+import { notFound, redirect } from "next/navigation";
+import { getTemplateSections, getPagePublished, getPageMeta, getPageRedirect } from "@/lib/sections";
 import { sectionDefaults, parseItems, isVisible, bgStyle, overlayOn } from "@/lib/templates";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -26,6 +26,8 @@ const COMMIT_ICONS = [IconBulb, IconUsers, IconGear, IconCrest];
 
 export default async function OurHistoryPage() {
   if (!(await getPagePublished("history"))) notFound();
+  const redirectTo = await getPageRedirect("history");
+  if (redirectTo) redirect(redirectTo);
   const s = await getTemplateSections("history");
   const d = (k: string) => ({ ...sectionDefaults("history", k), ...s[k] });
   const hero = d("hero");

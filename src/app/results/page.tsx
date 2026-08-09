@@ -9,8 +9,8 @@ import { SharePage } from "@/components/history/SharePage";
 import { Accordion } from "@/components/admissions/Accordion";
 import { StudentDestinations, type DestinationCard } from "@/components/results/StudentDestinations";
 import { RichText } from "@/components/site/RichText";
-import { notFound } from "next/navigation";
-import { getTemplateSections, getPagePublished, getPageMeta } from "@/lib/sections";
+import { notFound, redirect } from "next/navigation";
+import { getTemplateSections, getPagePublished, getPageMeta, getPageRedirect } from "@/lib/sections";
 import { sectionDefaults, parseItems, parseLines, isVisible, bgStyle, num, overlayOn } from "@/lib/templates";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -74,6 +74,8 @@ function PdfIcon({ className }: { className?: string }) {
 
 export default async function ResultsPage() {
   if (!(await getPagePublished("results"))) notFound();
+  const redirectTo = await getPageRedirect("results");
+  if (redirectTo) redirect(redirectTo);
   const s = await getTemplateSections("results");
   const d = (k: string) => ({ ...sectionDefaults("results", k), ...s[k] });
   const hero = d("hero");

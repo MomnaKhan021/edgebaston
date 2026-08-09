@@ -6,8 +6,8 @@ import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
 import { SharePage } from "@/components/history/SharePage";
 import { RichText } from "@/components/site/RichText";
-import { notFound } from "next/navigation";
-import { getTemplateSections, getPagePublished, getPageMeta } from "@/lib/sections";
+import { notFound, redirect } from "next/navigation";
+import { getTemplateSections, getPagePublished, getPageMeta, getPageRedirect } from "@/lib/sections";
 import { sectionDefaults, parseItems, isVisible, bgStyle } from "@/lib/templates";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -35,6 +35,8 @@ const n2 = (i: number) => String(i + 1).padStart(2, "0");
 
 export default async function FeesPage() {
   if (!(await getPagePublished("fees"))) notFound();
+  const redirectTo = await getPageRedirect("fees");
+  if (redirectTo) redirect(redirectTo);
   const s = await getTemplateSections("fees");
   const d = (k: string) => ({ ...sectionDefaults("fees", k), ...s[k] });
   const intro = d("intro");

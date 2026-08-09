@@ -6,8 +6,8 @@ import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
 import { SharePage } from "@/components/site/SharePage";
 import { TypeformEmbed } from "@/components/site/TypeformEmbed";
-import { notFound } from "next/navigation";
-import { getTemplateSections, getPagePublished, getPageMeta } from "@/lib/sections";
+import { notFound, redirect } from "next/navigation";
+import { getTemplateSections, getPagePublished, getPageMeta, getPageRedirect } from "@/lib/sections";
 import { isVisible, overlayOn } from "@/lib/templates";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -22,6 +22,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function InquiryPage() {
   if (!(await getPagePublished("inquiry"))) notFound();
+  const redirectTo = await getPageRedirect("inquiry");
+  if (redirectTo) redirect(redirectTo);
   const s = await getTemplateSections("inquiry");
   const hero = s.hero ?? {};
   const form = s.form ?? {};

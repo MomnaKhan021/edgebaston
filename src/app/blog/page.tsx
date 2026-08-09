@@ -6,8 +6,8 @@ import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
 import { BlogList, type PostCard } from "@/components/blog/BlogList";
 import { db } from "@/lib/db";
-import { notFound } from "next/navigation";
-import { getTemplateSections, getPagePublished, getPageMeta } from "@/lib/sections";
+import { notFound, redirect } from "next/navigation";
+import { getTemplateSections, getPagePublished, getPageMeta, getPageRedirect } from "@/lib/sections";
 import { sectionDefaults, isVisible, bgStyle } from "@/lib/templates";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -20,6 +20,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function BlogPage() {
   if (!(await getPagePublished("blog"))) notFound();
+  const redirectTo = await getPageRedirect("blog");
+  if (redirectTo) redirect(redirectTo);
   const s = await getTemplateSections("blog");
   const d = (k: string) => ({ ...sectionDefaults("blog", k), ...s[k] });
   const hero = d("hero");
