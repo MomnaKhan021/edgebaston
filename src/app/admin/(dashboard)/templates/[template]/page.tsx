@@ -3,6 +3,11 @@ import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
 import { getTemplateDef } from "@/lib/templates";
 import { instancePageId } from "@/lib/templateInstances";
+import { PAGE_ROUTES, canUnpublish } from "@/lib/pageRoutes";
+import { getPagePublished } from "@/lib/sections";
+import { setPagePublished } from "@/app/admin/actions";
+import { ToggleField } from "@/components/admin/ToggleField";
+import { SubmitButton } from "@/components/admin/ui";
 import { IconExternal } from "@/components/admin/icons";
 
 export default async function TemplateSectionsAdmin({
@@ -10,10 +15,10 @@ export default async function TemplateSectionsAdmin({
   searchParams,
 }: {
   params: Promise<{ template: string }>;
-  searchParams: Promise<{ saved?: string; created?: string }>;
+  searchParams: Promise<{ saved?: string; created?: string; status?: string }>;
 }) {
   const { template } = await params;
-  const { saved, created } = await searchParams;
+  const { saved, created, status } = await searchParams;
 
   // A template-backed page (inst_<id>) uses its base template's field defs but
   // its own title, live URL and stored content namespace.
@@ -35,8 +40,13 @@ export default async function TemplateSectionsAdmin({
     if (!def) notFound();
     title = def.name;
     description = def.description;
-    liveHref = template === "home" ? "/" : `/${template}`;
+    liveHref = PAGE_ROUTES[template] ?? `/${template}`;
   }
+
+  // Base designed pages (not instances, not home/header/footer) can be turned
+  // off from the live site.
+  const showPublish = !pageId && canUnpublish(template);
+  const published = showPublish ? await getPagePublished(template) : true;
 
   const rows = await db.templateSection
     .findMany({ where: { template } })
@@ -64,10 +74,33 @@ export default async function TemplateSectionsAdmin({
         </Link>
       </div>
 
+      {status && (
+        <div className="mb-5 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800">
+          {status === "on" ? "This page is now live." : "This page is now hidden from the live site (visitors get a 404)."}
+        </div>
+      )}
+
       {created && (
         <div className="mb-5 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800">
           Page created from the template. Edit any section below, or view it live — changes publish instantly.
         </div>
+      )}
+
+      {/* Live on/off for this whole page */}
+      {showPublish && (
+        <form action={setPagePublished} className="mb-5 flex flex-col gap-4 rounded-2xl border bg-background p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+          <input type="hidden" name="template" value={template} />
+          <div>
+            <p className="text-sm font-bold text-eb-navy">Live status</p>
+            <p className="mt-0.5 text-xs text-muted-foreground">
+              Turn this page off to remove it from the live site — visitors get a 404 and it drops from search. Your section content is kept, so you can switch it back on any time.
+            </p>
+          </div>
+          <div className="flex shrink-0 items-center gap-3">
+            <ToggleField name="published" defaultValue={published ? "1" : "0"} />
+            <SubmitButton>Save</SubmitButton>
+          </div>
+        </form>
       )}
 
       {saved && (

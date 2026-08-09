@@ -5,7 +5,8 @@ import { SiteNavbar } from "@/components/home/SiteNavbar";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
 import { SharePage } from "@/components/history/SharePage";
-import { getTemplateSections } from "@/lib/sections";
+import { notFound } from "next/navigation";
+import { getTemplateSections, getPagePublished } from "@/lib/sections";
 import { sectionDefaults, parseItems, isVisible, bgStyle, overlayOn } from "@/lib/templates";
 
 export const metadata: Metadata = {
@@ -26,6 +27,7 @@ function parseRows(value: string | undefined): { label: string; value: string }[
 }
 
 export default async function TermDatesPage() {
+  if (!(await getPagePublished("term-dates"))) notFound();
   const s = await getTemplateSections("term-dates");
   const d = (k: string) => ({ ...sectionDefaults("term-dates", k), ...s[k] });
   const hero = d("hero");

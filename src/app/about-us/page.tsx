@@ -8,7 +8,8 @@ import { Slider } from "@/components/home/Slider";
 import { ArrowUpRight } from "@/components/home/icons";
 import { InspectionTabs } from "@/components/about/InspectionTabs";
 import { RichText } from "@/components/site/RichText";
-import { getTemplateSections } from "@/lib/sections";
+import { notFound } from "next/navigation";
+import { getTemplateSections, getPagePublished } from "@/lib/sections";
 import { sectionDefaults, parseItems, isVisible, bgStyle } from "@/lib/templates";
 
 export const metadata: Metadata = {
@@ -40,6 +41,7 @@ function GradeBadge({ from, to }: { from: string; to: string }) {
 }
 
 export default async function AboutUsPage() {
+  if (!(await getPagePublished("about"))) notFound();
   const s = await getTemplateSections("about");
   const d = (k: string) => ({ ...sectionDefaults("about", k), ...s[k] });
   const hero = d("hero");

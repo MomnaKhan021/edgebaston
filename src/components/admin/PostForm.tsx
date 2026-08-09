@@ -10,6 +10,8 @@ type PostValues = {
   slug?: string;
   excerpt?: string;
   content?: string;
+  metaTitle?: string;
+  metaDescription?: string;
   category?: string;
   imageUrl?: string;
   authorName?: string;
@@ -71,6 +73,30 @@ export function PostForm({ post }: { post?: PostValues }) {
         <Field label="Article content" hint="Full rich text. Headings, links and buttons take the site's branding automatically.">
           <RichTextEditor name="content" defaultValue={p.content ?? ""} placeholder="Write the article…" />
         </Field>
+      </div>
+
+      {/* SEO — per-post meta title & description */}
+      <div className="rounded-2xl border bg-background p-6 shadow-sm">
+        <h2 className="mb-1 font-bold text-eb-navy">SEO &amp; metadata</h2>
+        <p className="mb-4 text-sm text-muted-foreground">
+          The title and description that search engines (Google) and browser tabs show for this article.
+        </p>
+        <div className="space-y-4">
+          <Field
+            label="Meta title"
+            htmlFor="metaTitle"
+            hint="Shown in the browser tab and as the headline in search results (~50–60 characters). Leave empty to use the post title."
+          >
+            <Input id="metaTitle" name="metaTitle" defaultValue={p.metaTitle} />
+          </Field>
+          <Field
+            label="Meta description"
+            htmlFor="metaDescription"
+            hint="The summary under the title in search results (~150–160 characters). Leave empty to use the excerpt."
+          >
+            <Textarea id="metaDescription" name="metaDescription" rows={3} defaultValue={p.metaDescription} />
+          </Field>
+        </div>
       </div>
 
       <div className="rounded-2xl border bg-background p-6 shadow-sm">

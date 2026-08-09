@@ -6,7 +6,8 @@ import { Reveal } from "@/components/home/Reveal";
 import { GetDirections } from "@/components/contact/GetDirections";
 import { Socials } from "@/components/contact/Socials";
 import { ArrowUpRight } from "@/components/home/icons";
-import { getTemplateSections } from "@/lib/sections";
+import { notFound } from "next/navigation";
+import { getTemplateSections, getPagePublished } from "@/lib/sections";
 import { sectionDefaults, parseItems, isVisible, bgStyle, overlayOn } from "@/lib/templates";
 
 export const metadata: Metadata = {
@@ -41,6 +42,7 @@ function DetailRow({ label, children }: { label: string; children: React.ReactNo
 }
 
 export default async function ContactPage() {
+  if (!(await getPagePublished("contact"))) notFound();
   const s = await getTemplateSections("contact");
   const d = (k: string) => ({ ...sectionDefaults("contact", k), ...s[k] });
   const hero = d("hero");

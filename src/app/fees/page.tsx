@@ -6,7 +6,8 @@ import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
 import { SharePage } from "@/components/history/SharePage";
 import { RichText } from "@/components/site/RichText";
-import { getTemplateSections } from "@/lib/sections";
+import { notFound } from "next/navigation";
+import { getTemplateSections, getPagePublished } from "@/lib/sections";
 import { sectionDefaults, parseItems, isVisible, bgStyle } from "@/lib/templates";
 
 export const metadata: Metadata = {
@@ -29,6 +30,7 @@ function parsePriceRows(value: string | undefined): { label: string; exc: string
 const n2 = (i: number) => String(i + 1).padStart(2, "0");
 
 export default async function FeesPage() {
+  if (!(await getPagePublished("fees"))) notFound();
   const s = await getTemplateSections("fees");
   const d = (k: string) => ({ ...sectionDefaults("fees", k), ...s[k] });
   const intro = d("intro");

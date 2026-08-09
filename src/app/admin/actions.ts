@@ -224,6 +224,8 @@ export async function savePost(formData: FormData) {
     slug,
     excerpt: str(formData, "excerpt").trim(),
     content: await compressInlineImages(str(formData, "content")),
+    metaTitle: str(formData, "metaTitle").trim(),
+    metaDescription: str(formData, "metaDescription").trim(),
     category: str(formData, "category").trim(),
     imageUrl,
     authorName: str(formData, "authorName").trim(),
@@ -389,6 +391,22 @@ export async function saveSection(formData: FormData) {
  * Section-based items (template + inst) copy with each other; courses copy with
  * courses; plain pages copy with plain pages. Anything else is a mismatch.
  */
+/** Turn a designed page (template) on/off on the live site. */
+export async function setPagePublished(formData: FormData) {
+  await assertAuth();
+  const template = str(formData, "template");
+  if (!template) redirect("/admin/templates");
+  const published = bool(formData, "published");
+  await db.templateSection.upsert({
+    where: { template_key: { template, key: "__page" } },
+    update: { data: JSON.stringify({ published: published ? "1" : "0" }) },
+    create: { template, key: "__page", data: JSON.stringify({ published: published ? "1" : "0" }) },
+  });
+  revalidateTag("sections", "max");
+  revalidatePath("/", "layout");
+  redirect(`/admin/templates/${template}?status=${published ? "on" : "off"}`);
+}
+
 export async function duplicateTemplate(formData: FormData) {
   await assertAuth();
   const { getTemplateDef } = await import("@/lib/templates");

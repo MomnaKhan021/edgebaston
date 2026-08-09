@@ -6,7 +6,8 @@ import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
 import { SharePage } from "@/components/site/SharePage";
 import { DetailAccordion, type AccordionItem } from "@/components/site/DetailAccordion";
-import { getTemplateSections } from "@/lib/sections";
+import { notFound } from "next/navigation";
+import { getTemplateSections, getPagePublished } from "@/lib/sections";
 import { parseItems, isVisible, overlayOn } from "@/lib/templates";
 
 export const metadata: Metadata = {
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
 };
 
 export default async function SubjectsPage() {
+  if (!(await getPagePublished("subjects"))) notFound();
   const s = await getTemplateSections("subjects");
   const hero = s.hero ?? {};
   const list = s.list ?? {};

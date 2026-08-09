@@ -66,3 +66,28 @@ export async function getSection(template: string, key: string): Promise<Record<
   const all = await getTemplateSections(template);
   return all[key] ?? { ...def.defaults };
 }
+
+/** Reserved key used to store a designed page's live on/off state. */
+const PAGE_META_KEY = "__page";
+
+/**
+ * Whether a designed page (template) is published on the live site. Defaults to
+ * true. When the template is being rendered as a template-backed page instance
+ * (a namespace override is active), this always returns true — an instance's
+ * visibility is controlled by its Page row, not the base template's flag.
+ * Fails open (returns true) if the database is unavailable.
+ */
+export async function getPagePublished(template: string): Promise<boolean> {
+  const map = nsStore.getStore();
+  if (map && map[template]) return true;
+  try {
+    const row = await db.templateSection.findUnique({
+      where: { template_key: { template, key: PAGE_META_KEY } },
+    });
+    if (!row) return true;
+    const data = parse(row.data);
+    return data.published !== "0";
+  } catch {
+    return true;
+  }
+}

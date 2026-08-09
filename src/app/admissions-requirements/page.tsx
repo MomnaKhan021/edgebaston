@@ -8,7 +8,8 @@ import { IconSpark, IconUsers, IconCrest } from "@/components/history/HistoryIco
 import { AppSteps } from "@/components/admissions/AppSteps";
 import { Accordion } from "@/components/admissions/Accordion";
 import { RichText } from "@/components/site/RichText";
-import { getTemplateSections } from "@/lib/sections";
+import { notFound } from "next/navigation";
+import { getTemplateSections, getPagePublished } from "@/lib/sections";
 import { sectionDefaults, parseItems, parseLines, isVisible, bgStyle } from "@/lib/templates";
 
 export const metadata: Metadata = {
@@ -57,6 +58,7 @@ function Share() {
 }
 
 export default async function AdmissionsRequirementsPage() {
+  if (!(await getPagePublished("admissions"))) notFound();
   const s = await getTemplateSections("admissions");
   const d = (k: string) => ({ ...sectionDefaults("admissions", k), ...s[k] });
   const intro = d("intro");

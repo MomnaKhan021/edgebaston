@@ -5,7 +5,8 @@ import { SiteNavbar } from "@/components/home/SiteNavbar";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
 import { StoryCard, type Story } from "@/components/course/StoryCard";
-import { getTemplateSections } from "@/lib/sections";
+import { notFound } from "next/navigation";
+import { getTemplateSections, getPagePublished } from "@/lib/sections";
 import { sectionDefaults, parseItems, isVisible, bgStyle } from "@/lib/templates";
 
 export const metadata: Metadata = {
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
 };
 
 export default async function WhatOurStudentsSayPage() {
+  if (!(await getPagePublished("success-stories"))) notFound();
   const s = await getTemplateSections("success-stories");
   const d = (k: string) => ({ ...sectionDefaults("success-stories", k), ...s[k] });
   const hero = d("hero");

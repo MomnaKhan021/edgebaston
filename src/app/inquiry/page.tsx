@@ -6,7 +6,8 @@ import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
 import { SharePage } from "@/components/site/SharePage";
 import { TypeformEmbed } from "@/components/site/TypeformEmbed";
-import { getTemplateSections } from "@/lib/sections";
+import { notFound } from "next/navigation";
+import { getTemplateSections, getPagePublished } from "@/lib/sections";
 import { isVisible, overlayOn } from "@/lib/templates";
 
 export const metadata: Metadata = {
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
 };
 
 export default async function InquiryPage() {
+  if (!(await getPagePublished("inquiry"))) notFound();
   const s = await getTemplateSections("inquiry");
   const hero = s.hero ?? {};
   const form = s.form ?? {};

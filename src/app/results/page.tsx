@@ -9,7 +9,8 @@ import { SharePage } from "@/components/history/SharePage";
 import { Accordion } from "@/components/admissions/Accordion";
 import { StudentDestinations, type DestinationCard } from "@/components/results/StudentDestinations";
 import { RichText } from "@/components/site/RichText";
-import { getTemplateSections } from "@/lib/sections";
+import { notFound } from "next/navigation";
+import { getTemplateSections, getPagePublished } from "@/lib/sections";
 import { sectionDefaults, parseItems, parseLines, isVisible, bgStyle, num, overlayOn } from "@/lib/templates";
 
 export const metadata: Metadata = {
@@ -68,6 +69,7 @@ function PdfIcon({ className }: { className?: string }) {
 }
 
 export default async function ResultsPage() {
+  if (!(await getPagePublished("results"))) notFound();
   const s = await getTemplateSections("results");
   const d = (k: string) => ({ ...sectionDefaults("results", k), ...s[k] });
   const hero = d("hero");

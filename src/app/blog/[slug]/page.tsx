@@ -12,7 +12,20 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const post = await db.post.findUnique({ where: { slug } }).catch(() => null);
   if (!post) return { title: "Post not found" };
-  return { title: post.title, description: post.excerpt || makeExcerpt(post.content) };
+
+  // Per-post SEO from the admin; fall back to the post title / excerpt.
+  const title = post.metaTitle ? { absolute: post.metaTitle } : post.title;
+  const description = post.metaDescription || post.excerpt || makeExcerpt(post.content) || undefined;
+  return {
+    title,
+    description,
+    openGraph: {
+      title: post.metaTitle || post.title,
+      description,
+      type: "article",
+      images: post.imageUrl ? [post.imageUrl] : undefined,
+    },
+  };
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {

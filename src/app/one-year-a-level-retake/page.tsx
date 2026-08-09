@@ -13,7 +13,8 @@ import { StorySlider } from "@/components/course/StorySlider";
 import { StoryCard, type Story } from "@/components/course/StoryCard";
 import { FaqList } from "@/components/course/FaqList";
 import { RichText } from "@/components/site/RichText";
-import { getTemplateSections } from "@/lib/sections";
+import { notFound } from "next/navigation";
+import { getTemplateSections, getPagePublished } from "@/lib/sections";
 import { sectionDefaults, parseItems, parseFaqItems, isVisible, bgStyle, num, overlayOn } from "@/lib/templates";
 import {
   IconResults,
@@ -168,6 +169,7 @@ function UnderlineLink({ href, children, external = false }: { href: string; chi
 /* --------------------------------- Page ---------------------------------- */
 
 export default async function RetakePage() {
+  if (!(await getPagePublished("retake"))) notFound();
   const s = await getTemplateSections("retake");
   const d = (k: string) => ({ ...sectionDefaults("retake", k), ...s[k] });
   const hero = d("hero");

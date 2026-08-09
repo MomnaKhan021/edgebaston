@@ -92,6 +92,8 @@ model Post {
   slug        String   @unique
   excerpt     String   @default("") // short blurb for the listing cards
   content     String   @default("") // rich-text HTML for the article body
+  metaTitle       String @default("") // SEO <title>; falls back to the post title
+  metaDescription String @default("") // SEO meta description; falls back to the excerpt
   category    String   @default("") // e.g. Implants, Orthodontics — drives the filter tabs
   imageUrl    String   @default("")
   authorName  String   @default("")
