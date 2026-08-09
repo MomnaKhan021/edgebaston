@@ -2293,12 +2293,13 @@ export const RESULTS_TEMPLATE: TemplateDef = {
       ],
       defaults: {
         visible: "1",
-        years: ["2020", "2021", "2022", "2023", "2024", "2025"].join("\n"),
-        activeYear: "2025",
+        years: ["2021", "2022", "2023", "2024", "2025", "2026"].join("\n"),
+        activeYear: "2026",
         buttonLabel: "Enquire About Course",
         buttonUrl: "/inquiry",
         yearData: JSON.stringify([
-          { year: "2025", heading: "2025 A-Level Results: Outstanding Achievement", body: "Congratulations to our students who have achieved exceptional results this year. Every student should be immensely proud of what they have accomplished.", stat1Value: "16.0", stat2Value: "65.1", stat3Value: "87.7", subjects: "Biology | A*–A | 71.0\nChemistry | A*–A | 67.0\nMathematics | A*–A | 58.0", gradesValue: "+1.78", dest1Value: "72.7", dest2Value: "92" },
+          { year: "2026", heading: "2026 A-Level Results: Outstanding Achievement", body: "Congratulations to our 2026 cohort on another exceptional set of results. Every student should be immensely proud of what they have accomplished this year.", stat1Value: "17.0", stat2Value: "66.0", stat3Value: "88.0", subjects: "Biology | A*–A | 72.0\nChemistry | A*–A | 68.0\nMathematics | A*–A | 59.0", gradesValue: "+1.80", dest1Value: "74.0", dest2Value: "93" },
+          { year: "2025", heading: "2025 A-Level Results: Outstanding Achievement", body: "Congratulations to our students who achieved exceptional results this year. Every student should be immensely proud of what they have accomplished.", stat1Value: "16.0", stat2Value: "65.1", stat3Value: "87.7", subjects: "Biology | A*–A | 71.0\nChemistry | A*–A | 67.0\nMathematics | A*–A | 58.0", gradesValue: "+1.78", dest1Value: "72.7", dest2Value: "92" },
           { year: "2024", heading: "2024 A-Level Results", body: "A strong year of results across every subject area.", stat1Value: "14.0", stat2Value: "61.0", stat3Value: "85.0", subjects: "Biology | A*–A | 68.0\nChemistry | A*–A | 63.0\nMathematics | A*–A | 55.0", gradesValue: "+1.70", dest1Value: "70.0", dest2Value: "90" },
           { year: "2023", heading: "2023 A-Level Results", body: "Consistent, outstanding outcomes for our students.", stat1Value: "13.0", stat2Value: "59.0", stat3Value: "83.0", subjects: "Biology | A*–A | 66.0\nChemistry | A*–A | 61.0\nMathematics | A*–A | 54.0", gradesValue: "+1.60", dest1Value: "68.0", dest2Value: "88" },
         ]),
