@@ -20,10 +20,11 @@ export const PAGE_ROUTES: Record<string, string> = {
 };
 
 /**
- * Templates whose live page can be published/unpublished from the admin.
- * The homepage and the non-page chrome (header/footer) are excluded — turning
- * the homepage off would leave the site with no home.
+ * Templates whose live page can be published/unpublished (and given a redirect
+ * or SEO overrides) from the admin. This is every template with a live route —
+ * including the homepage. The non-page chrome (header/footer) isn't in
+ * PAGE_ROUTES, so it's excluded automatically.
  */
 export function canUnpublish(templateKey: string): boolean {
-  return templateKey in PAGE_ROUTES && templateKey !== "home";
+  return templateKey in PAGE_ROUTES;
 }
