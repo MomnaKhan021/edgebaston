@@ -8,6 +8,7 @@ import { ArrowUpRight } from "@/components/home/icons";
 import { SharePage } from "@/components/history/SharePage";
 import { Accordion } from "@/components/admissions/Accordion";
 import { StudentDestinations, type DestinationCard } from "@/components/results/StudentDestinations";
+import { ResultsYearTabs, type YearBlock, type SharedLabels } from "@/components/results/ResultsYearTabs";
 import { RichText } from "@/components/site/RichText";
 import { notFound, redirect } from "next/navigation";
 import { getTemplateSections, getPagePublished, getPageMeta, getPageRedirect } from "@/lib/sections";
@@ -99,6 +100,46 @@ export default async function ResultsPage() {
   })) as DestinationCard[];
   const faqItems = parseItems(faq.faqs).map((x) => ({ q: x.q ?? "", a: x.a ?? "" })).filter((x) => x.q);
 
+  // Per-year tabbed results (drives clickable year tabs). When present, it
+  // replaces the static year bar + single results summary below.
+  const parseSubjectLines = (v: string | undefined) =>
+    String(v ?? "")
+      .split("\n")
+      .map((line) => {
+        const [name, grade, percent] = line.split("|").map((x) => x.trim());
+        return { name: name ?? "", grade: grade ?? "", percent: num(percent, 0) };
+      })
+      .filter((x) => x.name);
+  const parsedYears: YearBlock[] = parseItems(yearbar.yearData)
+    .map((y) => ({
+      year: y.year ?? "",
+      heading: y.heading ?? "",
+      body: y.body ?? "",
+      stats: [y.stat1Value ?? "", y.stat2Value ?? "", y.stat3Value ?? ""] as [string, string, string],
+      subjects: parseSubjectLines(y.subjects),
+      gradesValue: y.gradesValue ?? "",
+      dest1Value: num(y.dest1Value, 0),
+      dest2Value: num(y.dest2Value, 0),
+    }))
+    .filter((y) => y.year);
+  const useTabs = parsedYears.length > 0;
+  const shared: SharedLabels = {
+    eyebrow: summary.eyebrow,
+    statLabels: [summary.stat1Label, summary.stat2Label, summary.stat3Label],
+    storyLabel: summary.storyLabel,
+    storyLinkLabel: summary.storyLinkLabel,
+    storyLinkUrl: summary.storyLinkUrl,
+    subjectsHeading: subjectsSec.heading,
+    subjectsSubtitle: subjectsSec.subtitle,
+    gradesLabel: subjectsSec.gradesLabel,
+    destHeading: destinations.heading,
+    dest1Label: destinations.dest1Label,
+    dest2Label: destinations.dest2Label,
+    buttonLabel: yearbar.buttonLabel,
+    buttonUrl: yearbar.buttonUrl,
+    activeYear: yearbar.activeYear,
+  };
+
   return (
     <>
       <SiteAnnouncement />
@@ -138,8 +179,11 @@ export default async function ResultsPage() {
         </div>
       </div>
 
-      {/* Year bar */}
-      {isVisible(yearbar) && (
+      {/* Per-year tabbed results (clickable tabs) */}
+      {useTabs && <ResultsYearTabs years={parsedYears} shared={shared} />}
+
+      {/* Static year bar — only when no per-year tabs are configured */}
+      {!useTabs && isVisible(yearbar) && (
         <section className="bg-eb-navy" style={bgStyle(yearbar)}>
           <div className="mx-auto flex max-w-[1440px] flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between lg:px-16">
             <div className="eb-noscroll -mx-1 flex gap-1.5 overflow-x-auto px-1">
@@ -168,8 +212,8 @@ export default async function ResultsPage() {
         </section>
       )}
 
-      {/* Results detail — one light container holding summary, subjects and destinations */}
-      {(isVisible(summary) || isVisible(subjectsSec) || isVisible(destinations)) && (
+      {/* Results detail — single-year fallback, shown only when no year tabs exist */}
+      {!useTabs && (isVisible(summary) || isVisible(subjectsSec) || isVisible(destinations)) && (
         <Reveal>
           <section className="bg-white">
             <div className="mx-auto max-w-[1320px] px-4 py-10 lg:px-16 lg:py-14">
