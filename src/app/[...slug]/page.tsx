@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { excerpt } from "@/lib/utils";
 import { withSectionNamespace } from "@/lib/sections";
 import { canInstance, getInstanceRenderer, instanceNamespace } from "@/lib/templateInstances";
+import { PAGE_ROUTES } from "@/lib/pageRoutes";
 import { AnnouncementBar } from "@/components/home/AnnouncementBar";
 import { SiteNavbar } from "@/components/home/SiteNavbar";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
@@ -43,6 +44,18 @@ export default async function DynamicPage({
 }) {
   const { slug } = await params;
   const page = await db.page.findUnique({ where: { slug: joinSlug(slug) } });
+
+  // Forgiving fallback: if a nested path has no page of its own, resolve it to
+  // its FINAL segment when that is a real page — so a redirect target like
+  // /admissions/admissions-requirements still lands on /admissions-requirements
+  // even though the "/admissions" parent doesn't exist.
+  if (!page && slug.length > 1) {
+    const last = decodeURIComponent(slug[slug.length - 1]);
+    const knownRoutes = new Set(Object.values(PAGE_ROUTES).map((p) => p.replace(/^\//, "")));
+    if (last && knownRoutes.has(last)) redirect(`/${last}`);
+    const lastPage = await db.page.findUnique({ where: { slug: last } }).catch(() => null);
+    if (lastPage?.published) redirect(`/${last}`);
+  }
 
   if (!page || !page.published) notFound();
   if (page.redirectUrl) redirect(page.redirectUrl);
