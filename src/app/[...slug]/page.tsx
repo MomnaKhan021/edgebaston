@@ -58,7 +58,17 @@ export default async function DynamicPage({
   }
 
   if (!page || !page.published) notFound();
-  if (page.redirectUrl) redirect(page.redirectUrl);
+  // Self-redirect guard: ignore a redirect that points back at this page
+  // itself (directly, or via a nested alias like "/x/<own-slug>" that the
+  // fallback above would resolve straight back here) — it would loop forever.
+  if (page.redirectUrl) {
+    const target = page.redirectUrl;
+    const path = target.startsWith("/") ? target.split(/[?#]/)[0] : "";
+    const segs = path.split("/").filter(Boolean);
+    const pointsAtSelf =
+      path === `/${page.slug}` || (segs.length > 0 && segs[segs.length - 1] === page.slug);
+    if (!pointsAtSelf) redirect(target);
+  }
 
   // Template-backed page: render the designed layout with this page's own
   // content (read from the "inst_<id>" namespace via the async-context
