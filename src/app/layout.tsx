@@ -31,14 +31,10 @@ export async function generateMetadata(): Promise<Metadata> {
     twitter: { card: "summary_large_image", title: defaultTitle, description },
   };
 
-  // Custom favicon (browser-tab icon) when one is uploaded in the admin.
-  if (settings.faviconUrl) {
-    meta.icons = {
-      icon: settings.faviconUrl,
-      shortcut: settings.faviconUrl,
-      apple: settings.faviconUrl,
-    };
-  }
+  // Browser-tab icon: the admin-uploaded favicon when set, otherwise the
+  // bundled branded default (the Edgbaston gatehouse mark).
+  const icon = settings.faviconUrl || "/favicon.svg";
+  meta.icons = { icon, shortcut: icon, apple: icon };
 
   return meta;
 }
