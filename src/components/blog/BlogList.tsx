@@ -59,10 +59,12 @@ export function BlogList({
             No posts here yet — check back soon.
           </p>
         ) : (
-          <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((p, i) => (
-              <Link key={p.slug} href={`/blog/${p.slug}`} className="eb-card group flex flex-col">
-                <div className={`overflow-hidden rounded-2xl ${p.imageUrl ? "" : TINTS[i % TINTS.length]}`}>
+              <Link key={p.slug} href={`/blog/${p.slug}`} className="group flex h-full flex-col">
+                {/* Fixed-ratio frame; the image is cropped to fit and the zoom
+                    stays clipped inside the rounded corners. */}
+                <div className={`shrink-0 overflow-hidden rounded-2xl ${p.imageUrl ? "bg-eb-cream" : TINTS[i % TINTS.length]}`}>
                   {p.imageUrl ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={p.imageUrl} alt={p.title} className="aspect-[16/10] w-full object-cover transition duration-300 group-hover:scale-[1.03]" loading="lazy" decoding="async" />
@@ -74,7 +76,7 @@ export function BlogList({
                   {p.category && (
                     <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-eb-blue">{p.category}</span>
                   )}
-                  <h3 className="mt-1.5 text-[20px] font-extrabold leading-snug tracking-tight text-eb-ink transition group-hover:text-eb-blue">
+                  <h3 className="mt-1.5 text-[18px] font-extrabold leading-snug tracking-tight text-eb-ink transition group-hover:text-eb-blue sm:text-[20px]">
                     {p.title}
                   </h3>
                   {p.excerpt && <p className="mt-2 text-[14px] leading-relaxed text-neutral-600 line-clamp-3">{p.excerpt}</p>}
