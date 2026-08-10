@@ -21,7 +21,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string[] }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const page = await db.page.findUnique({ where: { slug: joinSlug(slug) } }).catch(() => null);
+  let page = await db.page.findUnique({ where: { slug: joinSlug(slug) } }).catch(() => null);
   if (!page) {
     // A designed page rendered at its alias URL keeps its own SEO meta.
     const tpl = await findTemplateByAliasPath("/" + joinSlug(slug));
@@ -35,7 +35,11 @@ export async function generateMetadata({
       }
       return {};
     }
-    return { title: "Page not found" };
+    // A custom page rendered at its alias URL keeps its own meta too.
+    page = await db.page
+      .findFirst({ where: { redirectUrl: "/" + joinSlug(slug), published: true } })
+      .catch(() => null);
+    if (!page) return { title: "Page not found" };
   }
 
   // Per-page SEO from the admin; fall back to the page title / a content excerpt.
@@ -73,17 +77,22 @@ export default async function DynamicPage({
       return rendered as ReactElement;
     }
 
+    // Reverse alias lookup for custom pages: ANY page whose redirect targets
+    // exactly this path renders here — regardless of what its own slug is
+    // (prefixes/suffixes like "-1" included) or how many segments the path has.
+    page = await db.page
+      .findFirst({ where: { redirectUrl: currentPath, published: true } })
+      .catch(() => null);
+
     // Forgiving fallback: if a nested path has no page of its own, resolve it
     // to its FINAL segment when that is a real page — so /x/fees still lands
     // on /fees even though the "/x" parent doesn't exist.
-    if (slug.length > 1) {
+    if (!page && slug.length > 1) {
       const last = decodeURIComponent(slug[slug.length - 1]);
       const lastPage = await db.page.findUnique({ where: { slug: last } }).catch(() => null);
       if (lastPage?.published) {
         const aliasTarget = (lastPage.redirectUrl || "").split(/[?#]/)[0];
         if (aliasTarget === currentPath) {
-          // That page's redirect points exactly here → this is its new URL;
-          // render its content at this address instead of bouncing back.
           page = lastPage;
         } else {
           redirect(`/${last}`);

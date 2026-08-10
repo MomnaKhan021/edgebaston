@@ -27,6 +27,8 @@ const RENDERERS: Record<string, Renderer> = {
   fees: () => import("@/app/fees/page"),
   "term-dates": () => import("@/app/term-dates/page"),
   results: () => import("@/app/results/page"),
+  blog: () => import("@/app/blog/page"),
+  "success-stories": () => import("@/app/what-our-students-say/page"),
   contact: () => import("@/app/contact/page"),
 };
 

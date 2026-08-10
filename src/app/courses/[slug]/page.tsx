@@ -79,9 +79,12 @@ export default async function CourseDetailPage({
       return rendered as ReactElement;
     }
 
-    // A custom page aliased here (its redirect targets this path) renders too;
+    // A custom page aliased here (its redirect targets this path) renders too —
+    // matched by its redirect target first (any slug, any prefix/suffix) —
     // otherwise fall back to the real page at the bare slug.
-    const page = await db.page.findUnique({ where: { slug } }).catch(() => null);
+    const page =
+      (await db.page.findFirst({ where: { redirectUrl: currentPath, published: true } }).catch(() => null)) ??
+      (await db.page.findUnique({ where: { slug } }).catch(() => null));
     if (page?.published) {
       const aliasTarget = (page.redirectUrl || "").split(/[?#]/)[0];
       if (aliasTarget === currentPath && page.templateKey && canInstance(page.templateKey)) {
