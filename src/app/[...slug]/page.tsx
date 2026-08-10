@@ -9,6 +9,7 @@ import { PAGE_ROUTES } from "@/lib/pageRoutes";
 import { AnnouncementBar } from "@/components/home/AnnouncementBar";
 import { SiteNavbar } from "@/components/home/SiteNavbar";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
+import { BlogArticle } from "@/components/blog/BlogArticle";
 
 /** Join the catch-all segments back into a stored slug, e.g. ["guard","course"] → "guard/course". */
 function joinSlug(segments: string[]): string {
@@ -34,6 +35,16 @@ export async function generateMetadata({
         };
       }
       return {};
+    }
+    // A blog post at its alias URL keeps its own SEO meta.
+    const aliasedPost = await db.post
+      .findFirst({ where: { redirectUrl: "/" + joinSlug(slug), published: true } })
+      .catch(() => null);
+    if (aliasedPost) {
+      return {
+        title: aliasedPost.metaTitle ? { absolute: aliasedPost.metaTitle } : aliasedPost.title,
+        description: aliasedPost.metaDescription || aliasedPost.excerpt || undefined,
+      };
     }
     // A custom page rendered at its alias URL keeps its own meta too.
     page = await db.page
@@ -76,6 +87,13 @@ export default async function DynamicPage({
       const rendered = await withSectionNamespace({ [tpl]: tpl }, () => mod.default({}));
       return rendered as ReactElement;
     }
+
+    // Blog post at a custom alias URL: a published post whose "Redirect this
+    // article" target is exactly this path renders its article HERE.
+    const aliasedPost = await db.post
+      .findFirst({ where: { redirectUrl: currentPath, published: true } })
+      .catch(() => null);
+    if (aliasedPost) return <BlogArticle post={aliasedPost} />;
 
     // Reverse alias lookup for custom pages: ANY page whose redirect targets
     // exactly this path renders here — regardless of what its own slug is
