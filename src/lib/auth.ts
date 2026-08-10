@@ -28,6 +28,7 @@ function allowedAdminEmails(): Set<string> {
     "admin@edgebaston.edu",
     "momnadev@convertt.co",
     "support@convertt.co",
+    "owais@rhokea.com",
   ];
   const fromEnv = [process.env.ADMIN_EMAIL || "", ...(process.env.ADMIN_EMAILS || "").split(",")];
   return new Set(
