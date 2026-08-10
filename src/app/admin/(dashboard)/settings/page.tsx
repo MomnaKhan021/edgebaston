@@ -98,6 +98,13 @@ export default async function SettingsAdmin({
           >
             <ImageUpload name="faviconUrl" defaultValue={settings.faviconUrl} aspect="aspect-square" />
           </Field>
+          <Field
+            label="Google Analytics GA4 ID"
+            htmlFor="ga4Id"
+            hint="Your GA4 Measurement ID (starts with G-). Found in Google Analytics → Admin → Data streams. Leave empty to disable tracking."
+          >
+            <Input id="ga4Id" name="ga4Id" defaultValue={settings.ga4Id} placeholder="G-XXXXXXXXXX" />
+          </Field>
         </div>
       </section>
 

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import { getSettings } from "@/lib/settings";
 import { saans, saansMono } from "./fonts";
@@ -66,6 +67,19 @@ export default async function RootLayout({
       <body className="flex min-h-full flex-col">
         {children}
         {isVisible(offer) && <OfferBar title={offer.title} message={offer.message} endDate={offer.endDate} buttonLabel={offer.buttonLabel} buttonUrl={offer.buttonUrl} bgColor={offer.bgColor} />}
+
+        {/* Google Analytics 4 — loads only when a Measurement ID is configured. */}
+        {settings.ga4Id && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${settings.ga4Id}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${settings.ga4Id}');`}
+            </Script>
+          </>
+        )}
       </body>
     </html>
   );
