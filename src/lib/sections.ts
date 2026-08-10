@@ -1,6 +1,7 @@
 import { AsyncLocalStorage } from "node:async_hooks";
 import { db } from "@/lib/db";
 import { getTemplateDef, getSectionDef } from "@/lib/templates";
+import { normalizeRedirect } from "@/lib/utils";
 
 /**
  * Per-request override that lets a duplicated page render a designed template
@@ -123,7 +124,7 @@ export async function getPageRedirect(template: string): Promise<string> {
       where: { template_key: { template, key: PAGE_META_KEY } },
     });
     if (!row) return "";
-    return parse(row.data).redirectUrl ?? "";
+    return normalizeRedirect(parse(row.data).redirectUrl ?? "");
   } catch {
     return "";
   }
