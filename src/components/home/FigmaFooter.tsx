@@ -39,7 +39,8 @@ export async function FigmaFooter() {
           "radial-gradient(110% 85% at 12% 100%, #2f7dc0 0%, rgba(47,125,192,0.35) 38%, rgba(47,125,192,0) 62%), #0e2f49",
       }}
     >
-      <div className="mx-auto max-w-[1440px] px-4 pt-12 lg:px-[60px] lg:pt-20">
+      {/* extra bottom padding so the fixed offer bar never covers the copyright row */}
+      <div className="mx-auto max-w-[1440px] px-4 pb-36 pt-12 lg:px-[60px] lg:pb-16 lg:pt-20">
         {/* Top: principal + intro */}
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
           <div className="flex items-center gap-3">
@@ -49,7 +50,7 @@ export async function FigmaFooter() {
               alt={intro.name || "Principal"}
               className="h-12 w-12 rounded-md object-cover object-top sm:h-[89px] sm:w-[89px]"
               style={{ aspectRatio: "1 / 1" }}
-              loading="lazy"
+              loading="eager"
               decoding="async"
             />
             <div>
@@ -103,7 +104,7 @@ export async function FigmaFooter() {
                   src={address.mapImage || "/figma/map.webp"}
                   alt={`Map to ${address.orgName}`}
                   className="h-full w-full object-cover"
-                  loading="lazy"
+                  loading="eager"
                   decoding="async"
                 />
               </a>
