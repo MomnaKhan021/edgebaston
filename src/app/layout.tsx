@@ -30,9 +30,10 @@ export async function generateMetadata(): Promise<Metadata> {
   const proto = h.get("x-forwarded-proto") ?? "https";
   const baseUrl = `${proto}://${host}`;
 
-  // Social share image (og:image): the admin-uploaded one (served as a real
-  // image via /api/og-image), otherwise the home banner as a sensible default.
-  const shareImage = settings.ogImageUrl ? "/api/og-image" : "/figma/hero-building.webp";
+  // Social share image (og:image) is always served (and normalised to a
+  // 1200×630 WebP) by /api/og-image — the admin upload when set, otherwise the
+  // home banner as a sensible default.
+  const shareImage = "/api/og-image";
 
   const meta: Metadata = {
     metadataBase: new URL(baseUrl),
