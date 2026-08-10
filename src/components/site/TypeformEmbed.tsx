@@ -36,9 +36,12 @@ export function TypeformEmbed({
     if (conversionSendTo) {
       (window as unknown as { enquiryConversion?: () => void }).enquiryConversion = () => {
         const gtag = (window as unknown as { gtag?: Gtag }).gtag;
-        if (typeof gtag === "function") {
-          gtag("event", "conversion", { send_to: conversionSendTo });
-        }
+        if (typeof gtag !== "function") return;
+        // Google Ads conversion.
+        gtag("event", "conversion", { send_to: conversionSendTo });
+        // GA4 lead event so form completions are tracked in Analytics too
+        // (routes to every configured GA4 destination by default).
+        gtag("event", "generate_lead", { form: "enquiry", currency: "GBP", value: 0 });
       };
     }
 
