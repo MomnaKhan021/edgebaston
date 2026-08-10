@@ -7,7 +7,11 @@ export function cn(...classes: (string | false | null | undefined)[]): string {
 
 /** Build a URL-safe slug from a title. */
 export function toSlug(input: string): string {
-  return slugify(input, { lower: true, strict: true, trim: true });
+  // Treat slashes as word separators first. In strict mode slugify *strips*
+  // slashes, which merges the words either side (a pasted path like
+  // "/courses/x-y/z" would become "coursesx-yz"); turning them into spaces
+  // keeps the words distinct ("courses-x-y-z").
+  return slugify(input.replace(/[\\/]+/g, " "), { lower: true, strict: true, trim: true });
 }
 
 /**
