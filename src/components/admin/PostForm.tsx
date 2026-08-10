@@ -2,6 +2,7 @@ import Link from "next/link";
 import { savePost } from "@/app/admin/actions";
 import { ArticleEditor } from "@/components/admin/ArticleEditor";
 import { ImageUpload } from "@/components/admin/ImageUpload";
+import { RedirectField } from "@/components/admin/RedirectField";
 import { Field, Input, Textarea, Toggle, SubmitButton } from "@/components/admin/ui";
 
 type PostValues = {
@@ -77,13 +78,7 @@ export function PostForm({ post }: { post?: PostValues }) {
       </div>
 
       <div className="rounded-2xl border bg-background p-6 shadow-sm">
-        <Field
-          label="Redirect URL"
-          htmlFor="redirectUrl"
-          hint="If set, this article sends visitors straight to another URL instead of showing its content. Use a path like /contact or a full https:// link. Leave empty for a normal article."
-        >
-          <Input id="redirectUrl" name="redirectUrl" defaultValue={p.redirectUrl} placeholder="/inquiry or https://…" />
-        </Field>
+        <RedirectField defaultValue={p.redirectUrl} noun="article" />
       </div>
 
       {/* SEO — per-post meta title & description */}

@@ -17,12 +17,29 @@ export type SessionPayload = {
   expiresAt: string;
 };
 
-/** Verify submitted credentials against the env-configured admin account. */
+/**
+ * Admin accounts allowed to sign in. All share one password (ADMIN_PASSWORD).
+ * The list is: built-in defaults below, plus ADMIN_EMAIL, plus any comma-
+ * separated addresses in ADMIN_EMAILS — so more admins can be added later from
+ * the Vercel env without a code change.
+ */
+function allowedAdminEmails(): Set<string> {
+  const defaults = [
+    "admin@edgebaston.edu",
+    "momnadev@convertt.co",
+    "support@convertt.co",
+  ];
+  const fromEnv = [process.env.ADMIN_EMAIL || "", ...(process.env.ADMIN_EMAILS || "").split(",")];
+  return new Set(
+    [...defaults, ...fromEnv].map((e) => e.trim().toLowerCase()).filter(Boolean),
+  );
+}
+
+/** Verify submitted credentials against the configured admin accounts. */
 export function verifyCredentials(email: string, password: string): boolean {
-  const adminEmail = process.env.ADMIN_EMAIL || "admin@edgebaston.edu";
   const adminPassword = process.env.ADMIN_PASSWORD || "admin1234";
   return (
-    email.trim().toLowerCase() === adminEmail.toLowerCase() &&
+    allowedAdminEmails().has(email.trim().toLowerCase()) &&
     password === adminPassword
   );
 }

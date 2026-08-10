@@ -6,7 +6,7 @@ import { SiteNavbar } from "@/components/home/SiteNavbar";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
 import { db } from "@/lib/db";
-import { excerpt as makeExcerpt } from "@/lib/utils";
+import { excerpt as makeExcerpt, normalizeRedirect } from "@/lib/utils";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -47,8 +47,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     notFound();
   }
   // Follow the post's redirect unless it points at this very URL.
-  if (post.redirectUrl && post.redirectUrl.split(/[?#]/)[0] !== `/blog/${slug}`) {
-    redirect(post.redirectUrl);
+  const postRedirect = normalizeRedirect(post.redirectUrl);
+  if (postRedirect && postRedirect.split(/[?#]/)[0] !== `/blog/${slug}`) {
+    redirect(postRedirect);
   }
 
   return (
