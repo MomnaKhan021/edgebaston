@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
+import type { ReactElement } from "react";
 import Link from "next/link";
 import { unstable_cache } from "next/cache";
 import { notFound, redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { excerpt } from "@/lib/utils";
 import { compressDataUri, compressInlineImages } from "@/lib/images";
+import { withSectionNamespace, findTemplateByAliasPath, getPageMeta } from "@/lib/sections";
+import { canInstance, getInstanceRenderer, instanceNamespace } from "@/lib/templateInstances";
+import { PAGE_ROUTES } from "@/lib/pageRoutes";
 
 // Cached per-slug course lookup shared by metadata + page render
 // (invalidated by revalidateTag("courses") on admin saves).
@@ -37,7 +41,18 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const course = await getCourse(slug);
-  if (!course) return { title: "Course not found" };
+  if (!course) {
+    // A designed page rendered at a /courses/... alias keeps its own SEO meta.
+    const tpl = await findTemplateByAliasPath(`/courses/${slug}`);
+    if (tpl) {
+      const m = await getPageMeta(tpl);
+      return {
+        title: m.metaTitle ? { absolute: m.metaTitle } : undefined,
+        description: m.metaDescription || undefined,
+      };
+    }
+    return { title: "Course not found" };
+  }
   return {
     title: course.title,
     description: course.summary || excerpt(course.content),
@@ -52,7 +67,57 @@ export default async function CourseDetailPage({
   const { slug } = await params;
   const course = await getCourse(slug);
 
-  if (!course || !course.published) notFound();
+  if (!course || !course.published) {
+    const currentPath = `/courses/${slug}`;
+
+    // "The redirect URL becomes the page's URL": a designed page whose admin
+    // redirect points exactly here renders its full content at this address.
+    const tpl = await findTemplateByAliasPath(currentPath);
+    if (tpl && canInstance(tpl)) {
+      const mod = await getInstanceRenderer(tpl)!();
+      const rendered = await withSectionNamespace({ [tpl]: tpl }, () => mod.default({}));
+      return rendered as ReactElement;
+    }
+
+    // A custom page aliased here (its redirect targets this path) renders too;
+    // otherwise fall back to the real page at the bare slug.
+    const page = await db.page.findUnique({ where: { slug } }).catch(() => null);
+    if (page?.published) {
+      const aliasTarget = (page.redirectUrl || "").split(/[?#]/)[0];
+      if (aliasTarget === currentPath && page.templateKey && canInstance(page.templateKey)) {
+        const mod = await getInstanceRenderer(page.templateKey)!();
+        const rendered = await withSectionNamespace(
+          { [page.templateKey]: instanceNamespace(page.id) },
+          () => mod.default({}),
+        );
+        return rendered as ReactElement;
+      }
+      if (aliasTarget !== currentPath) redirect(`/${slug}`);
+      // Plain rich-text page aliased here: render its content at this URL.
+      return (
+        <>
+          <SiteAnnouncement />
+          <SiteNavbar variant="solid" />
+          <main className="bg-white">
+            <div className="mx-auto max-w-3xl px-4 py-12 lg:py-16">
+              <h1 className="mb-6 text-3xl font-extrabold tracking-tight text-eb-ink lg:text-[44px]">{page.title}</h1>
+              {page.content ? (
+                <div className="prose-content" dangerouslySetInnerHTML={{ __html: page.content }} />
+              ) : (
+                <p className="text-muted-foreground">This page has no content yet.</p>
+              )}
+            </div>
+          </main>
+          <FigmaFooter />
+        </>
+      );
+    }
+
+    // Final-segment fallback: /courses/<designed-route> → the real page.
+    const known = new Set(Object.values(PAGE_ROUTES).map((p) => p.replace(/^\//, "")));
+    if (known.has(slug)) redirect(`/${slug}`);
+    notFound();
+  }
   if (course.redirectUrl) redirect(course.redirectUrl);
 
   return (

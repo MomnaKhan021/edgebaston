@@ -33,8 +33,23 @@ export const dynamic = "force-dynamic";
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const post = await db.post.findUnique({ where: { slug } });
-  if (!post || !post.published) notFound();
-  if (post.redirectUrl) redirect(post.redirectUrl);
+  if (!post || !post.published) {
+    // A designed page whose admin redirect targets /blog/<slug> renders its
+    // content at this address ("the redirect URL becomes the page's URL").
+    const { withSectionNamespace, findTemplateByAliasPath } = await import("@/lib/sections");
+    const { canInstance, getInstanceRenderer } = await import("@/lib/templateInstances");
+    const tpl = await findTemplateByAliasPath(`/blog/${slug}`);
+    if (tpl && canInstance(tpl)) {
+      const mod = await getInstanceRenderer(tpl)!();
+      const rendered = await withSectionNamespace({ [tpl]: tpl }, () => mod.default({}));
+      return rendered as React.ReactElement;
+    }
+    notFound();
+  }
+  // Follow the post's redirect unless it points at this very URL.
+  if (post.redirectUrl && post.redirectUrl.split(/[?#]/)[0] !== `/blog/${slug}`) {
+    redirect(post.redirectUrl);
+  }
 
   return (
     <>
