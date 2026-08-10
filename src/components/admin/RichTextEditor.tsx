@@ -7,6 +7,8 @@ import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
 import TextAlign from "@tiptap/extension-text-align";
 import { cn } from "@/lib/utils";
+import { Video } from "./VideoNode";
+import { uploadMedia, uploadsEnabled } from "@/lib/uploadClient";
 
 /**
  * A no-code rich-text editor with a full toolbar (headings, styles, lists,
@@ -40,6 +42,7 @@ export function RichTextEditor({
       StarterKit.configure({ link: false }),
       Link.configure({ openOnClick: false, autolink: true }),
       Image.configure({ inline: false, allowBase64: true }),
+      Video,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
     ],
     content: defaultValue,
@@ -94,6 +97,9 @@ function Toolbar({
   onOpenRich: () => void;
 }) {
   const fileRef = useRef<HTMLInputElement>(null);
+  const videoRef = useRef<HTMLInputElement>(null);
+  const pdfRef = useRef<HTMLInputElement>(null);
+  const [busy, setBusy] = useState<"video" | "pdf" | null>(null);
 
   if (!editor) {
     return <div className="h-11 border-b bg-muted" aria-hidden />;
@@ -144,6 +150,40 @@ function Toolbar({
     reader.readAsDataURL(file);
   };
 
+  // Upload a video / PDF to Supabase Storage, then embed its URL. The bytes
+  // never touch the database — only the resulting public URL is saved.
+  const onPickMedia = (kind: "video" | "pdf") => async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    if (!uploadsEnabled()) {
+      window.alert(
+        "File uploads aren't set up yet. Add the Supabase Storage keys (see the admin setup notes) and this will work.",
+      );
+      return;
+    }
+    setBusy(kind);
+    try {
+      const url = await uploadMedia(kind, file);
+      if (kind === "video") {
+        editor.chain().focus().insertContent({ type: "video", attrs: { src: url } }).run();
+      } else {
+        const label = file.name.replace(/[<>]/g, "");
+        editor
+          .chain()
+          .focus()
+          .insertContent(
+            `<p><a href="${url}" target="_blank" rel="noopener noreferrer" class="eb-pdf-link">📄 ${label}</a></p>`,
+          )
+          .run();
+      }
+    } catch (err) {
+      window.alert(err instanceof Error ? err.message : "Upload failed.");
+    } finally {
+      setBusy(null);
+    }
+  };
+
   return (
     <div className="flex flex-wrap items-center gap-1 border-b bg-muted px-2 py-1.5">
       {/* Headings */}
@@ -177,9 +217,13 @@ function Toolbar({
 
       {/* Link + media */}
       <Btn active={editor.isActive("link")} onClick={setLink} label="Link" />
-      <Btn active={false} onClick={() => fileRef.current?.click()} label="Upload" />
+      <Btn active={false} onClick={() => fileRef.current?.click()} label="Image" />
       <Btn active={false} onClick={imageByUrl} label="Image URL" />
+      <Btn active={false} disabled={busy !== null} onClick={() => videoRef.current?.click()} label={busy === "video" ? "Uploading…" : "Video"} />
+      <Btn active={false} disabled={busy !== null} onClick={() => pdfRef.current?.click()} label={busy === "pdf" ? "Uploading…" : "PDF"} />
       <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={onPickFile} />
+      <input ref={videoRef} type="file" accept="video/*" className="hidden" onChange={onPickMedia("video")} />
+      <input ref={pdfRef} type="file" accept="application/pdf" className="hidden" onChange={onPickMedia("pdf")} />
       <Divider />
 
       {/* History + source */}

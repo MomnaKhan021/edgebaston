@@ -378,6 +378,34 @@ button:disabled,
   border-radius: 0.5rem;
   margin: 1em 0;
 }
+/* Uploaded video (embedded from the rich-text editor). */
+.prose-content video,
+.prose-content .eb-video {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.75rem;
+  background: #000;
+  margin: 1.25em 0;
+}
+/* Uploaded PDF shown as a download/view button. */
+.prose-content a.eb-pdf-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--eb-cream, #f5f1ea);
+  color: var(--eb-navy, #0e2f49);
+  border: 1px solid rgba(14, 47, 73, 0.15);
+  padding: 0.6rem 1rem;
+  border-radius: 0.6rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.prose-content a.eb-pdf-link:hover {
+  opacity: 1;
+  border-color: rgba(14, 47, 73, 0.4);
+}
 .prose-content pre {
   background: var(--eb-navy, #0e2f49);
   color: #fff;
