@@ -2400,6 +2400,30 @@ export const RESULTS_TEMPLATE: TemplateDef = {
       },
     },
     {
+      key: "accordion",
+      name: "Accordion Section",
+      description: "An expandable accordion like the Subjects page — each item has a title, an optional image and content you can write as HTML. Handy in place of the Year Bar / Results Summary (hide those above to show this on its own).",
+      fields: [
+        toggle(),
+        text("heading", "Heading"),
+        textarea("intro", "Intro text"),
+        list("items", "Accordion items", "Item", [
+          text("title", "Title"),
+          image("image", "Image", "Optional — shown when the item is expanded."),
+          textarea("html", "Content", "Plain text or HTML (e.g. <p>…</p>, <ul><li>…</li></ul>)."),
+        ]),
+        color(),
+      ],
+      defaults: {
+        visible: "1",
+        heading: "Results & Destinations",
+        intro: "",
+        items:
+          "[{\"title\":\"How our results are measured\",\"image\":\"\",\"html\":\"<p>Our A-Level results are independently verified each year and reflect the full cohort across every subject.</p>\"},{\"title\":\"Where our students progress\",\"image\":\"\",\"html\":\"<p>The majority of our students go on to Russell Group and top-ranked universities, with strong success rates in Medicine and Dentistry.</p>\"}]",
+        bgColor: "",
+      },
+    },
+    {
       key: "students",
       name: "Where Our Students Go Next",
       description: "The heading, filter labels and every destination card. Add, remove and reorder cards — changes go live on save.",

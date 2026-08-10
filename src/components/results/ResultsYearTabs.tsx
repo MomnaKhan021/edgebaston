@@ -80,7 +80,23 @@ function PdfIcon({ className }: { className?: string }) {
  * block (heading, intro, headline stats, subject bars and destination
  * highlights) to that year's data — no page reload.
  */
-export function ResultsYearTabs({ years, shared }: { years: YearBlock[]; shared: SharedLabels }) {
+export function ResultsYearTabs({
+  years,
+  shared,
+  showTabs = true,
+  showSummary = true,
+  showSubjects = true,
+  showDestinations = true,
+}: {
+  years: YearBlock[];
+  shared: SharedLabels;
+  /** Section visibility (from the admin toggles) — lets the year bar, summary,
+   *  subjects and destinations be hidden individually even in tabbed mode. */
+  showTabs?: boolean;
+  showSummary?: boolean;
+  showSubjects?: boolean;
+  showDestinations?: boolean;
+}) {
   const initial =
     years.findIndex((y) => y.year === shared.activeYear) >= 0
       ? years.findIndex((y) => y.year === shared.activeYear)
@@ -89,9 +105,12 @@ export function ResultsYearTabs({ years, shared }: { years: YearBlock[]; shared:
   const yr = years[active];
   if (!yr) return null;
 
+  const hasBody = showSummary || showSubjects || showDestinations;
+
   return (
     <>
       {/* Year tab bar */}
+      {showTabs && (
       <section className="bg-eb-navy">
         <div className="mx-auto flex max-w-[1440px] flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between lg:px-16">
           <div className="eb-noscroll -mx-1 flex gap-1.5 overflow-x-auto px-1" role="tablist">
@@ -119,12 +138,15 @@ export function ResultsYearTabs({ years, shared }: { years: YearBlock[]; shared:
           )}
         </div>
       </section>
+      )}
 
       {/* Active year's results */}
+      {hasBody && (
       <section className="bg-white">
         <div className="mx-auto max-w-[1320px] px-4 py-10 lg:px-16 lg:py-14">
           <div className="space-y-6 rounded-[28px] bg-eb-cream p-4 sm:p-6 lg:p-8">
             {/* Summary */}
+            {showSummary && (
             <div>
               <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
                 <div className="max-w-2xl">
@@ -158,8 +180,10 @@ export function ResultsYearTabs({ years, shared }: { years: YearBlock[]; shared:
                 ))}
               </div>
             </div>
+            )}
 
             {/* Subjects + grades */}
+            {showSubjects && (
             <div className="grid gap-6 lg:grid-cols-[1.7fr_1fr] lg:items-stretch">
               <div className="rounded-2xl bg-white p-5 ring-1 ring-black/5 sm:p-7">
                 <h3 className="text-xl font-extrabold text-eb-navy lg:text-2xl">{shared.subjectsHeading}</h3>
@@ -196,8 +220,10 @@ export function ResultsYearTabs({ years, shared }: { years: YearBlock[]; shared:
                 </div>
               </div>
             </div>
+            )}
 
             {/* Destinations */}
+            {showDestinations && (
             <div>
               <h3 className="text-xl font-extrabold text-eb-navy lg:text-2xl">{shared.destHeading}</h3>
               <div className="mt-5 grid gap-5 sm:grid-cols-2">
@@ -205,9 +231,11 @@ export function ResultsYearTabs({ years, shared }: { years: YearBlock[]; shared:
                 <PeopleStat value={yr.dest2Value} label={shared.dest2Label} />
               </div>
             </div>
+            )}
           </div>
         </div>
       </section>
+      )}
     </>
   );
 }

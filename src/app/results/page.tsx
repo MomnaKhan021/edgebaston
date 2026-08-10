@@ -7,6 +7,7 @@ import { Reveal } from "@/components/home/Reveal";
 import { ArrowUpRight } from "@/components/home/icons";
 import { SharePage } from "@/components/history/SharePage";
 import { Accordion } from "@/components/admissions/Accordion";
+import { DetailAccordion, type AccordionItem } from "@/components/site/DetailAccordion";
 import { StudentDestinations, type DestinationCard } from "@/components/results/StudentDestinations";
 import { ResultsYearTabs, type YearBlock, type SharedLabels } from "@/components/results/ResultsYearTabs";
 import { RichText } from "@/components/site/RichText";
@@ -85,7 +86,15 @@ export default async function ResultsPage() {
   const subjectsSec = d("subjects");
   const destinations = d("destinations");
   const students = d("students");
+  const accordionSec = d("accordion");
   const faq = d("faq");
+
+  const accordionItems: AccordionItem[] = parseItems(accordionSec.items).map((it, i) => ({
+    id: String(i),
+    title: it.title || "Untitled",
+    imageUrl: it.image || undefined,
+    html: it.html || undefined,
+  }));
 
   const years = parseLines(yearbar.years);
   const stats = [
@@ -179,8 +188,18 @@ export default async function ResultsPage() {
         </div>
       </div>
 
-      {/* Per-year tabbed results (clickable tabs) */}
-      {useTabs && <ResultsYearTabs years={parsedYears} shared={shared} />}
+      {/* Per-year tabbed results (clickable tabs). The section toggles still
+          apply — hide the Year Bar, Summary, Subjects or Destinations here too. */}
+      {useTabs && (
+        <ResultsYearTabs
+          years={parsedYears}
+          shared={shared}
+          showTabs={isVisible(yearbar)}
+          showSummary={isVisible(summary)}
+          showSubjects={isVisible(subjectsSec)}
+          showDestinations={isVisible(destinations)}
+        />
+      )}
 
       {/* Static year bar — only when no per-year tabs are configured */}
       {!useTabs && isVisible(yearbar) && (
@@ -312,6 +331,26 @@ export default async function ResultsPage() {
                   </div>
                 )}
 
+              </div>
+            </div>
+          </section>
+        </Reveal>
+      )}
+
+      {/* Accordion (Subjects-style) — shown below the results block. Useful in
+          place of the year bar / summary, which can be hidden from the admin. */}
+      {isVisible(accordionSec) && accordionItems.length > 0 && (
+        <Reveal>
+          <section className="bg-white" style={bgStyle(accordionSec)}>
+            <div className="mx-auto max-w-[1080px] px-4 py-10 lg:px-16 lg:py-14">
+              {accordionSec.heading && (
+                <h2 className="text-3xl font-extrabold tracking-tight text-eb-ink lg:text-[40px]">{accordionSec.heading}</h2>
+              )}
+              {accordionSec.intro && (
+                <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-eb-navy/75">{accordionSec.intro}</p>
+              )}
+              <div className="mt-10">
+                <DetailAccordion items={accordionItems} />
               </div>
             </div>
           </section>
