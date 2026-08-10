@@ -24,6 +24,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const COMMIT_ICONS = [IconBulb, IconUsers, IconGear, IconCrest];
 
+export const dynamic = "force-dynamic";
+
 export default async function OurHistoryPage() {
   if (!(await getPagePublished("history"))) notFound();
   const redirectTo = await getPageRedirect("history");

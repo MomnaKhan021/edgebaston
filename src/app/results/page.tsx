@@ -74,6 +74,8 @@ function PdfIcon({ className }: { className?: string }) {
   );
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function ResultsPage() {
   if (!(await getPagePublished("results"))) notFound();
   const redirectTo = await getPageRedirect("results");

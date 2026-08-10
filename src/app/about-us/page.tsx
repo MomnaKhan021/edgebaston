@@ -44,6 +44,8 @@ function GradeBadge({ from, to }: { from: string; to: string }) {
   );
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function AboutUsPage() {
   if (!(await getPagePublished("about"))) notFound();
   const redirectTo = await getPageRedirect("about");

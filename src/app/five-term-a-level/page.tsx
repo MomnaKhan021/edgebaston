@@ -185,6 +185,8 @@ function RingCard({ value, label, chips }: { value: number; label: string; chips
 
 /* --------------------------------- Page ---------------------------------- */
 
+export const dynamic = "force-dynamic";
+
 export default async function FiveTermPage() {
   if (!(await getPagePublished("five-term"))) notFound();
   const redirectTo = await getPageRedirect("five-term");

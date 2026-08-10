@@ -18,6 +18,8 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function BlogPage() {
   if (!(await getPagePublished("blog"))) notFound();
   const redirectTo = await getPageRedirect("blog");

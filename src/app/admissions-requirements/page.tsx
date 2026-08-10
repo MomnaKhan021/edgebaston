@@ -61,6 +61,8 @@ function Share() {
   );
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function AdmissionsRequirementsPage() {
   if (!(await getPagePublished("admissions"))) notFound();
   const redirectTo = await getPageRedirect("admissions");

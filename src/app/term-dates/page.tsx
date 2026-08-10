@@ -30,6 +30,8 @@ function parseRows(value: string | undefined): { label: string; value: string }[
     .filter((r) => r.label || r.value);
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function TermDatesPage() {
   if (!(await getPagePublished("term-dates"))) notFound();
   const redirectTo = await getPageRedirect("term-dates");

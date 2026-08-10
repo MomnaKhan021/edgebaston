@@ -28,6 +28,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const post = await db.post.findUnique({ where: { slug } });

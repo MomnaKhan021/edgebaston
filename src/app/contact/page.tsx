@@ -45,6 +45,8 @@ function DetailRow({ label, children }: { label: string; children: React.ReactNo
   );
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function ContactPage() {
   if (!(await getPagePublished("contact"))) notFound();
   const redirectTo = await getPageRedirect("contact");

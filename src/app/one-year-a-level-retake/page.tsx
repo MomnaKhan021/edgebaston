@@ -172,6 +172,8 @@ function UnderlineLink({ href, children, external = false }: { href: string; chi
 
 /* --------------------------------- Page ---------------------------------- */
 
+export const dynamic = "force-dynamic";
+
 export default async function RetakePage() {
   if (!(await getPagePublished("retake"))) notFound();
   const redirectTo = await getPageRedirect("retake");

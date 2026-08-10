@@ -33,6 +33,10 @@ function parsePriceRows(value: string | undefined): { label: string; exc: string
 
 const n2 = (i: number) => String(i + 1).padStart(2, "0");
 
+// Always render on request so an admin redirect (or content edit) takes effect
+// immediately instead of a cached, pre-redirect copy being served.
+export const dynamic = "force-dynamic";
+
 export default async function FeesPage() {
   if (!(await getPagePublished("fees"))) notFound();
   const redirectTo = await getPageRedirect("fees");
