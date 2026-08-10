@@ -136,6 +136,7 @@ model SiteSetting {
   metaTitle       String @default("") // <title> / og:title; falls back to site name + tagline
   metaDescription String @default("") // meta description; falls back to tagline
   faviconUrl      String @default("") // browser-tab icon (data URI or path)
+  ogImageUrl      String @default("") // social share image (og:image) shown when the link is shared
   ga4Id           String @default("G-Q6TE32QZ9M") // Google Analytics 4 measurement ID; empty = no tracking
   updatedAt    DateTime @updatedAt
 }

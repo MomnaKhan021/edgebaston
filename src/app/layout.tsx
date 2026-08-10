@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { headers } from "next/headers";
 import "./globals.css";
 import { getSettings } from "@/lib/settings";
 import { saans, saansMono } from "./fonts";
@@ -21,14 +22,39 @@ export async function generateMetadata(): Promise<Metadata> {
   const defaultTitle = settings.metaTitle || `${settings.siteName} — ${settings.tagline}`;
   const description = settings.metaDescription || settings.tagline;
 
+  // Absolute base URL for share tags — social crawlers need absolute image
+  // URLs. Derived from the request so it works on any domain (vercel.app or
+  // the live domain) without hard-coding.
+  const h = await headers();
+  const host = h.get("host") ?? "edgbastoncollege.co.uk";
+  const proto = h.get("x-forwarded-proto") ?? "https";
+  const baseUrl = `${proto}://${host}`;
+
+  // Social share image (og:image): the admin-uploaded one (served as a real
+  // image via /api/og-image), otherwise the home banner as a sensible default.
+  const shareImage = settings.ogImageUrl ? "/api/og-image" : "/figma/hero-building.webp";
+
   const meta: Metadata = {
+    metadataBase: new URL(baseUrl),
     title: {
       default: defaultTitle,
       template: `%s | ${settings.siteName}`,
     },
     description,
-    openGraph: { title: defaultTitle, description, siteName: settings.siteName },
-    twitter: { card: "summary_large_image", title: defaultTitle, description },
+    openGraph: {
+      title: defaultTitle,
+      description,
+      siteName: settings.siteName,
+      type: "website",
+      url: baseUrl,
+      images: [{ url: shareImage, width: 1200, height: 630, alt: settings.siteName }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: defaultTitle,
+      description,
+      images: [shareImage],
+    },
   };
 
   // Browser-tab icon: the admin-uploaded favicon when set, otherwise the

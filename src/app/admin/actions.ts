@@ -273,6 +273,7 @@ export async function saveSettings(formData: FormData) {
     metaTitle: str(formData, "metaTitle"),
     metaDescription: str(formData, "metaDescription"),
     faviconUrl: await compressDataUri(str(formData, "faviconUrl")),
+    ogImageUrl: await compressDataUri(str(formData, "ogImageUrl"), 1200),
     ga4Id: str(formData, "ga4Id").trim(),
   };
 

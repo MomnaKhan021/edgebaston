@@ -17,6 +17,7 @@ export type Settings = {
   metaTitle: string;
   metaDescription: string;
   faviconUrl: string;
+  ogImageUrl: string;
   ga4Id: string;
   updatedAt: Date;
 };
@@ -37,6 +38,7 @@ const DEFAULTS: Settings = {
   metaTitle: "",
   metaDescription: "",
   faviconUrl: "",
+  ogImageUrl: "",
   ga4Id: "G-Q6TE32QZ9M",
   updatedAt: new Date(0),
 };

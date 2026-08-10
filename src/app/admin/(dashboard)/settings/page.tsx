@@ -99,6 +99,12 @@ export default async function SettingsAdmin({
             <ImageUpload name="faviconUrl" defaultValue={settings.faviconUrl} aspect="aspect-square" />
           </Field>
           <Field
+            label="Social share image"
+            hint="The preview image shown when the site link is shared on WhatsApp, Facebook, LinkedIn, etc. Use a wide image — 1200×630 works best. Leave empty to use the home banner by default."
+          >
+            <ImageUpload name="ogImageUrl" defaultValue={settings.ogImageUrl} aspect="aspect-[1200/630]" />
+          </Field>
+          <Field
             label="Google Analytics GA4 ID"
             htmlFor="ga4Id"
             hint="Your GA4 Measurement ID (starts with G-). Found in Google Analytics → Admin → Data streams. Leave empty to disable tracking."
