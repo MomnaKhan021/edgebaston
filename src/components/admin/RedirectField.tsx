@@ -38,10 +38,10 @@ export function RedirectField({
           <Input
             id="redirectUrl"
             name="redirectUrl"
-            type="url"
+            type="text"
             required
             defaultValue={defaultValue}
-            placeholder="https://example.com/where-to-send-visitors"
+            placeholder="/courses/one-year-a-level-retake or https://example.com"
           />
         </div>
       ) : (
