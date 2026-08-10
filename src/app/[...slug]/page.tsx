@@ -3,7 +3,7 @@ import type { ReactElement } from "react";
 import { notFound, redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { excerpt } from "@/lib/utils";
-import { withSectionNamespace } from "@/lib/sections";
+import { withSectionNamespace, findTemplateByAliasPath, getPageMeta } from "@/lib/sections";
 import { canInstance, getInstanceRenderer, instanceNamespace } from "@/lib/templateInstances";
 import { PAGE_ROUTES } from "@/lib/pageRoutes";
 import { AnnouncementBar } from "@/components/home/AnnouncementBar";
@@ -22,7 +22,21 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const page = await db.page.findUnique({ where: { slug: joinSlug(slug) } }).catch(() => null);
-  if (!page) return { title: "Page not found" };
+  if (!page) {
+    // A designed page rendered at its alias URL keeps its own SEO meta.
+    const tpl = await findTemplateByAliasPath("/" + joinSlug(slug));
+    if (tpl) {
+      const m = await getPageMeta(tpl);
+      if (m.metaTitle || m.metaDescription) {
+        return {
+          title: m.metaTitle ? { absolute: m.metaTitle } : undefined,
+          description: m.metaDescription || undefined,
+        };
+      }
+      return {};
+    }
+    return { title: "Page not found" };
+  }
 
   // Per-page SEO from the admin; fall back to the page title / a content excerpt.
   // `absolute` lets the admin control the exact title (no "| Site name" suffix).
@@ -43,31 +57,50 @@ export default async function DynamicPage({
   params: Promise<{ slug: string[] }>;
 }) {
   const { slug } = await params;
-  const page = await db.page.findUnique({ where: { slug: joinSlug(slug) } });
+  const currentPath = "/" + joinSlug(slug);
+  let page = await db.page.findUnique({ where: { slug: joinSlug(slug) } });
 
-  // Forgiving fallback: if a nested path has no page of its own, resolve it to
-  // its FINAL segment when that is a real page — so a redirect target like
-  // /admissions/admissions-requirements still lands on /admissions-requirements
-  // even though the "/admissions" parent doesn't exist.
-  if (!page && slug.length > 1) {
-    const last = decodeURIComponent(slug[slug.length - 1]);
-    const knownRoutes = new Set(Object.values(PAGE_ROUTES).map((p) => p.replace(/^\//, "")));
-    if (last && knownRoutes.has(last)) redirect(`/${last}`);
-    const lastPage = await db.page.findUnique({ where: { slug: last } }).catch(() => null);
-    if (lastPage?.published) redirect(`/${last}`);
+  if (!page) {
+    // "The redirect URL becomes the page's URL": if a designed page's admin
+    // redirect points exactly at this (otherwise unknown) path, render that
+    // page's full content HERE — the address bar keeps this URL.
+    const tpl = await findTemplateByAliasPath(currentPath);
+    if (tpl && canInstance(tpl)) {
+      const mod = await getInstanceRenderer(tpl)!();
+      // Identity namespace override: reads the template's own content, while
+      // signalling getPageRedirect to skip re-redirecting (no loop).
+      const rendered = await withSectionNamespace({ [tpl]: tpl }, () => mod.default({}));
+      return rendered as ReactElement;
+    }
+
+    // Forgiving fallback: if a nested path has no page of its own, resolve it
+    // to its FINAL segment when that is a real page — so /x/fees still lands
+    // on /fees even though the "/x" parent doesn't exist.
+    if (slug.length > 1) {
+      const last = decodeURIComponent(slug[slug.length - 1]);
+      const lastPage = await db.page.findUnique({ where: { slug: last } }).catch(() => null);
+      if (lastPage?.published) {
+        const aliasTarget = (lastPage.redirectUrl || "").split(/[?#]/)[0];
+        if (aliasTarget === currentPath) {
+          // That page's redirect points exactly here → this is its new URL;
+          // render its content at this address instead of bouncing back.
+          page = lastPage;
+        } else {
+          redirect(`/${last}`);
+        }
+      } else {
+        const knownRoutes = new Set(Object.values(PAGE_ROUTES).map((p) => p.replace(/^\//, "")));
+        if (last && knownRoutes.has(last)) redirect(`/${last}`);
+      }
+    }
   }
 
   if (!page || !page.published) notFound();
-  // Self-redirect guard: ignore a redirect that points back at this page
-  // itself (directly, or via a nested alias like "/x/<own-slug>" that the
-  // fallback above would resolve straight back here) — it would loop forever.
+  // Follow the page's redirect unless it points at the URL being rendered
+  // right now (then this IS the destination — render the content).
   if (page.redirectUrl) {
-    const target = page.redirectUrl;
-    const path = target.startsWith("/") ? target.split(/[?#]/)[0] : "";
-    const segs = path.split("/").filter(Boolean);
-    const pointsAtSelf =
-      path === `/${page.slug}` || (segs.length > 0 && segs[segs.length - 1] === page.slug);
-    if (!pointsAtSelf) redirect(target);
+    const targetPath = page.redirectUrl.startsWith("/") ? page.redirectUrl.split(/[?#]/)[0] : "";
+    if (targetPath !== currentPath) redirect(page.redirectUrl);
   }
 
   // Template-backed page: render the designed layout with this page's own

@@ -115,13 +115,17 @@ export async function getPageMeta(
 
 /**
  * A designed page's admin-set redirect URL (stored in the "__page" section).
- * When set, the live page should 307-redirect visitors here instead of
- * rendering. Returns "" when unset, when the DB is unavailable, or when the
- * redirect would just point back at this page itself (directly, or via a
- * nested alias like "/admissions/<own-slug>") — following it would loop
- * forever, so the page renders normally instead.
+ * When set, the live page 307-redirects visitors here — and if the target is
+ * an internal path that matches no other page, the catch-all route renders
+ * THIS page's content at that address (so the redirect URL effectively
+ * becomes the page's new URL). Returns "" when unset, when the DB is
+ * unavailable, when the target is exactly this page's own route (a no-op that
+ * would loop), or while this template is being rendered as an alias/instance
+ * (a namespace override is active) — the alias render must not re-redirect.
  */
 export async function getPageRedirect(template: string): Promise<string> {
+  const map = nsStore.getStore();
+  if (map && map[template]) return "";
   try {
     const row = await db.templateSection.findUnique({
       where: { template_key: { template, key: PAGE_META_KEY } },
@@ -129,19 +133,31 @@ export async function getPageRedirect(template: string): Promise<string> {
     if (!row) return "";
     const target = normalizeRedirect(parse(row.data).redirectUrl ?? "");
     if (!target) return "";
-    // Self-redirect guard: compare the target's final path segment with this
-    // page's own route (the catch-all resolves unknown nested paths to their
-    // final segment, so "/x/<own-slug>" also lands back here).
     const { PAGE_ROUTES } = await import("@/lib/pageRoutes");
-    const own = (PAGE_ROUTES[template] ?? `/${template}`).replace(/^\//, "");
-    if (target.startsWith("/")) {
-      const path = target.split(/[?#]/)[0];
-      const segs = path.split("/").filter(Boolean);
-      const last = segs[segs.length - 1] ?? "";
-      if (path === `/${own}` || last === own || (own === "" && segs.length === 0)) return "";
-    }
+    const own = PAGE_ROUTES[template] ?? `/${template}`;
+    if (target.split(/[?#]/)[0] === own) return ""; // exact self → ignore
     return target;
   } catch {
     return "";
+  }
+}
+
+/**
+ * Reverse lookup for "the redirect URL becomes the page's URL": given a
+ * request path the router matched nothing for (e.g. "/about-us/what-our-
+ * students-say"), find the designed page whose admin redirect points exactly
+ * there, so the catch-all can render that page's content at this address.
+ */
+export async function findTemplateByAliasPath(path: string): Promise<string | null> {
+  try {
+    const rows = await db.templateSection.findMany({ where: { key: PAGE_META_KEY } });
+    for (const row of rows) {
+      const target = normalizeRedirect(parse(row.data).redirectUrl ?? "");
+      if (!target.startsWith("/")) continue;
+      if (target.split(/[?#]/)[0] === path) return row.template;
+    }
+    return null;
+  } catch {
+    return null;
   }
 }

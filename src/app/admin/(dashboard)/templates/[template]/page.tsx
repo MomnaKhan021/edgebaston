@@ -56,6 +56,9 @@ export default async function TemplateSectionsAdmin({
   const showPageMeta = showPublish && !pageId;
   const meta = showPageMeta ? await getPageMeta(template) : { metaTitle: "", metaDescription: "" };
   const redirectTo = showPageMeta ? await getPageRedirect(template) : "";
+  // When a redirect is set, that IS the page's live address now — "View live"
+  // should open it (internal paths only; external URLs open as-is too).
+  if (redirectTo) liveHref = redirectTo;
 
   const rows = await db.templateSection
     .findMany({ where: { template } })
