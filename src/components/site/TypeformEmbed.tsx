@@ -5,6 +5,7 @@ import { useEffect } from "react";
 const SRC = "https://embed.typeform.com/next/embed.js";
 
 type TypeformGlobal = { reload?: () => void; load?: () => void };
+type Gtag = (...args: unknown[]) => void;
 
 /**
  * Embeds a Typeform "live" form reliably under Next's client-side navigation.
@@ -18,9 +19,28 @@ type TypeformGlobal = { reload?: () => void; load?: () => void };
  * (re)scans and mounts the current container whether or not the script was
  * already present.
  */
-export function TypeformEmbed({ formId }: { formId: string }) {
+export function TypeformEmbed({
+  formId,
+  conversionSendTo,
+}: {
+  formId: string;
+  /** When set, a Google Ads conversion (this send_to) fires on form submit. */
+  conversionSendTo?: string;
+}) {
   useEffect(() => {
     if (!formId) return;
+
+    // Typeform calls the global named by data-tf-on-submit when the form is
+    // submitted. Define it here so the Google Ads conversion fires. It checks
+    // for gtag at call time (gtag.js loads site-wide in the root layout).
+    if (conversionSendTo) {
+      (window as unknown as { enquiryConversion?: () => void }).enquiryConversion = () => {
+        const gtag = (window as unknown as { gtag?: Gtag }).gtag;
+        if (typeof gtag === "function") {
+          gtag("event", "conversion", { send_to: conversionSendTo });
+        }
+      };
+    }
 
     const mount = () => {
       const tf = (window as unknown as { tf?: TypeformGlobal }).tf;
@@ -52,7 +72,11 @@ export function TypeformEmbed({ formId }: { formId: string }) {
       {/* Responsive height: taller on mobile so the form isn't cramped, capped
           on desktop. The .tf-embed CSS forces Typeform's injected wrapper +
           iframe to fill this box so there's no dead space below the form. */}
-      <div data-tf-live={formId} className="h-[80vh] min-h-[520px] w-full sm:h-[640px]" />
+      <div
+        data-tf-live={formId}
+        data-tf-on-submit={conversionSendTo ? "enquiryConversion" : undefined}
+        className="h-[80vh] min-h-[520px] w-full sm:h-[640px]"
+      />
     </div>
   );
 }

@@ -88,7 +88,10 @@ export default async function InquiryPage() {
                   )}
                 </div>
               )}
-              <TypeformEmbed formId={form.formId || ""} />
+              <TypeformEmbed
+                formId={form.formId || ""}
+                conversionSendTo="AW-494533244/Og57CPaXtt8cEPz05-sB"
+              />
             </div>
           </section>
         </Reveal>
