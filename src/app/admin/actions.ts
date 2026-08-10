@@ -18,7 +18,9 @@ function str(formData: FormData, key: string, fallback = ""): string {
   return typeof v === "string" ? v : fallback;
 }
 function bool(formData: FormData, key: string): boolean {
-  return formData.get(key) === "on" || formData.get(key) === "true";
+  // Checkboxes submit "on"; the ToggleField switch submits "1"/"0".
+  const v = formData.get(key);
+  return v === "on" || v === "true" || v === "1";
 }
 function int(formData: FormData, key: string, fallback = 0): number {
   const n = parseInt(str(formData, key), 10);
