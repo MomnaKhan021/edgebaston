@@ -72,14 +72,14 @@ export function TypeformEmbed({
   if (!formId) return null;
   return (
     <div className="tf-embed overflow-hidden rounded-2xl">
-      {/* Tall enough to fit the whole enquiry form (the mobile layout is the
-          tallest, ~1500px), so it renders in one length — the page scrolls, not
-          a nested scrollbar inside the form (which was trapping touch-scroll on
-          mobile). Shorter on wide screens where the form stacks less. */}
+      {/* A viewport-height box: the form renders inline in normal page flow
+          (banner above, footer below) and scrolls within this box. A very tall
+          box makes Typeform switch to a full-screen takeover that hides the
+          rest of the page, so we keep it viewport-sized. */}
       <div
         data-tf-live={formId}
         data-tf-on-submit={conversionSendTo ? "enquiryConversion" : undefined}
-        className="h-[1750px] w-full lg:h-[1200px]"
+        className="h-[80vh] min-h-[520px] w-full sm:h-[640px]"
       />
     </div>
   );
