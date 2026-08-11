@@ -95,18 +95,13 @@ export function TypeformEmbed({
   }, [formId, conversionSendTo]);
 
   if (!formId) return null;
+  // Plain Typeform embed exactly as Typeform provides it — no wrapper, no
+  // classes, no custom height/styling. (data-tf-on-submit only wires up the
+  // lead-conversion event; it adds no styling.)
   return (
-    <div className="tf-embed">
-      {/* Fixed-height box so the whole (long) form renders in one length — the
-          page scrolls, not a nested scrollbar inside the form. The .tf-embed CSS
-          forces Typeform's injected wrapper + iframe to fill this box. Desktop
-          is 1200px; the narrower mobile layout wraps taller, so it keeps more
-          height there. No decorative styling on the form itself. */}
-      <div
-        data-tf-live={formId}
-        data-tf-on-submit={conversionSendTo ? "enquiryConversion" : undefined}
-        className="h-[1400px] w-full lg:h-[1200px]"
-      />
-    </div>
+    <div
+      data-tf-live={formId}
+      data-tf-on-submit={conversionSendTo ? "enquiryConversion" : undefined}
+    />
   );
 }
