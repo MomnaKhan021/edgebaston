@@ -175,17 +175,13 @@ export function Navbar({
   const router = useRouter();
   const solid = variant === "solid";
 
-  // Lock background scroll while the full-screen mobile menu is open. The
-  // data flag marks the lock as ours — TypeformEmbed force-unlocks scroll
-  // locks the Typeform widget applies, and must leave this one alone.
+  // Lock background scroll while the full-screen mobile menu is open.
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    document.body.dataset.ebMenuLock = "1";
     return () => {
       document.body.style.overflow = prev;
-      delete document.body.dataset.ebMenuLock;
     };
   }, [open]);
 

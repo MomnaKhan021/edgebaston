@@ -432,27 +432,9 @@ button:disabled,
   margin: 1.5em 0;
 }
 
-/* Typeform inline embed.
-   Two problems Typeform's embed causes that this CSS fixes:
-   1. Its injected wrapper/iframe don't grow to fill our sized container,
-      leaving dead space — so we force them to 100%.
-   2. On narrow/mobile viewports Typeform renders its widget inside a
-      `position: absolute; z-index: 10001` layer that resolves against the
-      viewport (not our box), so it breaks out to fullscreen and paints over
-      the hero, breadcrumb and footer — the "whole page is covered / banner
-      gone / form stuck" bug. Making the container a positioning context and
-      pinning that layer to `inset: 0` inside it keeps the form INLINE: it
-      fills our box and the rest of the page stays visible around it. */
-.tf-embed,
-.tf-embed [data-tf-live] {
-  position: relative;
-}
-/* The breakout layer Typeform injects as the first child of [data-tf-live]. */
-.tf-embed [data-tf-live] > div {
-  position: absolute !important;
-  inset: 0 !important;
-  z-index: auto !important;
-}
+/* Typeform inline embed: Typeform injects a wrapper with a fixed 500px height,
+   which leaves dead space inside our sized container. Force its wrapper +
+   iframe to fill the container so the form is responsive and gap-free. */
 .tf-embed [data-tf-live] > div,
 .tf-embed .tf-v1-widget,
 .tf-embed [data-tf-live] iframe {

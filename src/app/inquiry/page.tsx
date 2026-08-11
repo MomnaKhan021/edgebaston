@@ -3,6 +3,7 @@ import Link from "next/link";
 import { AnnouncementBar } from "@/components/home/AnnouncementBar";
 import { SiteNavbar } from "@/components/home/SiteNavbar";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
+import { Reveal } from "@/components/home/Reveal";
 import { SharePage } from "@/components/site/SharePage";
 import { TypeformEmbed } from "@/components/site/TypeformEmbed";
 import { notFound, redirect } from "next/navigation";
@@ -72,31 +73,31 @@ export default async function InquiryPage() {
         </div>
       </div>
 
-      {/* Enquiry form — no scroll-reveal wrapper here: the embedded form can
-          trap scrolling, which left the reveal animation (and the footer)
-          stuck invisible. Render everything plainly so it's always visible. */}
+      {/* Enquiry form */}
       {isVisible(form) && (
-        <section className="bg-white">
-          <div className="mx-auto max-w-[1200px] px-4 py-10 lg:px-[60px] lg:py-16">
-            {(form.heading || form.intro) && (
-              <div className="mb-8 text-center">
-                {form.heading && (
-                  <h2 className="text-[26px] font-extrabold tracking-tight text-eb-ink sm:text-3xl lg:text-[40px]">{form.heading}</h2>
-                )}
-                {form.intro && (
-                  <p className="mx-auto mt-3 max-w-xl text-[15px] leading-relaxed text-eb-navy/75">{form.intro}</p>
-                )}
-              </div>
-            )}
-            <TypeformEmbed
-              formId={form.formId || ""}
-              conversionSendTo="AW-494533244/Og57CPaXtt8cEPz05-sB"
-            />
-          </div>
-        </section>
+        <Reveal>
+          <section className="bg-white">
+            <div className="mx-auto max-w-[1200px] px-4 py-10 lg:px-[60px] lg:py-16">
+              {(form.heading || form.intro) && (
+                <div className="mb-8 text-center">
+                  {form.heading && (
+                    <h2 className="text-[26px] font-extrabold tracking-tight text-eb-ink sm:text-3xl lg:text-[40px]">{form.heading}</h2>
+                  )}
+                  {form.intro && (
+                    <p className="mx-auto mt-3 max-w-xl text-[15px] leading-relaxed text-eb-navy/75">{form.intro}</p>
+                  )}
+                </div>
+              )}
+              <TypeformEmbed
+                formId={form.formId || ""}
+                conversionSendTo="AW-494533244/Og57CPaXtt8cEPz05-sB"
+              />
+            </div>
+          </section>
+        </Reveal>
       )}
 
-      <FigmaFooter />
+      <Reveal><FigmaFooter /></Reveal>
     </>
   );
 }
