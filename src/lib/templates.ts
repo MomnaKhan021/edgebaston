@@ -2582,7 +2582,7 @@ export const INQUIRY_TEMPLATE: TemplateDef = {
         visible: "1",
         heading: "Send us your details",
         intro: "Fill in the form below and our admissions team will get back to you as soon as possible.",
-        formId: "01KZCE9EMPKQ22TCMSXYF1RVFZ",
+        formId: "01KZ9DZ99T2ACMDS893B17446X",
       },
     },
   ],
