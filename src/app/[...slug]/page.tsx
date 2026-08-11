@@ -6,7 +6,7 @@ import { excerpt } from "@/lib/utils";
 import { withSectionNamespace, findTemplateByAliasPath, getPageMeta } from "@/lib/sections";
 import { canInstance, getInstanceRenderer, instanceNamespace } from "@/lib/templateInstances";
 import { PAGE_ROUTES } from "@/lib/pageRoutes";
-import { AnnouncementBar } from "@/components/home/AnnouncementBar";
+import { SiteAnnouncement } from "@/components/home/SiteAnnouncement";
 import { SiteNavbar } from "@/components/home/SiteNavbar";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { BlogArticle } from "@/components/blog/BlogArticle";
@@ -148,7 +148,7 @@ export default async function DynamicPage({
   // site (the branded Navbar + FigmaFooter), not a separate simple chrome.
   return (
     <>
-      <AnnouncementBar />
+      <SiteAnnouncement />
       <SiteNavbar variant="solid" />
       <main className="bg-white">
         <div className="mx-auto max-w-3xl px-4 py-12 lg:py-16">

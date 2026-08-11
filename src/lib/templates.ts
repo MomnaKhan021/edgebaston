@@ -533,6 +533,7 @@ export const HEADER_TEMPLATE: TemplateDef = {
       name: "Navigation Bar",
       description: "Logo, menu links and the Contact button.",
       fields: [
+        toggle("visible", "Show the header on the site", "Untick to hide the top navigation bar across every page."),
         image("logoLight", "Logo (on dark banners)"),
         image("logoDark", "Logo (on white pages)"),
         menu("links", "Menu", "Add menu items and reorder them. Give an item sub-items (and sub-sub-items) — any item with sub-items becomes a hover dropdown on the site. Each item has its own link."),
@@ -601,6 +602,7 @@ export const FOOTER_TEMPLATE: TemplateDef = {
       name: "Principal & Intro",
       description: "Principal photo, name and the introduction paragraph.",
       fields: [
+        toggle("visible", "Show the footer on the site", "Untick to hide the footer across every page."),
         image("photo", "Principal photo"),
         text("role", "Role label"),
         text("name", "Principal name"),

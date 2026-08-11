@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { AnnouncementBar } from "@/components/home/AnnouncementBar";
+import { SiteAnnouncement } from "@/components/home/SiteAnnouncement";
 import { SiteNavbar } from "@/components/home/SiteNavbar";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
 import { Reveal } from "@/components/home/Reveal";
@@ -225,7 +225,7 @@ export default async function FiveTermPage() {
 
   return (
     <>
-      <AnnouncementBar />
+      <SiteAnnouncement />
 
       {/* Hero */}
       <section className="relative z-[60] isolate overflow-x-clip bg-eb-navy">

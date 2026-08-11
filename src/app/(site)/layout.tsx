@@ -1,4 +1,4 @@
-import { AnnouncementBar } from "@/components/home/AnnouncementBar";
+import { SiteAnnouncement } from "@/components/home/SiteAnnouncement";
 import { SiteNavbar } from "@/components/home/SiteNavbar";
 import { FigmaFooter } from "@/components/home/FigmaFooter";
 
@@ -9,7 +9,7 @@ export default function SiteLayout({
 }) {
   return (
     <>
-      <AnnouncementBar />
+      <SiteAnnouncement />
       <SiteNavbar variant="solid" />
       <main className="flex-1 bg-white">{children}</main>
       <FigmaFooter />

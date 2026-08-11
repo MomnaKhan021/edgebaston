@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { FooterLinks } from "./FooterLinks";
 import { getTemplateSections } from "@/lib/sections";
-import { parseItems, sectionDefaults } from "@/lib/templates";
+import { parseItems, sectionDefaults, isVisible } from "@/lib/templates";
 
 function Arrow() {
   return (
@@ -20,6 +20,8 @@ export async function FigmaFooter() {
     s = {};
   }
   const intro = s.intro ?? sectionDefaults("footer", "intro");
+  // Admin can hide the footer site-wide (Templates → Footer → Show the footer).
+  if (!isVisible(intro)) return null;
   const links = s.links ?? sectionDefaults("footer", "links");
   const address = s.address ?? sectionDefaults("footer", "address");
   const brand = s.brand ?? sectionDefaults("footer", "brand");
