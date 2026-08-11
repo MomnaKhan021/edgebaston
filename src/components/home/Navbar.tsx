@@ -175,13 +175,16 @@ export function Navbar({
   const router = useRouter();
   const solid = variant === "solid";
 
-  // Lock background scroll while the full-screen mobile menu is open.
+  // Lock background scroll while the full-screen mobile menu is open. Tag the
+  // lock as ours so the enquiry form's scroll-unlock guard leaves it alone.
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    document.body.dataset.ebMenuLock = "1";
     return () => {
       document.body.style.overflow = prev;
+      delete document.body.dataset.ebMenuLock;
     };
   }, [open]);
 

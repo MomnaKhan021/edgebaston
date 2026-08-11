@@ -45,6 +45,10 @@ export function TypeformEmbed({
       };
     }
 
+    let disposed = false;
+    let formReady = false;
+    let retries = 0;
+
     const mount = () => {
       const tf = (window as unknown as { tf?: TypeformGlobal }).tf;
       // reload() rescans and mounts any unmounted [data-tf-live]; load() is the
@@ -52,6 +56,32 @@ export function TypeformEmbed({
       if (tf?.reload) tf.reload();
       else if (tf?.load) tf.load();
     };
+
+    // The first mount can race hydration and leave the iframe blank. Typeform
+    // posts a `form-ready` message once it has actually rendered; until that
+    // arrives, wipe the container and remount a few times.
+    const onMessage = (e: MessageEvent) => {
+      if (typeof e.origin !== "string" || !e.origin.endsWith("typeform.com")) return;
+      let type: unknown = (e.data as { type?: string } | null)?.type;
+      if (typeof e.data === "string") {
+        try {
+          type = (JSON.parse(e.data) as { type?: string }).type;
+        } catch {
+          /* not JSON */
+        }
+      }
+      if (type === "form-ready") formReady = true;
+    };
+    window.addEventListener("message", onMessage);
+    const verify = () => {
+      if (disposed || formReady || retries >= 3) return;
+      retries += 1;
+      const box = document.querySelector(`[data-tf-live="${formId}"]`);
+      if (box) box.innerHTML = "";
+      mount();
+      setTimeout(verify, 2500);
+    };
+    const verifyTimer = setTimeout(verify, 2500);
 
     // Guard against a Typeform form's custom CSS leaking onto our page. When a
     // form has custom code, the embed injects that CSS as a <style> into OUR
@@ -76,6 +106,18 @@ export function TypeformEmbed({
     if (container) styleWatch.observe(container, { childList: true, subtree: true });
     sanitize();
 
+    // This form is configured to take over the screen: Typeform's embed locks
+    // page scroll by setting `overflow: hidden` on <body>, so the whole page
+    // freezes. Undo it whenever it reappears — except when the mobile menu owns
+    // the lock (it tags <body> with data-eb-menu-lock).
+    const unlockBody = () => {
+      if (document.body.dataset.ebMenuLock) return;
+      if (document.body.style.overflow === "hidden") document.body.style.overflow = "";
+    };
+    const bodyWatch = new MutationObserver(unlockBody);
+    bodyWatch.observe(document.body, { attributes: true, attributeFilter: ["style"] });
+    unlockBody();
+
     const isReady = () => Boolean((window as unknown as { tf?: TypeformGlobal }).tf);
     const existing = document.querySelector<HTMLScriptElement>(`script[src="${SRC}"]`);
 
@@ -91,17 +133,28 @@ export function TypeformEmbed({
       document.body.appendChild(script);
     }
 
-    return () => styleWatch.disconnect();
+    return () => {
+      disposed = true;
+      clearTimeout(verifyTimer);
+      window.removeEventListener("message", onMessage);
+      styleWatch.disconnect();
+      bodyWatch.disconnect();
+      unlockBody(); // don't leave the page frozen after leaving this page
+    };
   }, [formId, conversionSendTo]);
 
   if (!formId) return null;
-  // Plain Typeform embed exactly as Typeform provides it — no wrapper, no
-  // classes, no custom height/styling. (data-tf-on-submit only wires up the
-  // lead-conversion event; it adds no styling.)
+  // This form renders itself as a full-screen, high z-index overlay. The
+  // .tf-embed CSS makes this box a positioning context and pins that overlay
+  // inside it, so the form sits in this one section instead of floating over
+  // the whole page. The height gives the section a size for the (internally
+  // scrolling) form; page scroll itself is kept unlocked in the effect above.
   return (
-    <div
-      data-tf-live={formId}
-      data-tf-on-submit={conversionSendTo ? "enquiryConversion" : undefined}
-    />
+    <div className="tf-embed h-[760px] w-full">
+      <div
+        data-tf-live={formId}
+        data-tf-on-submit={conversionSendTo ? "enquiryConversion" : undefined}
+      />
+    </div>
   );
 }

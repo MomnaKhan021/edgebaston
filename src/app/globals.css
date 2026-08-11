@@ -432,6 +432,30 @@ button:disabled,
   margin: 1.5em 0;
 }
 
+/* Typeform embed cage. This form renders its widget in a `position: absolute;
+   z-index: 10001` layer that, left alone, resolves against the viewport and
+   floats over the whole page. Make the box a positioning context and pin that
+   layer to inset:0 inside it, so the form stays within its own section. Its own
+   look lives inside the cross-origin iframe and is unaffected. */
+.tf-embed,
+.tf-embed [data-tf-live] {
+  position: relative;
+}
+.tf-embed [data-tf-live] {
+  height: 100%;
+}
+.tf-embed [data-tf-live] > div {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: auto !important;
+}
+.tf-embed [data-tf-live] > div,
+.tf-embed .tf-v1-widget,
+.tf-embed [data-tf-live] iframe {
+  height: 100% !important;
+  width: 100% !important;
+}
+
 /* TipTap editor placeholder + focus styling in the dashboard. */
 .ProseMirror {
   min-height: 260px;
