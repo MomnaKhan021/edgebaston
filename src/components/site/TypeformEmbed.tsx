@@ -53,6 +53,29 @@ export function TypeformEmbed({
       else if (tf?.load) tf.load();
     };
 
+    // Guard against a Typeform form's custom CSS leaking onto our page. When a
+    // form has custom code, the embed injects that CSS as a <style> into OUR
+    // document (a sibling of the iframe, not inside it). If that CSS uses
+    // page-global selectors — a bare `*` reset, or html/body rules — it hits
+    // the whole site and flattens every margin/padding (announcement bar,
+    // header, breadcrumb, footer). The form's own look lives inside its
+    // cross-origin iframe, so stripping these host-scoped <style> tags is safe.
+    const pageGlobal = /(^|[{},])\s*(\*|html|body)\b/i;
+    const sanitize = () => {
+      const scope = document.querySelector(`[data-tf-live="${formId}"]`);
+      if (!scope) return;
+      scope.querySelectorAll("style").forEach((el) => {
+        if (pageGlobal.test(el.textContent || "")) el.remove();
+      });
+    };
+
+    const container = document.querySelector(`[data-tf-live="${formId}"]`);
+    // Typeform injects that <style> asynchronously (and again on reload), so
+    // watch the container and strip it whenever it reappears.
+    const styleWatch = new MutationObserver(sanitize);
+    if (container) styleWatch.observe(container, { childList: true, subtree: true });
+    sanitize();
+
     const isReady = () => Boolean((window as unknown as { tf?: TypeformGlobal }).tf);
     const existing = document.querySelector<HTMLScriptElement>(`script[src="${SRC}"]`);
 
@@ -67,7 +90,9 @@ export function TypeformEmbed({
       script.addEventListener("load", mount);
       document.body.appendChild(script);
     }
-  }, [formId]);
+
+    return () => styleWatch.disconnect();
+  }, [formId, conversionSendTo]);
 
   if (!formId) return null;
   return (
