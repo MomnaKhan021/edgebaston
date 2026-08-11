@@ -72,13 +72,13 @@ export function TypeformEmbed({
   if (!formId) return null;
   return (
     <div className="tf-embed overflow-hidden rounded-2xl">
-      {/* Responsive height: taller on mobile so the form isn't cramped, capped
-          on desktop. The .tf-embed CSS forces Typeform's injected wrapper +
-          iframe to fill this box so there's no dead space below the form. */}
+      {/* Tall box so the whole (long) enquiry form renders in one length — the
+          page scrolls, not a nested scrollbar inside the form. The .tf-embed CSS
+          forces Typeform's injected wrapper + iframe to fill this box. */}
       <div
         data-tf-live={formId}
         data-tf-on-submit={conversionSendTo ? "enquiryConversion" : undefined}
-        className="h-[80vh] min-h-[520px] w-full sm:h-[640px]"
+        className="h-[1400px] min-h-[640px] w-full"
       />
     </div>
   );

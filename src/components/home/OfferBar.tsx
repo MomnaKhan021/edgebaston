@@ -125,7 +125,12 @@ export function OfferBar({
   const info = hasTimer || Boolean(title) || Boolean(message);
   const hasContent = info || Boolean(buttonUrl);
   if (!mounted || !open || !hasContent) return null;
-  if (pathname?.startsWith("/admin")) return null;
+  // Hidden in the admin, and on the enquiry / contact pages — the bar's only
+  // job is to send people there, so it's redundant and would overlap the form's
+  // submit button. Matches the canonical routes and any alias containing them
+  // (e.g. /admissions/enquiry-form).
+  const p = pathname || "";
+  if (p.startsWith("/admin") || /(en|in)quir|(^|\/)contact(\/|$)/i.test(p)) return null;
 
   return (
     // z-[65]: above the hero (z-[60], whose full-height image would otherwise
