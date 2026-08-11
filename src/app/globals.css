@@ -435,6 +435,10 @@ button:disabled,
 /* Typeform inline embed: Typeform injects a wrapper with a fixed 500px height,
    which leaves dead space inside our sized container. Force its wrapper +
    iframe to fill the container so the form is responsive and gap-free. */
+/* Typeform's inline embed doesn't auto-grow, so we give the container an
+   explicit (tall) height and force its injected wrapper + iframe to fill it —
+   sized to fit the whole form so it shows in one length with no nested
+   scrollbar (which also stops the touch-scroll trap on mobile). */
 .tf-embed [data-tf-live] > div,
 .tf-embed .tf-v1-widget,
 .tf-embed [data-tf-live] iframe {
