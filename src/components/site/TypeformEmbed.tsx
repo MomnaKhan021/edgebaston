@@ -29,6 +29,9 @@ export function TypeformEmbed({
 }) {
   useEffect(() => {
     if (!formId) return;
+    let disposed = false;
+    let formReady = false;
+    let retries = 0;
 
     // Typeform calls the global named by data-tf-on-submit when the form is
     // submitted. Define it here so the Google Ads conversion fires. It checks
@@ -45,6 +48,36 @@ export function TypeformEmbed({
       };
     }
 
+    // On narrow viewports Typeform's widget flips into a "fullscreen" mode and
+    // sets `overflow: hidden` on <body>, freezing the whole page's scroll (our
+    // CSS already pins its overlay inside the container, but the scroll lock
+    // is applied via JS). Undo it whenever it appears — unless the mobile menu
+    // owns the lock (it tags body with data-eb-menu-lock).
+    const unlockBody = () => {
+      if (document.body.dataset.ebMenuLock) return;
+      if (document.body.style.overflow === "hidden") document.body.style.overflow = "";
+    };
+    const bodyWatch = new MutationObserver(unlockBody);
+    bodyWatch.observe(document.body, { attributes: true, attributeFilter: ["style"] });
+    unlockBody();
+
+    // The embedded form reports in via postMessage when it has rendered.
+    // Until that arrives we treat the widget as blank and retry the mount —
+    // on some routes the first mount races hydration and stays empty.
+    const onMessage = (e: MessageEvent) => {
+      if (typeof e.origin !== "string" || !e.origin.endsWith("typeform.com")) return;
+      let type: unknown = (e.data as { type?: string } | null)?.type;
+      if (typeof e.data === "string") {
+        try {
+          type = (JSON.parse(e.data) as { type?: string }).type;
+        } catch {
+          /* not JSON */
+        }
+      }
+      if (type === "form-ready") formReady = true;
+    };
+    window.addEventListener("message", onMessage);
+
     const mount = () => {
       const tf = (window as unknown as { tf?: TypeformGlobal }).tf;
       // reload() rescans and mounts any unmounted [data-tf-live]; load() is the
@@ -52,6 +85,17 @@ export function TypeformEmbed({
       if (tf?.reload) tf.reload();
       else if (tf?.load) tf.load();
     };
+
+    const verify = () => {
+      if (disposed || formReady || retries >= 3) return;
+      retries += 1;
+      // Wipe Typeform's injected DOM so reload() treats the box as unmounted.
+      const box = document.querySelector(`[data-tf-live="${formId}"]`);
+      if (box) box.innerHTML = "";
+      mount();
+      setTimeout(verify, 2500);
+    };
+    const verifyTimer = setTimeout(verify, 2500);
 
     const isReady = () => Boolean((window as unknown as { tf?: TypeformGlobal }).tf);
     const existing = document.querySelector<HTMLScriptElement>(`script[src="${SRC}"]`);
@@ -67,7 +111,15 @@ export function TypeformEmbed({
       script.addEventListener("load", mount);
       document.body.appendChild(script);
     }
-  }, [formId]);
+
+    return () => {
+      disposed = true;
+      clearTimeout(verifyTimer);
+      window.removeEventListener("message", onMessage);
+      bodyWatch.disconnect();
+      unlockBody(); // don't leave the page frozen after unmount
+    };
+  }, [formId, conversionSendTo]);
 
   if (!formId) return null;
   return (
