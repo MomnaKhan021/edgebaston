@@ -30,25 +30,33 @@ export function TypeformEmbed({
   useEffect(() => {
     if (!formId) return;
 
-    // Typeform calls the global named by data-tf-on-submit when the form is
-    // submitted. Define it here so the Google Ads conversion fires. It checks
-    // for gtag at call time (gtag.js loads site-wide in the root layout).
-    if (conversionSendTo) {
-      (window as unknown as { enquiryConversion?: () => void }).enquiryConversion = () => {
-        // Meta Pixel Lead — the event the ad campaign optimises on. Fired first
-        // so it lands even if gtag isn't ready.
-        const fbq = (window as unknown as { fbq?: (...args: unknown[]) => void }).fbq;
-        if (typeof fbq === "function") fbq("track", "Lead");
-
-        const gtag = (window as unknown as { gtag?: Gtag }).gtag;
-        if (typeof gtag !== "function") return;
+    // Fire the enquiry-submit conversions: Meta Pixel Lead, the Google Ads
+    // conversion, and a GA4 lead event. Deduped so it fires at most once.
+    //
+    // We do NOT rely on Typeform's `data-tf-on-submit` attribute: with this
+    // embed it does not invoke the named global on submit (verified live — the
+    // form posts its submit message but the callback never runs), which had
+    // silently stopped the conversions firing. Instead we trigger off
+    // Typeform's own `form-submit` postMessage (handled in onMessage below),
+    // which the embed always emits. `enquiryConversion` stays defined as a
+    // harmless, deduped fallback in case the attribute ever does fire.
+    let converted = false;
+    const fireConversions = () => {
+      if (converted) return;
+      converted = true;
+      const w = window as unknown as { fbq?: (...args: unknown[]) => void; gtag?: Gtag };
+      // Meta Pixel Lead — the event the ad campaign optimises on. Fired first
+      // so it lands even if gtag isn't ready.
+      if (typeof w.fbq === "function") w.fbq("track", "Lead");
+      if (typeof w.gtag === "function") {
         // Google Ads conversion.
-        gtag("event", "conversion", { send_to: conversionSendTo });
+        if (conversionSendTo) w.gtag("event", "conversion", { send_to: conversionSendTo });
         // GA4 lead event so form completions are tracked in Analytics too
         // (routes to every configured GA4 destination by default).
-        gtag("event", "generate_lead", { form: "enquiry", currency: "GBP", value: 0 });
-      };
-    }
+        w.gtag("event", "generate_lead", { form: "enquiry", currency: "GBP", value: 0 });
+      }
+    };
+    (window as unknown as { enquiryConversion?: () => void }).enquiryConversion = fireConversions;
 
     let disposed = false;
     let formReady = false;
@@ -76,6 +84,9 @@ export function TypeformEmbed({
         }
       }
       if (type === "form-ready") formReady = true;
+      // Primary conversion trigger: the embed emits this when the form is
+      // submitted (data-tf-on-submit is unreliable here — see fireConversions).
+      if (type === "form-submit" || type === "form-submitted") fireConversions();
     };
     window.addEventListener("message", onMessage);
     const verify = () => {
