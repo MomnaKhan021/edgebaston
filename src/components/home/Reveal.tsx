@@ -21,6 +21,12 @@ export function Reveal({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    // No IntersectionObserver support → reveal immediately rather than leaving
+    // the content stuck invisible at opacity:0.
+    if (typeof IntersectionObserver === "undefined") {
+      setShown(true);
+      return;
+    }
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -30,7 +36,12 @@ export function Reveal({
           }
         });
       },
-      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
+      // threshold 0: reveal as soon as ANY part enters view. A fixed ratio like
+      // 0.12 is unreachable for sections taller than ~8× the viewport — the
+      // viewport can't show 12% of them at once — so such sections (e.g. the
+      // tall results/destinations block) stayed permanently invisible, worst on
+      // mobile where the viewport is shortest.
+      { threshold: 0, rootMargin: "0px 0px -8% 0px" },
     );
     io.observe(el);
     return () => io.disconnect();
