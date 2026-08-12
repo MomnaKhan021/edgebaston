@@ -30,7 +30,11 @@ export function StudentDestinations({
   resetLabel: string;
 }) {
   const [dest, setDest] = useState(ALL);
-  const [year, setYear] = useState(ALL);
+  // Default the Year filter to 2025 (falling back to all years if there are no
+  // 2025 destinations, so the grid is never empty on first load).
+  const [year, setYear] = useState(() =>
+    cards.some((c) => c.year === "2025") ? "2025" : ALL,
+  );
 
   const universities = useMemo(
     () => Array.from(new Set(cards.map((c) => c.university).filter(Boolean))).sort(),
