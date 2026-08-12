@@ -5,12 +5,18 @@ import "./globals.css";
 import { getSettings } from "@/lib/settings";
 import { saans, saansMono } from "./fonts";
 import { OfferBar } from "@/components/home/OfferBar";
+import { MetaPixelPageView } from "@/components/site/MetaPixelPageView";
 import { getSection } from "@/lib/sections";
 import { isVisible } from "@/lib/templates";
 
 // This is a database-backed CMS: render pages per-request so content edited in
 // the dashboard shows immediately, and so the build never queries the database.
 export const dynamic = "force-dynamic";
+
+// Meta (Facebook) Pixel — Events Manager › Data sources › Edgbaston College.
+// Fires sitewide on every page, like the GA4 tag; the enquiry-form submit
+// callback adds a Lead event on top of these PageViews.
+const META_PIXEL_ID = "1372105881008436";
 
 // Self-hosted Saans (design typeface) for text, Saans SemiMono for labels.
 const geistSans = saans;
@@ -103,6 +109,38 @@ export default async function RootLayout({
             </Script>
           </>
         )}
+
+        {/* Meta Pixel — base snippet, fires PageView on every page. */}
+        <Script
+          id="meta-pixel"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', '${META_PIXEL_ID}');
+              fbq('track', 'PageView');
+            `,
+          }}
+        />
+        <noscript>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            height="1"
+            width="1"
+            style={{ display: "none" }}
+            alt=""
+            src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
+          />
+        </noscript>
+        {/* Refire PageView on client-side route changes (SPA navigations). */}
+        <MetaPixelPageView />
       </body>
     </html>
   );

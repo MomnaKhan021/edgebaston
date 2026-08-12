@@ -35,6 +35,11 @@ export function TypeformEmbed({
     // for gtag at call time (gtag.js loads site-wide in the root layout).
     if (conversionSendTo) {
       (window as unknown as { enquiryConversion?: () => void }).enquiryConversion = () => {
+        // Meta Pixel Lead — the event the ad campaign optimises on. Fired first
+        // so it lands even if gtag isn't ready.
+        const fbq = (window as unknown as { fbq?: (...args: unknown[]) => void }).fbq;
+        if (typeof fbq === "function") fbq("track", "Lead");
+
         const gtag = (window as unknown as { gtag?: Gtag }).gtag;
         if (typeof gtag !== "function") return;
         // Google Ads conversion.
