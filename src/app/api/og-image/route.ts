@@ -17,7 +17,7 @@ const DEFAULT_IMAGE = "/figma/hero-building.webp";
 async function toShareImage(buf: Buffer): Promise<Buffer> {
   return sharp(buf)
     .resize(1200, 630, { fit: "cover", position: "attention" })
-    .jpeg({ quality: 82, mozjpeg: true })
+    .jpeg({ quality: 82 })
     .toBuffer();
 }
 
