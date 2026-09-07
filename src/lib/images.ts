@@ -1,11 +1,16 @@
-import sharp from "sharp";
-
 const DATA_URI_RE = /^data:image\/([a-z0-9.+-]+);base64,(.+)$/i;
 
 /**
  * Admin uploads store images inline as base64 data URIs. Uncompressed photos
  * can be many megabytes each, which bloats the HTML of any page that renders
  * them. This resizes + re-encodes oversized data URIs to WebP (~100KB).
+ *
+ * sharp is imported lazily inside the try so that if the native module fails to
+ * load or crashes (it has been flaky on Vercel), compression is simply skipped
+ * and the original image is kept — the caller's save must never fail because of
+ * image compression. A static top-level `import sharp` would instead crash the
+ * whole server action (e.g. saveSettings) before it could write to the DB,
+ * which silently dropped admin saves.
  */
 export async function compressDataUri(uri: string, width = 1600): Promise<string> {
   const m = uri?.match?.(DATA_URI_RE);
@@ -13,6 +18,7 @@ export async function compressDataUri(uri: string, width = 1600): Promise<string
   const buf = Buffer.from(m[2], "base64");
   if (buf.length < 150_000) return uri; // already small enough
   try {
+    const sharp = (await import("sharp")).default;
     const out = await sharp(buf)
       .resize({ width, withoutEnlargement: true })
       .webp({ quality: 78 })
