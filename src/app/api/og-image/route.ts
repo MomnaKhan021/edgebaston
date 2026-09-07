@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import sharp from "sharp";
 import { getSettings } from "@/lib/settings";
 
 // Serves the social share image (og:image) as a real, crawler-fetchable image.
@@ -18,6 +17,7 @@ export const dynamic = "force-dynamic";
 const DEFAULT_IMAGE = "/figma/hero-building.webp";
 
 async function toShareImage(buf: Buffer): Promise<Buffer> {
+  const sharp = (await import("sharp")).default;
   return sharp(buf)
     .resize(1200, 630, { fit: "cover", position: "attention" })
     .webp({ quality: 80 })
@@ -34,9 +34,18 @@ function serve(buf: Buffer): NextResponse {
 }
 
 export async function GET(req: Request) {
-  const { ogImageUrl } = await getSettings();
-
+  // TEMP DIAGNOSTIC: surface the real error as text so we can see why the route
+  // 500s in production. Revert once diagnosed.
+  const dbg = new URL(req.url).searchParams.has("debug");
   try {
+    const { ogImageUrl } = await getSettings();
+    if (dbg) {
+      return new NextResponse(
+        `ogImageUrl length=${ogImageUrl.length} prefix=${ogImageUrl.slice(0, 40)}`,
+        { headers: { "content-type": "text/plain" } },
+      );
+    }
+
     // Custom upload stored as a data URI → decode and normalise.
     const m = ogImageUrl.match(/^data:([^;]+);base64,([\s\S]*)$/);
     if (m) return serve(await toShareImage(Buffer.from(m[2], "base64")));
@@ -48,7 +57,13 @@ export async function GET(req: Request) {
     const res = await fetch(new URL(DEFAULT_IMAGE, req.url));
     const bytes = Buffer.from(await res.arrayBuffer());
     return serve(await toShareImage(bytes));
-  } catch {
+  } catch (e) {
+    if (dbg) {
+      return new NextResponse(
+        "OGDBG " + (e instanceof Error ? `${e.message}\n${e.stack}` : String(e)),
+        { status: 200, headers: { "content-type": "text/plain" } },
+      );
+    }
     // Last-resort fallback: redirect to the raw default asset.
     return NextResponse.redirect(new URL(DEFAULT_IMAGE, req.url));
   }
