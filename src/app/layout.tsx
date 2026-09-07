@@ -37,9 +37,11 @@ export async function generateMetadata(): Promise<Metadata> {
   const baseUrl = `${proto}://${host}`;
 
   // Social share image (og:image) is always served (and normalised to a
-  // 1200×630 WebP) by /api/og-image — the admin upload when set, otherwise the
-  // home banner as a sensible default.
-  const shareImage = "/api/og-image";
+  // 1200×630 JPEG) by /api/og-image — the admin upload when set, otherwise the
+  // home banner as a sensible default. The ?v=<updatedAt> version string
+  // changes whenever settings are saved, so Facebook/WhatsApp/LinkedIn treat it
+  // as a new image URL and re-fetch instead of showing a stale cached preview.
+  const shareImage = `/api/og-image?v=${settings.updatedAt.getTime()}`;
 
   const meta: Metadata = {
     metadataBase: new URL(baseUrl),

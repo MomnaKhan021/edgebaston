@@ -5,7 +5,11 @@ import { getSettings } from "@/lib/settings";
 // Serves the social share image (og:image) as a real, crawler-fetchable image.
 // The admin upload is stored as a data URI (crawlers can't read those), and the
 // default banner is a large static file — so we always normalise here to a
-// 1200×630 WebP kept well under WhatsApp's ~300KB preview limit.
+// 1200×630 JPEG kept well under WhatsApp's ~300KB preview limit.
+//
+// JPEG (not WebP): Facebook renders WebP og:images, but WhatsApp and LinkedIn
+// frequently do not — they show no preview at all. JPEG is supported by every
+// platform, so we serve that for maximum compatibility.
 export const dynamic = "force-dynamic";
 
 const DEFAULT_IMAGE = "/figma/hero-building.webp";
@@ -13,14 +17,14 @@ const DEFAULT_IMAGE = "/figma/hero-building.webp";
 async function toShareImage(buf: Buffer): Promise<Buffer> {
   return sharp(buf)
     .resize(1200, 630, { fit: "cover", position: "attention" })
-    .webp({ quality: 80 })
+    .jpeg({ quality: 82, mozjpeg: true })
     .toBuffer();
 }
 
 function serve(buf: Buffer): NextResponse {
   return new NextResponse(new Uint8Array(buf), {
     headers: {
-      "Content-Type": "image/webp",
+      "Content-Type": "image/jpeg",
       "Cache-Control": "public, max-age=300, must-revalidate",
     },
   });
