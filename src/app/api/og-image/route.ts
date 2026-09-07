@@ -5,36 +5,29 @@ import { getSettings } from "@/lib/settings";
 // Serves the social share image (og:image) as a real, crawler-fetchable image.
 // The admin upload is stored as a data URI (crawlers can't read those), and the
 // default banner is a large static file — so we always normalise here to a
-// 1200×630 image kept well under WhatsApp's ~300KB preview limit.
+// 1200×630 WebP kept well under WhatsApp's ~300KB preview limit.
 //
-// Format is JPEG when possible (WhatsApp/LinkedIn don't reliably render WebP
-// og:images), with a WebP fallback: on Vercel's sharp build, encoding some
-// uploaded images to JPEG crashes natively (a segfault that bypasses JS
-// try/catch and 500s the whole route), so we flatten away any alpha first and,
-// if JPEG encoding still fails, fall back to WebP — which never crashes.
+// NOTE: this outputs WebP, not JPEG. Encoding the uploaded share image to JPEG
+// crashes Vercel's sharp build natively (a segfault that bypasses JS try/catch
+// and 500s the whole route) — flattening alpha first did not help. WebP encodes
+// it reliably, so we keep WebP. Facebook renders WebP og:images; if a preview
+// must show on WhatsApp/LinkedIn (spotty WebP support), re-upload the share
+// image already saved as a JPG so no server-side JPEG re-encode is needed.
 export const dynamic = "force-dynamic";
 
 const DEFAULT_IMAGE = "/figma/hero-building.webp";
 
-async function toShareImage(buf: Buffer): Promise<{ body: Buffer; type: string }> {
-  // Flatten onto the brand navy so images with transparency (the usual cause
-  // of the JPEG-encode crash) become opaque before encoding.
-  const base = sharp(buf)
+async function toShareImage(buf: Buffer): Promise<Buffer> {
+  return sharp(buf)
     .resize(1200, 630, { fit: "cover", position: "attention" })
-    .flatten({ background: "#0e2f49" });
-  try {
-    const body = await base.clone().jpeg({ quality: 82 }).toBuffer();
-    return { body, type: "image/jpeg" };
-  } catch {
-    const body = await base.webp({ quality: 80 }).toBuffer();
-    return { body, type: "image/webp" };
-  }
+    .webp({ quality: 80 })
+    .toBuffer();
 }
 
-function serve({ body, type }: { body: Buffer; type: string }): NextResponse {
-  return new NextResponse(new Uint8Array(body), {
+function serve(buf: Buffer): NextResponse {
+  return new NextResponse(new Uint8Array(buf), {
     headers: {
-      "Content-Type": type,
+      "Content-Type": "image/webp",
       "Cache-Control": "public, max-age=300, must-revalidate",
     },
   });
