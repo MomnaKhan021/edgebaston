@@ -36,12 +36,16 @@ export async function generateMetadata(): Promise<Metadata> {
   const proto = h.get("x-forwarded-proto") ?? "https";
   const baseUrl = `${proto}://${host}`;
 
-  // Social share image (og:image) is always served (and normalised to a
-  // 1200×630 JPEG) by /api/og-image — the admin upload when set, otherwise the
-  // home banner as a sensible default. The ?v=<updatedAt> version string
-  // changes whenever settings are saved, so Facebook/WhatsApp/LinkedIn treat it
-  // as a new image URL and re-fetch instead of showing a stale cached preview.
-  const shareImage = `/api/og-image?v=${settings.updatedAt.getTime()}`;
+  // Social share image (og:image) is served at a real, crawlable URL by
+  // /api/og-image — the admin upload when set, otherwise the home banner. The
+  // ?v=<updatedAt> version string changes whenever settings are saved, so
+  // Facebook/WhatsApp/LinkedIn treat it as a new image URL and re-fetch instead
+  // of showing a stale cached preview. NOTE: settings come through
+  // unstable_cache, which serialises Date → string, so wrap in new Date()
+  // before getTime() — calling .getTime() on the raw value throws and takes the
+  // whole metadata (title, description, og tags) down with it.
+  const shareVersion = new Date(settings.updatedAt).getTime() || 0;
+  const shareImage = `/api/og-image?v=${shareVersion}`;
 
   const meta: Metadata = {
     metadataBase: new URL(baseUrl),
