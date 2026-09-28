@@ -13,6 +13,7 @@ import {
   IconPages,
   IconBlog,
   IconInquiries,
+  IconUsers,
   IconSettings,
   IconExternal,
   IconSignOut,
@@ -28,6 +29,7 @@ const NAV = [
   { label: "Pages", href: "/admin/pages", Icon: IconPages },
   { label: "Blog", href: "/admin/blog", Icon: IconBlog },
   { label: "Inquiries", href: "/admin/inquiries", Icon: IconInquiries },
+  { label: "Users", href: "/admin/users", Icon: IconUsers },
   { label: "Settings", href: "/admin/settings", Icon: IconSettings },
 ];
 

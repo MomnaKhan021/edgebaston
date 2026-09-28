@@ -157,3 +157,13 @@ export function IconTemplates({ className = base }: P) {
     </svg>
   );
 }
+
+export function IconUsers({ className = base }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...common}>
+      <circle cx="8.5" cy="8" r="3" />
+      <path d="M2.5 20c0-3.1 2.4-5.2 6-5.2s6 2.1 6 5.2" />
+      <path d="M16 4.5a3 3 0 010 5.8M17.5 20c0-2.4-.9-4.2-2.5-5.1" />
+    </svg>
+  );
+}

@@ -1,6 +1,8 @@
 import "server-only";
 import { cookies } from "next/headers";
 import { SignJWT, jwtVerify } from "jose";
+import { db } from "@/lib/db";
+import { verifyPassword } from "@/lib/password";
 
 const COOKIE_NAME = "eb_session";
 const SESSION_DAYS = 7;
@@ -36,13 +38,38 @@ function allowedAdminEmails(): Set<string> {
   );
 }
 
-/** Verify submitted credentials against the configured admin accounts. */
-export function verifyCredentials(email: string, password: string): boolean {
+/** The built-in admin emails (from env), for display in Admin → Users. */
+export function builtInAdminEmails(): string[] {
+  return [...allowedAdminEmails()].sort();
+}
+
+/**
+ * Verify submitted credentials. Two sources, checked in this order:
+ *   1. Built-in env admins (ADMIN_EMAIL/ADMIN_EMAILS + ADMIN_PASSWORD). These
+ *      need no database, so they always work — even if the DB is down or the
+ *      AdminUser table doesn't exist yet — guaranteeing no one is locked out.
+ *   2. Dashboard users added via Admin → Users (stored with a scrypt hash).
+ * The DB check is fail-soft: any DB error falls through to "invalid" rather
+ * than breaking login for everyone.
+ */
+export async function verifyCredentials(
+  email: string,
+  password: string,
+): Promise<boolean> {
+  const normEmail = email.trim().toLowerCase();
+
   const adminPassword = process.env.ADMIN_PASSWORD || "admin1234";
-  return (
-    allowedAdminEmails().has(email.trim().toLowerCase()) &&
-    password === adminPassword
-  );
+  if (allowedAdminEmails().has(normEmail) && password === adminPassword) {
+    return true;
+  }
+
+  try {
+    const user = await db.adminUser.findUnique({ where: { email: normEmail } });
+    if (user) return await verifyPassword(password, user.passwordHash);
+  } catch {
+    // DB unavailable / table missing — env admins above still work.
+  }
+  return false;
 }
 
 /** Create a signed session JWT and store it in an httpOnly cookie. */

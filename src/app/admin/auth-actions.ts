@@ -19,7 +19,7 @@ export async function loginAction(
   if (!email || !password) {
     return { error: "Please enter your email and password." };
   }
-  if (!verifyCredentials(email, password)) {
+  if (!(await verifyCredentials(email, password))) {
     return { error: "Invalid email or password." };
   }
 

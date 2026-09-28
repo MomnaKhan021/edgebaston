@@ -140,3 +140,16 @@ model SiteSetting {
   ga4Id           String @default("G-Q6TE32QZ9M") // Google Analytics 4 measurement ID; empty = no tracking
   updatedAt    DateTime @updatedAt
 }
+
+/// A dashboard user who can sign in to the admin. Passwords are stored as a
+/// scrypt hash ("salt:hash"), never in plain text. The built-in env admins
+/// (ADMIN_EMAIL / ADMIN_PASSWORD) still work as a permanent fallback, so no one
+/// can ever be locked out of the dashboard even if this table is empty.
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String   @default("")
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}

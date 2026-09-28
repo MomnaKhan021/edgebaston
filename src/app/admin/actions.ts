@@ -5,6 +5,7 @@ import { compressDataUri, compressInlineImages } from "@/lib/images";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/auth";
+import { hashPassword } from "@/lib/password";
 import { toSlug, toPathSlug, normalizeRedirect } from "@/lib/utils";
 
 /** Guard used by every mutating action (Server Actions are directly callable). */
@@ -554,4 +555,56 @@ export async function createPageFromTemplate(formData: FormData) {
   revalidateTag("sections", "max");
   revalidatePath("/", "layout");
   redirect(`/admin/templates/${ns}?created=1`);
+}
+
+/* ------------------------------ Users ------------------------------ */
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+/**
+ * Add a dashboard user, or update an existing one's name + password when the
+ * email already exists (so this doubles as "reset password"). Passwords are
+ * stored as a scrypt hash, never in plain text.
+ */
+export async function createUser(formData: FormData) {
+  await assertAuth();
+  const email = str(formData, "email").trim().toLowerCase();
+  const name = str(formData, "name").trim();
+  const password = str(formData, "password");
+
+  if (!EMAIL_RE.test(email)) {
+    redirect("/admin/users?error=" + encodeURIComponent("Enter a valid email address."));
+  }
+  if (password.length < 8) {
+    redirect("/admin/users?error=" + encodeURIComponent("Password must be at least 8 characters."));
+  }
+
+  const passwordHash = await hashPassword(password);
+  try {
+    await db.adminUser.upsert({
+      where: { email },
+      update: { name, passwordHash },
+      create: { email, name, passwordHash },
+    });
+  } catch {
+    redirect("/admin/users?error=" + encodeURIComponent("Couldn't save the user — the database may be unavailable."));
+  }
+
+  revalidatePath("/admin/users");
+  redirect("/admin/users?saved=" + encodeURIComponent(email));
+}
+
+/** Remove a dashboard user. Env admins can't be removed here (they're in env). */
+export async function deleteUser(formData: FormData) {
+  await assertAuth();
+  const id = str(formData, "id");
+  if (id) {
+    try {
+      await db.adminUser.delete({ where: { id } });
+    } catch {
+      redirect("/admin/users?error=" + encodeURIComponent("Couldn't delete the user."));
+    }
+  }
+  revalidatePath("/admin/users");
+  redirect("/admin/users?deleted=1");
 }
