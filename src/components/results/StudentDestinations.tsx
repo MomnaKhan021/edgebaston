@@ -30,11 +30,16 @@ export function StudentDestinations({
   resetLabel: string;
 }) {
   const [dest, setDest] = useState(ALL);
-  // Default the Year filter to 2025 (falling back to all years if there are no
-  // 2025 destinations, so the grid is never empty on first load).
-  const [year, setYear] = useState(() =>
-    cards.some((c) => c.year === "2025") ? "2025" : ALL,
-  );
+  // Default the Year filter to the most recent year that has destinations
+  // (falling back to all years if none are dated, so the grid is never empty
+  // on first load).
+  const [year, setYear] = useState(() => {
+    const latest = cards
+      .map((c) => c.year)
+      .filter(Boolean)
+      .sort((a, b) => b.localeCompare(a))[0];
+    return latest ?? ALL;
+  });
 
   const universities = useMemo(
     () => Array.from(new Set(cards.map((c) => c.university).filter(Boolean))).sort(),
